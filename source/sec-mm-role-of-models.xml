@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      A Modeling Approach to Calculus         -->
+<!--                                              -->
+<!-- Copyright (C) 2015  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="role-of-models">
+<title>The Role of Models</title>
+
+<p>When I was young, I enjoyed building model kits of airplanes, cars, and boats.  These models were made from different materials and were much smaller than the physical objects they represented.  Not all parts were present, but the essentials were represented.  Sometimes, complicated physical objects such as the engine of a car were represented by a simplified set of model parts.  For my models, the goal was a visual representation of a physical object that could illustrate the placement and relationship of parts.  Engineers often design scale models that provide both visual and functional representations, as they need to verify that not only will the parts fit together but they will work together as designed.</p>
+
+<p>A biologist often has a very different idea in mind.  One common use of the word <term>model</term> in biology has reference to a <term>model organism</term>.  For example, a scientist trying to understand medical treatments, ethical and financial considerations impact which organism is used.  Mice and rats are often used as model organisms because past research has shown that experimental results often successfully generalize to other mammals, and humans in particular.  However, sometimes the differences can be important, so closer models such as pigs or monkeys may be sought for more advanced tests.</p>
+
+<p>The models we will work with for mathematical modeling have some similarities and some differences with the physical models described above.  One of the key similarities is that a model is an incomplete representation of reality, but with enough relationships between the model and reality that conclusions drawn from the model may be generalized to the reality it represents.  Second, the model replaces the complicated realities with simplified replacements, for example by summarizing complicated interactions with a single equation or relationship that summarizes what is believed to be most relevant.  However, in some cases, a mathematical model does not try to capture any particular reality but rather attempts to summarize general features and learn what consequences follow from those general features.  For example, instead of recognizing a population as a collection of individuals interacting, a mathematical model may look at some expected average behavior and treat the population as a single quantity.</p>
+
+<p>Mathematical modeling plays a key role in the use of hypotheses in the scientific method.  For example, a biologist may believe that the manner in predator and prey populations interact is the key to understanding why the populations have a boom and bust cycle.  A mathematical model allows the scientist to codify their understanding of population interactions using equations.  This model then can provide predictions that could be used in the interpretation of an actual experiment, such as determining if the boom--bust cycle arises in the numerical model, or if other behavior arises.  Analyzing the model might also allow the scientist to determine how the interactions might be manipulated to arrive at other outcomes.</p>
+
+<figure>
+    <image xml:id='modeling-cycle' source='images/modeling-cycle'/>
+    <caption>Diagram illustrating the modeling cycle.</caption>
+</figure>
+
+<p>The use of models illustrated in the previous example is typical of the modeling process as part of the overall scientific method.  First, essential elements of the hypothesized role of interactions is summarized through mathematical equations.  Second, mathematical analysis of the equations and numerical predictions allow a scientist to make predictions about the consequences of these interactions.  Third, the predictions are interpreted in the context of the physical interaction.  Ideally, these predictions are then followed up with a scientific experiment that directly tests the outcomes predicted by the analysis.  If outcomes are different than predicted, then a modification of the original model is required, and the process repeats.</p>
+
+<p>Mathematical models can be used to accomplish a variety of possible goals.  One goal is to make <term>quantitative predictions</term>.  By this, we mean that our model is expected to make predictions whose numerical values have direct interpretation in relation to observed relationships.  The quality of the model is measured by how closely the model comes in predicting future observed relationships.  An alternative goal is to make <term>qualitative predictions</term>.  By this, we mean that our model is expected to  provide structural predictions, such as the possibility for either a steady state behavior or a cyclic behavior in a system.  The quality of the model is measured by how well the nature of the interactions going into the model provide an ability to understand how and when key structural features exist in a system, even if the numerical details are not in agreement with observable measurements.</p>
+
+<p>So why might a scientist want to use a mathematical model?  One obvious reason would simply be to make projections of future observations.  Less obvious would be to repeatedly make projections of future observations under a variety of different possible conditions in order to identify optimal conditions.  For example, when an experiment is expensive or ethically questionable to repeat many times, a mathematical model might inform a scientist which experimental conditions are most likely to provide meaningful insight.  Similarly, a mathematical model might allow exploration of outcomes when there is no opportunity for repeated experimentation.  You should recognize these objectives as corresponding to quantitative models.</p>
+
+<p>A second reason for a mathematical model might not be concerned so much with precise prediction as understanding the significance of interactions.  For example, in studying the spread of disease, public health policy makers might want to know which of several potential policies have the greatest potential in minimizing the impact of an impending outbreak.  While a quantitative model might be desired, it may be adequate for the decision making process to understand basic trade-offs between different potential policies.  Under such circumstances, a qualitative model may satisfy the needs of the scientists and policy makers.</p>
+
+</section>

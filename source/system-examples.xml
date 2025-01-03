@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="system-examples">
+<title>Examples of Interacting Systems</title>
+
+    <introduction>
+        <p>In systems modeling, we have multiple dynamic variables, each of which has an equation governing its dynamic progression in time. We often think of these state variables using a <term>flow diagram</term>. A flow diagram treats each state variable as a reservoir (or a bucket). Arrows pointing into the reservoir represent source terms that correspond to positive rates of change. Arrows pointing out of the reservoir represent loss terms that correspond to negative rates of change. In modeling, each rate of change (arrow on the diagram) has a mathematical formula involving potentially any of the state variables. There may also be graphical representation of which state variables influence the rates in a positive or negative way.</p>
+        <p>In each example of interacting systems, we identify the state variables and draw a potential flow diagram. Different assumptions on the model might correspond to changes in the flow diagram itself or in the formulas for the rates represented by the arrows in the diagram.</p>
+    </introduction>
+    
+    <subsection>
+        <title>Epidemic Models</title>
+        
+        <p>In an epidemic model, we consider a single population but consider every individual in the population as being classified according to their status with respect to a disease. In the classic model of a disease involving immunity, there are three categories in the population: individuals who are healthy but susceptible to become sick, those who are sick and therefore infectious, and those who once were sick but have recovered and retain immunity. These three variables are traditionally assigned the variables <m>S</m> (susceptible), <m>I</m> (infected), and <m>R</m> (recovered or removed).</p>
+        
+        <p>The standard flow diagram for the SIR model tells the story of how an infection spreads through a population. Susceptible individuals become sick after interactions with infected individuals. When there are more infected individuals, it becomes more likely that a person will become infected. Once infected, individuals stay sick for some duration after which they recover. After they recover, they have developed an immunity for the illness and will not become sick again. In addition to this progression of the disease, individuals may die from any stage with some probability. New births in the population generally will be healthy unless our illness has vertical transmission of the disease.</p>
+        <p>A possible flow diagram for the SIR model is illustrated in the figure below. The three classes are represented by rectangles labeled by the appropriate state variable. Each rate (flow arrow) is labeled according to the process that it represents. A rate will generally always depend on the class that it leaves. To emphasize that the infection rate also depends on the number of infected individuals, we draw a link (dashed line) between the infected class and the infection flow arrow.</p>
+        
+        <figure xml:id='SIR-system-diagram'>
+            <image width="60%">
+                <latex-image >
+                <![CDATA[\usetikzlibrary{positioning}
+                \tikzset{
+                    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+                    tmp/.style  = {coordinate}, 
+                    input/.style = {coordinate},
+                    output/.style= {coordinate},
+                }
+                \begin{tikzpicture}[auto, node distance=1cm,>=latex]
+                \draw
+                    node [input] (birth) at (0,0) {}
+                    node [block] (susceptible) at (2,0) {$S$}
+                    node [block] (infected) at (5,0) {$I$}
+                    node [block] (recovered) at (8,0) {$R$}
+                ;
+                \draw
+                    node [tmp, above=1cm of recovered] (rtop) {}
+                    node [tmp, above=1cm of susceptible] (stop) {}
+                    node [output, below=1cm of susceptible] (sdeath) {}
+                    node [output, below=1cm of infected] (ideath) {}
+                    node [output, below=1cm of recovered] (rdeath) {}
+                    node [tmp] (iRateL) at ($(susceptible.east)!0.3!(infected.west)$) {}
+                    node [tmp] (iRateR) at ($(susceptible.east)!0.7!(infected.west)$) {}
+                    node [tmp] (rRateL) at ($(infected.east)!0.3!(recovered.west)$) {}
+                    node [tmp] (rRateR) at ($(infected.east)!0.7!(recovered.west)$) {}
+                    node [tmp] (sdRate) at ($(susceptible.south)!0.5!(sdeath)$) {}
+                    node [tmp] (idRate) at ($(infected.south)!0.5!(ideath)$) {}
+                    node [tmp] (rdRate) at ($(recovered.south)!0.5!(rdeath)$) {}
+                ;
+                
+                \draw [->] (birth) -- node (bRate) {birth} (susceptible);
+                \draw [->] (susceptible) -- node {infection} (infected);
+                \draw [->] (infected) -- node (rRate) {recover} (recovered);
+                \draw [->] (susceptible) -- node {death} (sdeath);
+                \draw [->] (infected) -- node {death} (ideath);
+                \draw [->] (recovered) -- node {death} (rdeath);
+                \draw [->] (recovered) -- (rtop) -- node {lose immunity} (stop) -- (susceptible);
+                
+                %\draw [dashed, ->] (susceptible.south east) .. controls (susceptible.south east -| iRateL) .. (iRateL);
+                \draw [dashed, ->] (infected.south west) .. controls (infected.south west -| iRateR) .. (iRateR);
+                %\draw [dashed, ->] (infected.south east) .. controls (infected.south east -| rRateL) .. (rRateL);
+                %\draw [dashed, ->] (susceptible.south west) .. controls (susceptible.south west |- sdRate) .. (sdRate);
+                %\draw [dashed, ->] (infected.south west) .. controls (infected.south west |- idRate) .. (idRate);
+                %\draw [dashed, ->] (recovered.south west) .. controls (recovered.south west |- rdRate) .. (rdRate);
+                %\draw [dashed, ->] (recovered.north east) .. controls (recovered.north east |- rtop) .. (rtop);
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>SIR Model. Individuals are classified into susceptible, infected and recovered classes. Infections rely on interactions between the susceptible and infected individuals.</caption>
+        </figure>
+        
+        <p>Simplifications of the model might come from eliminating some of the flow rates. For example, when studying a disease that progresses quickly relative to the population (such as influenza), we might ignore slow scale processes like birth and death. For a disease that instills permanent immunity, we might eliminate the loss of immunity rate. If a disease never gives immunity, then we might eliminate the recovered class altogether and have recovery send individuals directly back to the susceptible class. Some diseases require additional classes.</p>
+    </subsection>
+
+    <subsection>
+        <title>Interacting Populations</title>
+        
+        <p>Ecosystems involve many different interacting species. Interactions might include competition, mutualism, parasitism and predation. In competition, two or more species rely on common resources such that the presence of one species reduces the availability of those resources for the other species. In mutualism, the presence of two interacting species together benefits each species relative to the populations living in isolation. In parasitism, one species takes resources from an individual of another species and may or may not lead to the death of the host but likely reduces the host's fitness. In predation, the predator kills and consumes individuals of the prey species.</p>
+        
+        <p>The flow diagram for interactions between two species generally look the same, with the difference being whether interactions are beneficial or inhibitory. One way that the diagram can represent this is by using a different type of arrow for inhibitory effects. In the diagrams below, a regular arrow <m>\rightarrow</m> represents a beneficial interaction while a segment ending in a perpendicular cap <m>\dashv</m> represents an inhibitory interaction.</p>
+        
+        <figure xml:id='predator-prey-system-diagram'>
+            <image width="30%">
+                <latex-image >
+                <![CDATA[\usetikzlibrary{positioning}
+                \tikzset{
+                    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+                    tmp/.style  = {coordinate}, 
+                    input/.style = {coordinate},
+                    output/.style= {coordinate},
+                }
+                \begin{tikzpicture}[auto, node distance=1cm,>=latex]
+                \draw
+                    node [input] (birthH) at (0,0) {}
+                    node [block] (popH) at (2,0) {$H$}
+                    node [output] (deathH) at (4,0) {}
+                    node [input] (birthL) at (0,-2) {}
+                    node [block] (popL) at (2,-2) {$L$}
+                    node [output] (deathL) at (4,-2) {}
+                ;
+                
+                \draw [->] (birthH) -- node [below] (bRateH) {birth} (popH);
+                \draw [->] (birthL) -- node (bRateL) {birth} (popL);
+                \draw [->] (popH) -- node [below] (dRateH) {death} (deathH);
+                \draw [->] (popL) -- node (dRateL) {death} (deathL);
+                \draw [dashed, ->] (popH.south west) -- (bRateL);
+                \draw [dashed, ->] (popL.north east) -- (dRateH);
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Predator-Prey model. A predator species <m>L</m> (e.g., lynx) and  a prey species <m>H</m> (e.g., hare) interact. The predator influences the death rate of the prey and the prey influences the birth rate of the predator.</caption>
+        </figure>
+        <figure xml:id='competition-system-diagram'>
+            <image width="30%">
+                <latex-image >
+                <![CDATA[\usetikzlibrary{positioning}
+                \tikzset{
+                    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+                    tmp/.style  = {coordinate}, 
+                    input/.style = {coordinate},
+                    output/.style= {coordinate},
+                }
+                \begin{tikzpicture}[auto, node distance=1cm,>=latex]
+                \draw
+                    node [input] (birthA) at (0,0) {}
+                    node [block] (popA) at (2,0) {$P_A$}
+                    node [output] (deathA) at (4,0) {}
+                    node [input] (birthB) at (0,-2) {}
+                    node [block] (popB) at (2,-2) {$P_B$}
+                    node [output] (deathB) at (4,-2) {}
+                ;
+                
+                \draw [->] (birthA) -- node [below] (abRate) {birth} (popA);
+                \draw [->] (birthB) -- node (bbRate) {birth} (popB);
+                \draw [->] (popA) -- node [below] (adRate) {death} (deathA);
+                \draw [->] (popB) -- node (bdRate) {death} (deathB);
+                \draw [dashed, -|] (popA.south west) -- (bbRate);
+                \draw [dashed, -|] (popB.north west) -- (abRate);
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Competition model. Two species <m>A</m> and <m>B</m> have an inhibitory effect on the growth of the other species.</caption>
+        </figure>
+        <figure xml:id='mutualism-system-diagram'>
+            <image width="30%">
+                <latex-image >
+                <![CDATA[\usetikzlibrary{positioning}
+                \tikzset{
+                    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+                    tmp/.style  = {coordinate}, 
+                    input/.style = {coordinate},
+                    output/.style= {coordinate},
+                }
+                \begin{tikzpicture}[auto, node distance=1cm,>=latex]
+                \draw
+                    node [input] (birthA) at (0,0) {}
+                    node [block] (popA) at (2,0) {$P_A$}
+                    node [output] (deathA) at (4,0) {}
+                    node [input] (birthB) at (0,-2) {}
+                    node [block] (popB) at (2,-2) {$P_B$}
+                    node [output] (deathB) at (4,-2) {}
+                ;
+                
+                \draw [->] (birthA) -- node [below] (abRate) {birth} (popA);
+                \draw [->] (birthB) -- node (bbRate) {birth} (popB);
+                \draw [->] (popA) -- node [below] (adRate) {death} (deathA);
+                \draw [->] (popB) -- node (bdRate) {death} (deathB);
+                \draw [dashed, ->] (popA.south west) -- (bbRate);
+                \draw [dashed, ->] (popB.north west) -- (abRate);
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Mutualism model. Two species <m>A</m> and <m>B</m> have an mutually beneficial effect on the growth of the other species.</caption>
+        </figure>
+        <figure xml:id='parasite-host-system-diagram'>
+            <image width="30%">
+                <latex-image >
+                <![CDATA[\usetikzlibrary{positioning}
+                \tikzset{
+                    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+                    tmp/.style  = {coordinate}, 
+                    input/.style = {coordinate},
+                    output/.style= {coordinate},
+                }
+                \begin{tikzpicture}[auto, node distance=1cm,>=latex]
+                \draw
+                    node [input] (birthH) at (0,0) {}
+                    node [block] (popH) at (2,0) {$H$}
+                    node [output] (deathH) at (4,0) {}
+                    node [input] (birthP) at (0,-2) {}
+                    node [block] (popP) at (2,-2) {$P$}
+                    node [output] (deathP) at (4,-2) {}
+                ;
+                
+                \draw [->] (birthH) -- node [below] (bRateH) {birth} (popH);
+                \draw [->] (birthP) -- node (bRateP) {birth} (popP);
+                \draw [->] (popH) -- node [below] (dRateH) {death} (deathH);
+                \draw [->] (popP) -- node (dRateP) {death} (deathP);
+                \draw [dashed, ->] (popH.south west) -- (bRateP);
+                \draw [dashed, -|] (popP.north west) -- (bRateH);
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Parasite-Host model. A parasite species <m>P</m> benefits from the presence of the host species <m>H</m> while the host fitness is reduced.</caption>
+        </figure>
+        
+        <p>From a modeling perspective, we should note that the illustrated competition, mutualism and parasitism model diagrams are structurally equivalent. Only the nature of the interactions (beneficial or inhibitory) are different. Consequently, it may be possible to analyze related models for all three systems by considering different model parameters that might capture these differences.</p>
+    </subsection>
+    
+    <subsection>
+        <title>Age or Stage-Based Models</title>
+        
+        <p>Even within a single population, we might model the dynamics by a system that accounts for the number of individuals that are of different ages or stages of development. In the simplest cases, individuals steadily progress through a sequence of classifications (such as ages). The only way to leave the progression is to die. Often, only certain categories of individuals will be capable of reproduction (e.g., mature adults). The flow rates between classes generally reflect how long an individual stays in a class. Fast rates correspond to short dwell times. In some models, we may wish to allow individuals to revert to an earlier stage or to alternate between different mature states (e.g., fertile vs infertile).</p>
+        <figure xml:id='age-based-system-diagram'>
+            <image width="75%" >
+                <latex-image >
+                <![CDATA[\usetikzlibrary{positioning}
+                \tikzset{
+                    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+                    tmp/.style  = {coordinate}, 
+                    input/.style = {coordinate},
+                    output/.style= {coordinate},
+                }
+                \begin{tikzpicture}[auto, node distance=1cm,>=latex]
+                \draw
+                    node [input] (birth) at (0,0) {}
+                    node [block] (pop0) at (2,0) {$P_0$}
+                    node [block] (pop1) at (4,0) {$P_1$}
+                    node [block] (pop2) at (6,0) {$P_2$}
+                    node [block] (pop3) at (8,0) {$P_3$}
+                    node [block] (pop4) at (10,0) {$P_4$}
+                ;
+                
+                \draw [->] (birth) -- node (birthRate) {birth} (pop0);
+                \draw [->] (pop0) -- node {age} (pop1);
+                \draw [->] (pop1) -- node {age} (pop2);
+                \draw [->] (pop2) -- node {age} (pop3);
+                \draw [->] (pop3) -- node {age} (pop4);
+                \draw [->] (pop0.south) -- node {death} ($(pop0.south) + (0,-1)$);
+                \draw [->] (pop1.south) -- node {death} ($(pop1.south) + (0,-1)$);
+                \draw [->] (pop2.south) -- node {death} ($(pop2.south) + (0,-1)$);
+                \draw [->] (pop3.south) -- node {death} ($(pop3.south) + (0,-1)$);
+                \draw [->] (pop4.south) -- node {death} ($(pop4.south) + (0,-1)$);
+                
+                \draw [dashed, ->] (pop3.north west) .. controls (6,1.5) and (2,1.5) .. (birthRate.north);
+                \draw [dashed, ->] (pop4.north west) .. controls (7,1.5) and (3,2) .. (birthRate.north);
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Age-Based Population model. An illustrative age-based model for a species that becomes fertile in the third and fourth years of life.</caption>
+        </figure>
+        
+        <figure xml:id='egg-larva-juvenile-adult-system-diagram'>
+            <image width="90%" >
+                <latex-image >
+                <![CDATA[\usetikzlibrary{positioning}
+                \tikzset{
+                    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+                    tmp/.style  = {coordinate}, 
+                    input/.style = {coordinate},
+                    output/.style= {coordinate},
+                }
+                \begin{tikzpicture}[auto, node distance=1cm,>=latex]
+                \draw
+                    node [input] (birth) at (0,0) {}
+                    node [block] (pop0) at (2,0) {$E$}
+                    node [block] (pop1) at (5,0) {$L$}
+                    node [block] (pop2) at (8,0) {$J$}
+                    node [block] (pop3) at (11,0) {$A$}
+                ;
+                
+                \draw [->] (birth) -- node (birthRate) {lay} (pop0);
+                \draw [->] (pop0) -- node {hatch} (pop1);
+                \draw [->] (pop1) -- node {grow} (pop2);
+                \draw [->] (pop2) -- node {mature} (pop3);
+                \draw [->] (pop0.south) -- node {death} ($(pop0.south) + (0,-1)$);
+                \draw [->] (pop1.south) -- node {death} ($(pop1.south) + (0,-1)$);
+                \draw [->] (pop2.south) -- node {death} ($(pop2.south) + (0,-1)$);
+                \draw [->] (pop3.south) -- node {death} ($(pop3.south) + (0,-1)$);
+                
+                \draw [dashed, ->] (pop3.north west) .. controls (6,1.5) and (2,1.5) .. (birthRate.north);
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Stage-Based Population model. An illustrative stage-based model for a species that lays eggs (<m>E</m>) that hatch into larvae (<m>L</m>) which grow into infertile juveniles (<m>J</m>) and eventually mature adults (<m>A</m>).</caption>
+        </figure>
+    </subsection>
+</section>

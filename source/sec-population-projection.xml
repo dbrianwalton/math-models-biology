@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="population-projection">
+<title>Projection Models</title>
+
+<introduction>
+    <p>In the previous section, we considered a recursive formula for the new population in terms of the per capita net growth rate, <m>r(P)</m>, where the new population is computed by the difference equation <me>P_{n+1} - P_n  = r(P_n) \cdot P_n,</me> which is equivalent to the recursive formula <me>P_{n+1} = P_n + r(P_n) \cdot P_n.</me> The basic idea to the difference equation is that <m>r(P) \cdot P</m> is the formula for the increment of change in the population, which is why that formula is added to the previous population.</p>
+    <p>In this section, we introduce an alternative way of thinking about computing the new population. In the above model, we effectively were thinking about the <em>change in the population</em> as a function of the previous population (specifically by thinking of the per capita rate as a function). We turn our attention now to thinking of the new population as itself being a function of the previous population. This function is called the <term>projection function</term>.</p>
+</introduction>
+
+<subsection xml:id="projection-functions">
+    <title>Projection Functions</title>
+    
+    <p>A sequence <m>x=(x_n)</m> is defined <term>recursively</term> if you have a formula to compute <m>x_{n+1}</m> in terms of the value for <m>x_n</m>. Generally, we have an equation that is solved for the new value in the form of <me>x_{n+1} = f(x_n).</me> The function <m>f</m> in this equation is named the <term>projection function</term> for the sequence because it allows us to <em>project</em> the next value of the sequence knowing the current value in the sequence.</p>
+    
+    <example>
+        <p>The difference equation <m>x_{n+1} - x_n = r x_n</m> with an initial value defines a sequence recursively. If we solve this equation for <m>x_{n+1}</m>, we get a function of <m>x_n</m>: <me>x_{n+1} = x_n + r x_n = f(x_n).</me> The function being used,  <m>f(x) = x+rx = (1+r)x</m>, is the projection function.</p>
+    </example>
+
+    <example>
+        <p>In Calculus, Newton's method to find the positive square root of any positive number <m>a \gt 0</m>, which is the positive solution to <m>x^2-a=0</m>, involves creating a sequence that satisfies the recursive equation <me>x_n^2 - a + 2x_n(x_{n+1}-x_n) = 0.</me> Solving this equation for <m>x_{n+1}</m>, we find the equation that writes <m>x_{n+1}</m> as a function of <m>x_n</m>, <me>x_{n+1} = \frac{x_n}{2} + \frac{a}{2x_n} = f(x_n).</me> The projection function in this example is <me>f(x) = \frac{x}{2} + \frac{a}{2x}.</me></p>
+    </example>
+    
+    <p>When thinking about models as approximating relationships between actual data, we find projection functions by looking at the relation given by the scatter plot of consecutive values of the sequence, <m>(x_n, x_{n+1})</m>.</p>
+    
+    <example>
+        <statement>
+            <p>The table below gives the values of a sequence <m>z_n</m> for <m>n=0,\ldots,10</m>. Analyze the data to find a reasonable projection function.</p>
+            <table>
+                <tabular>
+                    <col right="major"/>
+                    <col align="right"/>
+                    <row bottom="major"><cell><m>n</m></cell> <cell><m>z_n</m></cell></row>
+                    <row><cell><m>0</m></cell> <cell><m>1.00</m></cell></row>
+                    <row><cell><m>1</m></cell> <cell><m>3.42</m></cell></row>
+                    <row><cell><m>2</m></cell> <cell><m>10.21</m></cell></row>
+                    <row><cell><m>3</m></cell> <cell><m>17.99</m></cell></row>
+                    <row><cell><m>4</m></cell> <cell><m>6.50</m></cell></row>
+                    <row><cell><m>5</m></cell> <cell><m>15.80</m></cell></row>
+                    <row><cell><m>6</m></cell> <cell><m>11.95</m></cell></row>
+                    <row><cell><m>7</m></cell> <cell><m>17.32</m></cell></row>
+                    <row><cell><m>8</m></cell> <cell><m>8.37</m></cell></row>
+                    <row><cell><m>9</m></cell> <cell><m>17.52</m></cell></row>
+                    <row><cell><m>10</m></cell> <cell><m>7.82</m></cell></row>
+                </tabular>
+            </table>
+        </statement>
+        <solution>
+            <p>We start by creating a plot of the projection relation, corresponding to a scatter plot of points <m>(z_n,z_{n+1})</m>. When <m>n=0</m>, we have <m>(z_0,z_1) = (1.0, 3.42)</m>. The next few points are expressed below: <md>
+                <mrow> n=1 \quad \Rightarrow \quad (z_1,z_2) = (3.42, 10.21) </mrow>
+                <mrow> n=2 \quad \Rightarrow \quad (z_2,z_3) = (10.21, 17.99) </mrow>
+                <mrow> n=3 \quad \Rightarrow \quad (z_3,z_4) = (17.99, 6.50) </mrow>
+            </md> The resulting scatter plot from all of the available projection relation points given the data is shown below.</p>
+            <figure>
+                <image source="images/proj-relation-quadratic-example"/>
+            </figure>
+            <p>The figure strongly suggests the shape of a parabola so that the relation likely involves a quadratic formula. Using a computer to perform a regression to find the quadratic polynomial trend curve for these points, we find an equation <me>z_{n+1} = 0.007003 + 3.59705 z_n - 0.179759 z_n^2.</me> Most programs would have reported this as <me>y=0.007003 + 3.59705 x - 0.179759 x^2,</me> but our relation involved <m>(z_n,z_{n+1})</m> rather than the usual variables <m>(x,y)</m>. The constant term in this equation is small, and we can ask for a regression where that term is set to zero, which gives an alternative equation <me>z_{n+1} = 3.5985z_n -0.1798 z_n^2.</me></p>
+            <p>The right way to do this would be to do a statistical hypothesis test on whether the constant term is significantly different from zero. However, we will keep things simple and just look at the graph and see if there appears to be a significant advantage in including the extra term. The figure below was generated to show both graphs with the data, even though it looks like only a single curve. Including the extra term has no significant impact in the model. We consider our sequence following the recursive formula <m>z_{n+1} = f(z_n)</m> using the projection function <me>f(x) = 3.5985x - 0.1798x^2.</me> In fact, the data were generated from a sequence with projection function <m>f(x)=3.6x-0.18x^2</m> with sequence values rounded to two decimal places.</p>
+            <figure>
+                <image source="images/proj-function-quadratic-example"/>
+            </figure>
+        </solution>
+    </example>
+</subsection>
+
+<subsection xml:id='projection-fixed-points'>
+    <title>Fixed Points and Equilibria</title>
+    
+    <p>An <term>equilibrium</term> represents a state of balance. For example, in chemistry, an equilibrium in a chemical reaction means that there is a balance between the reaction rates that create a chemical and those that use the chemical. It is not that nothing is happening, but that the creation and loss are perfectly balanced.</p>
+    
+    <p>A population can also be in equilibrium if the sources of all growth in the population is exactly balanced by the sources of all loss. That is, the rate of birth and immigration in a population would need to be exactly balanced by the rate of death and emigration. The effect of this balance is that the sequence is constant, namely that <me>P_{n+1} = P_n.</me></p>
+    
+    <p>When a population is modeled by a projection function, <m>P_{n+1} = f(P_n)</m>, we can test whether an equilibrium is possible by seeing whether the equation <m>x=f(x)</m> has any solutions. That is, since <m>P_{n+1}=P_n</m> is true for an equilibrium, we are looking for all values of <m>x</m> that might be used for the sequence <m>P_n=x</m>. We call solutions to the equation <m>x=f(x)</m> the <term>fixed points</term> of the function <m>f(x)</m>.</p>
+    
+    <example>
+        <statement>
+            <p>Recall that Newton's method for finding the square root <m>\sqrt{a}</m> introduced the projection function <me>f(x) = \frac{x}{2} + \frac{a}{2x}.</me> Find all of the fixed points for this function.</p>
+        </statement>
+        <solution>
+            <p>We are solving the fixed point equation <m>x=f(x)</m> which becomes <me>x = \frac{x}{2} + \frac{a}{2x}.</me> Solving this equation by hand corresponds to the following steps. <md>
+                <mrow>x = \frac{x}{2} + \frac{a}{2x}</mrow>
+                <mrow>\frac{x}{2} = \frac{a}{2x}</mrow>
+                <mrow>x^2 = a</mrow>
+                <mrow>x=\pm \sqrt{a}</mrow>
+            </md> So the fixed points are the positive and negative square roots of <m>a</m>.</p>
+        </solution>
+    </example>
+
+    <example>
+        <statement>
+            <p>A population has a per capita net growth rate that linearly decreases with the population, <me>r(P) = 0.12 - 0.0004 P.</me> Find the projection function and identify possible equilibria for this population.</p>
+        </statement>
+        <solution>
+            <p>The per capita net growth rate is related to the change in the population through births and deaths: <m>B-D = r(P) \cdot P</m>. As a difference equation, the population can be modeled as <me>P_{n+1} - P_n = r(P_n) \cdot P_n.</me> Using the given formula for <m>r(P)</m>, we can rewrite our model in recursive form as <md>
+                <mrow>P_{n+1} &amp;= P_n + r(P_n) \cdot P_n</mrow>
+                <mrow> &amp;= P_n + (0.12 - 0.0004 P_n) P_n</mrow>
+                <mrow> &amp;= 1.12 P_n - 0.0004 P_n^2.</mrow>
+            </md> A projection function corresponds to the function in the equation <m>P_{n+1}=f(P_n)</m>, which we can recognize in this problem involves <me>f(x) = 1.12x - 0.0004x^2.</me></p>
+            <p>The fixed point equation <m>x=f(x)</m> allows us to find all fixed points (and therefore possible equilibria of the population). We solve the equation by factoring: <md>
+            <mrow>x = 1.12x - 0.0004 x^2</mrow>
+            <mrow>0 = 0.12x-0.0004x^2</mrow>
+            <mrow>x(0.12 - 0.0004x) = 0</mrow>
+            </md> By factoring an equation equal to zero, we find either <m>x=0</m> (a fixed point) or <m>0.12-0.0004x=0</m> (a simpler equation to find another fixed point). The other fixed point is <m>x=\frac{0.12}{0.0004} = 300</m>. So the possible equilibria for this population model are the values <m>P=0</m> or <m>P=300</m>. (Notice how we interpreted in the context of the state variable <m>P</m> rather than the fixed point variable <m>x</m>.)</p>
+        </solution>
+    </example>
+    
+    <p>A sequence that start at a fixed point will lead to a constant sequence, holding steady at the same value indefinitely. Otherwise, it is not certain what will happen. Whether a sequence converges to a fixed point depends on whether the fixed point is stable or unstable. When a fixed point is <term>stable</term>, a sequence that starts sufficiently close to the fixed point will always converge to the fixed point. Often, the sequence does not need to start very close at all to converge to a stable fixed point. However, an <term>unstable</term> fixed point results in a sequence that moves further away from the fixed point instead. We will learn methods of classifying fixed points as stable or unstable later. For now, we will just look at the values of a sequence and see if they converge or not.</p>
+</subsection>
+
+<subsection xml:id='projection-computation'>
+    <title>Computing Recursive Sequences</title>
+    
+    <p>In order to explore our models, we need to compute the values of the sequences we are studying. We recruit our computers to do the work for us. One approach is to use a spreadsheet. We create a table for our sequence. The first entry in our table is the initial value of the sequence. Then we use cell formulas to compute the next sequence value in the cell below the initial value. So long as the formula is the same at each step, we can then copy our formula down and additional values will be automatically generated.</p>
+    
+    <p>A better approach is to use a scriptable computational tool. In other words, we will program the computer to generate our sequences. One such tool is the online computational tool Sage. Sage is similar to Mathematica or Maple but is available for free. We can even embed a Sage cell directly in the online text, as shown below. The online version allows us to edit the cell to adjust the formulas to match any problem that we want.</p>
+    
+    <p>The default entry for the script below corresponds to Newton's method with <m>a=3</m>. Notice how quickly the sequence converges to the fixed point at <m>x^*=\sqrt{3} \approx 1.73205</m>. This informs us that <m>x^*=\sqrt{3}</m> is a stable fixed point. What happens if you start close to the other fixed point at <m>x^*=-\sqrt{3} \approx -1.73205</m>?</p>
+    
+    <sage>
+        <input>
+        # This is a comment (ignored by the computer)
+        # Initial value is assigned and projection function is defined
+        u = 5               # initial value
+        f(x) = x/2+1.5/x    # projection function
+        nMax = 20           # number of terms to compute
+        
+        # Create an empty list (using brackets) where to store sequence
+        uSeq = []
+        # Repeat in a loop the calculation of the sequence values
+        for n in range(nMax):
+            # The indentation is essential in loops:
+            # Repeats everything indented this level
+            # Append the current sequence value to the end of our list
+            uSeq.append(u)
+            # Calculate the new value and use it for next current value
+            u = f(u)
+        # No longer indented, so nothing below is repeated.
+        # To do below after the loop is complete.
+        # Display the values of the sequence (new loop)
+        for n in range(len(uSeq)):
+            # This command is a formatted print command in python
+            # %d means to display an integer
+            # \t means to add a tab
+            # %10.8f means to display a floating point value with 8 decimals
+            # The values in parentheses are the numbers to be displayed
+            print("%d\t%10.8f" % (n,uSeq[n]))
+        # Create a plot of the sequence values.
+        # Putting dollar signs around the labels formats as math (LaTeX)
+        list_plot(uSeq, figsize=[5,3], axes_labels=["$n$","$u_n$"])
+        </input>
+    </sage>
+
+    <p>Here is the same script without any comments, just so that you can see there aren't that many steps. It is good practice to use comments to explain what your code is doing. Try modifying the script to learn how the different steps affect the overall results. <ul>
+    <li>use a different projection function</li>
+    <li>use a different initial value</li>
+    <li>change the number of terms calculated</li>
+    <li>change the number of decimal places shown</li>
+    <li>change the <c>figsize</c> option on the <c>list_plot</c></li>
+    </ul></p>
+    
+    <sage>
+        <input>
+        u = 5
+        f(x) = x/2+1.5/x
+        nMax = 20
+        uSeq = []
+        for n in range(nMax):
+            uSeq.append(u)
+            u = f(u)
+        
+        for n in range(len(uSeq)):
+            print("%d\t%10.8f" % (n,uSeq[n]))
+        list_plot(uSeq, figsize=[5,3], axes_labels=["$n$","$u_n$"])
+        </input>
+    </sage>
+</subsection>
+</section>

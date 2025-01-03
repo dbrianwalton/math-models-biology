@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="population-discrete">
+<title>Discrete Population Models</title>
+
+<introduction>
+    <p>Many organisms reproduce only during specific seasons.  For example, annual plants grow from seeds that germinate during the spring, flower in the summer fertilizing new seeds, and disperse the seeds in the autumn for the following year.  Some insects have a very specific pattern of growth, passing through various stages of development to emerge for mating at a specific time of the year, with the Mayfly as a particular example.  Salmon eggs are fertilized in river tributaries during a specific spawning season; the eggs hatch into salmon fry which, when they are old enough, migrate to the ocean as immature juveniles; and after several years of growing in the ocean, they return as fertile adults to the same tributary for another spawning season. For such organisms, we can think of the new offspring as annual recruits to the overall population, all of which are added in a single burst.</p>
+    <p>To model a population with clearly delineated reproductive events, we generally desire a model that describes the size of the population at the same point of the reproductive cycle. For example, we might want to look at the sequence of the density of a particular flowering plants each year at a particular study area. Or we might want to count the number of spawning salmon swimming up a particular tributary each year. Even for models that reproduce continuously or multiple times during a season, we might consider that we only observe those population as regular events.</p>
+    <p>A <term>discrete-time model</term> is a model of the state of a system that is measured at regular-spaced, distinct moments of time. In this section, we introduce the study of populations using discrete-time models. Mathematically, we will be studying <term>sequences</term>.</p>
+</introduction>
+
+<subsection xml:id="population-sequences">
+    <title>Populations as Sequences</title>
+    
+    <p>Mathematically, a <term>sequence</term> is an ordered set of numbers. Suppose that a system has a variable <m>x</m> that is measured at regular intervals (e.g., a population). We often think of our variable as having an initial value and think of subsequent measurements as counting the number of additional observations. An <term>index variable</term> is a variable that represents the count (or index) through the observations. The value of the variable <m>x</m> for a given index <m>n</m> is indicated by writing the index value as a subscript on the variable, such as <m>x_n</m>.</p>
+    
+    <example>
+        <p>Consider a population that is recorded at regular intervals with the following values: 199, 217, 236, 257, 264, 301, 312, 315, 331, …. If we let <m>P</m> represent the population size, then the sequence <me>P = (199, 217, 236, 257, 264, 301, 312, 315, 331, \ldots)</me> has an initial value <m>P_0 = 199</m> and subsequent values <m>P_1 = 217</m>, <m>P_2 = 236</m>, <m>P_3=257</m>, and so on.</p>
+    </example>
+    
+    <p>As motivated by our agent-based models, we might think of our population as changing through births and deaths. We might also include immigration and emigration. We can think of death and emigration as sources of loss, with individuals who were counted in the previous population and remain in the population for the next observation as survivors. Individuals that are new to the population, either from birth or from immigration, can be considered as recruits. The total population each year is described by the equation <me>\hbox{New Population} = \hbox{Survivors} + \hbox{New Recruits}.</me>
+If we classified losses as deaths and emigrants and recruits as births and immigrants, we might consider the more detailed equation <me>\hbox{New Population} = \hbox{Old Population} - \hbox{Deaths} - \hbox{Emigrants} + \hbox{Births} + \hbox{Immigrants}.</me></p>
+
+    <p>A <term>mathematical model</term> for a population represents an abstraction of this pattern. First, we will consider each of the terms as variables in a system. Then we will seek mathematical equations that relate these variables in a way that will allow us to predict how the variables change. Because the real system involves stochasticity as well as more variables than we can reasonably include, our equations will only attempt to model enough of the behavior that we deem adequate and necessary to characterize the behavior we seek to describe.</p>
+    
+    <p>We begin by defining our system. Let <m>P</m> represent the population. Let <m>B</m> represent the number of births, or more precisely, the number of individuals in <m>P</m> that were born since the last observation and have survived for the current census. Let <m>D</m> represent the number of deaths of individuals that were counted in the previous observation. Let <m>E</m> and <m>I</m> represent the number of emigrants (individuals of the previous census who left) and the number of immigrants (counted individuals that arrived since the previous census), respectively. Each of these variables in the system represent sequences. Our population equation becomes an equation involving sequence values <me>P_{n+1} = P_n - D_{n+1} - E_{n+1} + B_{n+1} + I_{n+1}.</me> We often rewrite this equation as a <term>difference equation</term> that only shows the change in the sequence, <me>P_{n+1} - P_n =  B_{n+1} + I_{n+1} - D_{n+1} - E_{n+1}.</me></p>
+    
+    <p>Our next step is to create equations relating the various terms. In particular, different models correspond to applying different equations that will allow us to find the birth, death and migration rates in terms of the previous population value.</p>
+</subsection>
+
+<subsection xml:id="population-constant-per-capita">
+    <title>Constant Per Capita Growth Models</title>
+    <p>The naive model for reproduction was that the number of births and deaths are proportional to the population. That is, in terms of our sequence, there are constants <m>b</m> and <m>d</m> such that <md>
+        <mrow>B_{n+1} = b \cdot P_{n},</mrow>
+        <mrow>D_{n+1} = d \cdot P_{n}.</mrow>
+    </md> We call the constants <m>b</m> and <m>d</m> the <term>per capita birth rate</term> and the <term>per capita death rate</term>, respectively. The phrase <em>per capita</em> literally means per head, and the per capita rates represent the average per individual contribution to birth and death. Rewriting the equations, we could instead <em>define</em> <m>b</m> and <m>d</m> as the following ratios, <md>
+        <mrow>b = \frac{B_{n+1}}{P_{n}},</mrow>
+        <mrow>d = \frac{D_{n+1}}{P_{n}},</mrow>
+    </md> which we are modeling as being constant. (More advanced models consider these ratios as changing.) We require that <m>b \ge 0</m> and <m>0 \le d \le 1</m>.</p>
+    
+    <p>In the absence of migration, the constant per capita rate model leads to a dynamic model <me>P_{n+1} = P_n - d \cdot P_n + b \cdot P_n.</me> We can rewrite this as <me>P_{n+1} = (1-d+b) P_n = (1+r) P_n,</me> where <m>r=b-d</m> is called the per capita net growth rate. This equation, called the <term>recursive equation</term>, is identical to the equation for compounded interest where <m>r</m> represents that percent growth rate. Such a model results in a <term>geometric sequence</term> for the population size, <me>P_n = P_0 \cdot (1+r)^{n}.</me> We call this representation of the sequence an <term>explicit formula</term> because we can compute the population value <m>P_n</m> knowing only index <m>n</m> and the initial value. A geometric sequence corresponds to either exponential growth (when <m>r \gt 0</m>) or exponential decay (when <m>r \lt 0</m>). In the singular case where <m>r=0</m>, the population remains constant.</p>
+    
+    <example>
+        <statement>
+        <p>A population of size 400 is tracked for one month, during which time there are 50 births and 40 deaths. If the population has constant per capita rates, what will be the predicted population after one year?</p>
+        </statement>
+        <solution>
+        <p>Constant per capita rates mean that we can compute <m>b</m> and <m>d</m> from this observation and use them in our model: <md>
+            <mrow> b = \frac{50}{400} = \frac{1}{8} = 0.125, </mrow>
+            <mrow> d = \frac{40}{400} = \frac{1}{10} = 0.1.</mrow>
+        </md> Consequently, our population model is given by the recursive formula <me>P_{n+1} = (1+0.125-0.1) P_n = 1.025 P_n,</me> with an initial value <m>P_0 = 400</m>. The index variable <m>n</m> is counting months of observation.</p>
+        <p>The explicit formula for this model is given by <me>P_n = 400 \cdot 1.025^{n}.</me> The population after a year corresponds to <m>P_{12}</m> (12 months after starting), which has a value <me>P_{12} = 400 \cdot 1.025^{12} \approx 538.</me> Under the assumptions of our model, namely constant per capita growth rates, we would predict a population of 538 individuals after one year.</p>
+        </solution>
+    </example>
+</subsection>
+
+<subsection xml:id="population-density-dependent">
+    <title>Density Dependent Growth Models</title>
+    
+    <p>Recall that constant per capita growth rates where the birth rate exceeds the death rate imply that a population will grow exponentially and without bound. This is inconsistent with the reality that as populations get larger environmental constraints limit their growth. This implies that for populations experiences these constraints are not well-modeled using constant per capita growth rates. (Such a model might work well during the time that the population is far from its limiting size.) </p>
+    
+    <p>We previously defined the per capita net growth rate <m>r=b-d</m> where <m>b</m> is the per capita birth rate and <m>d</m> is the per capita death rate. Sometimes it is inconvenient or impossible to determine the birth and death rates separately. If we can at least measure the net change in the population, which will be equal to <m>\Delta P_{n+1} = B_{n+1}-D_{n+1}</m>, then the per capita net growth rate will be a sequence defined by <me>r_{n+1} = \frac{B_{n+1}-D_{n+1}}{P_{n}}.</me></p>
+    
+    <p>We turn our attention to the case that the per capita net growth rate can be modeled as a function of the population size <m>P_n</m>. This means that if we were to consider a scatter plot of the points <m>(P_n, r_{n+1})</m> that the graph could be reasonably approximated by a function. We generally expect that the graph will be a decreasing function because as the population gets larger, the growth rate should decrease. For a very large population, we even expect <m>r \lt 0</m> since the population would be greater than its carrying capacity. However, we will always have <m>r \ge -1</m>, with <m>r=-1</m> corresponding to complete extinction.</p>
+    
+    <example>
+        <p>If we revisited the density-dependent agent-based model in Section <xref ref='population-agent-density-dependent'/>, we can plot the per capita net growth rate computed at each time step with respect to the size of the population at the beginning of the step. The figure below illustrates this relationship. (Values when the population was small and demographic stochasticity is high were not included.)</p>
+        <figure>
+            <image source="images/percap-rate-densdep-graph"/>
+        </figure>
+        <p>We see in the graph that the per capita net growth rate is decreasing. The data seem consistent with a model where the per capita rate decreases linearly. This makes sense because the rules of the agent-based model were that the death rate increased linearly in terms of the number of individuals on a shared patch.</p>
+    </example>
+    
+    <p>In order to develop our models, we will consider parametric formulas. A <term>parametric formula</term> is a function that involves parameters to describe a family of functions that share a common algebraic structure. A <term>parameter</term> is a symbol that represents a constant that appears in the formula. One might think of a parameter as a variable that helps describe the state of a system but does not depend on the state of the system.</p>
+    
+    <p>The simplest density dependent model to write down would be when <m>r</m> is a linear function of <m>P</m>, <me>r(P) = r_0 - a P,</me> Here <m>r_0</m> is called the <term>intrinsic per capita net growth rate</term> and represents the per capita net growth rate when <m>P \approx 0</m>. The parameter <m>a</m> is the negative slope giving how much the growth rate decreases per individual. We will learn about other parametric models when we consider some alternative representations for the recursive formula defining our sequence.</p>
+    
+    <example>
+        <p>Using the density dependent data from our agent-based model, we can use linear regression to find a line of best fit. This gives us the following values for the parameters: <md>
+            <mrow> r_0 = 6.616 \times 10^{-2}, </mrow>
+            <mrow> a = 6.275 \times 10^{-6}. </mrow>
+        </md> The resulting parametric model for the per capita growth rate is then given by <me>r(P) = 6.616 \times 10^{-2} - 6.275 \times 10^{-6} \, P.</me> A graph showing the trend line with the data is given below.</p>
+        <figure>
+            <image source="images/percap-rate-densdep-model-graph"/>
+        </figure>
+    </example>
+</subsection>
+</section>

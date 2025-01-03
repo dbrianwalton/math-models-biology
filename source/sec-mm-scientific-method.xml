@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      A Modeling Approach to Calculus         -->
+<!--                                              -->
+<!-- Copyright (C) 2015  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="scientific-method">
+<title>The Scientific Method</title>
+
+<p>When talking about the scientific method, I sometimes come away with the impression that science is a well-planned, structured process that always follows the same pattern, like a list that should be memorized:  (1) Make an observation, (2) Ask a question, (3) Develop a hypothesis, (4) Use the hypothesis to make a prediction, (5) Test the hypothesis's prediction with an experiment, (6) Analyze the data of the experiment, and (7) Interpret the results in the context of the hypothesis.  Rinse and repeat.  But science is not always performed in this simple cycle, following this rigid ordering.  Rather than describing the mechanics of science, the scientific method summarizes the philosophy of science and how scientists establish scientific knowledge.</p>
+
+<p>At the heart of the scientific method is the idea of a hypothesis.  Scientists and mathematicians use the word <term>hypothesis</term> in different ways.  For a scientist, a hypothesis is a proposal that describes how some natural phenomenon occurs.  It makes possible the prediction of observable outcomes separate from the observed phenomenon itself.  For a mathematician, a hypothesis is a logical statement (a sentence which can be definitively determined to be either true or false) that is part of an implication whereby the truth of the hypothesis guarantees the true of the conclusion.  In terms of English language, an implication is an <em>if<ndash/>then</em> statement, where the clause following <em>then</em> (the conclusion) is guaranteed to be true whenever the clause following <em>if</em> (the hypothesis) happens to be true.</p>
+
+<p>For a scientist, a hypothesis itself is never directly analyzed.  That is, a scientist looks for the consequences of a hypothesis, which are the expected outcomes of an experiment if the hypothesis is assumed to be true.  A well-designed experiment tests to see if these outcomes appear as expected.  The failure to achieve the expected outcomes is seen as evidence that the hypothesis is false, and the proposed hypothesis is <em>rejected</em>.  The successful appearance of the proposed outcomes, however, does not prove the hypothesis was true, for they may have arisen for alternative reasons.  For this reason, success is often phrased as <em>failure to reject</em> the hypothesis.</p>
+
+<p>For a mathematician, hypotheses are directly analyzed.  <term>Theorems</term> form clear logical relationships between hypotheses and conclusions of implications, whereby the conclusion can be guaranteed to be true under the condition that the hypothesis is true.  <term>Proofs</term> form the logical framework by which these relationships are established.  The hypotheses themselves are tested in specific circumstances in order to learn whether the conclusion is guaranteed under those particular circumstances without needing to work through the details of the relationship each time.</p>
+
+<p>The difference between a scientist's view and a mathematician's view of the role of a hypothesis provides the distinction between two types of reasoning:  inductive reasoning and deductive reasoning.</p>
+
+<p>Inductive reasoning (not to be confused with mathematical induction) is the reasoning exemplified by a scientist.  Through observations, a scientist identifies a pattern.  A hypothesis is formed that summarizes all past observations and makes predictions about future observations.  Through additional observations, additional support can strengthen the evidence for the hypothesis, but the hypothesis itself can never be fully proved to be true.  Through a failed prediction, however, the hypothesis can be proved to be false.</p>
+
+<p>Deductive reasoning is the reasoning exemplified by a mathematician.  Through logical reasoning, a connection is made between two properties (expressed as logical statements) whereby the presence of one property (the hypothesis) is enough to guarantee the presence of the second property (the conclusion).  The truth of this guarantee is absolutely established with logic, built on a core foundation of basic assumptions.  The only room for uncertainty is in the validity of the foundational assumptions, which includes the nature of logic and what is meant by truth.</p>
+
+<p>While scientists and mathematicians may philosophically associate themselves more strongly with either inductive reasoning or deductive reasoning, they each spend time with both.</p>
+
+<p>In the formation of a useful hypothesis, a scientist must consider the predictive power of the hypothesis.  A strong hypothesis leads to the prediction of results that would not be anticipated without that hypothesis, and so the scientist uses deductive reasoning to formulate predictions based on the hypothesis.  In many cases, particularly where mathematical modeling occurs, these predictions use the full power of deduction through the use of mathematical calculation and proof.</p>
+
+<p>Similarly, a mathematician is often interested in establishing new relationships, formulating and then proving new theorems.  Such relationships are often found by identifying patterns in calculations or structures.  For mathematicians, these patterns (called <term>conjectures</term>) are supported or refuted by new examples until the mathematician can identify the thread of reasoning that either proves or disproves the relationship.</p>
+    
+ </section>

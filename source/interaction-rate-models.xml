@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="interaction-rate-models" xmlns:xi="http://www.w3.org/2001/XInclude">
+<title>Modeling Interaction Rates</title>
+
+<introduction>
+    <p>Once we have formulated a flow diagram for our system, we need to establish a mathematical model by determining how to compute each of the rates. In unusual cases, we might have plentiful data with which we can estimate actual quantitative relationships between the state variables and the relevant rates. More commonly, we have qualitative assumptions about the nature of the relationship defining the rates. We use these qualitative assumptions to establish a general form of the relationship involving parameters. Often, we can then apply analysis on the model to understand possible behaviors as they relate to parameter values.</p>
+    <p>In this section, we explore some of common qualitative relationships between state variables and rates associated with those variables. Qualitative descriptions include mathematical descriptions of relationships including traits of increasing and decreasing as well as concavity and asymptotic behavior. By identifying likely traits associated with a system of interest, we can identify possible model equations to use for the rates.</p>
+</introduction>
+    
+    <subsection>
+        <title>Linear Rates and Linear Combinations</title>
+        
+        <p>The simplest rate of all is a constant rate. We use a constant rate when the rate at which a particular event does not depend on the state variables. Usually, these rates are related to an external environment. For example, we might use a constant rate for immigration to describe the rate at which individuals arrive from an external population that we are not modeling. Or we might use a constant rate to describe how fast doctors can treat sick patients.</p>
+        
+        <p>The next simplest model for a rate of change is one that is proportional to a single state variable. We can usually think of these rates as saying that each individual (or other relevant unit being measured) represented by that variable contributes a specific amount per unit time and that amount does not depend on the total number of individuals. By multiplying by the total number of individuals (or total quantity), we have a rate that is the sum of the contributions of the individuals.</p>
+
+         <example>
+            <p>Suppose a population of size <m>P</m> has a growth term that comes from a constant immigration rate of 100 individuals per year and a constant per capita growth rate of 2\% per year. The immigration will be modeled using a constant rate and the population growth will be represented as begin proportional to the population size. The total growth rate would then be modeled by <me>(\hbox{growth rate}) = 100 + 0.02P.</me> Note that this model only describes the rate of a single flow that would be part of a bigger differential equation.</p>
+        </example>
+        
+        <p>Sometimes, a rate is represented as the sum of multiple contributions, each of which is defined by a constant per capita. For example, suppose in an age-based model that three-year old plants produce a different number of seeds than a four-year old plant. If we let <m>P_3</m> and <m>P_4</m> represent the number of plants of age three and four, respectively, and <m>s_3</m> and <m>s_4</m> are the average number of seeds produced by three- and four-year old plants, respectively, then the total number of seeds produced would be given by <me>(\hbox{seed production rate}) = s_3 P_3 + s_4 P_4.</me></p>
+        <p>We call such a sum of proportional terms a <term>linear combination</term>, in this case a linear combination of <m>P_3</m> and <m>P_4</m>, or even of <m>P_0,P_1,P_2,P_3,P_4</m> if we realized that all missing terms had proportionality constants of zero. To be a linear combination, all of the proportionality constants must really be constants, not other variables, although we might represent them as parameters. We will later learn that rates that are linear combinations of the state variables are one of the most important representations in order to do analysis.</p>
+    </subsection>
+
+    <subsection>
+        <title>Logistic Growth with Functional Dependence</title>
+        
+        <p>One strategy for modeling systems is to repurpose models that were used for single populations in a way that informs the system. For example, when considering a single population <m>P</m>, one way to model the growth of that population so that it had a carrying capacity was to use the logistic growth model, <me>\frac{dP}{dt} = rP(1-\frac{P}{K}).</me> The motivation behind this formula is that the per capita growth rate <m>r(1-\frac{P}{K})</m> starts at <m>r</m> when <m>P</m> is small and linearly decreases until it is zero at the carrying capacity <m>K</m>. If <m>P</m> starts above <m>K</m>, then the per capita growth is negative and the population decreases. Thus, this model can be considered to include both births and deaths in a combined formula.</p>
+        <p>We can repurpose this model for use in a system. One way is to use the model for the rate without change to account for that growth and death rates of the system that only depend on the population. We would then add additional rate terms to account for growth or loss that depended on other variables.</p>
+        <p>Alternatively, we might modify the logistic growth rate formula to account for the presence of other variables. For example, we might consider the carrying capacity to depend on another population <m>Q</m>. That is, we can think of the carrying capacity <m>K</m> as a decreasing function of <m>Q</m>, such as with a linear function <m>K(Q) = K_0 - \alpha Q</m> so that the per capita growth rate for <m>P</m> now has the form <m>r(1-\frac{P}{K(Q)})</m>. The new effective growth rate that would be used in the differential equation is the per capita rate times the population <m>P</m>, given by <me> r P (1-\frac{P}{K(Q)}) = r P (1 - \frac{P}{K_0 - \alpha Q}).</me></p>
+        <p>We can illustrate the effect of the population <m>Q</m> by graphing the effective per capita growth rate <m>r(1-\frac{P}{K(Q)})</m> as a function of <m>P</m> using different values of <m>Q</m>. This is illustrated in the figure below. Notice that for small populations <m>P \approx 0</m>, the per capita growth is not changing much. It is only when <m>P</m> starts to be larger that the effect of <m>Q</m> is observed. This model formula seems to require an assumption that competition only occurs when both populations are large.</p>
+        <figure>
+            <image width="50%">
+                <latex-image >
+                <![CDATA[\tikzset{
+                }
+                \begin{tikzpicture}
+                \begin{axis}
+                [
+                    xmin=-0.2, xmax=1.2,
+                    axis lines = center,
+                    xlabel={$P$}, ylabel={$\displaystyle r\Big(1-\frac{P}{K-\alpha Q}\Big)$},
+                    xtick={1},
+                    ytick={1},
+                    xticklabels={$K$},
+                    yticklabels={$r$},
+                ]
+                \addplot [domain=-0.2:1.2, black,thick] { (1-x) };
+                \addplot [domain=-0.2:1.2, red,thick] { (1-x/0.9) };
+                \addplot [domain=-0.2:1.2, orange,thick] { (1-x/0.8) };
+                \end{axis}
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Per capita growth rate for a population <m>P</m> where the carrying capacity <m>K</m> depends on another population <m>Q</m>.</caption>
+        </figure>
+        <p>It might be a better modeling assumption to suppose that the per capita growth rate is affected at both high and low populations <m>P</m> in the presence of another population <m>Q</m>. Consider an alternate modeling strategy where we think of <m>K</m> as representing total population capacity units in the environment. We can then think of the term <m>1-P/K</m> in the per capita growth formula as representing the fraction of growth capacity remaining.</p>
+        <p>The presence of a population <m>Q</m> uses up some of that capacity so that we want to reduce the fraction of growth capacity due to <m>Q</m> as well as <m>P</m>. However, one individual of <m>Q</m> may not occupy the same number of capacity units as an individual from <m>P</m>. We use a per capita growth rate for <m>P</m> modeled by the expression <me> r (1 - \frac{P}{K} - \frac{\alpha Q}{K}) = r P (1- \frac{P+\alpha Q}{K}).</me> The graph of the per capita growth rate corresponding to increasing values of <m>Q</m> is given below. The figure illustrates a more uniform reduction on the growth rate due to <m>Q</m> for both low and high values for <m>P</m>.</p>
+        <figure>
+            <image width="50%">
+                <latex-image >
+                <![CDATA[\tikzset{
+                }
+                \begin{tikzpicture}
+                \begin{axis}
+                [
+                    xmin=-0.2, xmax=1.2,
+                    axis lines = center,
+                    xlabel={$P$}, ylabel={$\displaystyle r\Big(1-\frac{P+\alpha Q}{K}\Big)$},
+                    xtick={1},
+                    ytick={1},
+                    xticklabels={$K$},
+                    yticklabels={$r$},
+                ]
+                \addplot [domain=-0.2:1.2, black,thick] { (1-x) };
+                \addplot [domain=-0.2:1.2, red,thick] { (1-(x+0.1)) };
+                \addplot [domain=-0.2:1.2, orange,thick] { (1-(x+0.2)) };
+                \end{axis}
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Per capita growth rate for a population <m>P</m> where the another population <m>Q</m> occupies part of the carrying capacity available for <m>P</m>.</caption>
+        </figure>
+        <p>Similar strategies can be adopted for any model that incorporates density dependence. For example, if a growth rate for an isolated population includes an exponential decay term to incorporate a decreasing rate due to population density like <m>r P e^{-P/K}</m>, then the presence of a second population that adds to the crowding could be incorporated with a term like <m>r P e^{-(P+\alpha Q)/K}</m>. In the same way as for the logistic growth term, this consider the crowding factor as having <m>Q</m> individuals impact the growth rate in an equivalent manner as having an extra <m>\alpha Q</m> individuals in the <m>P</m> population.</p>
+    </subsection>
+    
+    <subsection>
+        <title>Law of Mass Action for Interactions</title>
+        
+        <p>In simple chemical reactions, the principle of mass action states that the rate of a reaction is proportional to the product of the concentrations of the reactants. The premise behind this principle is that the chemical reaction occurs in a well-mixed solution and that the number of molecular interactions of the reactants that occur per unit time will be proportional to the product of the concentrations. Of those interactions, some fraction will result in the reaction proceeding.</p>
+        <p>Many interactions in settings other than chemical reactions can also be modeled in a similar way. Suppose that there are two populations <m>P</m> and <m>Q</m> that are interacting to create certain events (e.g., causing infections, predators killing prey, competition reducing a birth rate). The law of mass action can arise any time we can think of the events being counted as being the sum of contributions from each individual in population <m>P</m> such that the average number of events per individual is itself proportional to the size of the population <m>Q</m>. In other words, the assumption is that the number of events per individual in population <m>P</m> will double if the population <m>Q</m> doubles, will triple if the population <m>Q</m> triples, and so on.</p>
+        <example>
+            <p>The logistic growth model with total capacity <m>K</m> can be interpreted as a law of mass action interaction.</p>
+            <p>Suppose a population <m>P</m> grows according to a logistic growth law, <me>\frac{dP}{dt} = r P (1 - \frac{P}{K}),</me> in the absence of population <m>Q</m>. Suppose that individuals from populations <m>P</m> and <m>Q</m> compete in such a way that <m>P</m> effectively has an additional death rate resulting from competitive interactions with <m>Q</m>. For the interactions to obey a law of mass action, we would require that the per capita death rate due to competition is proportional to the population size <m>Q</m>, say an average of <m>\sigma Q</m> deaths per <m>P</m> individual per unit time. Then the total death rate due to competition would be <m>\sigma Q \cdot P = \sigma P Q</m>. The modified model that includes the deaths due to competition would then be given by <me>\frac{dP}{dt} = r P (1 - \frac{P}{K}) - \sigma P Q.</me></p>
+            <p>This model is mathematically equivalent to the differential equation <me>\frac{dP}{dt} = rP (1 - \frac{P + \alpha Q}{K})</me> introduced earlier where we thought of <m>Q</m> as occupying some of the carrying capacity units for <m>P</m>. In particular, we can rewrite this as <md>
+                <mrow>\frac{dP}{dt} &amp;= rP(1-\frac{P+ \alpha Q}{K}) </mrow>
+                <mrow> &amp;= rP - \frac{r}{K} P^2 - \frac{r \alpha}{K} PQ </mrow>
+                <mrow> &amp;= rP(1-\frac{P}{K}) - \frac{r \alpha}{K} PQ.</mrow>
+            </md> Thus, the two models are equivalent where <m>\sigma = \frac{r \alpha}{K}</m>. This equivalence is another reason that this model for competition is preferred.</p>
+        </example>
+    </subsection>
+    
+    <subsection>
+        <title>Saturating Functional Response</title>
+        
+        <p>The law of mass action often makes good sense when the values of the state variables are not too big. However, there are often cases where we expect the proportional relation assumed for mass action to fail. Consider the example of a population that is consuming a resource (e.g., predators consuming prey, bacteria consuming a sugar substrate, or herbivores consuming vegetation). When the resource is limited, it makes sense that each individual in the population could double the amount of resource it consumes if the resource itself were to double. However, when the resource is abundant, doubling the resource likely has little effect on consumption rate.</p>
+
+        <p>The rate of consumption is not something that can increase indefinitely. The rate is limited due to the ability of the individual to complete a consumption event. A predator must spend the time to catch its prey, eat the prey, and perhaps even digest the prey before undertaking another predation event. A bacteria uses active transport to bring glucose from the environment into the cell for metabolism and the bacteria has a limited number of sites to perform this operation. An herbivore takes time to eat vegetation and doubling the amount of vegetation does not increase the rate of consumption if the herbivore is already eating full-time.</p>
+
+        <p>We need to adapt our model to account for <term>saturation</term>. Saturation corresponds to the mathematical idea of a <term>horizontal asymptote</term>, where a function effectively behaves like a constant when a variable becomes sufficiently large. Any function that has a horizontal asymptote might conceivably be used as a model for saturation. One of the most commonly used models is a simple rational function.</p>
+
+        <p>Recall from our discussion of mass action that we could think of <m>\sigma Q</m> as counting the number of interaction events per individual in the <m>P</m> population. We modify this term to incorporate a horizontal asymptote using a modified form <m>\frac{\sigma Q}{1 + Q/M}</m>. The figure below illustrates the graphs of the specific mass action rate <m>\sigma Q</m> and the saturating specific rate.</p>
+
+        <figure>
+            <image width="50%">
+                <latex-image >
+                <![CDATA[\tikzset{
+                }
+                \begin{tikzpicture}
+                \begin{axis}
+                [
+                    xmin=-0.2, xmax=3,
+                    axis lines = center,
+                    xlabel={$Q$}, ylabel={specific rate},
+                    xtick={1},
+                    ytick={1},
+                    xticklabels={$M$},
+                    yticklabels={$\sigma M$},
+                ]
+                \addplot [domain=-0.2:3, red, thick] { x };
+                \addplot [domain=-0.2:3, samples=51, blue, thick] { x/(1+x) };
+                \end{axis}
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Specific rate of interactions per unit of <m>P</m> resulting from <m>Q</m> individuals showing mass action <m>\sigma Q</m> and saturating <m>\frac{\sigma Q}{1+Q/m}</m>.</caption>
+        </figure>
+
+        <p>For small values of <m>Q</m>, the saturating model behaves almost identically to the law of mass action. However, for larger values of <m>Q</m>, the specific rate of events saturates at a value of <m>\sigma M</m>. The value <m>M</m>, which is measured in the same units as <m>Q</m>, corresponds to that value of <m>Q</m> for which the specific rate is exactly half way to saturation. Thus, <m>M</m> is called the <term>half-saturation</term> level for <m>Q</m>.</p>
+
+        <p>In ecology, these interaction curves describe consumption rates and are called the <term>functional response</term> to the food density. An ecologist named C. S. Holling proposed a classification of the functional response curves as falling under three general categories. A Type I functional response corresponds to the law of mass action, although it may also be piecewise linear, switching to a constant saturating rate. The example above is consider a Type II functional response because it is an increasing and concave down function. A Type III functional response would be concave up at low food densities and then switch to concave down as consumption approached its saturating level. The figure below illustrates typical examples.</p>
+
+        <figure>
+            <image width="50%">
+                <latex-image >
+                <![CDATA[\tikzset{
+                }
+                \begin{tikzpicture}
+                \begin{axis}
+                [
+                    xmin=-0.2, xmax=3,
+                    ymin=-0.2, ymax=1.5,
+                    axis lines = center,
+                    xlabel={$Q$}, ylabel={specific rate},
+                    xtick=\empty,
+                    ytick={1},
+                    yticklabels={$R_{\mathrm{max}}$},
+                ]
+                \addplot [domain=0:1, red, thick] { x };
+                \addplot [domain=1:3, red, thick] { 1 };
+                \addplot [domain=-0.2:3, thick, samples=51, blue] { 1-e^(-x) };
+                \addplot [domain=-0.2:3, thick, samples=51, orange] { x^2/(1+x^2) };
+                \end{axis}
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Illustration of Type I (red), Type II (blue), and Type III (orange) functional response curves.</caption>
+        </figure>
+    </subsection>
+    
+    <subsection>
+        <title>Switching Functional Response</title>
+        
+        <p>The Type III functional response captures a new idea. Both Type I and Type II functional responses have the characteristic that at low food densities, consumption essentially follows a law of mass action. That is, each organism is consuming the food at a rate that is proportional to the density of that food. This might reflect the idea that the organism is eating the food as it is encountered. However, a Type III functional response that is concave up for low food densities does not follow this pattern. Instead, it is as if the organism is rejecting opportunities to consume the food at low densities and only begins to consume in proportion to encounters if the food density exceeds some threshold. This is an example of switching behavior.</p>
+        
+        <p><term>Switching</term> occurs when the dynamic relationships change according to different conditions. Typically, we consider switching in relationship to individual state variables. When a state variable is below a threshold, one dynamic relationship exists; when the state variable is above a threshold, another dynamic relationship exists. The cross-over is often continuous so that near the threshold, the dynamics is an intermediate combination of the two relationships.</p>
+        
+        <p>Functions that have two different horizontal asymptotes and a smooth connection between them are often used for switching functions. Combinations of exponential functions provide one example.</p>
+        
+        <example>
+            <p>Consider the function <me>f(x) = \frac{e^{kx}}{e^{kx}+1}.</me> If <m>k \gt 0</m>, then the horizontal asymptotes are given by limits <md>
+                <mrow> \lim_{x \to -\infty} f(x) = 0, </mrow>
+                <mrow> \lim_{x \to +\infty} f(x) = 1. </mrow>
+            </md> If <m>k \gt 0</m>, then the direction of the switching is reversed with horizontal asymptotes given by <md>
+                <mrow> \lim_{x \to -\infty} f(x) = 1, </mrow>
+                <mrow> \lim_{x \to +\infty} f(x) = 0. </mrow>
+            </md> The steepness of the transition between the asymptotes is determined by the magnitude of <m>k</m><mdash/>the larger the magnitude of <m>k</m>, the steeper the transition will be. The figure below illustrates several examples with <m>k \gt 0</m>.</p>
+            <figure>
+            <image width="50%">
+                <latex-image >
+                <![CDATA[\tikzset{
+                }
+                \begin{tikzpicture}
+                \begin{axis}
+                [
+                    xmin=-3.25, xmax=3.25,
+                    ymin=-0.5, ymax=1.5,
+                    axis lines = center,
+                    xlabel={$x$}, ylabel={$y$},
+                ]
+                \addplot [domain=-3.5:3.5, red, thick] { e^x/(e^x+1) };
+                \addplot [domain=-3.5:3.5, blue, thick] { e^(2*x)/(e^(2*x)+1) };
+                \addplot [domain=-3.5:3.5, orange, thick] { e^(3*x)/(e^(3*x)+1) };
+                \end{axis}
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Graph of <m>y=f(x)=\frac{e^{kx}}{e^{kx}+1}</m> with values <m>k=1</m> (red), <m>k=2</m> (blue) and <m>k=3</m> (orange).</caption>
+            </figure>
+            <p>The graph of this switching function is symmetric around the point <m>(0,\frac{1}{2})</m>. At this point, the function is exactly half-way between the two limiting values. We consider this point to be the location of the switch. Mathematically, this point is also an inflection point, a consequence of the symmetry of this particular function. We can create a switching function at any desire location by applying a horizontal shift. It helps if we rewrite our original formula <me>f(x) = \frac{e^{kx}}{e^{kx}+1} = \frac{1}{1 + e^{-kx}}.</me> Then we can get the same switching behavior around a switching point <m>x=c</m> using <me>f_c(x) = \frac{1}{1+e^{-k(x-c)}}.</me></p>
+        </example>
+        
+        <p>Another common example of a function used for switching between two values involves the arctangent function. Recall that the arctangent function is the inverse of the trigonometric tangent function, restricted to a domain <m>(-\frac{\pi}{2},\frac{\pi}{2})</m>. Because the tangent function has all values in <m>(-\infty,\infty)</m>, the inverse function will be defined with a domain <m>(-\infty,\infty)</m> and a range of <m>(-\frac{\pi}{2}, \frac{\pi}{2})</m>. The vertical asymptotes of the tangent become horizontal asymptotes of the arctangent. This is precisely the behavior we desire from a switching function.</p>
+        
+        <example>
+            <p>The arctangent function can be used as a switching function. The left and right horizontal asymptotes are given by <md>
+                <mrow> \lim_{x \to -\infty} \arctan(x) = -\frac{\pi}{2}, </mrow>
+                <mrow> \lim_{x \to \infty} \arctan(x) = \frac{\pi}{2}, </mrow>
+            </md> and the function is symmetric around the point at <m>(0,0)</m>. We can construct a function that goes between values 0 and 1 by dividing by <m>\pi</m> and then adding <m>\frac{1}{2}</m>: <me>f(x) = \frac{1}{\pi} \arctan(x) + \frac{1}{2}.</me> (Sometimes we want to go between values <m>-1</m> and <m>1</m>; we do this by just multiplying by <m>\frac{2}{\pi}</m>.)</p>
+            <p>We can change the steepness of the transition by a horizontal compression with factor <m>k</m> and the location around <m>x=c</m> by a horizontal shift to get <me>f_c(x) = \frac{1}{\pi} \arctan\big(k(x-c)\big)+\frac{1}{2}.</me> The figure below illustrates several examples.</p>
+            <figure>
+            <image width="50%">
+                <latex-image >
+                <![CDATA[\tikzset{
+                }
+                \begin{tikzpicture}
+                \begin{axis}
+                [
+                    xmin=-3.25, xmax=3.25,
+                    ymin=-0.5, ymax=1.5,
+                    axis lines = center,
+                    xlabel={$x$}, ylabel={$y$},
+                ]
+                \addplot [domain=-3.5:3.5, samples=81, red, thick] { rad(atan((x-1)))/3.1416+0.5 };
+                \addplot [domain=-3.5:3.5, samples=81, blue, thick] { rad(atan(2*(x-1)))/3.1416+0.5 };
+                \addplot [domain=-3.5:3.5, samples=81, orange, thick] { rad(atan(2*(x+1)))/3.1416+0.5 };
+                \end{axis}
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+            <caption>Graph of <m>y=f(x)=\frac{1}{\pi}\arctan\big(k(x-c)\big)+\frac{1}{2}</m> with values <m>k=1, c=1</m> (red), <m>k=2, c=1</m> (blue) and <m>k=3, c=-1</m> (orange).</caption>
+            </figure>
+        </example>
+    </subsection>
+</section>

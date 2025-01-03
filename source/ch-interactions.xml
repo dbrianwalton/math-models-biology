@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<chapter xml:id="interactions" xmlns:xi="http://www.w3.org/2001/XInclude">
+<title>Modeling Interactions</title>
+
+<introduction>
+    <p>Our exploration of population models gave us some experience modeling a single variable that changes with time. As we developed these models, we considered the dynamics by thinking about what makes the population increase and decrease. Many times there are multiple variables that affect one another. We turn our attention to models of these interactions.</p>
+    <p>We start by introducing differential equations in order to model dynamics of quantities that change continuously in time. We then turn our attention to the modeling of interactions.</p>
+</introduction>
+    
+<xi:include href="./system-examples.xml" />
+<xi:include href="./interaction-rate-models.xml" />
+<xi:include href="./system-phase-space.xml" />
+</chapter>

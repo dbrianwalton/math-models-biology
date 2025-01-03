@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="projection-cobweb">
+<title>Graphical Analysis of Projection Functions</title>
+
+<introduction>
+    <p>A projection function establishes a relationship between consecutive values in a sequence. For a population, the projection function allows us to predict the population after one cycle given the size of the population at the current time. In this section, we will learn how to interpret information using the graph of the projection function.</p>
+</introduction>
+    
+    <subsection xml:id='projection-compare-replacement'>
+    <title>Visualizing Potential for Growth</title>
+    <p>In calculus, we learn that a function <m>f(x)</m> is increasing on intervals for which <m>f'(x) \gt 0</m> and decreasing on intervals for which <m>f'(x) \lt 0</m>. This is because the derivative <m>f'(x)</m> of a function <m>f(x)</m> measures the rate of change for the function <m>f(x)</m>. Sequences can be analyzed in a similar way, by looking at whether <em>increments</em> in the sequence are positive or negative.</p>
+    <p>The increment for a sequence <m>x = (x_n)_{n=0}^{\infty}</m> is the difference between consecutive terms, defined by the backward difference <me>\Delta x_{n} = x_{n}-x_{n-1}.</me> We call it the increment because the increment is what we add to the current value to find the next value of the sequence, <me>x_{n+1} = x_n + \Delta x_{n+1}.</me> For populations, the increment corresponds to the sum of births and net migration minus the deaths.</p>
+    <p>When a population model involves a projection function <m>x_{n+1} = f(x_n)</m>, then the increment depends on the value of the function <m>f</m>, <me>\Delta x_{n+1} = x_{n+1}-x_n = f(x_n) - x_n.</me> Consequently, we can identify when the population will grow or decline based on the value of <m>f(x)-x</m>. When <m>f(x) \gt x</m>, the sequence increases. When <m>f(x) \lt x</m>, the sequence decreases.</p>
+    
+    <example>
+        <p>Consider a model for population growth where the per capita net growth rate is a decreasing linear function of the population size, <m>r(P) = r_0 - a P</m>. The projection function for this model is given by <me>f(x) = x + (r_0 - ax) x = x + r_0 x - ax^2.</me> The fixed points for this are <m>x=0</m> and <m>x=\frac{r_0}{a}</m>. The second fixed point is often denoted by <m>K=\frac{r_0}{a}</m>, and the per capita growth can then written in the equivalent form <m>r(P) = r_0(1-\frac{P}{K})</m>. This model is called the <term>discrete logistic</term> model for population growth.</p>
+        <p>We consider the case when <m>r_0 \gt 0</m> so that <m>K \gt 0</m>. A graph of <m>y = f(x) - x</m> is illustrated below. The graph is a concave down parabola with intercepts at <m>x=0</m> and <m>x=K</m>. We see that <m>f(x)-x</m> is positive for <m>x</m> in the interval <m>(0,K)</m> and negative in the intervals <m>(-\infty,0)</m> and <m>(K,\infty)</m>. In the context of population growth, the negative interval has no physical interpretation. (In other contexts, the same model might apply and have an interpretation.) So the population will increase whenever <m>P_n \lt K</m> and will decrease whenever <m>P_n \gt K</m>.</p>
+        <figure>
+            <image>
+                <latex-image >
+                    <![CDATA[\tikzset{
+                    }
+                    \begin{tikzpicture}
+                    \begin{axis} [
+                        xmin=-1, xmax=5,
+                        ymin=-0.5, ymax=1,
+                        axis x line=center,
+                        axis y line=center,
+                        xtick={4},
+                        xticklabels={$K$},
+                        ytick=\empty,
+                        width=10cm, height=6cm,
+                        xlabel={$x$}, ylabel={$y=f(x)-x$},
+                    ]
+                    \addplot [domain=-1:5, samples=101] { 0.5*x*(1-0.25*x) };
+                    \end{axis}
+                    \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+        </figure>
+        <p>The equilibrium value <m>K</m> is called the <term>carrying capacity</term>, representing the population that the environment can sustain. When the population is below carrying capacity, the environment can sustain growth in the population. However, when the population is above the carrying capacity, the environment puts so much pressure on the population that the next cycle results in a smaller population.</p>
+    </example>
+    
+    <p>It is often better to graph <m>y=f(x)</m> and <m>y=x</m> on the same graph. Growth in the population will correspond to intervals over which <m>f(x) \gt x</m> and decay occurs on intervals where <m>f(x) \lt x</m>. We can think of the line <m>y=x</m> as the projection that would be required for exact replacement. Anytime the projection function is above this line, the population exceeds replacement. Anytime the projection function is below this line, the population falls. Points where the graphs intersect are <term>fixed points</term> and correspond to the equilibrium values of the sequence. In addition, such a graph allows us to analyze a sequence using something called a cobweb diagram.</p>
+    </subsection>
+    
+    <subsection xml:id='cobweb-diagrams'>
+        <title>Cobweb Diagrams</title>
+        
+        <p>A <term>cobweb diagram</term> illustrates the dynamics of a sequence through its projection function by drawing a sequence of vertical and horizontal lines that represent the projection process. A cobweb diagram always begins with a graph showing both the projection function <m>y=f(x)</m> and the line of exact replacement <m>y=x</m>. Recall that a projection function takes a sequence value as input (<m>x</m>-value) and the output (<m>y</m>-value) gives the next value in the sequence. The steps in generating a cobweb diagram are explained below. <dl>
+            <li><title>Initial Value</title> On the <m>x</m>-axis, identify the location of the initial value <m>x_0</m> and start on the line <m>y=x</m>. Your current point will be <m>(x_0,x_0)</m>.</li>
+            <li><title>Project Next Value</title> Draw a vertical line between your current point and the projection graph <m>y=f(x)</m>. The <m>y</m>-value of the new point will be the next sequence value.</li>
+            <li><title>Update Current Value</title> Draw a horizontal line between your last point and the line <m>y=x</m>. The new <m>x</m>-value now corresponds to the next value of your sequence.</li>
+            <li><title>Repeat</title> Repeat the steps of projecting and updating. Vertical lines always end at the projection function; horizontal lines always end at <m>y=x</m>.</li>
+        </dl></p>
+        
+        <example>
+            <p>Compare the cobweb diagrams for a discrete logistic population model with <m>K=1</m> (to represent 1 capacity unit, not 1 individual) and values <m>r_0=0.75</m> and <m>r_0 = 1.5</m> using initial values <m>x_0=0.25</m>. The projection function when <m>r_0=0.75</m> is given by <m>f(x) = x + 0.75x(1-x)</m>. When <m>r_0=1.25</m>, the projection function is <m>f(x)=x + 1.5x(1-x)</m>.</p>
+            <p>First, we consider the cobweb diagram for <m>f(x) = x + 0.75x(1-x)</m>. The figure below is interactive in that you can see the repetition in drawing the segments of the diagram. For this projection function and initial value, the sequence steadily increases toward the fixed point. We can see that the fixed point is stable.</p>
+            <figure>
+            <jsxgraph xml:id="jsxgraph-cobweb-discrete-logistic-ex1">
+                <!-- http://jsxgraph.uni-bayreuth.de/wiki/index.php/Archimedean_spiral -->
+                <input>
+                <![CDATA[// Put variables in object to isolate.
+                cw1 = { x0:0.25, n:10 };
+                cw1.f = function(x) { return x + .75*x*(1-x); };
+                cw1.buildSeq = function(x, n) {
+                    var seq = [x];
+                    for (var i=1; i<=n; i++) {
+                        x = cw1.f(x);
+                        seq[i] = x;
+                    }
+                    return seq;
+                };
+                cw1.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-discrete-logistic-ex1', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
+                cw1.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
+                cw1.project = cw1.board.create('functiongraph', 
+                    [cw1.f], {strokeColor:'blue', strokeWidth:2});
+                cw1.step = cw1.board.create('slider', 
+                    [[0.1,1.4],[1,1.4],[1,1,10]],{name:'step', snapWidth:1, precision:0});
+                
+                cw1.seq = cw1.buildSeq(cw1.x0, cw1.n);
+                cw1.project = [];
+                cw1.update = [];
+                for (var i=0; i<cw1.n; i++) {
+                    cw1.project[i] = cw1.board.create('segment', [ [cw1.seq[i], cw1.seq[i]], [cw1.seq[i], cw1.seq[i+1]]], { name:i, color:'black',fixed:true });
+                    cw1.update[i] = cw1.board.create('segment', [ [cw1.seq[i], cw1.seq[i+1]], [cw1.seq[i+1], cw1.seq[i+1]]], { name:i, color:'black',fixed:true });
+                }
+                cw1.a = cw1.board.create('point', [function() { var i = cw1.step.Value(); return cw1.seq[i-1]; }, function() { var i = cw1.step.Value(); return cw1.seq[i-1]} ], {visible:false, withLabel:false});
+                cw1.b = cw1.board.create('point', [function() { var i = cw1.step.Value(); return cw1.seq[i-1]; }, function() { var i = cw1.step.Value(); return cw1.seq[i]} ], {visible:false, withLabel:false});
+                cw1.c = cw1.board.create('point', [function() { var i = cw1.step.Value(); return cw1.seq[i]; }, function() { var i = cw1.step.Value(); return cw1.seq[i]} ], {visible:false, withLabel:false});
+                cw1.board.create('segment', [cw1.a, cw1.b], {color:'red', withLabel:false, strokeWidth:4});
+                cw1.board.create('segment', [cw1.b, cw1.c], {color:'red', withLabel:false, strokeWidth:4});
+                ]]>
+                </input>
+            </jsxgraph>
+            </figure>
+            <p>Next we look at the cobweb diagram for <m>f(x)=x + 1.5x(1-x)</m>. In this example, the vertex of the parabola is to the left of the fixed point so that our sequence actually exceeds the carrying capacity and begins to oscillate above and below the equilibrium. However, it does still eventually converge to the fixed point.</p>
+            <figure>
+            <jsxgraph xml:id="jsxgraph-cobweb-discrete-logistic-ex2">
+                <!-- http://jsxgraph.uni-bayreuth.de/wiki/index.php/Archimedean_spiral -->
+                <input>
+                <![CDATA[// Put variables in object to isolate.
+                cw2 = { x0:0.25, n:10 };
+                cw2.f = function(x) { return x + 1.5*x*(1-x); };
+                cw2.buildSeq = function(x, n) {
+                    var seq = [x];
+                    for (var i=1; i<=n; i++) {
+                        x = cw2.f(x);
+                        seq[i] = x;
+                    }
+                    return seq;
+                };
+                cw2.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-discrete-logistic-ex2', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
+                cw2.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
+                cw2.project = cw2.board.create('functiongraph', 
+                    [cw2.f], {strokeColor:'blue', strokeWidth:2});
+                cw2.step = cw2.board.create('slider', 
+                    [[0.1,1.4],[1,1.4],[1,1,10]],{name:'step', snapWidth:1, precision:0});
+                
+                cw2.seq = cw2.buildSeq(cw2.x0, cw2.n);
+                cw2.project = [];
+                cw2.update = [];
+                for (var i=0; i<cw2.n; i++) {
+                    cw2.project[i] = cw2.board.create('segment', [ [cw2.seq[i], cw2.seq[i]], [cw2.seq[i], cw2.seq[i+1]]], { name:i, color:'black',fixed:true });
+                    cw2.update[i] = cw2.board.create('segment', [ [cw2.seq[i], cw2.seq[i+1]], [cw2.seq[i+1], cw2.seq[i+1]]], { name:i, color:'black',fixed:true });
+                }
+                cw2.a = cw2.board.create('point', [function() { var i = cw2.step.Value(); return cw2.seq[i-1]; }, function() { var i = cw2.step.Value(); return cw2.seq[i-1]} ], {visible:false, withLabel:false});
+                cw2.b = cw2.board.create('point', [function() { var i = cw2.step.Value(); return cw2.seq[i-1]; }, function() { var i = cw2.step.Value(); return cw2.seq[i]} ], {visible:false, withLabel:false});
+                cw2.c = cw2.board.create('point', [function() { var i = cw2.step.Value(); return cw2.seq[i]; }, function() { var i = cw2.step.Value(); return cw2.seq[i]} ], {visible:false, withLabel:false});
+                cw2.board.create('segment', [cw2.a, cw2.b], {color:'red', withLabel:false, strokeWidth:4});
+                cw2.board.create('segment', [cw2.b, cw2.c], {color:'red', withLabel:false, strokeWidth:4});
+                ]]>
+                </input>
+            </jsxgraph>
+            </figure>
+            <p>Because we can, here is a figure where you can choose the value of <m>r_0</m> (<m>0 \lt r_0 \lt 3</m>) and the initial value <m>x_0</m> and explore a variety of cobweb diagrams in a single figure. Notice in particular that when the value of <m>r_0</m> is larger, so that the peak of the parabola is higher, the dynamics become more complex.</p>
+            <figure>
+            <jsxgraph xml:id="jsxgraph-cobweb-discrete-logistic-ex3">
+                <!-- http://jsxgraph.uni-bayreuth.de/wiki/index.php/Archimedean_spiral -->
+                <input>
+                <![CDATA[// Put variables in object to isolate.
+                cw3 = { n:10 };
+                cw3.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-discrete-logistic-ex3', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
+                cw3.r = cw3.board.create('slider', 
+                    [[0.1,1.4],[1,1.4],[0,0.75,3]],{name:'r0', precision:2});
+                cw3.x0 = cw3.board.create('slider', 
+                    [[0,0],[2,0],[0,0.25,2]],{name:'x0', precision:2});
+                cw3.f = function(x) { return x + cw3.r.Value()*x*(1-x); };
+                cw3.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
+                cw3.project = cw3.board.create('functiongraph', 
+                    [cw3.f], {strokeColor:'blue', strokeWidth:2});
+                // Build the points used for the cobweb.
+                cw3.x = [];
+                cw3.x[0] = cw3.board.create('point', [ function() {return cw3.x0.Value();}, 0], {name:0, visible:false});
+                for (var i=1; i<=cw3.n; i++) {
+                    cw3.x[i] = cw3.board.create('point',
+                        [ function() {var j=this.name; return cw3.f(cw3.x[j-1].X());}, 0 ], 
+                        {name:i, visible:false}
+                    );
+                }
+                cw3.y = [];
+                for (var i=0; i<=cw3.n; i++) {
+                    cw3.y[i] = cw3.board.create('transform', 
+                        [ 0, "X("+i+")"],
+                        {name:i, type:'translate'}
+                    );
+                }
+                // Now construct the actual cobweb diagram.
+                for (var i=0; i<cw3.n; i++) {
+                    var a = cw3.board.create('point', 
+                        [cw3.x[i], cw3.y[i]], {visible:false});
+                    var b = cw3.board.create('point', 
+                        [cw3.x[i], cw3.y[i+1]], {visible:false});
+                    var c = cw3.board.create('point', 
+                        [cw3.x[i+1], cw3.y[i+1]], {visible:false});
+                    cw3.board.create('segment',
+                        [a, b], {color:'black',fixed:true});
+                    cw3.board.create('segment',
+                        [b, c], {color:'black',fixed:true});
+                }
+                ]]>
+                </input>
+            </jsxgraph>
+            </figure>
+        </example>
+
+        <p>The code below generates the graph of <m>y=f(x)</m> and <m>y=x</m> in preparation for a cobweb diagram in Sage, with the benefit that the resulting graphic can be copied for other uses.</p>
+        
+        <sage>
+            <input>
+            # Declare the variable
+            var('x')
+            # Declare values for parameters
+            r = 1.9
+            k = 10
+            # Define the projection function
+            f(x) = x*(1+r*(1-x/k))
+            bounds = [0,15]   # [xmin,xmax]
+            # Base plot
+            plotF = plot(f(x), (x,bounds[0],bounds[1]), thickness=2)
+            plotId = plot(x, (x,bounds[0],bounds[1]), color='red', linestyle='--')
+            basePlot = plotF+plotId
+            show(basePlot, figsize=[5,5])
+            </input>
+        </sage>
+        <p>Building on the figure above, you can then add a particular cobweb diagram corresponding to an initial value of your choice.</p>
+        <sage>
+            <input>
+            # Setup needed for cobweb
+            x0 = 1 # Initial value
+            N = 10 # Number of cobweb steps.
+            doTable = false  # Do you want a table of values?
+            # Now generate the cobweb adding one line at a time.
+            x = x0
+            seq = [x0]
+            cobweb = Graphics()
+            for i in range(N):
+                # Vertical line
+                cobweb = cobweb + line([[x,x], [x,f(x)]], color='black') 
+                # Horizontal line
+                cobweb = cobweb + line([[x,f(x)],[f(x),f(x)]], color='black')
+                # Update for the next iteration.
+                x = f(x)
+                seq.append(x)
+            # Draw the cobweb in a plot.
+            show(basePlot+cobweb, figsize=[5,5])
+            
+            # Generate a table of values only if asked
+            if doTable:
+                print("Table of sequence values")
+                print("k\tx_k")
+                for i in range(len(seq)):
+                    print("%d\t%f" % (i, seq[i]))
+            </input>
+        </sage>
+    </subsection>
+    
+    <subsection>
+        <title>Cobwebs and Stability</title>
+        <p>We conclude the section by combining the concepts of cobweb diagrams and stability. Recall that our criteria for local stability depended on the slope of the tangent line at the fixed point. Suppose that <m>x^*</m> is a fixed point so that <m>f(x^*)=x^*</m>. A cobweb diagram of the linear approximation around the fixed point behaves in one of the following four ways. <ul>
+        <li>If <m>f'(x^*) \gt 1</m>, then the cobweb diagram moves away from the fixed point like a staircase and the fixed point is unstable.</li>
+        <li>If <m>0 \lt f'(x^*) \lt 1</m>, then the cobweb diagram moves toward the fixed point and the fixed point is stable.</li>
+        <li>If <m>-1 \lt f'(x^*) \lt 0</m>, then the cobweb diagram spirals inward toward the fixed point and the fixed point is stable.</li>
+        <li>If <m>f'(x^*) \lt -1</m>, then the cobweb diagram spirals outward away from the fixed point and the fixed point is stable.</li>
+        </ul> More complicated dynamics can occur further away from the fixed point. But at least near the fixed point, the linear approximation gives a good description of what is happening, at least when <m>|f'(x^*)| \ne 1</m>.</p>
+        <p>A dynamic cobweb diagram of a linear projection function <m>f(x)=1+a(x-1)</m> where you can choose the slope <m>a</m> at the fixed point <m>x^*=1</m> is illustrated below. Can you relate this behavior to what you observed in the discrete logistic model earlier?</p>
+        <figure>
+        <jsxgraph xml:id="jsxgraph-cobweb-linear-ex4">
+            <!-- http://jsxgraph.uni-bayreuth.de/wiki/index.php/Archimedean_spiral -->
+            <input>
+            <![CDATA[// Put variables in object to isolate.
+            cw4 = { n:10 };
+            cw4.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-linear-ex4', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
+            cw4.a = cw4.board.create('slider', 
+                [[0.1,1.4],[1,1.4],[-1.5,0.75,1.5]],{name:'a', precision:2});
+            cw4.x0 = cw4.board.create('slider', 
+                [[0,0],[2,0],[0,0.25,2]],{name:'x0', precision:2});
+            cw4.f = function(x) { return 1 + cw4.a.Value()*(x-1); };
+            cw4.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
+            cw4.project = cw4.board.create('functiongraph', 
+                [cw4.f], {strokeColor:'blue', strokeWidth:2});
+            // Build the points used for the cobweb.
+            cw4.x = [];
+            cw4.x[0] = cw4.board.create('point', [ function() {return cw4.x0.Value();}, 0], {name:0, visible:false});
+            for (var i=1; i<=cw4.n; i++) {
+                cw4.x[i] = cw4.board.create('point',
+                    [ function() {var j=this.name; return cw4.f(cw4.x[j-1].X());}, 0 ], 
+                    {name:i, visible:false}
+                );
+            }
+            cw4.y = [];
+            for (var i=0; i<=cw4.n; i++) {
+                cw4.y[i] = cw4.board.create('transform', 
+                    [ 0, "X("+i+")"],
+                    {name:i, type:'translate'}
+                );
+            }
+            // Now construct the actual cobweb diagram.
+            for (var i=0; i<cw4.n; i++) {
+                var a = cw4.board.create('point', 
+                    [cw4.x[i], cw4.y[i]], {visible:false});
+                var b = cw4.board.create('point', 
+                    [cw4.x[i], cw4.y[i+1]], {visible:false});
+                var c = cw4.board.create('point', 
+                    [cw4.x[i+1], cw4.y[i+1]], {visible:false});
+                cw4.board.create('segment',
+                    [a, b], {color:'black',fixed:true});
+                cw4.board.create('segment',
+                    [b, c], {color:'black',fixed:true});
+            }
+            ]]>
+            </input>
+        </jsxgraph>
+        </figure>
+    </subsection>
+</section>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      A Modeling Approach to Calculus         -->
+<!--                                              -->
+<!-- Copyright (C) 2015  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="population-agent-based" xmlns:xi="http://www.w3.org/2001/XInclude">
+<title>An Agent Based Motivation for Dynamics</title>
+
+<introduction>
+    <p>We start our modeling by thinking about an <term>agent-based model</term>. An agent-based model is a computer simulation in which abstract agents are defined on a computer with a collection of rules for what they do in time and how the different agents interact with one another. In the context of a population, we might think of the agents as individuals within a virtual population. The rules describe the patterns of life that the individuals follow.</p>
+    
+    <p>By first thinking about how we would implement an agent-based model for a system, we are engaging the process of establishing an abstract representation of the fundamental assumptions identified in a hypothesis on how the system develops in time. Generally, we want to minimize the number of rules while still capturing the essence of our hypothesis. Allowing the computer simulation to follow our rules, we can observe the dynamics relatively quickly and make virtual measurements that might guide a more mathematical model.</p>
+</introduction>
+    
+<subsection>
+    <title>NetLogo Overview</title>
+    
+    <p><image source='images/NetLogoIcon.png' width='10%'/> NetLogo (see <url href='https://ccl.northwestern.edu/netlogo/'>https://ccl.northwestern.edu/netlogo/</url>) is an example of an agent-based modeling environment, made freely available under the <url href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU General Public License</url>. The agents are easily visualized as characters (turtles) that move about a rectangular plot. The plot is subdivided into patches so that you can assign different rules of behavior that depend on what patch the turtle is on.</p>
+    
+    <p>Rather than explain everything about NetLogo here, I refer you to the excellent documentation on the NetLogo website. There are three useful tutorials to get started: <url href='https://ccl.northwestern.edu/netlogo/docs/tutorial1.html'>Tutorial 1</url> (Running Models), <url href='https://ccl.northwestern.edu/netlogo/docs/tutorial2.html'>Tutorial 2</url> (On Turtles and Patches), and <url href='https://ccl.northwestern.edu/netlogo/docs/tutorial3.html'>Tutorial 3</url> (Building a Model). In addition, the <url href='https://ccl.northwestern.edu/netlogo/docs/programming.html'>NetLogo Programming Guide</url> explains the structure of how to program and the <url href='https://ccl.northwestern.edu/netlogo/docs/dictionary.html'>NetLogo Dictionary</url> summarizes the commands that agents automatically inherit.</p>
+    
+    <p>Demo code associated with this document was written in NetLogo 6. Links are provided to download the full model. Elements of the code will be discussed. Individuals in the population will be modeled as turtle agents (meaning they are movable).</p>
+</subsection>
+
+<subsection xml:id='population-agent-naive'>
+    <title>Environmentally Naive Births and Deaths</title>
+    
+    <p>When trying to define rules for how an individual will give birth to new individuals or die, we might consider complicating factors. For example, we might expect that births and death would depend on the health of the individual as well as the state of the environment in which the individual is living. However, the simplest models would not take these into account. The simplest rule for reproduction might be to decide randomly whether or not to give birth at a given cycle (tick) for the system. Similarly, we might have death be decided randomly. The following code fragment is a minimal approach for implementing random birth and death that is naive in regards to the environment.</p>
+    
+    <program language="netlogo">
+        <input>
+        <![CDATA[
+        to attempt-reproduce
+          ;; global 'birth-percent' = percent of cycles
+          ;; in which to reproduce
+          if random-float 100 < birth-percent [ hatch 1 ]
+        end
+
+        to attempt-survive  ;; and failure is to die
+          ;; global 'death-percent' = percent of cycles
+          ;; in which to die
+          if random-float 100 < death-percent [ die ]
+        end
+        ]]>
+        </input>
+    </program>
+    
+    <p>If we ran a simulation using these naive rules for reproduction and survival, with every agent randomly deciding whether it will reproduce and whether it will die, we would discover that there is a lot of randomness but that the number of births and deaths seem to be related to the population size. The following graph comes from such a simulation.</p>
+    
+    <figure>
+        <image source='images/nl-pop-dyn-naive-graph.png' width='70%'/>
+        <caption>Plot of total population, the number of births and deaths for a naive reproductive model with <c>birth-percent = 16</c> and <c>death-percent = 9</c>.</caption>
+    </figure>
+    
+    <p>This figure illustrates that the larger the population size, the more births and deaths we expect to observe. In fact, because of how the birth and death events were randomly determined based on a percentage of the number of tick cycles for each individual, we would expect that the number of births and deaths are approximately just the corresponding percentage of the total population size. Of course, because the simulation involves random decisions, there are fluctuations above and below that amount.</p>
+    
+    <p>We might look directly at the relationship between the number of births and deaths with respect to the population size. We can create a plot with points <m>(P,B)</m> where <m>P</m> is the population and <m>B</m> is the number of births that came from that population. Similarly, we can create a plot with points <m>(P,D)</m> where <m>D</m> is the number of deaths occurring with a population <m>P</m>. A combined graph is shown below for the simulation that generated the previous dynamics plot.</p>
+    
+    <figure>
+        <image source='images/rates-naive-graph'/>
+        <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the naive model.</caption>
+    </figure>
+    
+    <p>The plot suggests that the number of births and deaths occurring during each time period is approximately proportional to the population size (i.e., linear graphs passing through <m>(0,0)</m>). In fact, the proportionality constant corresponds to the percent used for birth and deaths in our simulation, with <m>B \approx 0.16 P</m> and <m>D \approx 0.09 P</m>. (For births, this is also dependent on our simulation resulting in only a single birth for every reproduction event.)</p>
+</subsection>
+
+<subsection xml:id='population-agent-density-dependent'>
+    <title>Density-Dependent Births and Deaths</title>
+    
+    <p>A more complex rule for population dynamics would include density-dependence. A population does not grow without bound. When the population is crowded, the birth and death rates for individuals change. Competition between individuals might result in fewer resources per individual. Crowded conditions might increase sickness or injuries. Such conditions generally lower the birth rates and increase the death rates for the population.</p>
+    
+    <p>One simplistic approach to simulate these density-dependent effects in NetLogo would be to identify how many individuals are on a common patch and treat that as the local density. We might then directly increase the percentage of individuals that would die based on this density. This approach captures the idea of density dependence but does not attempt to attribute those changes to actual interactions. More advanced simulations would require directly modeling the environment itself.</p>
+    
+    <p>In NetLogo, we can have each patch influence all of the agents that belong to the patch. The following code fragments illustrate how such a model might be implemented.</p>
+    
+    <program language="netlogo">
+        <input>
+        <![CDATA[
+        to density-update ;; this is a command for patches
+          ;; create a temporary variable that counts all individuals on patch
+          let density count turtles-here
+          ;; use that density to compute a variable death percentage for
+          ;; each individual living on the current patch
+          ask turtles-here [
+            ;; death-percent is "y-intercept"
+            ;; death-increment is "slope"
+            set local-death-percent (death-percent + death-increment * density)
+          ]
+        end
+        
+        to attempt-reproduce
+          ;; global 'birth-percent' = percent that reproduce
+          if random-float 100 < birth-percent [ hatch 1 ]
+        end
+        
+        to attempt-survive  ;; and failure is to die
+          ;; 'local-death-percent' = calculated by patches
+          if random-float 100 < local-death-percent [ die ]
+        end
+        
+        to go  ;; minimal code of the standard go command
+          ask patches [
+            density-update
+          ]
+          ask turtles [
+            attempt-reproduce
+            move  ;; not shown
+            attempt-survive
+          ]
+          tick
+        end
+        ]]>
+        </input>
+    </program>
+    
+    <p>The following graph comes from such a simulation using this type of density-dependence.</p>
+    
+    <figure>
+        <image source='images/nl-pop-dyn-densdep-graph.png' width='70%'/>
+        <caption>Plot of total population, the number of births and deaths for a density-dependent growth model with <c>birth-percent = 16</c> and <c>death-percent = 9</c> and <c>death-increment = 0.3</c>.</caption>
+    </figure>
+    
+    <p>Notice that the population does not grow indefinitely. As the population increases, the death rate increases faster than the birth rate so that the population growth rate ultimately decreases. The population levels out. We say that the population has a <term>carrying capacity</term>, which is the population that the environment can sustain at a steady-state or equilibrium.</p>
+    
+    <p>An <term>equilibrium</term> occurs when the population does not change. This corresponds to when the birth rate and death rate are in balance. Plotting the birth and death rates with respect to the population size is illustrated in the figure below. The carrying capacity corresponds to where these rates intersect.</p>
+
+    <figure>
+        <image source='images/rates-densdep-graph'/>
+        <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</caption>
+    </figure>
+    
+    <p>Because the population grows according to the difference between the birth rate and the death rate <m>B-D</m>, we call this difference the <term>net growth rate</term> <m>R</m>. The figure below illustrates a plot of the net growth rate <m>R</m> with respect to the population size <m>P</m>, giving us a new way to think about our data. Notice that the net growth rate increases and then decreases as the population increases. The carrying capacity corresponds to the population size at which the net growth rate returns to <m>R=0</m>.</p>
+    
+    <figure>
+        <image source='images/netrate-densdep-graph'/>
+        <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</caption>
+    </figure>
+    
+</subsection>
+
+<conclusion>
+    <p>Motivated by dynamics of a population simulated with births and deaths, we will next look at deterministic models for population growth. These simulations included demographic stochasticity, the randomness related to random birth and death events. The models we will be looking at do not include the stochasticity but will represent the average behavior expected for a population.</p>
+</conclusion>
+</section>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<chapter xml:id="populations" xmlns:xi="http://www.w3.org/2001/XInclude">
+<title>Population Dynamics</title>
+
+<introduction>
+    <p>We begin our adventure in mathematical modeling by studying the dynamics of populations. The term <term>dynamics</term> refers to the idea that the population changes in time and we seek explanatory models that characterize how those changes occur. In the simplest sense, a population consists of individuals and the principal state variable will be the number of individuals in the population. Throughout our discussion, we will use <m>P</m> to represent the population size and <m>t</m> to represent the time.</p>
+    
+    <p>When we think about a dynamical system, we need to identify how we will measure the state of our system with respect to time. For example, we sometimes are interested in the state of the system at uniformly spaced time increments. For example, in a population, we might census our population at equally spaced intervals. That might be every few hours for a cell culture, every few days at a certain time for an insect population, or every year during migration for a migratory species. In these cases, we will think of our state as only being measurable at these times. Models using this perspective are called <term>discrete time models</term>.</p>
+    
+    <p>On the other hand, we might measure the state of the system frequently enough that only gradual changes are occurring between measurements. In these cases, we might consider thinking about time continuously and consider the possibility that the state existed at all times. We could then use <term>continuous time models</term> which give us a mathematical representation of the state of the system for all times, at least over some interval of interest.</p>
+    
+    <p>Other variables in the system allow us to understand how the population is changing. The most common variables relating to a population characterize the rates for births and deaths and migration. The change in the population size can be characterized as adding in new individuals (births and immigrants) and subtracting the loss of individuals (deaths and emigrants). The art of a mathematical model is to describe these terms using mathematical equations that allow us to make predictions about the population.</p>
+</introduction>
+    
+<xi:include href="./sec-population-agent-based.xml" />
+<xi:include href="./sec-population-discrete.xml" />
+<xi:include href="./sec-population-projection.xml" />
+<xi:include href="./sec-projection-analysis.xml" />
+<xi:include href="./sec-projection-cobweb.xml" />
+<xi:include href="./sec-population-interventions.xml" />
+<xi:include href="./intro-differential-equations.xml" />
+<xi:include href="./differential-equation-analysis.xml" />
+
+</chapter>

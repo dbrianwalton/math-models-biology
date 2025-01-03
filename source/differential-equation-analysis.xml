@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="differential-equation-analysis">
+<title>Analysis of Differential Equations</title>
+
+<introduction>
+    <p>Differential equation models and sequence projection models have many similarities as well as differences. Just as we looked for equilibrium solutions for projection models in discrete time, we will look for equilibrium solutions for differential equation models in continuous time. Those equilibria can be stable or unstable. However, unlike sequence models, a differential equation model can not pass across an equilibrium solution. The graphical analysis of sequences using a cobweb diagram for discrete jumps is replaced for differential equations by the idea of a phase line.</p>
+</introduction>
+    
+    <subsection xml:id='diffeq-equilibria'>
+        <title>Equilibria for Differential Equations</title>
+
+        <p>The concept of an equilibrium is that the state of the system is not changing. For variables, this means that the dynamic variables are constant functions with respect to time. Constant functions have a zero rate of change. We find equilibria solutions to a differential equation <m>\frac{dy}{dt} = F(t,y)</m> by solving the equation <m>F(t,y) = 0</m> and look for solutions of the form <m>y=C</m> for some constant <m>C</m>. Other solutions that involve the variable <m>t</m> are not equilibrium solution but instead describe other points where the instantaneous rate of change is zero but for which the function changes at other times.</p>
+    
+        <example>
+            <statement>
+                <p>Find the equilibrium solution(s) for the differential equation <me>\frac{dP}{dt} = 100 - 0.2 P.</me></p>
+            </statement>
+            <solution>
+                <p>The rate function <m>F(t,P) = 100 - 0.2P</m> involves only the dependent variable <m>P</m>. Solving the equilibrium equation <m>F(t,P)=0</m> gives <md>
+                    <mrow> 100-0.2P = 0 </mrow>
+                    <mrow> 0.2P = 100 </mrow>
+                    <mrow> P = 500. </mrow>
+                </md> The solution <m>P=500</m> is of the form <m>P</m> is a constant and is therefore an equilibrium solution.</p>
+            </solution>
+        </example>
+    
+        <example>
+            <statement>
+                <p>Find the equilibrium solution(s) for the differential equation <me>\frac{dP}{dt} = 0.2P(1-0.005P).</me></p>
+            </statement>
+            <solution>
+                <p>The rate function <m>F(t,P) = 0.2P(1-0.005P)</m> involves only the dependent variable <m>P</m>. Solving the equilibrium equation <m>F(t,P)=0</m> gives either <m>0.2P=0</m> or <m>1-0.005P=0</m>, which give two equilibrium solutions <m>P=0</m> and <m>P = 200</m>.</p>
+            </solution>
+        </example>
+        
+        <p>When we wanted to understand the stability of equilibria resulting from projection function models, we started by considering linear projection functions. For differential equations, we do similar analysis. We start with proportional rates of change models and then apply that to linear rates of change models.</p>
+        
+        <theorem xml:id='diffeq-exponential-models'>
+            <title>Exponential Growth/Decay Models</title>
+            <statement>
+                <p>A differential equation of the form <m>\frac{dy}{dt} = k y</m> where <m>k</m> is a constant, so that the rate of change of <m>y</m> is proportional to the value of <m>y</m>, has solutions that are exponential with rate <m>k</m>. That is, for an initial condition <m>(t_0,y_0)</m>, the unique solution will be <me>y(t) = y_0 \, e^{k(t-t_0)}.</me> The growth behavior depends on the sign of <m>k</m>: <ul>
+                    <li><m>k \gt 0</m> (exponential growth): <m>|y(t)| \to \infty</m> as <m>t \to \infty</m> while <m>|y(t)| \to 0</m> as <m>t \to -\infty</m>.</li>
+                    <li><m>k \lt 0</m> (exponential decay): <m>|y(t)| \to 0</m> as <m>t \to \infty</m> while <m>|y(t)| \to \infty</m> as <m>t \to -\infty</m>.</li>
+                </ul></p>
+            </statement>
+        </theorem>
+        
+        <p>A differential equation of the form <m>\frac{dy}{dt} = \alpha y + \beta</m> can be transformed into an exponential growth/decay model by rewriting the model in terms of the equilibrium, found by <m>\alpha y + \beta = 0</m>. The equilibrium is <m>y^*=-\frac{\beta}{\alpha}</m> so that the growth rate model can be rewritten as <me> \frac{dy}{dt} = \alpha(y - y^*). </me> Because <m>y^*</m> is a constant, <m>\frac{dy^*}{dt} = 0</m>. The rules of calculus allow us to define <m>u = y - y^*</m> and find the differential equation <me>\frac{du}{dt} = \frac{d}{dt}[y-y^*] = \frac{dy}{dt} = \alpha (y-y^*) = \alpha u. </me> Thus, <m>u</m> is an exponential model and <m>y</m> is shifted to be centered around the equilibrium.</p>
+        
+        <theorem xml:id='diffeq-shifted-exponential-models'>
+            <title>Shifted Exponential Growth/Decay Models</title>
+            <statement>
+                <p>A differential equation of the form <m>\frac{dy}{dt} = \alpha y + \beta</m> where <m>\alpha</m> and <m>\beta</m> are constant has solutions that are exponential functions with rate <m>\alpha</m> shifted by the equilibrium <m>y^* = -\frac{\beta}{\alpha}</m>. That is, for an initial condition <m>(t_0,y_0)</m>, the unique solution will be <me>y(t) = y^* + (y_0 - y^*) \, e^{\alpha(t-t_0)}.</me> The growth behavior depends on the sign of <m>\alpha</m>: <ul>
+                    <li><m>\alpha \gt 0</m> (exponential growth): <m>|y(t)-y^*| \to \infty</m> as <m>t \to \infty</m> (unstable).</li>
+                    <li><m>\alpha \lt 0</m> (exponential decay): <m>|y(t)-y^*| \to 0</m> as <m>t \to \infty</m> (stable).</li>
+                </ul></p>
+            </statement>
+        </theorem>
+        
+        <p>Nonlinear growth rates that depend only on the dependent variable, <m>\frac{dy}{dt} = f(y)</m>, have equilibria at all of the values <m>y</m> so that <m>f(y)=0</m>. Consider an equilibrium at <m>y=y^*</m>. We can approximate the differential equation <m>\frac{dy}{dt} = f(y)</m> by the tangent line approximation at <m>y=y^*</m> to determine stability of the equilibrium as long as <m>f'(y^*) \ne 0</m>. Then approximation suggests <m>f(y) \approx f'(y^*) \cdot (y-y^*)</m> for values of <m>y</m> sufficiently near <m>y^*</m>. This is a linear rate function that leads to a shifted exponential model.</p>
+        
+        <theorem xml:id='diffeq-nonlinear-equilibria-stability'>
+            <title>Local Stability of Equilibria</title>
+            <statement>
+                <p>Suppose a differential equation of the form <m>\frac{dy}{dt} = f(y)</m> has an equilibrium at <m>y^*</m> so that <m>f(y) \approx f'(y^*) \cdot (y-y^*)</m>. Then if <m>f'(y^*) \ne 0</m>, the local stability of the equilibrium <m>y^*</m> can be determined by the sign of <m>f'(y^*)</m>. <ul>
+                    <li><m>f'(y^*) \gt 0</m> (exponential growth): <m>|y(t)-y^*|</m> increases, at least initially.</li>
+                    <li><m>f'(y^*) \gt 0</m> (exponential decay): <m>|y(t)-y^*|</m> decreases.</li>
+                </ul></p>
+            </statement>
+        </theorem>
+        
+        <example>
+            <p>The discrete logistic model <m>P_{n+1} = P_n + r_0(1-P_n/K) P_n</m> in discrete time has a growth term defined by <m>P_{n+1}-P_n = r_0 P_n(1-P_n/K)</m>. This is saying that the total increment of change in the population over the course of the time increment is given by the formula <m>r_0 P_n (1-P_n/K)</m>. If we interpret that formula as a <em>rate of change</em> instead of the total increment of change, we arrive at the continuous-time logistic growth model <me>\frac{dP}{dt} = rP(1-\frac{P}{K})</me> where <m>r</m> and <m>K</m> are positive constants.</p>
+            <p>The equilibria for this model are found by solving <m>rP(1-\frac{P}{K}) = 0</m> to give <m>P=0</m> and <m>P=K</m>. The growth rate formula <m>f(P) = rP - \frac{r}{K}P^2</m> has a derivative <m>f'(P) = r - \frac{2r}{K}P</m>. Computing the derivative at each equilibrium informs us of the stability of that solution. <ul>
+                <li><m>f'(0)=r \gt 0</m> so <m>P=0</m> is an <em>unstable</em> equilibrium.</li>
+                <li><m>f'(K)=r-2r=-r \lt 0</m> so <m>P=K</m> is a <em>stable</em> equilibrium.</li>
+            </ul> The following Sage script generates a typical slope field and several solutions coming from different initial values that illustrate the stability of these equilbria. Notice how solutions move away from the unstable equilibrium solution but towards the stable equilibrium solution.</p>
+            <sage>
+                <input>
+                var('t,P')  # Declare the mathematical variables
+                r = 1     # intrinsic growth rate
+                K = 100   # carrying capacity
+                f(P) = r*P*(1-P/K)  # Define the rate formula
+                (tmin,tmax) = (-2,4)
+                (ymin, ymax) = (-K/2,2*K)
+                slopefield = plot_slope_field(f(P),   # give the rate
+                    (t,tmin,tmax), (P,ymin,ymax),       # specify the axes
+                    headlength=4, headaxislength=4)     # extra format options
+
+                initialValues = [ [0,1.4*K], [0,K], [0,0.1*K], [0,0], [0,-0.1*K] ]
+                colors = rainbow(len(initialValues))
+                trajectoryPlot = Graphics()
+                for i in range(len(initialValues)):
+                    # Find the solution
+                    point = initialValues[i]
+                    solution = desolve_rk4(
+                                f(P),
+                                P,
+                                ics=point,  # Use the selected point
+                                ivar=t,
+                                end_points=[tmin,tmax],
+                                step=0.05,
+                              )
+                    # Add the trajectory to the plot
+                    trajectoryPlot += list_plot(solution, 
+                        color=colors[i], plotjoined=True)
+                    trajectoryPlot += list_plot([point], color=colors[i])
+                show(slopefield+trajectoryPlot,
+                    ymin=ymin, ymax=ymax, figsize=[4,3])
+                </input>
+            </sage>
+        </example>
+    </subsection>
+    
+    <subsection xml:id='diffeq-phase-line'>
+        <title>Phase Lines</title>
+        <p>A differential equation with a rate that depends only on the dependent variable is called <term>autonomous</term>, such as <m>\frac{dy}{dt} = f(y)</m>. This is analogous to a sequence that can be defined recursively with a projection function. For a recursive sequence, we could study it geometrically using a cobweb diagram. When the projection function is above the line <m>y=x</m>, the sequence increases; when the projection function is below the line, the sequence decreases.</p>
+        <p>For an autonomous differential equation, <m>\frac{dy}{dt} = f(y)</m>, we can use the graph of the rate function to understand the behavior of the solution function. When the rate function is positive <m>f(y) \gt 0</m> (above the axis), the solution <m>y(t)</m> will be an increasing function. When the rate function is negative <m>f(y) \lt 0</m> (below the axis), the solution <m>y(t)</m> will be a decreasing function. Equilibrium solutions correspond to values of <m>y</m> where <m>f(y)=0</m>. We can summarize this behavior by drawing a number line with arrows pointing in the direction of increasing or decreasing between equilibrium values. Such a number line is called a <term>phase line</term>.</p>
+        <example>
+            <p>Consider the autonomous differential equation <m>\frac{dy}{dt} = 3y^2-4</m>. We will generate a phase line summary of possible solution behaviors.</p>
+            <p>The graph of the rate function <m>f(y)=3y^2-4</m> is a concave up parabola with roots at <m>y=\pm \frac{2}{\sqrt{3}}</m>, shown below.</p>
+            <figure>
+                <image>
+                    <latex-image >
+                    <![CDATA[\tikzset{
+                    }
+                    \begin{tikzpicture}
+                    \begin{axis} [
+                        xmin=-4, xmax=4,
+                        ymin=-5, ymax=5,
+                        axis x line=center,
+                        axis y line=center,
+                        xtick={-1.15,1.15},
+                        xticklabels={$-\frac{2}{\sqrt{3}}$, $\frac{2}{\sqrt{3}}$},
+                        ytick=\empty,
+                        width=10cm, height=6cm,
+                        xlabel={$y$}, ylabel={$\frac{dy}{dt}=f(y)$},
+                    ]
+                    \addplot [domain=-4:4, samples=101] { 3*x^2-4 };
+                    \end{axis}
+                    \end{tikzpicture}]]>
+                    </latex-image >
+                </image>
+            </figure>
+            <p>The roots of the rate function are the equilibrium solutions, <m>y=-\frac{2}{\sqrt{3}}</m> and <m>y=\frac{2}{\sqrt{3}}</m>. Between the equilibria, the rate function is negative, so any solutions with initial values between the equilibria will be decreasing functions going away from the upper equilibrium and toward the lower equilibrium. If the initial value is above the equilibria, <m>y(t_0) \gt \frac{2}{\sqrt{3}}</m>, then the solution will be an increasing function that grows without bound. If the initial value is below the equilibra, <m>y(t_0) \lt -\frac{2}{\sqrt{3}}</m>, then the solution will also be an increasing function but will grow at a slower rate as it approaches the lower equilibrium. The equilibria and the three intervals for initial values are summarized in the phase line below.</p>
+            <figure>
+                <image>
+                    <latex-image >
+                    <![CDATA[\tikzset{
+                    }
+                    \begin{tikzpicture}
+                    \draw [<->] (-3,0) -- (3,0) node[right] {$y$};
+                    \node[circle,fill=black,inner sep=0pt,minimum size=3pt,label=below:{$-\frac{2}{\sqrt{3}}$}] (a) at (-1.5,0) {};
+                    \node[circle,fill=black,inner sep=0pt,minimum size=3pt,label=below:{$\frac{2}{\sqrt{3}}$}] (a) at (1.5,0) {};
+                    \draw [->] (-2.5,0.1) -- (-1.75,0.1);
+                    \draw [<-] (-0.75,0.1) -- (0.75,0.1);
+                    \draw [->] (1.75,0.1) -- (2.5,0.1);
+                    \end{tikzpicture}]]>
+                    </latex-image >
+                </image>
+            </figure>
+            <p>This phase line might be easier visualized in relation to the graph of different solutions if we drew it vertically on an axis so that arrows pointing to the right (increasing) represent solutions that rise (increasing) and arrows point to the left (decreasing) represent solutions that fall (decreasing). The equilibrium solutions correspond to solutions that remain constant. We see that <m>y=\frac{2}{\sqrt{3}}</m> is an <em>unstable</em> equilibrium while <m>y=-\frac{2}{\sqrt{3}}</m> is a <em>stable</em> equilibrium.</p>
+            <figure>
+                <image>
+                    <latex-image >
+                    <![CDATA[\tikzset{
+                    }
+                    \begin{tikzpicture}
+                    \begin{axis}
+                    [ 
+                        xmin=-.2, xmax=2.2,
+                        ymin=-3, ymax=3,
+                        axis lines=center,
+                        xlabel={$t$}, ylabel={$y$},
+                        ytick={-1.15,1.15},
+                        yticklabels={$-\frac{2}{\sqrt{3}}$, $\frac{2}{\sqrt{3}}$},
+                    ]
+                    \addplot [domain=1.155:4, samples=101, red, thick] ({ln(-1+2/(1+sqrt(4/3)/x))/sqrt(48)+1}, {x});
+                    \addplot [domain=-1.154:1.154, samples=101, orange, thick] ({ln(1-2/(1+sqrt(4/3)/x))/sqrt(48)+1}, {x});
+                    \addplot [domain=-4:-1.155, samples=101, green, thick] ({ln(-1+2/(1+sqrt(4/3)/x))/sqrt(48)}, {x});
+                    \addplot [thick, -, blue] coordinates { (-0.2,1.154) (2.2,1.154) };
+                    \addplot [thick, -, blue] coordinates { (-0.2,-1.154) (2.2,-1.154) };
+                    \addplot [only marks] coordinates { (0,-1.154) (0,1.154) };
+                    \addplot [thick, ->] coordinates { (-0.02,-2.8) (-0.02,-1.45) };
+                    \addplot [thick, ->] coordinates { (-0.02, 0.8) (-0.02,-0.8) };
+                    \addplot [thick, ->] coordinates { (-0.02, 1.45) (-0.02,2.8) };
+                    \end{axis}
+                    \end{tikzpicture}]]>
+                    </latex-image >
+                </image>
+            </figure>
+        </example>
+    </subsection>
+</section>

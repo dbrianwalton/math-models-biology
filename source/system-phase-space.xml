@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="system-phase-space">
+<title>Dynamical Systems and Phase Space</title>
+
+<introduction>
+    <p>We are interested in studying what happens in an interacting system. For these systems, our system must have more than one dynamic variable. We call the system a <term>dynamical system</term>. In this section, we introduce some terminology for how we think about dynamical systems. We will be able to visualize these concepts graphically when there are two or three dynamic variables. When there are more than three variables, we will work by analogy even though we aren't able to visualize the result.</p>
+</introduction>
+
+<subsection xml:id='vector-fields'>
+    <title>Vector Fields</title>
+
+    <p>A continuous dynamical system is defined in terms of a system of differential equations. Each state variable has a rate of change (the derivative). In a dynamical system, there exists a function of the state variables and the independent variable <m>t</m> that equals this rate of change at all times. In an abstract system with <m>n</m> state variables, labeled <m>x_1(t), x_2(t), \ldots, x_n(t)</m>, where the time dependence is explicitly stated, there are <m>n</m> functions of the state variables <m>f_1, f_2, \ldots, f_n</m> such that <md>
+        <mrow> \frac{dx_1}{dt} &amp;= f_1(t, x_1, x_2, \ldots, x_n) </mrow>
+        <mrow> \frac{dx_2}{dt} &amp;= f_2(t, x_1, x_2, \ldots, x_n) </mrow>
+        <mrow> &amp; \vdots </mrow>
+        <mrow> \frac{dx_n}{dt} &amp;= f_n(t, x_1, x_2, \ldots, x_n) </mrow>
+    </md> The collection of functions <m>(f_1, f_2, \ldots, f_n)</m> defines a <term>vector field</term>.</p>
+    
+    <theorem xml:id="thm-existence-uniqueness-system">
+        <title>Existence and Uniqueness of Initial Value Problem</title>
+        <statement>
+            <p>If each of the component rate functions are continuous and all of the partial derivatives are continuous in a neighborhood of the initial value <m>(t_0, x_{1,0}, x_{2,0}, \ldots, x_{n,0})</m>, then the initial value problem defined by the vector field <m>(f_1, f_2, \ldots, f_n)</m> and initial values <m>x_k(t_0) = x_{k,0}</m> for <m>k=1, 2, \ldots, n</m> has a unique solution for some interval <m>t \in (t_0-\delta, t_0+\delta)</m>.</p>
+        </statement>
+    </theorem>
+    
+    <p>The existence and uniqueness theorem guarantees that if we specify the state of the system at a time in which the vector field changes smoothly relative to time and also relative to the values of the state variables (this is what continuity of the partial derivatives guarantees), then the state will follow a flow defined by the vector field. In many cases, the vector field does not depend on time and we have an autonomous system of differential equations. In these cases, we can often visualize solutions to the differential equations by create a plot of the vector field.</p>
+    
+    <p>A <term>vector</term> is a mathematical object that consists of both a direction and a magnitude. Graphically, we usually represent a vector as an arrow. The length of the arrow represents its magnitude and the direction is the direction of the arrow from its root (the straight segment) to its tip (the arrow). A vector can also be determined from its components.</p>
+    
+    <p>Standard components correspond to perpendicular directions, with one direction for each state variable. A system with two state variables has a vector field defined in the plane with two directions. The direction of the <m>x</m>-axis corresponds to the first state variable and the <m>y</m>-axis corresponds to the second state variable. A vector is specified by giving a value for each coordinate direction, say <m>\vec{v} = \langle a, b \rangle</m> (similar to a point). The vector, drawn at a location <m>(x,y)</m> in the plane corresponds to an arrow with a root at <m>(x,y)</m> and the tip at <m>(x+a,y+b)</m>. That is, the vector gives a displacement from the root to the tip.</p>
+    
+    <p>The vector field functions <m>(f_1, \ldots, f_n)</m> define at every moment <m>t</m> and state <m>x = (x_1, \ldots, x_n)</m> a rate vector <me>\vec{u}(t,x) = \langle f_1(t,x), \ldots, f_n(t,x) \rangle.</me> A solution can be visualized as a point <m>x(t)</m> moving through the state space such that its velocity is at each instant defined by <m>\vec{u}(t,x)</m>. For an autonomous system, the velocity depends only on the current state and we call the state space the phase space. When the vector field depends explicitly on time, we must add the time variable as a new state variable and the phase space is one dimension larger than the state space.</p>
+    
+    <p>We illustrate the ideas with some two-dimensional examples and use Sage to generate illustrative figures.</p>
+    
+    <example>
+        <p>An example from physics is the harmonic oscillator (mass on a spring). In the absence of friction, the only force is from the spring, proportional to and opposing the displacement. The state variables are the displacement <m>x</m> and the velocity <m>v</m>. The system of differential equations is given by <md>
+            <mrow> \frac{dx}{dt} &amp; = v, </mrow>
+            <mrow> \frac{dv}{dt} &amp; = - \frac{k}{m} x. </mrow>
+        </md> The rate for <m>x</m> is just the definition of velocity. The rate for <m>v</m> is acceleration and is a consequence of Newton's law <m>F=ma</m> where <m>F=-kx</m> is the force of the spring.</p>
+        <p>The vector field is identified by considering an order for our state variables, <m>x_1 = x</m> and <m>x_2 = v</m>, with corresponding rate functions <m>f_1(x,v) = v</m> and <m>f_2(x,v)=- \frac{k}{m} x</m>. The <term>phase plane</term> is the <m>(x,v)</m>-plane. The vector field corresponds to placing at each point <m>(x,v)</m> a vector <m>\langle v, -\frac{k}{m} x\rangle</m>. Computer generated plots of vector fields usually rescale the vectors but preserve the correct directions and relative lengths.</p>
+        <p>The following Sage script generates a vector field for this system.</p>
+        <sage>
+            <input>
+            # Define phase space variables and time (only needed later for solutions)
+            var('t,x,v')
+            kmRatio = 1.2   # The ratio k/m is a model parameter
+            
+            # Define the vector field equations
+            f1 = v
+            f2 = - kmRatio * x
+            
+            # Define the vector field plot and then display it.
+            vField = plot_vector_field( [f1, f2], (x,-2,2), (v,-2,2) )
+            show(vField, axes_labels=["$x$","$v$"], figsize=[4,4])
+            </input>
+        </sage>
+        <p>When you execute the Sage script and see the results, you should observe arrows that look like they generate a circular pattern (an ellipse, actually). The closer to the origin, <m>(0,0)</m>, the smaller the arrows appear.</p>
+        <p>The vector field allows us to tell the story of what happens to the oscillator. Imagine stretching the string for a positive displacement by 1 unit of distance. Right when we let go, we are at a state of <m>x=1</m> and <m>v=0</m>, which appears on the <m>x</m>-axis of the phase space. The vector field points down, <m>\langle f_1, f_2\rangle = \langle 0, -\frac{k}{m} \rangle</m>, which means that we start to gain a little negative velocity. Immediately, the negative velocity starts to cause the displacement to decrease. This corresponds to following the ellipse in the fourth quadrant.</p>
+        <p>Eventually, the state of the system reaches <m>x=0</m> with some maximum negative velocity <m>-v_{\mathrm{max}}</m>. This corresponds to a point on the lower <m>v</m>-axis. The vector field is horizontal and directed left, <m>\langle f_1,f_2 \rangle = \langle -v_{\mathrm{max}}, 0 \rangle</m>. The velocity causes the displacement to become negative and immediately, the acceleration begins to be positive and the velocity gradually slows down to zero, at which time we have returned to the <m>x</m>-axis on the left side. It is not yet obvious, but conservation of energy guarantees that we have reached a negative displacement exactly equal to our original positive displacement. The state of the system continues through the second and first quadrant, ultimately returning to its initial point, whereon the cycle is repeated.</p>
+        <p>The path the state follows through phase space is called the <term>orbit</term>. If we include the time variable to extend the phase space, the path is called the <term>trajectory</term>. If we solve the initial value problem numerically, we can add an orbit to the plot of the vector field. In addition, we often wish to see the graphs of the individual state variables as functions of time. This is accomplished by plotting <m>(t,x)</m> and <m>(t,v)</m>.</p>
+        <sage>
+            <input>
+            # This requires executing the earlier script first.
+            # That defined the variables and the vector field.
+            (x0,v0) = (1, 0)
+            tMax = 10
+            solution = desolve_system_rk4([f1, f2],
+                                          [x,v],
+                                          ivar=t, 
+                                          ics=[0,x0,v0],
+                                          end_points = [0, tMax])
+            # Solution is a list of points [t,x,v]
+            # The orbit traces out just [x,v] in phase plane
+            # Create a new list of modified points from solution points
+            orbitPts = [ [xk, vk] for [tk, xk, vk] in solution ]
+            orbit = list_plot( orbitPts, plotjoined=True )
+            show(vField + orbit, axes_labels=["$x$","$v$"], figsize=[4,4])
+            # Solution graphs
+            xPlot = list_plot( [ [tk,xk] for [tk,xk,vk] in solution ], 
+                              plotjoined=True, 
+                              color="blue", legend_label="$x$" )
+            vPlot = list_plot( [ [tk,vk] for [tk,xk,vk] in solution ], 
+                              plotjoined=True, 
+                              color="red", legend_label="$v$" )
+            show(xPlot+vPlot, axes_labels=["$t$",""], figsize=[5,3])
+            </input>
+        </sage>
+    </example>
+    
+    <example>
+        <p>In the early 1900s, two scientists, Alfred Lotka and Vito Volterra, independently developed a system of differential equations to describe the dynamics of two populations<mdash/>a producer or prey and a consumer or predator. The system of equations, now called the Lotka<ndash/>Volterra predator<ndash/>prey model, has two state variables. Let <m>C</m> represent the size of the consumer (or carnivore) population and let <m>P</m> represent the size of the producer (or prey) population. The basic model assumes that the producer would grow in direct proportion to its current population and that the consumer would die in direct proportion to its population. Each consumer kills and eats the producer at a rate proportional to the producer population, and births of the consumer are proportional to the consumption rate. The flow diagram for the model is shown below.</p>
+        <figure xml:id='lotka-volterra-predator-prey-system-diagram'>
+            <image width="30%">
+                <latex-image >
+                <![CDATA[\usetikzlibrary{positioning}
+                \tikzset{
+                    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+                    tmp/.style  = {coordinate}, 
+                    input/.style = {coordinate},
+                    output/.style= {coordinate},
+                }
+                \begin{tikzpicture}[auto, node distance=1cm,>=latex]
+                \draw
+                    node [input] (birthP) at (0,0) {}
+                    node [block] (popP) at (2,0) {$P$}
+                    node [output] (deathP) at (4,0) {}
+                    node [input] (birthC) at (0,-2) {}
+                    node [block] (popC) at (2,-2) {$C$}
+                    node [output] (deathC) at (4,-2) {}
+                ;
+                
+                \draw [->] (birthP) -- node [below] (bRateP) {$\alpha P$} (popP);
+                \draw [->] (birthC) -- node (bRateC) {$\beta P C$} (popC);
+                \draw [->] (popP) -- node [below] (dRateP) {$\rho P C$} (deathP);
+                \draw [->] (popC) -- node (dRateC) {$\gamma C$} (deathC);
+                \draw [dashed, ->] (popP.south west) -- (bRateC);
+                \draw [dashed, ->] (popC.north east) -- (dRateP);
+                \end{tikzpicture}]]>
+                </latex-image >
+            </image>
+        </figure>
+        <p>The resulting system of differential equations defines our vector field. <md>
+            <mrow> \frac{dP}{dt} &amp;= \alpha P - \rho P C, </mrow>
+            <mrow> \frac{dC}{dt} &amp;= \beta P C - \gamma C. </mrow>
+        </md> The following Sage script generates a vector field and plots a sample orbit in the phase plane. A graph of the corresponding state variables as functions of time is also generated.</p>
+        <sage>
+            <input>
+            var('t,P,C')
+            # Parameters
+            [ alpha, rho, beta, gamma ] = [0.1, 0.002, 0.0005, 0.2]
+            
+            # Vector Field
+            dPdt = alpha*P - rho*P*C
+            dCdt = beta*P*C - gamma*C
+            vField = plot_vector_field( [dPdt, dCdt], (P,-50,1000), (C,-10,150) )
+            
+            # Solve a particular solution
+            (P0,C0) = (200, 20)
+            tMax = 100
+            solution = desolve_system_rk4([dPdt, dCdt],
+                                          [P,C],
+                                          ivar=t, 
+                                          ics=[0,P0,C0],
+                                          end_points = [0, tMax])
+            # Create the orbit
+            orbitPts = [ [xk, vk] for [tk, xk, vk] in solution ]
+            orbit = list_plot( orbitPts, plotjoined=True )
+            show(vField + orbit, axes_labels=["$P$","$C$"], figsize=[4,4])
+            
+            # Solution graphs
+            PPlot = list_plot( [ [tk,Pk] for [tk,Pk,Ck] in solution ], 
+                              plotjoined=True, 
+                              color="blue", legend_label="$P$" )
+            CPlot = list_plot( [ [tk,Ck] for [tk,Pk,Ck] in solution ], 
+                              plotjoined=True, 
+                              color="red", legend_label="$C$" )
+            show(PPlot+CPlot, axes_labels=["$t$",""], figsize=[5,3])
+            </input>
+        </sage>
+    </example>
+</subsection>
+
+<subsection>
+    <title>Nullclines and Equilibria</title>
+
+    <p>A <term>nullcline</term> is a subset of the phase space of points where one of the rate functions in the vector field equals zero. In a two-dimensional system, a nullcline is typically a curve. In a three-dimensional system, a nullcline is typically a surface. In higher dimensions, a nullcline defines what is called a hypersurface, which is the generalization of a surface in three dimensions. Nullclines divide the phase space into disjoint regions in which the state variable is exclusively either increasing or decreasing.</p>
+
+    <p>An <term>equilibrium</term> is a point in phase space such that all of the state variables are constant. This requires that the point is on every variable's nullcline. So we can find equilibrium points by finding where the nullclines intersect.</p>
+    
+    <p>We can create a graph that shows the nullclines using something called an implicit plot. The way that an implicit plot works is that a formula is computed at every point on a grid in the plane. We could think of these values as defining the height of a surface above or below each point in the plane. The implicit plot uses this surface to draw a contour in the plane where the height equals zero. Because the surface is not known exactly but is only measured at a grid of points, the contour is only approximate.</p>
+    
+    <example>
+        <p>The Lotka<ndash/>Volterra predator<ndash/>prey model given by <md>
+            <mrow> \frac{dP}{dt} &amp;= \alpha P - \rho P C, </mrow>
+            <mrow> \frac{dC}{dt} &amp;= \beta P C - \gamma C, </mrow>
+        </md> is a two-dimensional system. The <m>P</m>-nullcline <m>\mathcal{N}_P</m> is the set of all points in the phase plane where <m>\frac{dP}{dt} = 0</m>, <me> \mathcal{N}_P = \{ (P,C) : \alpha P - \rho P C = 0 \}.</me> Similarly, the <m>C</m>-nullcline is the set of all points where <m>\frac{dC}{dt} = 0</m>, <me>\mathcal{N}_C = \{ (P,C) : \beta P C - \gamma C = 0 \}.</me></p>
+        <p>To illustrate where an implicit plot comes from, the following Sage script plots the surface defined by the <m>P</m>-rate formula with a contour showing the curve where the rate is zero. This approximate contour is the graphed as an implicit plot.</p>
+        <sage>
+            <input>
+            # Define z in order to plot the surface z=dPdt
+            var('t,P,C,z')
+            # Parameters
+            [ alpha, rho, beta, gamma ] = [0.1, 0.002, 0.0005, 0.2]
+
+            # Define Vector Field
+            dPdt = alpha*P - rho*P*C
+            dCdt = beta*P*C - gamma*C
+
+            PRateSurface = plot3d(dPdt, (P,-50,1000), (C,-10,200))
+            PRateNull = implicit_plot3d( dPdt==0,
+                            (P,-50,1000), (C,-10,200), (z,0,5), 
+                            color="red")
+            show(PRateSurface + PRateNull)
+
+            # Plot the P-nullcline in phase plane
+            Pnullcline = implicit_plot( dPdt==0, 
+                            (P,-50,1000), (C,-10,200), 
+                            color="red")
+            # Legends don't work with implicit plots :( so we make one ourselves
+            # Rectangle to outline, line segment to illustrate, label
+            legend = polygon([(25,190), (25,170), (250,170), (250,190)],
+                            edgecolor="black", color="white") \
+                    + line([(45,180), (85,180)], color="red") \
+                    + text("$\\frac{dP}{dt}=0$", [95,180], 
+                            color="black", horizontal_alignment="left")
+            # Show the result
+            show(Pnullcline+legend, figsize=[4,4], axes_labels=["$P$","$C$"], aspect_ratio='automatic')
+            </input>
+        </sage>
+        <p>The <m>P</m>-nullcline divides the phase plane into regions of <m>P</m>-directionality. The intersection points are equilibria, which for the given model parameters occur at <m>(P,C)=(0,0)</m> and <m>(P,C)=(400,50)</m>. Within each region, the state variable either exclusively increases (<m>\frac{dP}{dt} \gt 0</m>) or exclusively decreases (<m>\frac{dP}{dt} \lt 0</m>). We can add arrows to visualize the result. The values used to define the ends of arrows was determined manually after looking at the phase plane with the nullcline shown to make the arrow centered.</p>
+        <sage>
+            <input>
+            # Assumes that dPdt and Pnullcline already created above
+            
+            # After looking at the nullcline, chose points in each region.
+            # Find value of dPdt at each point.
+            print( dPdt.substitute([P==500,C==100]) )
+            print( dPdt.substitute([P==500,C==20]) )
+            
+            # Use the sign of the answers found just above to determine if
+            # arrows should point left (negative) or right (positive)
+            # (Horizontal because P is the horizontal axis variable)
+            PphaseDirs = arrow( (500,100), (400,100), color="red" ) \
+                + arrow( (500,20), (600,20), color="red")
+
+            # Combine the graphs for display
+            show(Pnullcline + PphaseDirs + legend, figsize=[4,4], axes_labels=["$P$","$C$"], aspect_ratio='automatic')
+            </input>
+        </sage>
+        <p>Ultimately, we want to know the direction for both <m>P</m> and <m>C</m>. We plot the nullclines together, using different colors to distinguish them. We test the sign of the rate functions at points in the regions and draw arrows showing the direction. Conveniently, we could have Sage do the work once we identify the points by automating the drawing of arrows. The following script generates the nullclines, after some experimentation to get the legend looking appropriate.</p>
+        <sage>
+            <input>
+            var('t,P,C')
+            # Parameters
+            [ alpha, rho, beta, gamma ] = [0.1, 0.002, 0.0005, 0.2]
+
+            # Define Vector Field
+            dPdt = alpha*P - rho*P*C
+            dCdt = beta*P*C - gamma*C
+            
+            # Create graphs for nullclines
+            Pnullcline = implicit_plot( dPdt==0, 
+                            (P,-200,1000), (C,-50,200), color="red")
+            Cnullcline = implicit_plot( dCdt==0, 
+                            (P,-200,1000), (C,-50,200), color="blue")
+            legend = polygon([(25,190), (25,155), (270,155), (270,190)],
+                            edgecolor="black", color="white") \
+                    + line([(45,180), (85,180)], color="red") \
+                    + text("$\\frac{dP}{dt}=0$", [95,180], 
+                            color="black", horizontal_alignment="left") \
+                    + line([(45,165), (85,165)], color="blue") \
+                    + text("$\\frac{dC}{dt}=0$", [95,165], 
+                            color="black", horizontal_alignment="left")
+            show(Pnullcline + Cnullcline + legend, figsize=[4,4], axes_labels=["$P$","$C$"], aspect_ratio='automatic')
+            </input>
+        </sage>
+        <p>Looking at the phase plane, we see nine distinct regions separated by the nullclines. The Sage script below tests the sign of the vector field rates at nine points, one from each region and draws horizontal and vertical arrows rooted at that point.</p>
+        <sage>
+            <input>
+            # Vector field and nullclines defined earlier
+            testPoints = [ [-150,100], [200,100], [700,100], \
+                            [-150,25], [200,25], [700,25], \
+                            [-150,-25], [200,-25], [700,-25] ]
+            # Build up the directions
+            directions = Graphics()
+            # Length of arrows, horizontal and vertical
+            hlen = 75
+            vlen = 20
+            for pt in testPoints:
+                Prate = dPdt.substitute([P==pt[0], C==pt[1]])
+                Crate = dCdt.substitute([P==pt[0], C==pt[1]])
+                directions += arrow( pt, [pt[0]+hlen*sign(Prate), pt[1]], color="red", width=2, arrowsize=2)
+                directions += arrow( pt, [pt[0],pt[1]+vlen*sign(Crate)], color="blue", arrowsize=2)
+            show(Pnullcline + Cnullcline + directions + legend, figsize=[4,4], axes_labels=["$P$","$C$"], aspect_ratio='automatic')
+            </input>
+        </sage>
+    </example>
+    
+    <p>Higher dimensions obey the same ideas in principle but are harder to visualize. Even three dimensions can be a little challenging to interpret.</p>
+    
+    <example>
+        <p>The SIR model for infectious diseases considers a single population where each individual can be categorized as susceptible to the disease, infected, and recovered and immune from the disease. The state variables <m>S</m>, <m>I</m>, and <m>R</m> count the number of individuals in each category. Assuming that only healthy individuals give birth subject to a carrying capacity and infected individuals die at a higher rate than other individuals, a simple model is given by the system of differential equations <md>
+            <mrow>\frac{dS}{dt} &amp;= r(S+R)(1 - \frac{S+I+R}{K}) - \alpha S I - \gamma S </mrow>
+            <mrow>\frac{dI}{dt} &amp;= \alpha S I - (\gamma + \delta) I - \rho I </mrow>
+            <mrow>\frac{dR}{dt} &amp;= \rho I - \gamma R</mrow>
+        </md> The phase space is three-dimensional.</p>
+        <p>The Sage script below uses three-dimensional implicit plots to create approximate nullclines (these will be surfaces) for the three state variables. It is hard to see the intersection of all three surfaces. The script includes a step to solve for the equilibrium points.</p>
+        <sage>
+            <input>
+            # Variables: Avoid "I" as that is reserved for the imaginary number
+            var('nS,nI,nR,t')
+            
+            # Model Parameters
+            r = 1
+            K = 1000
+            alpha = 0.005
+            gamma = 0.85
+            delta = 0.25
+            rho = 2.5
+            
+            # Vector Field rates
+            dSdt = r*(nS+nR)*(1-(nS+nI+nR)/K) - alpha*nS*nI
+            dIdt = alpha*nS*nI - (gamma+delta+rho)*nI
+            dRdt = rho*nI - gamma*nR
+            
+            # Generate the nullclines
+            Snullcline = implicit_plot3d( dSdt==0, (nS,-200,1200), (nI,-200,800), (nR,-200,400), color="green")
+            Inullcline = implicit_plot3d( dIdt==0, (nS,-200,1200), (nI,-200,800), (nR,-200,400), color="red")
+            Rnullcline = implicit_plot3d( dRdt==0, (nS,-200,1200), (nI,-200,800), (nR,-200,400), color="blue")
+            show(Snullcline + Inullcline + Rnullcline)
+            
+            # Find equilibrium points.
+            equilibria = solve([dSdt==0, dIdt==0, dRdt==0], [nS,nI,nR])
+            # This return a list of the form [nS==a, nI==b, nR==c]
+            # Use those values to form a point and display numerically
+            for eq in equilibria:
+                print(vector([nS,nI,nR]).substitute(eq).n())
+            </input>
+        </sage>
+    </example>
+</subsection>
+</section>

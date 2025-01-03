@@ -5,14 +5,15 @@
   <xi:include href="./docinfo.ptx" />
 
   <book xml:id="my-great-book">
-    <title>My Great Book</title>
-    <subtitle>An example to get you started</subtitle>
+    <title>Dynamic Models for Biology</title>
 
     <!-- Include frontmatter -->
     <xi:include href="./frontmatter.ptx" />
 
     <!-- Include chapters -->
-    <xi:include href="./ch-chapter-title.ptx" />
+    <xi:include href="./ch-mathematical-modeling.xml" />
+    <xi:include href="./ch-populations.xml" />
+    <xi:include href="./ch-interactions.xml" />
 
 
     <!-- Include backmatter -->
