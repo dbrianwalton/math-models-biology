@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US" dir="ltr">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Dynamical Systems and Phase Space</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Dynamic Models for Biology">
+<meta property="book:author" content="D. Brian Walton">
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script><script>
+var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "tags": "none",
+    "tagSide": "right",
+    "tagIndent": ".8em",
+    "packages": {
+      "[+]": [
+        "base",
+        "extpfeil",
+        "ams",
+        "amscd",
+        "color",
+        "newcommand",
+        "knowl"
+      ]
+    }
+  },
+  "options": {
+    "ignoreHtmlClass": "tex2jax_ignore|ignore-math",
+    "processHtmlClass": "process-math",
+    "renderActions": {
+      "findScript": [
+        10,
+        function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        },
+        ""
+      ]
+    }
+  },
+  "chtml": {
+    "scale": 0.98,
+    "mtextInheritFont": true
+  },
+  "loader": {
+    "load": [
+      "input/asciimath",
+      "[tex]/extpfeil",
+      "[tex]/amscd",
+      "[tex]/color",
+      "[tex]/newcommand",
+      "[pretext]/mathjaxknowl3.js"
+    ],
+    "paths": {
+      "pretext": "_static/pretext/js/lib"
+    }
+  },
+  "startup": {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  }
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script>// Make *any* div with class 'sagecell-sage' an executable Sage cell
+// Their results will be linked, only within language type
+sagecell.makeSagecell({
+  "inputLocation": "div.sagecell-sage",
+  "linked": true,
+  "linkKey": "linked-sage",
+  "autoeval": false,
+  "languages": [
+    "sage"
+  ],
+  "evalButtonText": "Evaluate (Sage)"
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><link href="_static/pretext/css/pretext_search.css" rel="stylesheet" type="text/css">
+<script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraph.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script><link href="_static/pretext/css/theme.css" rel="stylesheet" type="text/css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '7.5.0';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script src="_static/prefix-runtime.917314eae5e3ab90.bundle.js"></script><script src="_static/prefix-347.8328b60515045466.bundle.js"></script><script src="_static/prefix-runestone.b5027876c2f06108.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-347.f9add1ca35d5ad93.css">
+<link rel="stylesheet" type="text/css" href="_static/prefix-runestone.97f3ae4f7a71ba18.css">
+<style>
+</style>
+</head>
+<body id="dmb" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead" class="ptx-masthead"><div class="ptx-banner">
+<a id="logo-link" class="logo-link" target="_blank" href=""></a><div class="title-container">
+<h1 class="heading"><a href="my-great-book.html"><span class="title">Dynamic Models for Biology</span></a></h1>
+<p class="byline">D. Brian Walton</p>
+</div>
+</div></header><nav id="ptx-navbar" class="ptx-navbar navbar"><div class="ptx-navbar-contents">
+<button class="toc-toggle button" title="Contents"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d2;</span><span class="name">Contents</span></button><div class="searchbox">
+<div class="searchwidget"><button id="searchbutton" class="searchbutton button" type="button" title="Search book"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe8b6;</span><span class="name">Search Book</span></button></div>
+<div id="searchresultsplaceholder" class="searchresultsplaceholder" style="display: none">
+<div class="search-results-controls">
+<input aria-label="Search term" id="ptxsearch" class="ptxsearch" type="text" name="terms" placeholder="Search term"><button title="Close search" id="closesearchresults" class="closesearchresults"><span class="material-symbols-outlined">close</span></button>
+</div>
+<h2 class="search-results-heading">Search Results: </h2>
+<div id="searchempty" class="searchempty"><span>No results.</span></div>
+<ol id="searchresults" class="searchresults"></ol>
+</div>
+</div>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="interaction-rate-models.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="interactions.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+</div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar" class="ptx-sidebar"><nav id="ptx-toc" class="ptx-toc depth2 focused" data-preexpanded-levels="0" data-max-levels="2"><ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-frontmatter"><div class="toc-title-box"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="mathematical-modeling.html" class="internal"><span class="codenumber">1</span> <span class="title">Mathematical Modeling</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="scientific-method.html" class="internal"><span class="codenumber">1.1</span> <span class="title">The Scientific Method</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="role-of-models.html" class="internal"><span class="codenumber">1.2</span> <span class="title">The Role of Models</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="measurements.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Measurements</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="system-state.html" class="internal"><span class="codenumber">1.4</span> <span class="title">The State of a System</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="populations.html" class="internal"><span class="codenumber">2</span> <span class="title">Population Dynamics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-agent-based.html" class="internal"><span class="codenumber">2.1</span> <span class="title">An Agent Based Motivation for Dynamics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-based-3" class="internal"><span class="codenumber">2.1.1</span> <span class="title">NetLogo Overview</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-naive" class="internal"><span class="codenumber">2.1.2</span> <span class="title">Environmentally Naive Births and Deaths</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-density-dependent" class="internal"><span class="codenumber">2.1.3</span> <span class="title">Density-Dependent Births and Deaths</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-discrete.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Discrete Population Models</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-discrete.html#population-sequences" class="internal"><span class="codenumber">2.2.1</span> <span class="title">Populations as Sequences</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-discrete.html#population-constant-per-capita" class="internal"><span class="codenumber">2.2.2</span> <span class="title">Constant Per Capita Growth Models</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-discrete.html#population-density-dependent" class="internal"><span class="codenumber">2.2.3</span> <span class="title">Density Dependent Growth Models</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-projection.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Projection Models</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-functions" class="internal"><span class="codenumber">2.3.1</span> <span class="title">Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-fixed-points" class="internal"><span class="codenumber">2.3.2</span> <span class="title">Fixed Points and Equilibria</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-computation" class="internal"><span class="codenumber">2.3.3</span> <span class="title">Computing Recursive Sequences</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="projection-analysis.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Analysis of Population Projections</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#linear-projection-analysis" class="internal"><span class="codenumber">2.4.1</span> <span class="title">Linear Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-4" class="internal"><span class="codenumber">2.4.2</span> <span class="title">Linearizing Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-5" class="internal"><span class="codenumber">2.4.3</span> <span class="title">Computer Assisted Analysis</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="projection-cobweb.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Graphical Analysis of Projection Functions</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-compare-replacement" class="internal"><span class="codenumber">2.5.1</span> <span class="title">Visualizing Potential for Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#cobweb-diagrams" class="internal"><span class="codenumber">2.5.2</span> <span class="title">Cobweb Diagrams</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-cobweb-5" class="internal"><span class="codenumber">2.5.3</span> <span class="title">Cobwebs and Stability</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-interventions.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Intervention and Bifurcations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-constant-harvesting" class="internal"><span class="codenumber">2.6.1</span> <span class="title">Constant Harvesting</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-interventions-4" class="internal"><span class="codenumber">2.6.2</span> <span class="title">Proportional Harvesting</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="intro-differential-equations.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Introduction to Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#rate-of-change" class="internal"><span class="codenumber">2.7.1</span> <span class="title">Rates of Change</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#differential-equations" class="internal"><span class="codenumber">2.7.2</span> <span class="title">Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#numerical-solutions-diffeq" class="internal"><span class="codenumber">2.7.3</span> <span class="title">Solutions to Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#slope-fields" class="internal"><span class="codenumber">2.7.4</span> <span class="title">Slope Fields</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">2.8</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">2.8.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">2.8.2</span> <span class="title">Phase Lines</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter contains-active">
+<div class="toc-title-box"><a href="interactions.html" class="internal"><span class="codenumber">3</span> <span class="title">Modeling Interactions</span></a></div>
+<ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="system-examples.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Examples of Interacting Systems</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-3" class="internal"><span class="codenumber">3.1.1</span> <span class="title">Epidemic Models</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-4" class="internal"><span class="codenumber">3.1.2</span> <span class="title">Interacting Populations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-5" class="internal"><span class="codenumber">3.1.3</span> <span class="title">Age or Stage-Based Models</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="interaction-rate-models.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Modeling Interaction Rates</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-3" class="internal"><span class="codenumber">3.2.1</span> <span class="title">Linear Rates and Linear Combinations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-4" class="internal"><span class="codenumber">3.2.2</span> <span class="title">Logistic Growth with Functional Dependence</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-5" class="internal"><span class="codenumber">3.2.3</span> <span class="title">Law of Mass Action for Interactions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-6" class="internal"><span class="codenumber">3.2.4</span> <span class="title">Saturating Functional Response</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-7" class="internal"><span class="codenumber">3.2.5</span> <span class="title">Switching Functional Response</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section contains-active">
+<div class="toc-title-box"><a href="system-phase-space.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Dynamical Systems and Phase Space</span></a></div>
+<ul class="structural toc-item-list active">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#vector-fields" class="internal"><span class="codenumber">3.3.1</span> <span class="title">Vector Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#system-phase-space-4" class="internal"><span class="codenumber">3.3.2</span> <span class="title">Nullclines and Equilibria</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-backmatter"><div class="toc-title-box"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="system-phase-space"><h2 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">3.3</span><span class="space"> </span><span class="title">Dynamical Systems and Phase Space</span>
+</h2>
+<section class="introduction" id="system-phase-space-2"><div class="para" id="system-phase-space-2-1">We are interested in studying what happens in an interacting system. For these systems, our system must have more than one dynamic variable. We call the system a <dfn class="terminology">dynamical system</dfn>. In this section, we introduce some terminology for how we think about dynamical systems. We will be able to visualize these concepts graphically when there are two or three dynamic variables. When there are more than three variables, we will work by analogy even though we aren’t able to visualize the result.</div></section><section class="subsection" id="vector-fields"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">3.3.1</span><span class="space"> </span><span class="title">Vector Fields</span>
+</h3>
+<div class="para logical" id="vector-fields-2">
+<div class="para">A continuous dynamical system is defined in terms of a system of differential equations. Each state variable has a rate of change (the derivative). In a dynamical system, there exists a function of the state variables and the independent variable <span class="process-math">\(t\)</span> that equals this rate of change at all times. In an abstract system with <span class="process-math">\(n\)</span> state variables, labeled <span class="process-math">\(x_1(t), x_2(t), \ldots, x_n(t)\text{,}\)</span> where the time dependence is explicitly stated, there are <span class="process-math">\(n\)</span> functions of the state variables <span class="process-math">\(f_1, f_2, \ldots, f_n\)</span> such that</div>
+<div class="displaymath process-math" id="vector-fields-2-6">
+\begin{align*}
+\frac{dx_1}{dt} &amp;= f_1(t, x_1, x_2, \ldots, x_n) \\
+\frac{dx_2}{dt} &amp;= f_2(t, x_1, x_2, \ldots, x_n) \\
+&amp; \vdots \\
+\frac{dx_n}{dt} &amp;= f_n(t, x_1, x_2, \ldots, x_n) 
+\end{align*}
+</div>
+<div class="para">The collection of functions <span class="process-math">\((f_1, f_2, \ldots, f_n)\)</span> defines a <dfn class="terminology">vector field</dfn>.</div>
+</div>
+<article class="theorem theorem-like" id="thm-existence-uniqueness-system"><h4 class="heading">
+<span class="type">Theorem</span><span class="space"> </span><span class="codenumber">3.3.1</span><span class="period">.</span><span class="space"> </span><span class="title">Existence and Uniqueness of Initial Value Problem.</span>
+</h4>
+<div class="para" id="thm-existence-uniqueness-system-2-1">If each of the component rate functions are continuous and all of the partial derivatives are continuous in a neighborhood of the initial value <span class="process-math">\((t_0, x_{1,0}, x_{2,0}, \ldots, x_{n,0})\text{,}\)</span> then the initial value problem defined by the vector field <span class="process-math">\((f_1, f_2, \ldots, f_n)\)</span> and initial values <span class="process-math">\(x_k(t_0) = x_{k,0}\)</span> for <span class="process-math">\(k=1, 2, \ldots, n\)</span> has a unique solution for some interval <span class="process-math">\(t \in (t_0-\delta, t_0+\delta)\text{.}\)</span>
+</div></article><div class="para" id="vector-fields-4">The existence and uniqueness theorem guarantees that if we specify the state of the system at a time in which the vector field changes smoothly relative to time and also relative to the values of the state variables (this is what continuity of the partial derivatives guarantees), then the state will follow a flow defined by the vector field. In many cases, the vector field does not depend on time and we have an autonomous system of differential equations. In these cases, we can often visualize solutions to the differential equations by create a plot of the vector field.</div>
+<div class="para" id="vector-fields-5">A <dfn class="terminology">vector</dfn> is a mathematical object that consists of both a direction and a magnitude. Graphically, we usually represent a vector as an arrow. The length of the arrow represents its magnitude and the direction is the direction of the arrow from its root (the straight segment) to its tip (the arrow). A vector can also be determined from its components.</div>
+<div class="para" id="vector-fields-6">Standard components correspond to perpendicular directions, with one direction for each state variable. A system with two state variables has a vector field defined in the plane with two directions. The direction of the <span class="process-math">\(x\)</span>-axis corresponds to the first state variable and the <span class="process-math">\(y\)</span>-axis corresponds to the second state variable. A vector is specified by giving a value for each coordinate direction, say <span class="process-math">\(\vec{v} = \langle a, b \rangle\)</span> (similar to a point). The vector, drawn at a location <span class="process-math">\((x,y)\)</span> in the plane corresponds to an arrow with a root at <span class="process-math">\((x,y)\)</span> and the tip at <span class="process-math">\((x+a,y+b)\text{.}\)</span> That is, the vector gives a displacement from the root to the tip.</div>
+<div class="para logical" id="vector-fields-7">
+<div class="para">The vector field functions <span class="process-math">\((f_1, \ldots, f_n)\)</span> define at every moment <span class="process-math">\(t\)</span> and state <span class="process-math">\(x = (x_1, \ldots, x_n)\)</span> a rate vector</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\vec{u}(t,x) = \langle f_1(t,x), \ldots, f_n(t,x) \rangle.
+\end{equation*}
+</div>
+<div class="para">A solution can be visualized as a point <span class="process-math">\(x(t)\)</span> moving through the state space such that its velocity is at each instant defined by <span class="process-math">\(\vec{u}(t,x)\text{.}\)</span> For an autonomous system, the velocity depends only on the current state and we call the state space the phase space. When the vector field depends explicitly on time, we must add the time variable as a new state variable and the phase space is one dimension larger than the state space.</div>
+</div>
+<div class="para" id="vector-fields-8">We illustrate the ideas with some two-dimensional examples and use Sage to generate illustrative figures.</div>
+<details id="vector-fields-9" class="example example-like born-hidden-knowl"><summary class="knowl__link"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.3.2</span><span class="period">.</span>
+</h4></summary><article class="example example-like knowl__content"><div class="para logical" id="vector-fields-9-1">
+<div class="para">An example from physics is the harmonic oscillator (mass on a spring). In the absence of friction, the only force is from the spring, proportional to and opposing the displacement. The state variables are the displacement <span class="process-math">\(x\)</span> and the velocity <span class="process-math">\(v\text{.}\)</span> The system of differential equations is given by</div>
+<div class="displaymath process-math" id="vector-fields-9-1-3">
+\begin{align*}
+\frac{dx}{dt} &amp; = v, \\
+\frac{dv}{dt} &amp; = - \frac{k}{m} x. 
+\end{align*}
+</div>
+<div class="para">The rate for <span class="process-math">\(x\)</span> is just the definition of velocity. The rate for <span class="process-math">\(v\)</span> is acceleration and is a consequence of Newton’s law <span class="process-math">\(F=ma\)</span> where <span class="process-math">\(F=-kx\)</span> is the force of the spring.</div>
+</div>
+<div class="para" id="vector-fields-9-2">The vector field is identified by considering an order for our state variables, <span class="process-math">\(x_1 = x\)</span> and <span class="process-math">\(x_2 = v\text{,}\)</span> with corresponding rate functions <span class="process-math">\(f_1(x,v) = v\)</span> and <span class="process-math">\(f_2(x,v)=- \frac{k}{m} x\text{.}\)</span> The <dfn class="terminology">phase plane</dfn> is the <span class="process-math">\((x,v)\)</span>-plane. The vector field corresponds to placing at each point <span class="process-math">\((x,v)\)</span> a vector <span class="process-math">\(\langle v, -\frac{k}{m} x\rangle\text{.}\)</span> Computer generated plots of vector fields usually rescale the vectors but preserve the correct directions and relative lengths.</div>
+<div class="para" id="vector-fields-9-3">The following Sage script generates a vector field for this system.</div>
+<div id="vector-fields-9-4" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Define phase space variables and time (only needed later for solutions)
+var('t,x,v')
+kmRatio = 1.2   # The ratio k/m is a model parameter
+
+# Define the vector field equations
+f1 = v
+f2 = - kmRatio * x
+
+# Define the vector field plot and then display it.
+vField = plot_vector_field( [f1, f2], (x,-2,2), (v,-2,2) )
+show(vField, axes_labels=["$x$","$v$"], figsize=[4,4])
+</script></div>
+<div class="para" id="vector-fields-9-5">When you execute the Sage script and see the results, you should observe arrows that look like they generate a circular pattern (an ellipse, actually). The closer to the origin, <span class="process-math">\((0,0)\text{,}\)</span> the smaller the arrows appear.</div>
+<div class="para" id="vector-fields-9-6">The vector field allows us to tell the story of what happens to the oscillator. Imagine stretching the string for a positive displacement by 1 unit of distance. Right when we let go, we are at a state of <span class="process-math">\(x=1\)</span> and <span class="process-math">\(v=0\text{,}\)</span> which appears on the <span class="process-math">\(x\)</span>-axis of the phase space. The vector field points down, <span class="process-math">\(\langle f_1, f_2\rangle = \langle 0, -\frac{k}{m} \rangle\text{,}\)</span> which means that we start to gain a little negative velocity. Immediately, the negative velocity starts to cause the displacement to decrease. This corresponds to following the ellipse in the fourth quadrant.</div>
+<div class="para" id="vector-fields-9-7">Eventually, the state of the system reaches <span class="process-math">\(x=0\)</span> with some maximum negative velocity <span class="process-math">\(-v_{\mathrm{max}}\text{.}\)</span> This corresponds to a point on the lower <span class="process-math">\(v\)</span>-axis. The vector field is horizontal and directed left, <span class="process-math">\(\langle f_1,f_2 \rangle = \langle -v_{\mathrm{max}}, 0 \rangle\text{.}\)</span> The velocity causes the displacement to become negative and immediately, the acceleration begins to be positive and the velocity gradually slows down to zero, at which time we have returned to the <span class="process-math">\(x\)</span>-axis on the left side. It is not yet obvious, but conservation of energy guarantees that we have reached a negative displacement exactly equal to our original positive displacement. The state of the system continues through the second and first quadrant, ultimately returning to its initial point, whereon the cycle is repeated.</div>
+<div class="para" id="vector-fields-9-8">The path the state follows through phase space is called the <dfn class="terminology">orbit</dfn>. If we include the time variable to extend the phase space, the path is called the <dfn class="terminology">trajectory</dfn>. If we solve the initial value problem numerically, we can add an orbit to the plot of the vector field. In addition, we often wish to see the graphs of the individual state variables as functions of time. This is accomplished by plotting <span class="process-math">\((t,x)\)</span> and <span class="process-math">\((t,v)\text{.}\)</span>
+</div>
+<div id="vector-fields-9-9" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># This requires executing the earlier script first.
+# That defined the variables and the vector field.
+(x0,v0) = (1, 0)
+tMax = 10
+solution = desolve_system_rk4([f1, f2],
+                              [x,v],
+                              ivar=t, 
+                              ics=[0,x0,v0],
+                              end_points = [0, tMax])
+# Solution is a list of points [t,x,v]
+# The orbit traces out just [x,v] in phase plane
+# Create a new list of modified points from solution points
+orbitPts = [ [xk, vk] for [tk, xk, vk] in solution ]
+orbit = list_plot( orbitPts, plotjoined=True )
+show(vField + orbit, axes_labels=["$x$","$v$"], figsize=[4,4])
+# Solution graphs
+xPlot = list_plot( [ [tk,xk] for [tk,xk,vk] in solution ], 
+                  plotjoined=True, 
+                  color="blue", legend_label="$x$" )
+vPlot = list_plot( [ [tk,vk] for [tk,xk,vk] in solution ], 
+                  plotjoined=True, 
+                  color="red", legend_label="$v$" )
+show(xPlot+vPlot, axes_labels=["$t$",""], figsize=[5,3])
+</script></div></article></details><details id="vector-fields-10" class="example example-like born-hidden-knowl"><summary class="knowl__link"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.3.3</span><span class="period">.</span>
+</h4></summary><article class="example example-like knowl__content"><div class="para" id="vector-fields-10-1">In the early 1900s, two scientists, Alfred Lotka and Vito Volterra, independently developed a system of differential equations to describe the dynamics of two populations—a producer or prey and a consumer or predator. The system of equations, now called the Lotka–Volterra predator–prey model, has two state variables. Let <span class="process-math">\(C\)</span> represent the size of the consumer (or carnivore) population and let <span class="process-math">\(P\)</span> represent the size of the producer (or prey) population. The basic model assumes that the producer would grow in direct proportion to its current population and that the consumer would die in direct proportion to its population. Each consumer kills and eats the producer at a rate proportional to the producer population, and births of the consumer are proportional to the consumption rate. The flow diagram for the model is shown below.</div>
+<figure class="figure figure-like" id="lotka-volterra-predator-prey-system-diagram"><div class="image-box" style="width: 30%; margin-left: 35%; margin-right: 35%;"><img src="generated/latex-image/lotka-volterra-predator-prey-system-diagram-1.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">3.3.4<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para logical" id="vector-fields-10-3">
+<div class="para">The resulting system of differential equations defines our vector field.</div>
+<div class="displaymath process-math" id="vector-fields-10-3-1">
+\begin{align*}
+\frac{dP}{dt} &amp;= \alpha P - \rho P C, \\
+\frac{dC}{dt} &amp;= \beta P C - \gamma C. 
+\end{align*}
+</div>
+<div class="para">The following Sage script generates a vector field and plots a sample orbit in the phase plane. A graph of the corresponding state variables as functions of time is also generated.</div>
+</div>
+<div id="vector-fields-10-4" class="ptx-sagecell sagecell-sage"><script type="text/x-sage">var('t,P,C')
+# Parameters
+[ alpha, rho, beta, gamma ] = [0.1, 0.002, 0.0005, 0.2]
+
+# Vector Field
+dPdt = alpha*P - rho*P*C
+dCdt = beta*P*C - gamma*C
+vField = plot_vector_field( [dPdt, dCdt], (P,-50,1000), (C,-10,150) )
+
+# Solve a particular solution
+(P0,C0) = (200, 20)
+tMax = 100
+solution = desolve_system_rk4([dPdt, dCdt],
+                              [P,C],
+                              ivar=t, 
+                              ics=[0,P0,C0],
+                              end_points = [0, tMax])
+# Create the orbit
+orbitPts = [ [xk, vk] for [tk, xk, vk] in solution ]
+orbit = list_plot( orbitPts, plotjoined=True )
+show(vField + orbit, axes_labels=["$P$","$C$"], figsize=[4,4])
+
+# Solution graphs
+PPlot = list_plot( [ [tk,Pk] for [tk,Pk,Ck] in solution ], 
+                  plotjoined=True, 
+                  color="blue", legend_label="$P$" )
+CPlot = list_plot( [ [tk,Ck] for [tk,Pk,Ck] in solution ], 
+                  plotjoined=True, 
+                  color="red", legend_label="$C$" )
+show(PPlot+CPlot, axes_labels=["$t$",""], figsize=[5,3])
+</script></div></article></details></section><section class="subsection" id="system-phase-space-4"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">3.3.2</span><span class="space"> </span><span class="title">Nullclines and Equilibria</span>
+</h3>
+<div class="para" id="system-phase-space-4-2">A <dfn class="terminology">nullcline</dfn> is a subset of the phase space of points where one of the rate functions in the vector field equals zero. In a two-dimensional system, a nullcline is typically a curve. In a three-dimensional system, a nullcline is typically a surface. In higher dimensions, a nullcline defines what is called a hypersurface, which is the generalization of a surface in three dimensions. Nullclines divide the phase space into disjoint regions in which the state variable is exclusively either increasing or decreasing.</div>
+<div class="para" id="system-phase-space-4-3">An <dfn class="terminology">equilibrium</dfn> is a point in phase space such that all of the state variables are constant. This requires that the point is on every variable’s nullcline. So we can find equilibrium points by finding where the nullclines intersect.</div>
+<div class="para" id="system-phase-space-4-4">We can create a graph that shows the nullclines using something called an implicit plot. The way that an implicit plot works is that a formula is computed at every point on a grid in the plane. We could think of these values as defining the height of a surface above or below each point in the plane. The implicit plot uses this surface to draw a contour in the plane where the height equals zero. Because the surface is not known exactly but is only measured at a grid of points, the contour is only approximate.</div>
+<details id="system-phase-space-4-5" class="example example-like born-hidden-knowl"><summary class="knowl__link"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.3.5</span><span class="period">.</span>
+</h4></summary><article class="example example-like knowl__content"><div class="para logical" id="system-phase-space-4-5-1">
+<div class="para">The Lotka–Volterra predator–prey model given by</div>
+<div class="displaymath process-math" id="system-phase-space-4-5-1-3">
+\begin{align*}
+\frac{dP}{dt} &amp;= \alpha P - \rho P C, \\
+\frac{dC}{dt} &amp;= \beta P C - \gamma C, 
+\end{align*}
+</div>
+<div class="para">is a two-dimensional system. The <span class="process-math">\(P\)</span>-nullcline <span class="process-math">\(\mathcal{N}_P\)</span> is the set of all points in the phase plane where <span class="process-math">\(\frac{dP}{dt} = 0\text{,}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\mathcal{N}_P = \{ (P,C) : \alpha P - \rho P C = 0 \}.
+\end{equation*}
+</div>
+<div class="para">Similarly, the <span class="process-math">\(C\)</span>-nullcline is the set of all points where <span class="process-math">\(\frac{dC}{dt} = 0\text{,}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\mathcal{N}_C = \{ (P,C) : \beta P C - \gamma C = 0 \}.
+\end{equation*}
+</div>
+</div>
+<div class="para" id="system-phase-space-4-5-2">To illustrate where an implicit plot comes from, the following Sage script plots the surface defined by the <span class="process-math">\(P\)</span>-rate formula with a contour showing the curve where the rate is zero. This approximate contour is the graphed as an implicit plot.</div>
+<div id="system-phase-space-4-5-3" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Define z in order to plot the surface z=dPdt
+var('t,P,C,z')
+# Parameters
+[ alpha, rho, beta, gamma ] = [0.1, 0.002, 0.0005, 0.2]
+
+# Define Vector Field
+dPdt = alpha*P - rho*P*C
+dCdt = beta*P*C - gamma*C
+
+PRateSurface = plot3d(dPdt, (P,-50,1000), (C,-10,200))
+PRateNull = implicit_plot3d( dPdt==0,
+                (P,-50,1000), (C,-10,200), (z,0,5), 
+                color="red")
+show(PRateSurface + PRateNull)
+
+# Plot the P-nullcline in phase plane
+Pnullcline = implicit_plot( dPdt==0, 
+                (P,-50,1000), (C,-10,200), 
+                color="red")
+# Legends don't work with implicit plots :( so we make one ourselves
+# Rectangle to outline, line segment to illustrate, label
+legend = polygon([(25,190), (25,170), (250,170), (250,190)],
+                edgecolor="black", color="white") \
+        + line([(45,180), (85,180)], color="red") \
+        + text("$\\frac{dP}{dt}=0$", [95,180], 
+                color="black", horizontal_alignment="left")
+# Show the result
+show(Pnullcline+legend, figsize=[4,4], axes_labels=["$P$","$C$"], aspect_ratio='automatic')
+</script></div>
+<div class="para" id="system-phase-space-4-5-4">The <span class="process-math">\(P\)</span>-nullcline divides the phase plane into regions of <span class="process-math">\(P\)</span>-directionality. The intersection points are equilibria, which for the given model parameters occur at <span class="process-math">\((P,C)=(0,0)\)</span> and <span class="process-math">\((P,C)=(400,50)\text{.}\)</span> Within each region, the state variable either exclusively increases (<span class="process-math">\(\frac{dP}{dt} \gt 0\)</span>) or exclusively decreases (<span class="process-math">\(\frac{dP}{dt} \lt 0\)</span>). We can add arrows to visualize the result. The values used to define the ends of arrows was determined manually after looking at the phase plane with the nullcline shown to make the arrow centered.</div>
+<div id="system-phase-space-4-5-5" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Assumes that dPdt and Pnullcline already created above
+
+# After looking at the nullcline, chose points in each region.
+# Find value of dPdt at each point.
+print( dPdt.substitute([P==500,C==100]) )
+print( dPdt.substitute([P==500,C==20]) )
+
+# Use the sign of the answers found just above to determine if
+# arrows should point left (negative) or right (positive)
+# (Horizontal because P is the horizontal axis variable)
+PphaseDirs = arrow( (500,100), (400,100), color="red" ) \
+    + arrow( (500,20), (600,20), color="red")
+
+# Combine the graphs for display
+show(Pnullcline + PphaseDirs + legend, figsize=[4,4], axes_labels=["$P$","$C$"], aspect_ratio='automatic')
+</script></div>
+<div class="para" id="system-phase-space-4-5-6">Ultimately, we want to know the direction for both <span class="process-math">\(P\)</span> and <span class="process-math">\(C\text{.}\)</span> We plot the nullclines together, using different colors to distinguish them. We test the sign of the rate functions at points in the regions and draw arrows showing the direction. Conveniently, we could have Sage do the work once we identify the points by automating the drawing of arrows. The following script generates the nullclines, after some experimentation to get the legend looking appropriate.</div>
+<div id="system-phase-space-4-5-7" class="ptx-sagecell sagecell-sage"><script type="text/x-sage">var('t,P,C')
+# Parameters
+[ alpha, rho, beta, gamma ] = [0.1, 0.002, 0.0005, 0.2]
+
+# Define Vector Field
+dPdt = alpha*P - rho*P*C
+dCdt = beta*P*C - gamma*C
+
+# Create graphs for nullclines
+Pnullcline = implicit_plot( dPdt==0, 
+                (P,-200,1000), (C,-50,200), color="red")
+Cnullcline = implicit_plot( dCdt==0, 
+                (P,-200,1000), (C,-50,200), color="blue")
+legend = polygon([(25,190), (25,155), (270,155), (270,190)],
+                edgecolor="black", color="white") \
+        + line([(45,180), (85,180)], color="red") \
+        + text("$\\frac{dP}{dt}=0$", [95,180], 
+                color="black", horizontal_alignment="left") \
+        + line([(45,165), (85,165)], color="blue") \
+        + text("$\\frac{dC}{dt}=0$", [95,165], 
+                color="black", horizontal_alignment="left")
+show(Pnullcline + Cnullcline + legend, figsize=[4,4], axes_labels=["$P$","$C$"], aspect_ratio='automatic')
+</script></div>
+<div class="para" id="system-phase-space-4-5-8">Looking at the phase plane, we see nine distinct regions separated by the nullclines. The Sage script below tests the sign of the vector field rates at nine points, one from each region and draws horizontal and vertical arrows rooted at that point.</div>
+<div id="system-phase-space-4-5-9" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Vector field and nullclines defined earlier
+testPoints = [ [-150,100], [200,100], [700,100], \
+                [-150,25], [200,25], [700,25], \
+                [-150,-25], [200,-25], [700,-25] ]
+# Build up the directions
+directions = Graphics()
+# Length of arrows, horizontal and vertical
+hlen = 75
+vlen = 20
+for pt in testPoints:
+    Prate = dPdt.substitute([P==pt[0], C==pt[1]])
+    Crate = dCdt.substitute([P==pt[0], C==pt[1]])
+    directions += arrow( pt, [pt[0]+hlen*sign(Prate), pt[1]], color="red", width=2, arrowsize=2)
+    directions += arrow( pt, [pt[0],pt[1]+vlen*sign(Crate)], color="blue", arrowsize=2)
+show(Pnullcline + Cnullcline + directions + legend, figsize=[4,4], axes_labels=["$P$","$C$"], aspect_ratio='automatic')
+</script></div></article></details><div class="para" id="system-phase-space-4-6">Higher dimensions obey the same ideas in principle but are harder to visualize. Even three dimensions can be a little challenging to interpret.</div>
+<details id="system-phase-space-4-7" class="example example-like born-hidden-knowl"><summary class="knowl__link"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.3.6</span><span class="period">.</span>
+</h4></summary><article class="example example-like knowl__content"><div class="para logical" id="system-phase-space-4-7-1">
+<div class="para">The SIR model for infectious diseases considers a single population where each individual can be categorized as susceptible to the disease, infected, and recovered and immune from the disease. The state variables <span class="process-math">\(S\text{,}\)</span> <span class="process-math">\(I\text{,}\)</span> and <span class="process-math">\(R\)</span> count the number of individuals in each category. Assuming that only healthy individuals give birth subject to a carrying capacity and infected individuals die at a higher rate than other individuals, a simple model is given by the system of differential equations</div>
+<div class="displaymath process-math" id="system-phase-space-4-7-1-4">
+\begin{align*}
+\frac{dS}{dt} &amp;= r(S+R)(1 - \frac{S+I+R}{K}) - \alpha S I - \gamma S \\
+\frac{dI}{dt} &amp;= \alpha S I - (\gamma + \delta) I - \rho I \\
+\frac{dR}{dt} &amp;= \rho I - \gamma R
+\end{align*}
+</div>
+<div class="para">The phase space is three-dimensional.</div>
+</div>
+<div class="para" id="system-phase-space-4-7-2">The Sage script below uses three-dimensional implicit plots to create approximate nullclines (these will be surfaces) for the three state variables. It is hard to see the intersection of all three surfaces. The script includes a step to solve for the equilibrium points.</div>
+<div id="system-phase-space-4-7-3" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Variables: Avoid "I" as that is reserved for the imaginary number
+var('nS,nI,nR,t')
+
+# Model Parameters
+r = 1
+K = 1000
+alpha = 0.005
+gamma = 0.85
+delta = 0.25
+rho = 2.5
+
+# Vector Field rates
+dSdt = r*(nS+nR)*(1-(nS+nI+nR)/K) - alpha*nS*nI
+dIdt = alpha*nS*nI - (gamma+delta+rho)*nI
+dRdt = rho*nI - gamma*nR
+
+# Generate the nullclines
+Snullcline = implicit_plot3d( dSdt==0, (nS,-200,1200), (nI,-200,800), (nR,-200,400), color="green")
+Inullcline = implicit_plot3d( dIdt==0, (nS,-200,1200), (nI,-200,800), (nR,-200,400), color="red")
+Rnullcline = implicit_plot3d( dRdt==0, (nS,-200,1200), (nI,-200,800), (nR,-200,400), color="blue")
+show(Snullcline + Inullcline + Rnullcline)
+
+# Find equilibrium points.
+equilibria = solve([dSdt==0, dIdt==0, dRdt==0], [nS,nI,nR])
+# This return a list of the form [nS==a, nI==b, nR==c]
+# Use those values to form a point and display numerically
+for eq in equilibria:
+    print(vector([nS,nI,nR]).substitute(eq).n())
+</script></div></article></details></section></section></div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="interaction-rate-models.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+</div></main>
+</div>
+<div id="ptx-page-footer" class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:currentColor; fill:none"><polyline points="472,3590 472,9732 " style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" src="https://runestone.academy/runestone/static/images/RAIcon_cropped.png"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" src="https://www.mathjax.org/badge/badge-square-2.png"></a>
+</div>
+</body>
+</html>

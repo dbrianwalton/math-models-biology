@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US" dir="ltr">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Graphical Analysis of Projection Functions</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Dynamic Models for Biology">
+<meta property="book:author" content="D. Brian Walton">
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script><script>
+var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "tags": "none",
+    "tagSide": "right",
+    "tagIndent": ".8em",
+    "packages": {
+      "[+]": [
+        "base",
+        "extpfeil",
+        "ams",
+        "amscd",
+        "color",
+        "newcommand",
+        "knowl"
+      ]
+    }
+  },
+  "options": {
+    "ignoreHtmlClass": "tex2jax_ignore|ignore-math",
+    "processHtmlClass": "process-math",
+    "renderActions": {
+      "findScript": [
+        10,
+        function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        },
+        ""
+      ]
+    }
+  },
+  "chtml": {
+    "scale": 0.98,
+    "mtextInheritFont": true
+  },
+  "loader": {
+    "load": [
+      "input/asciimath",
+      "[tex]/extpfeil",
+      "[tex]/amscd",
+      "[tex]/color",
+      "[tex]/newcommand",
+      "[pretext]/mathjaxknowl3.js"
+    ],
+    "paths": {
+      "pretext": "_static/pretext/js/lib"
+    }
+  },
+  "startup": {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  }
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script>// Make *any* div with class 'sagecell-sage' an executable Sage cell
+// Their results will be linked, only within language type
+sagecell.makeSagecell({
+  "inputLocation": "div.sagecell-sage",
+  "linked": true,
+  "linkKey": "linked-sage",
+  "autoeval": false,
+  "languages": [
+    "sage"
+  ],
+  "evalButtonText": "Evaluate (Sage)"
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><link href="_static/pretext/css/pretext_search.css" rel="stylesheet" type="text/css">
+<script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraph.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script><link href="_static/pretext/css/theme.css" rel="stylesheet" type="text/css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '7.5.0';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script src="_static/prefix-runtime.917314eae5e3ab90.bundle.js"></script><script src="_static/prefix-347.8328b60515045466.bundle.js"></script><script src="_static/prefix-runestone.b5027876c2f06108.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-347.f9add1ca35d5ad93.css">
+<link rel="stylesheet" type="text/css" href="_static/prefix-runestone.97f3ae4f7a71ba18.css">
+<style>
+</style>
+</head>
+<body id="dmb" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead" class="ptx-masthead"><div class="ptx-banner">
+<a id="logo-link" class="logo-link" target="_blank" href=""></a><div class="title-container">
+<h1 class="heading"><a href="my-great-book.html"><span class="title">Dynamic Models for Biology</span></a></h1>
+<p class="byline">D. Brian Walton</p>
+</div>
+</div></header><nav id="ptx-navbar" class="ptx-navbar navbar"><div class="ptx-navbar-contents">
+<button class="toc-toggle button" title="Contents"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d2;</span><span class="name">Contents</span></button><div class="searchbox">
+<div class="searchwidget"><button id="searchbutton" class="searchbutton button" type="button" title="Search book"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe8b6;</span><span class="name">Search Book</span></button></div>
+<div id="searchresultsplaceholder" class="searchresultsplaceholder" style="display: none">
+<div class="search-results-controls">
+<input aria-label="Search term" id="ptxsearch" class="ptxsearch" type="text" name="terms" placeholder="Search term"><button title="Close search" id="closesearchresults" class="closesearchresults"><span class="material-symbols-outlined">close</span></button>
+</div>
+<h2 class="search-results-heading">Search Results: </h2>
+<div id="searchempty" class="searchempty"><span>No results.</span></div>
+<ol id="searchresults" class="searchresults"></ol>
+</div>
+</div>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="projection-analysis.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="populations.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="population-interventions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+</div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar" class="ptx-sidebar"><nav id="ptx-toc" class="ptx-toc depth2 focused" data-preexpanded-levels="0" data-max-levels="2"><ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-frontmatter"><div class="toc-title-box"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="mathematical-modeling.html" class="internal"><span class="codenumber">1</span> <span class="title">Mathematical Modeling</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="scientific-method.html" class="internal"><span class="codenumber">1.1</span> <span class="title">The Scientific Method</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="role-of-models.html" class="internal"><span class="codenumber">1.2</span> <span class="title">The Role of Models</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="measurements.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Measurements</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="system-state.html" class="internal"><span class="codenumber">1.4</span> <span class="title">The State of a System</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter contains-active">
+<div class="toc-title-box"><a href="populations.html" class="internal"><span class="codenumber">2</span> <span class="title">Population Dynamics</span></a></div>
+<ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-agent-based.html" class="internal"><span class="codenumber">2.1</span> <span class="title">An Agent Based Motivation for Dynamics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-based-3" class="internal"><span class="codenumber">2.1.1</span> <span class="title">NetLogo Overview</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-naive" class="internal"><span class="codenumber">2.1.2</span> <span class="title">Environmentally Naive Births and Deaths</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-density-dependent" class="internal"><span class="codenumber">2.1.3</span> <span class="title">Density-Dependent Births and Deaths</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-discrete.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Discrete Population Models</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-discrete.html#population-sequences" class="internal"><span class="codenumber">2.2.1</span> <span class="title">Populations as Sequences</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-discrete.html#population-constant-per-capita" class="internal"><span class="codenumber">2.2.2</span> <span class="title">Constant Per Capita Growth Models</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-discrete.html#population-density-dependent" class="internal"><span class="codenumber">2.2.3</span> <span class="title">Density Dependent Growth Models</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-projection.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Projection Models</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-functions" class="internal"><span class="codenumber">2.3.1</span> <span class="title">Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-fixed-points" class="internal"><span class="codenumber">2.3.2</span> <span class="title">Fixed Points and Equilibria</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-computation" class="internal"><span class="codenumber">2.3.3</span> <span class="title">Computing Recursive Sequences</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="projection-analysis.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Analysis of Population Projections</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#linear-projection-analysis" class="internal"><span class="codenumber">2.4.1</span> <span class="title">Linear Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-4" class="internal"><span class="codenumber">2.4.2</span> <span class="title">Linearizing Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-5" class="internal"><span class="codenumber">2.4.3</span> <span class="title">Computer Assisted Analysis</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section contains-active">
+<div class="toc-title-box"><a href="projection-cobweb.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Graphical Analysis of Projection Functions</span></a></div>
+<ul class="structural toc-item-list active">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-compare-replacement" class="internal"><span class="codenumber">2.5.1</span> <span class="title">Visualizing Potential for Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#cobweb-diagrams" class="internal"><span class="codenumber">2.5.2</span> <span class="title">Cobweb Diagrams</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-cobweb-5" class="internal"><span class="codenumber">2.5.3</span> <span class="title">Cobwebs and Stability</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-interventions.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Intervention and Bifurcations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-constant-harvesting" class="internal"><span class="codenumber">2.6.1</span> <span class="title">Constant Harvesting</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-interventions-4" class="internal"><span class="codenumber">2.6.2</span> <span class="title">Proportional Harvesting</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="intro-differential-equations.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Introduction to Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#rate-of-change" class="internal"><span class="codenumber">2.7.1</span> <span class="title">Rates of Change</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#differential-equations" class="internal"><span class="codenumber">2.7.2</span> <span class="title">Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#numerical-solutions-diffeq" class="internal"><span class="codenumber">2.7.3</span> <span class="title">Solutions to Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#slope-fields" class="internal"><span class="codenumber">2.7.4</span> <span class="title">Slope Fields</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">2.8</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">2.8.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">2.8.2</span> <span class="title">Phase Lines</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="interactions.html" class="internal"><span class="codenumber">3</span> <span class="title">Modeling Interactions</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="system-examples.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Examples of Interacting Systems</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-3" class="internal"><span class="codenumber">3.1.1</span> <span class="title">Epidemic Models</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-4" class="internal"><span class="codenumber">3.1.2</span> <span class="title">Interacting Populations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-5" class="internal"><span class="codenumber">3.1.3</span> <span class="title">Age or Stage-Based Models</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="interaction-rate-models.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Modeling Interaction Rates</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-3" class="internal"><span class="codenumber">3.2.1</span> <span class="title">Linear Rates and Linear Combinations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-4" class="internal"><span class="codenumber">3.2.2</span> <span class="title">Logistic Growth with Functional Dependence</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-5" class="internal"><span class="codenumber">3.2.3</span> <span class="title">Law of Mass Action for Interactions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-6" class="internal"><span class="codenumber">3.2.4</span> <span class="title">Saturating Functional Response</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-7" class="internal"><span class="codenumber">3.2.5</span> <span class="title">Switching Functional Response</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="system-phase-space.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Dynamical Systems and Phase Space</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#vector-fields" class="internal"><span class="codenumber">3.3.1</span> <span class="title">Vector Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#system-phase-space-4" class="internal"><span class="codenumber">3.3.2</span> <span class="title">Nullclines and Equilibria</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-backmatter"><div class="toc-title-box"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="projection-cobweb"><h2 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">2.5</span><span class="space"> </span><span class="title">Graphical Analysis of Projection Functions</span>
+</h2>
+<section class="introduction" id="projection-cobweb-2"><div class="para" id="projection-cobweb-2-1">A projection function establishes a relationship between consecutive values in a sequence. For a population, the projection function allows us to predict the population after one cycle given the size of the population at the current time. In this section, we will learn how to interpret information using the graph of the projection function.</div></section><section class="subsection" id="projection-compare-replacement"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.5.1</span><span class="space"> </span><span class="title">Visualizing Potential for Growth</span>
+</h3>
+<div class="para" id="projection-compare-replacement-2">In calculus, we learn that a function <span class="process-math">\(f(x)\)</span> is increasing on intervals for which <span class="process-math">\(f'(x) \gt 0\)</span> and decreasing on intervals for which <span class="process-math">\(f'(x) \lt 0\text{.}\)</span> This is because the derivative <span class="process-math">\(f'(x)\)</span> of a function <span class="process-math">\(f(x)\)</span> measures the rate of change for the function <span class="process-math">\(f(x)\text{.}\)</span> Sequences can be analyzed in a similar way, by looking at whether <em class="emphasis">increments</em> in the sequence are positive or negative.</div>
+<div class="para logical" id="projection-compare-replacement-3">
+<div class="para">The increment for a sequence <span class="process-math">\(x = (x_n)_{n=0}^{\infty}\)</span> is the difference between consecutive terms, defined by the backward difference</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\Delta x_{n} = x_{n}-x_{n-1}.
+\end{equation*}
+</div>
+<div class="para">We call it the increment because the increment is what we add to the current value to find the next value of the sequence,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x_{n+1} = x_n + \Delta x_{n+1}.
+\end{equation*}
+</div>
+<div class="para">For populations, the increment corresponds to the sum of births and net migration minus the deaths.</div>
+</div>
+<div class="para logical" id="projection-compare-replacement-4">
+<div class="para">When a population model involves a projection function <span class="process-math">\(x_{n+1} = f(x_n)\text{,}\)</span> then the increment depends on the value of the function <span class="process-math">\(f\text{,}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\Delta x_{n+1} = x_{n+1}-x_n = f(x_n) - x_n.
+\end{equation*}
+</div>
+<div class="para">Consequently, we can identify when the population will grow or decline based on the value of <span class="process-math">\(f(x)-x\text{.}\)</span> When <span class="process-math">\(f(x) \gt x\text{,}\)</span> the sequence increases. When <span class="process-math">\(f(x) \lt x\text{,}\)</span> the sequence decreases.</div>
+</div>
+<details id="projection-compare-replacement-5" class="example example-like born-hidden-knowl"><summary class="knowl__link"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.1</span><span class="period">.</span>
+</h4></summary><article class="example example-like knowl__content"><div class="para logical" id="projection-compare-replacement-5-1">
+<div class="para">Consider a model for population growth where the per capita net growth rate is a decreasing linear function of the population size, <span class="process-math">\(r(P) = r_0 - a P\text{.}\)</span> The projection function for this model is given by</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f(x) = x + (r_0 - ax) x = x + r_0 x - ax^2.
+\end{equation*}
+</div>
+<div class="para">The fixed points for this are <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=\frac{r_0}{a}\text{.}\)</span> The second fixed point is often denoted by <span class="process-math">\(K=\frac{r_0}{a}\text{,}\)</span> and the per capita growth can then written in the equivalent form <span class="process-math">\(r(P) = r_0(1-\frac{P}{K})\text{.}\)</span> This model is called the <dfn class="terminology">discrete logistic</dfn> model for population growth.</div>
+</div>
+<div class="para" id="projection-compare-replacement-5-2">We consider the case when <span class="process-math">\(r_0 \gt 0\)</span> so that <span class="process-math">\(K \gt 0\text{.}\)</span> A graph of <span class="process-math">\(y = f(x) - x\)</span> is illustrated below. The graph is a concave down parabola with intercepts at <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=K\text{.}\)</span> We see that <span class="process-math">\(f(x)-x\)</span> is positive for <span class="process-math">\(x\)</span> in the interval <span class="process-math">\((0,K)\)</span> and negative in the intervals <span class="process-math">\((-\infty,0)\)</span> and <span class="process-math">\((K,\infty)\text{.}\)</span> In the context of population growth, the negative interval has no physical interpretation. (In other contexts, the same model might apply and have an interpretation.) So the population will increase whenever <span class="process-math">\(P_n \lt K\)</span> and will decrease whenever <span class="process-math">\(P_n \gt K\text{.}\)</span>
+</div>
+<figure class="figure figure-like" id="projection-compare-replacement-5-3"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="generated/latex-image/projection-compare-replacement-5-3-1.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.5.2<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="projection-compare-replacement-5-4">The equilibrium value <span class="process-math">\(K\)</span> is called the <dfn class="terminology">carrying capacity</dfn>, representing the population that the environment can sustain. When the population is below carrying capacity, the environment can sustain growth in the population. However, when the population is above the carrying capacity, the environment puts so much pressure on the population that the next cycle results in a smaller population.</div></article></details><div class="para" id="projection-compare-replacement-6">It is often better to graph <span class="process-math">\(y=f(x)\)</span> and <span class="process-math">\(y=x\)</span> on the same graph. Growth in the population will correspond to intervals over which <span class="process-math">\(f(x) \gt x\)</span> and decay occurs on intervals where <span class="process-math">\(f(x) \lt x\text{.}\)</span> We can think of the line <span class="process-math">\(y=x\)</span> as the projection that would be required for exact replacement. Anytime the projection function is above this line, the population exceeds replacement. Anytime the projection function is below this line, the population falls. Points where the graphs intersect are <dfn class="terminology">fixed points</dfn> and correspond to the equilibrium values of the sequence. In addition, such a graph allows us to analyze a sequence using something called a cobweb diagram.</div></section><section class="subsection" id="cobweb-diagrams"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.5.2</span><span class="space"> </span><span class="title">Cobweb Diagrams</span>
+</h3>
+<div class="para logical" id="cobweb-diagrams-2">
+<div class="para">A <dfn class="terminology">cobweb diagram</dfn> illustrates the dynamics of a sequence through its projection function by drawing a sequence of vertical and horizontal lines that represent the projection process. A cobweb diagram always begins with a graph showing both the projection function <span class="process-math">\(y=f(x)\)</span> and the line of exact replacement <span class="process-math">\(y=x\text{.}\)</span> Recall that a projection function takes a sequence value as input (<span class="process-math">\(x\)</span>-value) and the output (<span class="process-math">\(y\)</span>-value) gives the next value in the sequence. The steps in generating a cobweb diagram are explained below.</div>
+<dl class="description-list">
+<dt id="cobweb-diagrams-2-6-1">Initial Value</dt>
+<dd> On the <span class="process-math">\(x\)</span>-axis, identify the location of the initial value <span class="process-math">\(x_0\)</span> and start on the line <span class="process-math">\(y=x\text{.}\)</span> Your current point will be <span class="process-math">\((x_0,x_0)\text{.}\)</span>
+</dd>
+<dt id="cobweb-diagrams-2-6-2">Project Next Value</dt>
+<dd> Draw a vertical line between your current point and the projection graph <span class="process-math">\(y=f(x)\text{.}\)</span> The <span class="process-math">\(y\)</span>-value of the new point will be the next sequence value.</dd>
+<dt id="cobweb-diagrams-2-6-3">Update Current Value</dt>
+<dd> Draw a horizontal line between your last point and the line <span class="process-math">\(y=x\text{.}\)</span> The new <span class="process-math">\(x\)</span>-value now corresponds to the next value of your sequence.</dd>
+<dt id="cobweb-diagrams-2-6-4">Repeat</dt>
+<dd> Repeat the steps of projecting and updating. Vertical lines always end at the projection function; horizontal lines always end at <span class="process-math">\(y=x\text{.}\)</span>
+</dd>
+</dl>
+</div>
+<details id="cobweb-diagrams-3" class="example example-like born-hidden-knowl"><summary class="knowl__link"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.3</span><span class="period">.</span>
+</h4></summary><article class="example example-like knowl__content"><div class="para" id="cobweb-diagrams-3-1">Compare the cobweb diagrams for a discrete logistic population model with <span class="process-math">\(K=1\)</span> (to represent 1 capacity unit, not 1 individual) and values <span class="process-math">\(r_0=0.75\)</span> and <span class="process-math">\(r_0 = 1.5\)</span> using initial values <span class="process-math">\(x_0=0.25\text{.}\)</span> The projection function when <span class="process-math">\(r_0=0.75\)</span> is given by <span class="process-math">\(f(x) = x + 0.75x(1-x)\text{.}\)</span> When <span class="process-math">\(r_0=1.25\text{,}\)</span> the projection function is <span class="process-math">\(f(x)=x + 1.5x(1-x)\text{.}\)</span>
+</div>
+<div class="para" id="cobweb-diagrams-3-2">First, we consider the cobweb diagram for <span class="process-math">\(f(x) = x + 0.75x(1-x)\text{.}\)</span> The figure below is interactive in that you can see the repetition in drawing the segments of the diagram. For this projection function and initial value, the sequence steadily increases toward the fixed point. We can see that the fixed point is stable.</div>
+<figure class="figure figure-like" id="cobweb-diagrams-3-3"><div id="jsxgraph-cobweb-discrete-logistic-ex1" class="jxgbox" style="width:600px; height:600px;"></div>
+<script>// Put variables in object to isolate.
+cw1 = { x0:0.25, n:10 };
+cw1.f = function(x) { return x + .75*x*(1-x); };
+cw1.buildSeq = function(x, n) {
+    var seq = [x];
+    for (var i=1; i<=n; i++) {
+        x = cw1.f(x);
+        seq[i] = x;
+    }
+    return seq;
+};
+cw1.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-discrete-logistic-ex1', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
+cw1.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
+cw1.project = cw1.board.create('functiongraph', 
+    [cw1.f], {strokeColor:'blue', strokeWidth:2});
+cw1.step = cw1.board.create('slider', 
+    [[0.1,1.4],[1,1.4],[1,1,10]],{name:'step', snapWidth:1, precision:0});
+
+cw1.seq = cw1.buildSeq(cw1.x0, cw1.n);
+cw1.project = [];
+cw1.update = [];
+for (var i=0; i<cw1.n; i++) {
+    cw1.project[i] = cw1.board.create('segment', [ [cw1.seq[i], cw1.seq[i]], [cw1.seq[i], cw1.seq[i+1]]], { name:i, color:'black',fixed:true });
+    cw1.update[i] = cw1.board.create('segment', [ [cw1.seq[i], cw1.seq[i+1]], [cw1.seq[i+1], cw1.seq[i+1]]], { name:i, color:'black',fixed:true });
+}
+cw1.a = cw1.board.create('point', [function() { var i = cw1.step.Value(); return cw1.seq[i-1]; }, function() { var i = cw1.step.Value(); return cw1.seq[i-1]} ], {visible:false, withLabel:false});
+cw1.b = cw1.board.create('point', [function() { var i = cw1.step.Value(); return cw1.seq[i-1]; }, function() { var i = cw1.step.Value(); return cw1.seq[i]} ], {visible:false, withLabel:false});
+cw1.c = cw1.board.create('point', [function() { var i = cw1.step.Value(); return cw1.seq[i]; }, function() { var i = cw1.step.Value(); return cw1.seq[i]} ], {visible:false, withLabel:false});
+cw1.board.create('segment', [cw1.a, cw1.b], {color:'red', withLabel:false, strokeWidth:4});
+cw1.board.create('segment', [cw1.b, cw1.c], {color:'red', withLabel:false, strokeWidth:4});
+</script><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.5.4<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="cobweb-diagrams-3-4">Next we look at the cobweb diagram for <span class="process-math">\(f(x)=x + 1.5x(1-x)\text{.}\)</span> In this example, the vertex of the parabola is to the left of the fixed point so that our sequence actually exceeds the carrying capacity and begins to oscillate above and below the equilibrium. However, it does still eventually converge to the fixed point.</div>
+<figure class="figure figure-like" id="cobweb-diagrams-3-5"><div id="jsxgraph-cobweb-discrete-logistic-ex2" class="jxgbox" style="width:600px; height:600px;"></div>
+<script>// Put variables in object to isolate.
+cw2 = { x0:0.25, n:10 };
+cw2.f = function(x) { return x + 1.5*x*(1-x); };
+cw2.buildSeq = function(x, n) {
+    var seq = [x];
+    for (var i=1; i<=n; i++) {
+        x = cw2.f(x);
+        seq[i] = x;
+    }
+    return seq;
+};
+cw2.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-discrete-logistic-ex2', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
+cw2.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
+cw2.project = cw2.board.create('functiongraph', 
+    [cw2.f], {strokeColor:'blue', strokeWidth:2});
+cw2.step = cw2.board.create('slider', 
+    [[0.1,1.4],[1,1.4],[1,1,10]],{name:'step', snapWidth:1, precision:0});
+
+cw2.seq = cw2.buildSeq(cw2.x0, cw2.n);
+cw2.project = [];
+cw2.update = [];
+for (var i=0; i<cw2.n; i++) {
+    cw2.project[i] = cw2.board.create('segment', [ [cw2.seq[i], cw2.seq[i]], [cw2.seq[i], cw2.seq[i+1]]], { name:i, color:'black',fixed:true });
+    cw2.update[i] = cw2.board.create('segment', [ [cw2.seq[i], cw2.seq[i+1]], [cw2.seq[i+1], cw2.seq[i+1]]], { name:i, color:'black',fixed:true });
+}
+cw2.a = cw2.board.create('point', [function() { var i = cw2.step.Value(); return cw2.seq[i-1]; }, function() { var i = cw2.step.Value(); return cw2.seq[i-1]} ], {visible:false, withLabel:false});
+cw2.b = cw2.board.create('point', [function() { var i = cw2.step.Value(); return cw2.seq[i-1]; }, function() { var i = cw2.step.Value(); return cw2.seq[i]} ], {visible:false, withLabel:false});
+cw2.c = cw2.board.create('point', [function() { var i = cw2.step.Value(); return cw2.seq[i]; }, function() { var i = cw2.step.Value(); return cw2.seq[i]} ], {visible:false, withLabel:false});
+cw2.board.create('segment', [cw2.a, cw2.b], {color:'red', withLabel:false, strokeWidth:4});
+cw2.board.create('segment', [cw2.b, cw2.c], {color:'red', withLabel:false, strokeWidth:4});
+</script><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.5.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="cobweb-diagrams-3-6">Because we can, here is a figure where you can choose the value of <span class="process-math">\(r_0\)</span> (<span class="process-math">\(0 \lt r_0 \lt 3\)</span>) and the initial value <span class="process-math">\(x_0\)</span> and explore a variety of cobweb diagrams in a single figure. Notice in particular that when the value of <span class="process-math">\(r_0\)</span> is larger, so that the peak of the parabola is higher, the dynamics become more complex.</div>
+<figure class="figure figure-like" id="cobweb-diagrams-3-7"><div id="jsxgraph-cobweb-discrete-logistic-ex3" class="jxgbox" style="width:600px; height:600px;"></div>
+<script>// Put variables in object to isolate.
+cw3 = { n:10 };
+cw3.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-discrete-logistic-ex3', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
+cw3.r = cw3.board.create('slider', 
+    [[0.1,1.4],[1,1.4],[0,0.75,3]],{name:'r0', precision:2});
+cw3.x0 = cw3.board.create('slider', 
+    [[0,0],[2,0],[0,0.25,2]],{name:'x0', precision:2});
+cw3.f = function(x) { return x + cw3.r.Value()*x*(1-x); };
+cw3.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
+cw3.project = cw3.board.create('functiongraph', 
+    [cw3.f], {strokeColor:'blue', strokeWidth:2});
+// Build the points used for the cobweb.
+cw3.x = [];
+cw3.x[0] = cw3.board.create('point', [ function() {return cw3.x0.Value();}, 0], {name:0, visible:false});
+for (var i=1; i<=cw3.n; i++) {
+    cw3.x[i] = cw3.board.create('point',
+        [ function() {var j=this.name; return cw3.f(cw3.x[j-1].X());}, 0 ], 
+        {name:i, visible:false}
+    );
+}
+cw3.y = [];
+for (var i=0; i<=cw3.n; i++) {
+    cw3.y[i] = cw3.board.create('transform', 
+        [ 0, "X("+i+")"],
+        {name:i, type:'translate'}
+    );
+}
+// Now construct the actual cobweb diagram.
+for (var i=0; i<cw3.n; i++) {
+    var a = cw3.board.create('point', 
+        [cw3.x[i], cw3.y[i]], {visible:false});
+    var b = cw3.board.create('point', 
+        [cw3.x[i], cw3.y[i+1]], {visible:false});
+    var c = cw3.board.create('point', 
+        [cw3.x[i+1], cw3.y[i+1]], {visible:false});
+    cw3.board.create('segment',
+        [a, b], {color:'black',fixed:true});
+    cw3.board.create('segment',
+        [b, c], {color:'black',fixed:true});
+}
+</script><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.5.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure></article></details><div class="para" id="cobweb-diagrams-4">The code below generates the graph of <span class="process-math">\(y=f(x)\)</span> and <span class="process-math">\(y=x\)</span> in preparation for a cobweb diagram in Sage, with the benefit that the resulting graphic can be copied for other uses.</div>
+<div id="cobweb-diagrams-5" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Declare the variable
+var('x')
+# Declare values for parameters
+r = 1.9
+k = 10
+# Define the projection function
+f(x) = x*(1+r*(1-x/k))
+bounds = [0,15]   # [xmin,xmax]
+# Base plot
+plotF = plot(f(x), (x,bounds[0],bounds[1]), thickness=2)
+plotId = plot(x, (x,bounds[0],bounds[1]), color='red', linestyle='--')
+basePlot = plotF+plotId
+show(basePlot, figsize=[5,5])
+</script></div>
+<div class="para" id="cobweb-diagrams-6">Building on the figure above, you can then add a particular cobweb diagram corresponding to an initial value of your choice.</div>
+<div id="cobweb-diagrams-7" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Setup needed for cobweb
+x0 = 1 # Initial value
+N = 10 # Number of cobweb steps.
+doTable = false  # Do you want a table of values?
+# Now generate the cobweb adding one line at a time.
+x = x0
+seq = [x0]
+cobweb = Graphics()
+for i in range(N):
+    # Vertical line
+    cobweb = cobweb + line([[x,x], [x,f(x)]], color='black') 
+    # Horizontal line
+    cobweb = cobweb + line([[x,f(x)],[f(x),f(x)]], color='black')
+    # Update for the next iteration.
+    x = f(x)
+    seq.append(x)
+# Draw the cobweb in a plot.
+show(basePlot+cobweb, figsize=[5,5])
+
+# Generate a table of values only if asked
+if doTable:
+    print("Table of sequence values")
+    print("k\tx_k")
+    for i in range(len(seq)):
+        print("%d\t%f" % (i, seq[i]))
+</script></div></section><section class="subsection" id="projection-cobweb-5"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.5.3</span><span class="space"> </span><span class="title">Cobwebs and Stability</span>
+</h3>
+<div class="para logical" id="projection-cobweb-5-2">
+<div class="para">We conclude the section by combining the concepts of cobweb diagrams and stability. Recall that our criteria for local stability depended on the slope of the tangent line at the fixed point. Suppose that <span class="process-math">\(x^*\)</span> is a fixed point so that <span class="process-math">\(f(x^*)=x^*\text{.}\)</span> A cobweb diagram of the linear approximation around the fixed point behaves in one of the following four ways.</div>
+<ul class="disc" id="projection-cobweb-5-2-3">
+<li id="projection-cobweb-5-2-3-1"><div class="para" id="p-derived-projection-cobweb-5-2-3-1">If <span class="process-math">\(f'(x^*) \gt 1\text{,}\)</span> then the cobweb diagram moves away from the fixed point like a staircase and the fixed point is unstable.</div></li>
+<li id="projection-cobweb-5-2-3-2"><div class="para" id="p-derived-projection-cobweb-5-2-3-2">If <span class="process-math">\(0 \lt f'(x^*) \lt 1\text{,}\)</span> then the cobweb diagram moves toward the fixed point and the fixed point is stable.</div></li>
+<li id="projection-cobweb-5-2-3-3"><div class="para" id="p-derived-projection-cobweb-5-2-3-3">If <span class="process-math">\(-1 \lt f'(x^*) \lt 0\text{,}\)</span> then the cobweb diagram spirals inward toward the fixed point and the fixed point is stable.</div></li>
+<li id="projection-cobweb-5-2-3-4"><div class="para" id="p-derived-projection-cobweb-5-2-3-4">If <span class="process-math">\(f'(x^*) \lt -1\text{,}\)</span> then the cobweb diagram spirals outward away from the fixed point and the fixed point is stable.</div></li>
+</ul>
+<div class="para">More complicated dynamics can occur further away from the fixed point. But at least near the fixed point, the linear approximation gives a good description of what is happening, at least when <span class="process-math">\(|f'(x^*)| \ne 1\text{.}\)</span>
+</div>
+</div>
+<div class="para" id="projection-cobweb-5-3">A dynamic cobweb diagram of a linear projection function <span class="process-math">\(f(x)=1+a(x-1)\)</span> where you can choose the slope <span class="process-math">\(a\)</span> at the fixed point <span class="process-math">\(x^*=1\)</span> is illustrated below. Can you relate this behavior to what you observed in the discrete logistic model earlier?</div>
+<figure class="figure figure-like" id="projection-cobweb-5-4"><div id="jsxgraph-cobweb-linear-ex4" class="jxgbox" style="width:600px; height:600px;"></div>
+<script>// Put variables in object to isolate.
+cw4 = { n:10 };
+cw4.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-linear-ex4', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
+cw4.a = cw4.board.create('slider', 
+    [[0.1,1.4],[1,1.4],[-1.5,0.75,1.5]],{name:'a', precision:2});
+cw4.x0 = cw4.board.create('slider', 
+    [[0,0],[2,0],[0,0.25,2]],{name:'x0', precision:2});
+cw4.f = function(x) { return 1 + cw4.a.Value()*(x-1); };
+cw4.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
+cw4.project = cw4.board.create('functiongraph', 
+    [cw4.f], {strokeColor:'blue', strokeWidth:2});
+// Build the points used for the cobweb.
+cw4.x = [];
+cw4.x[0] = cw4.board.create('point', [ function() {return cw4.x0.Value();}, 0], {name:0, visible:false});
+for (var i=1; i<=cw4.n; i++) {
+    cw4.x[i] = cw4.board.create('point',
+        [ function() {var j=this.name; return cw4.f(cw4.x[j-1].X());}, 0 ], 
+        {name:i, visible:false}
+    );
+}
+cw4.y = [];
+for (var i=0; i<=cw4.n; i++) {
+    cw4.y[i] = cw4.board.create('transform', 
+        [ 0, "X("+i+")"],
+        {name:i, type:'translate'}
+    );
+}
+// Now construct the actual cobweb diagram.
+for (var i=0; i<cw4.n; i++) {
+    var a = cw4.board.create('point', 
+        [cw4.x[i], cw4.y[i]], {visible:false});
+    var b = cw4.board.create('point', 
+        [cw4.x[i], cw4.y[i+1]], {visible:false});
+    var c = cw4.board.create('point', 
+        [cw4.x[i+1], cw4.y[i+1]], {visible:false});
+    cw4.board.create('segment',
+        [a, b], {color:'black',fixed:true});
+    cw4.board.create('segment',
+        [b, c], {color:'black',fixed:true});
+}
+</script><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.5.7<span class="period">.</span></span><span class="space"> </span></figcaption></figure></section></section></div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="projection-analysis.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="population-interventions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+</div></main>
+</div>
+<div id="ptx-page-footer" class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:currentColor; fill:none"><polyline points="472,3590 472,9732 " style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" src="https://runestone.academy/runestone/static/images/RAIcon_cropped.png"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" src="https://www.mathjax.org/badge/badge-square-2.png"></a>
+</div>
+</body>
+</html>
