@@ -17,15 +17,32 @@
     
     <p>On the other hand, we might measure the state of the system frequently enough that only gradual changes are occurring between measurements. In these cases, we might consider thinking about time continuously and consider the possibility that the state existed at all times. We could then use <term>continuous time models</term> which give us a mathematical representation of the state of the system for all times, at least over some interval of interest.</p>
     
-    <p>Other variables in the system allow us to understand how the population is changing. The most common variables relating to a population characterize the rates for births and deaths and migration. The change in the population size can be characterized as adding in new individuals (births and immigrants) and subtracting the loss of individuals (deaths and emigrants). The art of a mathematical model is to describe these terms using mathematical equations that allow us to make predictions about the population.</p>
+    <p>Other variables in the system allow us to understand how the population is changing. The most common variables relating to a population characterize the rates for births and deaths and migration. The change in the population size can be characterized as adding in new individuals (births and immigrants) and subtracting the loss of individuals (deaths and emigrants), as illustrated in <xref ref="fig-abstract-population-model"/>. The art of a mathematical model is to describe these terms using mathematical equations that allow us to make predictions about the population.</p>
+    
+    <figure xml:id="fig-abstract-population-model">
+        <caption>An abstract representation of a population model showing arrows representing processes that either increase (pointing in) or decrease (pointing out) the population size.</caption>
+        <image width="50%">
+            <shortdescription>Simplified diagram representation of a population model</shortdescription>
+            <latex-image>
+                \begin{tikzpicture}
+                    \draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- (0,0);
+                    \node at (0.5,0.5) {$\large{P}$};
+                    \draw [->] (-1.25,0.75) -- (0,.75) node [pos=0.5, below] {\tiny{birth}};
+                    \draw [->] (-1.25,0.25) -- (0,0.25) node [pos=0.5, below] {\tiny{immigrate}};
+                    \draw [->] (1,0.75) -- (2.25,.75) node [pos=0.5, below] {\tiny{death}};
+                    \draw [->] (1,0.25) -- (2.25,0.25) node [pos=0.5, below] {\tiny{emigrate}};
+                \end{tikzpicture}
+            </latex-image>
+        </image>
+    </figure>
 </introduction>
     
-<xi:include href="./sec-population-agent-based.xml" />
-<xi:include href="./sec-population-discrete.xml" />
-<xi:include href="./sec-population-projection.xml" />
-<xi:include href="./sec-projection-analysis.xml" />
-<xi:include href="./sec-projection-cobweb.xml" />
-<xi:include href="./sec-population-interventions.xml" />
+<xi:include href="./sec-population-agent-based.ptx" />
+<xi:include href="./sec-population-discrete.ptx" />
+<xi:include href="./sec-population-projection.ptx" />
+<xi:include href="./sec-population-projection-analysis.ptx" />
+<xi:include href="./sec-population-projection-cobweb.ptx" />
+<xi:include href="./sec-population-interventions.ptx" />
 <xi:include href="./intro-differential-equations.xml" />
 <xi:include href="./differential-equation-analysis.xml" />
 

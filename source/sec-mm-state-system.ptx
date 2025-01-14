@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      A Modeling Approach to Calculus         -->
+<!--                                              -->
+<!-- Copyright (C) 2015  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="system-state">
+<title>The State of a System</title>
+
+<p>When we use the word <term>system</term>, we are referring to the subject of study and all of the possible quantities associated with that subject. In principle, every object interacts with so many other objects that a system’s complexity would be incomprehensible. For the sake of simplification and sanity, we adopt a reductionist viewpoint and consider the system as representing only those quantities that are relevant for addressing specific scientific questions.</p>
+
+<p>A <term>state variable</term> is any individual quantity associated with the subject of study. A state variable might represent a quantity that could be directly measured (even if it is not being measured). It might also represent a mathematical expression derived from other measurements, in which case the state variable is called a <term>dependent variable</term>. For example, a physical object has a mass, <m>m</m>, as well as a volume, <m>V</m>. Both <m>m</m> and <m>V</m> are measurable. Using these state variables, we can also consider the average density, <m>\rho = \frac{m}{V}</m>, which is a dependent variable.</p>
+
+<p>The <term>state</term> of the system is the collection of all state variables, simultaneously measured for a given configuration of the system. In many cases, the system is <term>time-dependent</term>, meaning that the state of the system naturally is changing as time passes. In this case, the time of measurement should be included as one of the state variables. Practically, we only include the state variables that are directly relevant.</p>
+
+<p>
+    We often represent a variable by a symbol<mdash/>a letter, a Greek letter, an abbreviation, or even a word.
+    That symbol becomes a name for the variable to be used in sentences, expressions, and equations.
+    Uppercase and lowercase letters are different symbols and should not be interchanged with one another.
+    The choice of symbol should generally be related to the meaning of the variable.
+    An important part of communication in modeling is in stating clearly the variables of a system and identifying the symbols that are chosen to represent them.
+</p>
+
+<example>
+    <p>
+        Consider a population being studied at a certain location. Some of the state variables include the number of individuals in the population, the number of births and the number of deaths during a given time period (e.g., for a year), the total biomass of the population, the physical area required to support the population, and the amount of food used to feed the population during the time period. The state of the population consists of all of these measurements for a given time. The same population under study will have different states at different times.
+    </p>
+    <p>
+        When discussing these state variables, we might want to assign variable symbols.
+        We might choose <m>P</m> to represent the number of individuals in the population,
+        where the letter was chosen as the first letter in the word <q>population</q>.
+        We might use <m>B</m> and <m>D</m> to represent the number of births and deaths, respectively, for a similar reason, although we would need to specify the time frame under consideration since these are recorded over an interval of time rather than at a fixed time.
+        Since <q>biomass</q> also starts with the letter <q>B</q>, we might be tempted to use the same variable, but we should choose something distinct, such as <m>M</m> for mass. The amount of food consumed during an interval might be represented by <m>F</m>, and the area physically occupied by the population might be represented by <m>A</m>.
+    </p>
+    <p>
+        When communicating to others our variable choices, we do not need to provide the reasoning for our choice, but we do need to communicate the results. We might create an explanatory figure or table listing the variables and what they measure. The previous paragraph would not normally appear in written work, but a paragraph such as the following might be typical.
+    </p>
+    <p>
+        We let <m>P</m> represent the size of the population, and let <m>B</m> and <m>D</m> represent the number of births and deaths, respectively, during the preceding time interval. We let <m>A</m> measure the physical area occupied by the population and use <m>M</m> to represent the total biomass of the population.
+        Finally, we use <m>F</m> for the amount of food consumed by the population in the preceding time interval.
+    </p>
+</example>
+
+<p>
+    The next example introduces some particular data that we will use for additional exploration of the ideas in this section.
+</p>
+
+<example>
+    <p>
+        Consider the following data about the population, births and deaths in the United States.
+        To conserve space, the data are given using scientific notation expressed in the standard machine form
+        where the power of 10 follows the letter E, so that <m>2.521 \times 10^8</m> would be written 2.521E8.
+    </p>
+    <tabular top="major" halign="center">
+        <col/> <col/> <col/> <col right="minor"/> <col right="minor"/>
+        <col/> <col/> <col/><col/>
+        <row bottom="minor">
+            <cell>Year</cell>
+            <cell>Population</cell>
+            <cell>Births</cell>
+            <cell>Deaths</cell>
+            <cell></cell>
+            <cell>Year</cell>
+            <cell>Population</cell>
+            <cell>Births</cell>
+            <cell>Deaths</cell>
+        </row>
+        <row>
+            <cell>1991</cell>
+            <cell>2.521E8</cell>
+            <cell>4.111E6</cell>
+            <cell>2.170E6</cell>
+            <cell></cell>
+            <cell>2001</cell>
+            <cell>2.850E8</cell>
+            <cell>4.026E6</cell>
+            <cell>2.416E6</cell>
+        </row>
+        <row>
+            <cell>1992</cell>
+            <cell>2.550E8</cell>
+            <cell>4.065E6</cell>
+            <cell>2.176E6</cell>
+            <cell></cell>
+            <cell>2002</cell>
+            <cell>2.876E8</cell>
+            <cell>4.022E6</cell>
+            <cell>2.443E6</cell>
+        </row>
+        <row>
+            <cell>1993</cell>
+            <cell>2.577E8</cell>
+            <cell>4.000E6</cell>
+            <cell>2.269E6</cell>
+            <cell></cell>
+            <cell>2003</cell>
+            <cell>2.901E8</cell>
+            <cell>4.090E6</cell>
+            <cell>2.448E6</cell>
+        </row>
+        <row>
+            <cell>1994</cell>
+            <cell>2.602E8</cell>
+            <cell>3.953E6</cell>
+            <cell>2.279E6</cell>
+            <cell></cell>
+            <cell>2004</cell>
+            <cell>2.928E8</cell>
+            <cell>4.112E6</cell>
+            <cell>2.397E6</cell>
+        </row>
+        <row>
+            <cell>1995</cell>
+            <cell>2.628E8</cell>
+            <cell>3.900E6</cell>
+            <cell>2.312E6</cell>
+            <cell></cell>
+            <cell>2005</cell>
+            <cell>2.955E8</cell>
+            <cell>4.138E6</cell>
+            <cell>2.448E6</cell>
+        </row>
+        <row>
+            <cell>1996</cell>
+            <cell>2.652E8</cell>
+            <cell>3.891E6</cell>
+            <cell>2.315E6</cell>
+            <cell></cell>
+            <cell>2006</cell>
+            <cell>2.984E8</cell>
+            <cell>4.266E6</cell>
+            <cell>2.426E6</cell>
+        </row>
+        <row>
+            <cell>1997</cell>
+            <cell>2.677E8</cell>
+            <cell>3.881E6</cell>
+            <cell>2.314E6</cell>
+            <cell></cell>
+            <cell>2007</cell>
+            <cell>3.012E8</cell>
+            <cell>4.316E6</cell>
+            <cell>2.424E6</cell>
+        </row>
+        <row>
+            <cell>1998</cell>
+            <cell>2.703E8</cell>
+            <cell>3.942E6</cell>
+            <cell>2.337E6</cell>
+            <cell></cell>
+            <cell>2008</cell>
+            <cell>3.041E8</cell>
+            <cell>4.248E6</cell>
+            <cell>2.472E6</cell>
+        </row>
+        <row>
+            <cell>1999</cell>
+            <cell>2.727E8</cell>
+            <cell>3.959E6</cell>
+            <cell>2.391E6</cell>
+            <cell></cell>
+            <cell>2009</cell>
+            <cell>3.068E8</cell>
+            <cell>4.131E6</cell>
+            <cell>2.437E6</cell>
+        </row>
+        <row bottom="medium">
+            <cell>2000</cell>
+            <cell>2.822E8</cell>
+            <cell>4.059E6</cell>
+            <cell>2.403E6</cell>
+            <cell></cell>
+            <cell>2010</cell>
+            <cell>3.094E8</cell>
+            <cell>3.999E6</cell>
+            <cell>2.468E6</cell>
+        </row>
+    </tabular>
+    <p>
+        Each row (corresponding to the population in a given year) represents a distinct state of the system.
+        The state variables for our population include <m>Y</m>, the year of the observation, <m>P</m>, the population at the beginning of the indicated year, <m>B</m>, the total number of births recorded during that year, and <m>D</m>, the total number of deaths recorded during the year.
+        We will also introduce a calculated variable <m>t</m> with <m>t=Y-1990</m>, so that <m>t=1</m> corresponds to the year <m>Y=1991</m>. This is done for convenience so that the numbers used when thinking about time are smaller in magnitude.
+    </p>
+</example>
+
+<p>
+    Note that symbols are different than letters.
+    We think of <q>B</q> and <q>b</q> as both representing the same letter in the alphabet.
+    However, they are different <em>symbols</em>.
+    So if we declare that our state variables are represented using variables <m>P</m>, <m>B</m>, <m>D</m>, and <m>Y</m>, we should not use <m>p</m>, <m>b</m>, <m>d</m> or <m>y</m> as those are different symbols and do not have a stated interpretation.
+</p>
+
+<p>
+    One of the primary purposes of mathematical modeling is to establish relationships between different state variables and then use those relationships to make predictions.
+    Plotting graphs of relationships between variables often reveal patterns.
+    We usually use <term>scatter plots</term> to look for these relationships.
+    A scatter plot takes two state variables which we measure relative to corresponding units (in order to get numbers), say <m>x</m> and <m>y</m>.
+    We then plot the points <m>(x,y)</m> coming from different states.
+    If a pattern arises, then we look for an equation that captures the essential features of the relationship.
+    These equations form the essence of our mathematical model.
+    We can then analyze our system equations to see what predictions they allow us to infer.
+</p>
+
+</section>

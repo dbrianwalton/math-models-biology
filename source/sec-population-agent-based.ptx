@@ -11,7 +11,7 @@
 <title>An Agent Based Motivation for Dynamics</title>
 
 <introduction>
-    <p>We start our modeling by thinking about an <term>agent-based model</term>. An agent-based model is a computer simulation in which abstract agents are defined on a computer with a collection of rules for what they do in time and how the different agents interact with one another. In the context of a population, we might think of the agents as individuals within a virtual population. The rules describe the patterns of life that the individuals follow.</p>
+    <p>We start our modeling by thinking about an <term>agent-based model</term>. An agent-based model is a computer simulation in which abstract agents are defined on a computer with a collection of rules for what they do in time and how the different agents interact with one another. In the context of a population, we might think of the agents as simulating individuals within a virtual population. The rules describe the patterns of life that the individuals follow.</p>
     
     <p>By first thinking about how we would implement an agent-based model for a system, we are engaging the process of establishing an abstract representation of the fundamental assumptions identified in a hypothesis on how the system develops in time. Generally, we want to minimize the number of rules while still capturing the essence of our hypothesis. Allowing the computer simulation to follow our rules, we can observe the dynamics relatively quickly and make virtual measurements that might guide a more mathematical model.</p>
 </introduction>

@@ -11,9 +11,12 @@
 <title>Mathematical Modeling</title>
 
 <introduction>
-    <p>Welcome to the exciting world of mathematical modeling in biology.  Modeling is used in many areas of biology, from the analysis of populations and interactions between populations to the study of disease outbreaks within a population; from describing the flow of blood through the network of arteries, capillaries, and veins to predicting the patterns of electrical waves in the tissue of a heart; from using basic probability to understand genetic inheritance to modeling fitness in competitive environments as establishing selection of inherited traits.</p>
+    <p>
+    Welcome to the exciting world of mathematical modeling in biology.
+    Modeling is used in many areas of biology, from the analysis of populations and interactions between populations to the study of disease outbreaks within a population; from describing the flow of blood through the network of arteries, capillaries, and veins to predicting the patterns of electrical waves in the tissue of a heart; from using basic probability to understand genetic inheritance to modeling fitness in competitive environments as establishing selection of inherited traits.
+    </p>
 
-    <p>This course is designed to introduce the ideas of mathematical modeling in biology to a rather wide spectrum of students.  Some of you will be biology majors who have completed only the equivalent of a first semester of calculus, perhaps several semesters ago.  Others will be mathematics majors with significant background in mathematical techniques.  The rest are probably somewhere in between.</p>
+    <p>This course is designed to introduce the ideas of dynamic mathematical modeling in biology to a rather wide spectrum of students.  Some of you will be biology majors who have completed only the equivalent of a first semester of calculus, perhaps several semesters ago.  Others will be mathematics majors with significant background in mathematical techniques.  The rest are probably somewhere in between.</p>
 
     <p>The course will attempt to bridge the gap by focusing on general modeling ideas, using computer technology as a tool to provide the majority of analysis.  Automated computer algorithms are capable of doing essentially any calculation or computation that an expert graduate in mathematics could ever hope to learn.  The real contribution of a human being is first in knowing what calculation is needed and second in interpreting the results.  And on occasion, a human may need to design a custom program to instruct a computer how to perform a particular computation.</p>
 
@@ -22,9 +25,9 @@
     <p>The rest of this introduction is organized as follows.  First, we will discuss the scientific method for discovering scientific knowledge with a particular aim at understanding how mathematics fits into this framework.  Second, we will look more in depth in the area of modeling as a part of that scientific method.</p>
 </introduction>
     
-<xi:include href="./sec-mm-scientific-method.xml" />
-<xi:include href="./sec-mm-role-of-models.xml" />
-<xi:include href="./sec-mm-measurements.xml" />
-<xi:include href="./sec-mm-state-system.xml" />
+<xi:include href="./sec-mm-scientific-method.ptx" />
+<xi:include href="./sec-mm-role-of-models.ptx" />
+<xi:include href="./sec-mm-measurements.ptx" />
+<xi:include href="./sec-mm-state-system.ptx" />
 
 </chapter>

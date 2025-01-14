@@ -11,9 +11,9 @@
     <xi:include href="./frontmatter.ptx" />
 
     <!-- Include chapters -->
-    <xi:include href="./ch-mathematical-modeling.xml" />
-    <xi:include href="./ch-populations.xml" />
-    <xi:include href="./ch-interactions.xml" />
+    <xi:include href="./ch-mathematical-modeling.ptx" />
+    <xi:include href="./ch-populations.ptx" />
+    <xi:include href="./ch-interactions.ptx" />
 
 
     <!-- Include backmatter -->
