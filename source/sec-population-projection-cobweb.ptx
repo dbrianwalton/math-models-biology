@@ -14,7 +14,7 @@
     <p>A projection function establishes a relationship between consecutive values in a sequence. For a population, the projection function allows us to predict the population after one cycle given the size of the population at the current time. In this section, we will learn how to interpret information using the graph of the projection function.</p>
 </introduction>
     
-    <subsection xml:id='projection-compare-replacement'>
+<subsection xml:id='projection-compare-replacement'>
     <title>Visualizing Potential for Growth</title>
     <p>In calculus, we learn that a function <m>f(x)</m> is increasing on intervals for which <m>f'(x) \gt 0</m> and decreasing on intervals for which <m>f'(x) \lt 0</m>. This is because the derivative <m>f'(x)</m> of a function <m>f(x)</m> measures the rate of change for the function <m>f(x)</m>. Sequences can be analyzed in a similar way, by looking at whether <em>increments</em> in the sequence are positive or negative.</p>
     <p>The increment for a sequence <m>x = (x_n)_{n=0}^{\infty}</m> is the difference between consecutive terms, defined by the backward difference <me>\Delta x_{n} = x_{n}-x_{n-1}.</me> We call it the increment because the increment is what we add to the current value to find the next value of the sequence, <me>x_{n+1} = x_n + \Delta x_{n+1}.</me> For populations, the increment corresponds to the sum of births and net migration minus the deaths.</p>
@@ -66,130 +66,21 @@
             <p>Compare the cobweb diagrams for a discrete logistic population model with <m>K=1</m> (to represent 1 capacity unit, not 1 individual) and values <m>r_0=0.75</m> and <m>r_0 = 1.5</m> using initial values <m>x_0=0.25</m>. The projection function when <m>r_0=0.75</m> is given by <m>f(x) = x + 0.75x(1-x)</m>. When <m>r_0=1.25</m>, the projection function is <m>f(x)=x + 1.5x(1-x)</m>.</p>
             <p>First, we consider the cobweb diagram for <m>f(x) = x + 0.75x(1-x)</m>. The figure below is interactive in that you can see the repetition in drawing the segments of the diagram. For this projection function and initial value, the sequence steadily increases toward the fixed point. We can see that the fixed point is stable.</p>
             <figure>
-            <jsxgraph xml:id="jsxgraph-cobweb-discrete-logistic-ex1">
-                <!-- http://jsxgraph.uni-bayreuth.de/wiki/index.php/Archimedean_spiral -->
-                <input>
-                <![CDATA[// Put variables in object to isolate.
-                cw1 = { x0:0.25, n:10 };
-                cw1.f = function(x) { return x + .75*x*(1-x); };
-                cw1.buildSeq = function(x, n) {
-                    var seq = [x];
-                    for (var i=1; i<=n; i++) {
-                        x = cw1.f(x);
-                        seq[i] = x;
-                    }
-                    return seq;
-                };
-                cw1.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-discrete-logistic-ex1', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
-                cw1.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
-                cw1.project = cw1.board.create('functiongraph', 
-                    [cw1.f], {strokeColor:'blue', strokeWidth:2});
-                cw1.step = cw1.board.create('slider', 
-                    [[0.1,1.4],[1,1.4],[1,1,10]],{name:'step', snapWidth:1, precision:0});
-                
-                cw1.seq = cw1.buildSeq(cw1.x0, cw1.n);
-                cw1.project = [];
-                cw1.update = [];
-                for (var i=0; i<cw1.n; i++) {
-                    cw1.project[i] = cw1.board.create('segment', [ [cw1.seq[i], cw1.seq[i]], [cw1.seq[i], cw1.seq[i+1]]], { name:i, color:'black',fixed:true });
-                    cw1.update[i] = cw1.board.create('segment', [ [cw1.seq[i], cw1.seq[i+1]], [cw1.seq[i+1], cw1.seq[i+1]]], { name:i, color:'black',fixed:true });
-                }
-                cw1.a = cw1.board.create('point', [function() { var i = cw1.step.Value(); return cw1.seq[i-1]; }, function() { var i = cw1.step.Value(); return cw1.seq[i-1]} ], {visible:false, withLabel:false});
-                cw1.b = cw1.board.create('point', [function() { var i = cw1.step.Value(); return cw1.seq[i-1]; }, function() { var i = cw1.step.Value(); return cw1.seq[i]} ], {visible:false, withLabel:false});
-                cw1.c = cw1.board.create('point', [function() { var i = cw1.step.Value(); return cw1.seq[i]; }, function() { var i = cw1.step.Value(); return cw1.seq[i]} ], {visible:false, withLabel:false});
-                cw1.board.create('segment', [cw1.a, cw1.b], {color:'red', withLabel:false, strokeWidth:4});
-                cw1.board.create('segment', [cw1.b, cw1.c], {color:'red', withLabel:false, strokeWidth:4});
-                ]]>
-                </input>
-            </jsxgraph>
+            <interactive platform="jsxgraph" xml:id="jsxgraph-cobweb-discrete-logistic-ex1" source="code/jsx/jsx-cobweb-discrete-logistic-ex1.js" aspect="1:1">
+                <slate xml:id="jsxboard-cobweb-discrete-logistic-ex1" surface="jsxboard" aspect="1:1" />
+            </interactive>
             </figure>
             <p>Next we look at the cobweb diagram for <m>f(x)=x + 1.5x(1-x)</m>. In this example, the vertex of the parabola is to the left of the fixed point so that our sequence actually exceeds the carrying capacity and begins to oscillate above and below the equilibrium. However, it does still eventually converge to the fixed point.</p>
             <figure>
-            <jsxgraph xml:id="jsxgraph-cobweb-discrete-logistic-ex2">
-                <!-- http://jsxgraph.uni-bayreuth.de/wiki/index.php/Archimedean_spiral -->
-                <input>
-                <![CDATA[// Put variables in object to isolate.
-                cw2 = { x0:0.25, n:10 };
-                cw2.f = function(x) { return x + 1.5*x*(1-x); };
-                cw2.buildSeq = function(x, n) {
-                    var seq = [x];
-                    for (var i=1; i<=n; i++) {
-                        x = cw2.f(x);
-                        seq[i] = x;
-                    }
-                    return seq;
-                };
-                cw2.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-discrete-logistic-ex2', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
-                cw2.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
-                cw2.project = cw2.board.create('functiongraph', 
-                    [cw2.f], {strokeColor:'blue', strokeWidth:2});
-                cw2.step = cw2.board.create('slider', 
-                    [[0.1,1.4],[1,1.4],[1,1,10]],{name:'step', snapWidth:1, precision:0});
-                
-                cw2.seq = cw2.buildSeq(cw2.x0, cw2.n);
-                cw2.project = [];
-                cw2.update = [];
-                for (var i=0; i<cw2.n; i++) {
-                    cw2.project[i] = cw2.board.create('segment', [ [cw2.seq[i], cw2.seq[i]], [cw2.seq[i], cw2.seq[i+1]]], { name:i, color:'black',fixed:true });
-                    cw2.update[i] = cw2.board.create('segment', [ [cw2.seq[i], cw2.seq[i+1]], [cw2.seq[i+1], cw2.seq[i+1]]], { name:i, color:'black',fixed:true });
-                }
-                cw2.a = cw2.board.create('point', [function() { var i = cw2.step.Value(); return cw2.seq[i-1]; }, function() { var i = cw2.step.Value(); return cw2.seq[i-1]} ], {visible:false, withLabel:false});
-                cw2.b = cw2.board.create('point', [function() { var i = cw2.step.Value(); return cw2.seq[i-1]; }, function() { var i = cw2.step.Value(); return cw2.seq[i]} ], {visible:false, withLabel:false});
-                cw2.c = cw2.board.create('point', [function() { var i = cw2.step.Value(); return cw2.seq[i]; }, function() { var i = cw2.step.Value(); return cw2.seq[i]} ], {visible:false, withLabel:false});
-                cw2.board.create('segment', [cw2.a, cw2.b], {color:'red', withLabel:false, strokeWidth:4});
-                cw2.board.create('segment', [cw2.b, cw2.c], {color:'red', withLabel:false, strokeWidth:4});
-                ]]>
-                </input>
-            </jsxgraph>
+                <interactive platform="jsxgraph" xml:id="jsxgraph-cobweb-discrete-logistic-ex2" source="code/jsx/jsx-cobweb-discrete-logistic-ex2.js" aspect="1:1">
+                    <slate xml:id="jsxboard-cobweb-discrete-logistic-ex2" surface="jsxboard" aspect="1:1" />
+                </interactive>
             </figure>
             <p>Because we can, here is a figure where you can choose the value of <m>r_0</m> (<m>0 \lt r_0 \lt 3</m>) and the initial value <m>x_0</m> and explore a variety of cobweb diagrams in a single figure. Notice in particular that when the value of <m>r_0</m> is larger, so that the peak of the parabola is higher, the dynamics become more complex.</p>
             <figure>
-            <jsxgraph xml:id="jsxgraph-cobweb-discrete-logistic-ex3">
-                <!-- http://jsxgraph.uni-bayreuth.de/wiki/index.php/Archimedean_spiral -->
-                <input>
-                <![CDATA[// Put variables in object to isolate.
-                cw3 = { n:10 };
-                cw3.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-discrete-logistic-ex3', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
-                cw3.r = cw3.board.create('slider', 
-                    [[0.1,1.4],[1,1.4],[0,0.75,3]],{name:'r0', precision:2});
-                cw3.x0 = cw3.board.create('slider', 
-                    [[0,0],[2,0],[0,0.25,2]],{name:'x0', precision:2});
-                cw3.f = function(x) { return x + cw3.r.Value()*x*(1-x); };
-                cw3.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
-                cw3.project = cw3.board.create('functiongraph', 
-                    [cw3.f], {strokeColor:'blue', strokeWidth:2});
-                // Build the points used for the cobweb.
-                cw3.x = [];
-                cw3.x[0] = cw3.board.create('point', [ function() {return cw3.x0.Value();}, 0], {name:0, visible:false});
-                for (var i=1; i<=cw3.n; i++) {
-                    cw3.x[i] = cw3.board.create('point',
-                        [ function() {var j=this.name; return cw3.f(cw3.x[j-1].X());}, 0 ], 
-                        {name:i, visible:false}
-                    );
-                }
-                cw3.y = [];
-                for (var i=0; i<=cw3.n; i++) {
-                    cw3.y[i] = cw3.board.create('transform', 
-                        [ 0, "X("+i+")"],
-                        {name:i, type:'translate'}
-                    );
-                }
-                // Now construct the actual cobweb diagram.
-                for (var i=0; i<cw3.n; i++) {
-                    var a = cw3.board.create('point', 
-                        [cw3.x[i], cw3.y[i]], {visible:false});
-                    var b = cw3.board.create('point', 
-                        [cw3.x[i], cw3.y[i+1]], {visible:false});
-                    var c = cw3.board.create('point', 
-                        [cw3.x[i+1], cw3.y[i+1]], {visible:false});
-                    cw3.board.create('segment',
-                        [a, b], {color:'black',fixed:true});
-                    cw3.board.create('segment',
-                        [b, c], {color:'black',fixed:true});
-                }
-                ]]>
-                </input>
-            </jsxgraph>
+                <interactive platform="jsxgraph" xml:id="jsxgraph-cobweb-discrete-logistic-ex3" source="code/jsx/jsx-cobweb-discrete-logistic-ex3.js" aspect="1:1">
+                    <slate xml:id="jsxboard-cobweb-discrete-logistic-ex3" surface="jsxboard" aspect="1:1" />
+                </interactive>
             </figure>
         </example>
 
@@ -254,52 +145,9 @@
         </ul> More complicated dynamics can occur further away from the fixed point. But at least near the fixed point, the linear approximation gives a good description of what is happening, at least when <m>|f'(x^*)| \ne 1</m>.</p>
         <p>A dynamic cobweb diagram of a linear projection function <m>f(x)=1+a(x-1)</m> where you can choose the slope <m>a</m> at the fixed point <m>x^*=1</m> is illustrated below. Can you relate this behavior to what you observed in the discrete logistic model earlier?</p>
         <figure>
-        <jsxgraph xml:id="jsxgraph-cobweb-linear-ex4">
-            <!-- http://jsxgraph.uni-bayreuth.de/wiki/index.php/Archimedean_spiral -->
-            <input>
-            <![CDATA[// Put variables in object to isolate.
-            cw4 = { n:10 };
-            cw4.board = JXG.JSXGraph.initBoard('jsxgraph-cobweb-linear-ex4', {boundingbox: [-0.25, 1.5, 2, -0.25], axis:true, showNavigation:false});
-            cw4.a = cw4.board.create('slider', 
-                [[0.1,1.4],[1,1.4],[-1.5,0.75,1.5]],{name:'a', precision:2});
-            cw4.x0 = cw4.board.create('slider', 
-                [[0,0],[2,0],[0,0.25,2]],{name:'x0', precision:2});
-            cw4.f = function(x) { return 1 + cw4.a.Value()*(x-1); };
-            cw4.board.create('line', [[0,0], [1,1]], {color:'red',fixed:true});
-            cw4.project = cw4.board.create('functiongraph', 
-                [cw4.f], {strokeColor:'blue', strokeWidth:2});
-            // Build the points used for the cobweb.
-            cw4.x = [];
-            cw4.x[0] = cw4.board.create('point', [ function() {return cw4.x0.Value();}, 0], {name:0, visible:false});
-            for (var i=1; i<=cw4.n; i++) {
-                cw4.x[i] = cw4.board.create('point',
-                    [ function() {var j=this.name; return cw4.f(cw4.x[j-1].X());}, 0 ], 
-                    {name:i, visible:false}
-                );
-            }
-            cw4.y = [];
-            for (var i=0; i<=cw4.n; i++) {
-                cw4.y[i] = cw4.board.create('transform', 
-                    [ 0, "X("+i+")"],
-                    {name:i, type:'translate'}
-                );
-            }
-            // Now construct the actual cobweb diagram.
-            for (var i=0; i<cw4.n; i++) {
-                var a = cw4.board.create('point', 
-                    [cw4.x[i], cw4.y[i]], {visible:false});
-                var b = cw4.board.create('point', 
-                    [cw4.x[i], cw4.y[i+1]], {visible:false});
-                var c = cw4.board.create('point', 
-                    [cw4.x[i+1], cw4.y[i+1]], {visible:false});
-                cw4.board.create('segment',
-                    [a, b], {color:'black',fixed:true});
-                cw4.board.create('segment',
-                    [b, c], {color:'black',fixed:true});
-            }
-            ]]>
-            </input>
-        </jsxgraph>
+            <interactive platform="jsxgraph" xml:id="jsxgraph-cobweb-linear-ex4" source="code/jsx/jsx-cobweb-linear-ex4.js" aspect="1:1">
+                <slate xml:id="jsxboard-cobweb-linear-ex4" surface="jsxboard" aspect="1:1" />
+            </interactive>
         </figure>
     </subsection>
 </section>

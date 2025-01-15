@@ -71,70 +71,9 @@
         <p>The fixed point equation <me>(1+r_0)x - \alpha x^2 - hx = x</me> can be rewritten in an equivalent factored form <me>x\big((r_0-h)-\alpha x\big)=0.</me> The fixed points of the perturbed model are <m>x = 0</m> and <m>x=\frac{r_0-h}{\alpha}</m>. When <m>h=0</m>, the second fixed point corresponds to our original value <m>K=\frac{r_0}{\alpha}</m>. As <m>h</m> increases, location of the second fixed point steadily decreases. When <m>h=r_0</m>, the two fixed points overlap, and when <m>h \gt r_0</m>, the second fixed point is a negative value.</p>
         <p>You can explore the cobweb diagram for this situation for the discrete logistic model with <m>r_0 = 1.8</m> and <m>\alpha = 0.01</m> and varying values for <m>h</m>. The bifurcation occurs when <m>h = r_0 = 1.8</m>. Notice that if your initial condition is between the two fixed points, the population increase. But if the harvesting rate exceeds the intrinsic per capita net growth rate <m>h \gt r_0</m>, then the population converges to an extinct state.</p>
         <figure>
-            <jsxgraph xml:id="jsxgraph-proportional-harvest-cobweb-ex2">
-                <!-- http://jsxgraph.uni-bayreuth.de/wiki/index.php/Archimedean_spiral -->
-                <input>
-                <![CDATA[// Put variables in object to isolate.
-                cw2 = { n:15, r0:1.8, alpha:0.01 };
-                cw2.board = JXG.JSXGraph.initBoard(
-                    'jsxgraph-proportional-harvest-cobweb-ex2',
-                    {
-                        boundingbox: [-50, 240, 240, -50],
-                        axis:true, showNavigation:false
-                    });
-                cw2.h = cw2.board.create('slider', 
-                    [[20,200],[120,200],[0,0,2.5]],{name:'h', precision:2});
-                cw2.x0 = cw2.board.create('slider', 
-                    [[-50,0],[240,0],[-50,100,240]],{name:'x0', precision:1});
-                cw2.f = function(x) { 
-                    return (1+cw2.r0)*x - cw2.alpha*x*x - cw2.h.Value()*x; 
-                };
-                cw2.board.create('line', 
-                    [[0,0], [10,10]], 
-                    {color:'red',fixed:true}
-                );
-                cw2.project = cw2.board.create('functiongraph', 
-                    [cw2.f], 
-                    {strokeColor:'blue', strokeWidth:2}
-                );
-                // Build the points used for the cobweb.
-                cw2.x = [];
-                cw2.x[0] = cw2.board.create('point', 
-                    [ function() {return cw2.x0.Value();}, 0], 
-                    {name:0, visible:false}
-                );
-                for (var i=1; i<=cw2.n; i++) {
-                    cw2.x[i] = cw2.board.create('point',
-                        [ function() {
-                            var j=this.name; 
-                            return cw2.f(cw2.x[j-1].X());
-                            }, 0 ], 
-                        {name:i, visible:false}
-                    );
-                }
-                cw2.y = [];
-                for (var i=0; i<=cw2.n; i++) {
-                    cw2.y[i] = cw2.board.create('transform', 
-                        [ 0, "X("+i+")"],
-                        {name:i, type:'translate'}
-                    );
-                }
-                // Now construct the actual cobweb diagram.
-                for (var i=0; i<cw2.n; i++) {
-                    var a = cw2.board.create('point', 
-                        [cw2.x[i], cw2.y[i]], {visible:false});
-                    var b = cw2.board.create('point', 
-                        [cw2.x[i], cw2.y[i+1]], {visible:false});
-                    var c = cw2.board.create('point', 
-                        [cw2.x[i+1], cw2.y[i+1]], {visible:false});
-                    cw2.board.create('segment',
-                        [a, b], {color:'black',fixed:true});
-                    cw2.board.create('segment',
-                        [b, c], {color:'black',fixed:true});
-                }
-                ]]>
-                </input>
-            </jsxgraph>
+            <interactive platform="jsxgraph" xml:id="jsxgraph-proportional-harvest-cobweb-ex2" source="code/jsx/jsx-proportional-harvest-cobweb-ex2.js" aspect="1:1">
+                <slate xml:id="jsxboard-proportional-harvest-cobweb-ex2" surface="jsxboard" aspect="1:1" />
+            </interactive>
         </figure>
     </example>
     
