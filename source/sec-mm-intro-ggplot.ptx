@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Dynamic Models for Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2015  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+<section xml:id="sec-mm-intro-ggplot">
+    <title>Introducing tidyverse and ggplot</title>
+    <p>
+        In this course, we will be learning to use R and the tidyverse set of packages for our data visualization. So-called <em>tidy</em> data is organized in tables where each state variable is a column, and each row is the collection of the values for all state variables for a given experimental state.
+        These tables are often put together in a spreadsheet.
+        We will learn to deal with tables that have been exported as <c>csv</c> files, which stands for <q>comma-separated values</q>.
+        Our data should be organized to have only contain one table per file.
+        The data introduced in <xref ref="ex-US-population-data"/> is a subset of the data found in <dataurl source="data/US-population-data.csv" visual="US-population-data.csv"/>.
+    </p>
+
+    <p>
+        We will import the US population data into R and visualize different relationships between the state variables.
+        When data files are not too large, it is often convenient to open them directly in a spreadsheet application to see how the file is organized.
+        The first 10 rows of the US population data file are illustrated in <xref ref="fig-US-population-data-in-spreadsheet"/>.
+    </p>
+    <figure xml:id="fig-US-population-data-in-spreadsheet">
+        <caption>Import of <c>US-population-data.csv</c> in Microsoft Excel</caption>
+        <image width="60%" source="images/US-popn-data-in-spreadsheet.png"/>
+    </figure>
+    <p>
+        Notice in this file that there are several lines describing the data.
+        This is called <term>metadata</term> and contains information <em>about</em> the data but that are not actually <em>part of</em> the data.
+        Often, metadata is stored in a companion file associated with our data files.
+        The metadata is not part of our desired import, so we will want to <em>skip</em> the first five (5) lines of the file.
+        The sixth row contains the names of our state variables, and the data begin in the seventh row.
+    </p>
+    <p>
+        We will import the data into R using the <c>read_csv</c> function.
+        Open RStudio and create a new project.
+        If you are working on your own computer, you can have as many different projects as you desire.
+        If you are working with RStudio on posit.cloud, then your license imposes a limit to the number of projects, and you may wish to use a project for multiples examples.
+        Since this is our first example, we will illustrate the process using a project for data visualization associated with the course.
+    </p>
+    <image width="60%" source="images/US-popn-new-project.png"/>
+    <p>
+        I named my project <q>mathbio-data-visualization</q> and downloaded the data file to be saved in the resulting folder.
+    </p>
+    <image width="60%" source="images/US-popn-files-in-project.png"/>
+    <p>
+        If you click on the data file, you have the option of viewing the file or importing the data set.
+        We will import the data set.
+        An import wizard page opens showing you the import options.
+        In the corner of the wizard is the R code that we will use.
+        Using code has the important consequence of allowing us to create <term>reproducible</term> analysis processes.
+        If we want to come back and repeat our work, a saved sequence of code will allow us to know exactly what we did the last time.
+    </p>
+    <image width="80%" source="images/US-popn-import-wizard-start.png"/>
+    <p>
+        As we noted earlier, we want to skip the first five rows of metadata.
+        One of the wizard options is an option <c>Skip</c> to indicate how many rows are skipped, and we type <c>5</c>.
+        Notice that once we do this, the wizard anticipates how our data is structured.
+        We are given a chance to set the <c>Name</c> of our imported table, but the default value of <q>US_population_data</q> seems completely adequate.
+        There is another option <c>First Row as Names</c> that was selected by default.
+        The option <c>Open Data Viewer</c> will cause RStudio to open a table viewer after import that will give us a spreadsheet-like view of the resulting import.
+        This is useful for our initial exploration, but we will not include that in our final script.
+    </p>
+    <listing xml:id="listing-US-popn-import">
+        <program language='R'>
+            library(readr)
+            US_population_data &lt;- read_csv("US-population-data.csv", 
+                skip = 5)
+        </program>
+    </listing>
+    <p>
+        The function that does the import work is named <c>read_csv</c>.
+        Most functions in R are defined in various <term>packages</term> called <term>libraries</term>.
+        Before we can use <c>read_csv</c>, we first need to unpack the <c>readr</c> library where the function was defined.
+        The <em>inputs</em>, which are called <term>arguments</term>, to the function are listed between parentheses that immediately follow the function name and separated by commas.
+        The first argument is the name of the data file.
+        The <c>read_csv</c> had many other optional settings, one of which was <c>skip</c>, so when the code specifies that value, the name of the option is given where the code says <c>skip = 5</c>.
+        Once this code has been evaluated, we can access the data table, which is now a structure called <c>tibble</c>, using the name <c>US_population_data</c>.
+    </p>
+    <p>
+        To create a graph, we will use another of the tidyverse libraries called <c>ggplot2</c> that provides a graphing function <c>ggplot</c>.
+        The first argument of <c>ggplot</c>, which creates a graphical object, is the data-frame or tibble containing our state variables.
+        The attributes of this graphical object consist of aesthetic elements, such as titles and axes, and informative geometric objects that represent the data.
+        It is common to define many of the aesthetic elements in the call to <c>ggplot</c>, by adding a <c>mapping</c> argument which creates connections (maps) between elements of the graph and our chosen features.
+    </p>
+    <p>
+        When creating graphs of individual relationships between state variables, the <m>x</m>-axis and <m>y</m>-axis correspond to specific variables.
+        Consequently, one common mapping connects the axes to specific variables in the data-frame or tibble.
+        If we wanted to create a graph with <c>Year</c> on the <m>x</m>-axis and <c>Population</c> on the <m>y</m>-axis, we would include the aesthetic assignment <c>mapping = aes(x = Year, y = Population)</c>.
+        In addition, we need to add a geometric representation of our data, which for a scatterplot are points <m>(x,y)</m> representing values from our state variables.
+        Such a graph would be created from the commands shown in the following listing.
+    </p>
+    <listing xml:id="listing-US-popn-population-v-time-first">
+        <program language="R">
+        library(ggplot2)  # Only required before our first use of ggplot
+        ggplot(US_population_data,
+               mapping = aes(x = Year, y = Population)
+            ) +
+            geom_point()
+        </program>
+    </listing>
+    <image width="75%" source="images/US-popn-population-v-time-first.png"/>
+    <p>
+        What do we notice about this graph?
+        One thing is that we have much more data than the original data in our earlier table.
+        The data file just contained many more years than the original table shown in the text.
+        We would like to restrict our focus on the more narrow range of years.
+        Secondly, we might notice that the <m>y</m>-axis range was chosen to give a good spread of our data but does not properly represent size as the value <m>y=0</m> is not on the axis.
+        We might want to know how to force the axis to set a scale of our choosing.
+        Thirdly, we would like to add some color to the graph.
+    </p>
+    <p>
+        The second and third changes come by adding additional information to the graphical object.
+        Because we are assigning a color to the geometric points, we can add that information as an optional argument to <c>geom_point</c>.
+        (Later we will have a desire to assign color based on other features and that will involve a different strategy.)
+        Assigning limits to the axes correspond to functions <c>xlim</c> and <c>ylim</c>.
+    </p>
+    <listing xml:id="listing-US-popn-population-v-time-second">
+        <program language="R">
+        ggplot(US_population_data,
+               mapping = aes(x = Year, y = Population)
+            ) +
+            geom_point(color = "blue") +
+            ylim(0, 4e8)
+        </program>
+    </listing>
+    <image width="75%" source="images/US-popn-population-v-time-second.png"/>
+    <p>
+        The other requested change actually represents a desire to analyze a subset of the original data.
+        While we might graphically get the result of interest by adding <c>xlim(1991,2010)</c>, we will be more authentic to our intent by creating a restricted data set.
+        The library <c>dplyr</c> contains a function <c>filter</c> that accomplishes this important feat.
+        Using a smaller data set, we also adjust the maximum value of the <m>y</m>-axis.
+    </p>
+    <listing xml:id="listing-US-popn-population-v-time-third">
+        <program language="R">
+        library(dplyr)
+        focus_population_data &lt;- filter(US_population_data, Year &gt;= 1991 &amp; Year &lt; 2010)
+        ggplot(focus_population_data,
+               mapping = aes(x = Year, y = Population)
+            ) +
+            geom_point(color = "blue") +
+            ylim(0, 3.5e8)
+        </program>
+    </listing>
+    <image width="75%" source="images/US-popn-population-v-time-third.png"/>
+    <p>
+        We might want to look at the other data values so that we can see how the number of births and deaths are related to the size of the population.
+        One approach to accomplish this is to add two new geometric objects.
+        Because the <m>y</m>-values of these new objects do not come from <c>Population</c>, the geometric objects will add aesthetic updates to use <c>Births</c> and <c>Deaths</c>.
+    </p>
+    <listing xml:id="listing-US-popn-population-v-time-four">
+        <program language="R">
+        ggplot(focus_population_data,
+               mapping = aes(x = Year, y = Population)
+            ) +
+            geom_point(color = "blue") +
+            geom_point(aes(y = "Births"), color = "red") +
+            geom_point(aes(y = "Deaths"), color = "green") +
+            ylim(0, 3.5e8)
+        </program>
+    </listing>
+    <image width="75%" source="images/US-popn-population-v-time-four.png"/>
+    <p>
+        Because the number of births and deaths are just a small fraction of the size of the total population, the graphs for births and deaths are hard to visualize and nearly overlap one another in the figure.
+        A common strategy for visualizing graphs where different data points have very different orders of magnitude is to use a logarithmic scale.
+        We can update our graph to use a logarithmic scale by adding the option <c>scale_y_log10</c> in place of the fixed axes <c>ylim</c>.
+        While we are at it, let us distinguish the points by using different shapes (see <url ref="https://www.sthda.com/english/wiki/ggplot2-point-shapes"/>.
+    </p>
+    <listing xml:id="listing-US-popn-population-v-time-five">
+        <program language="R">
+        ggplot(focus_population_data,
+               mapping = aes(x = Year, y = Population)
+            ) +
+            geom_point(color = "blue", shape = 15) +
+            geom_point(aes(y = Births), color = "green", shape = 16) +
+            geom_point(aes(y = Deaths), color = "red", shape = 17) +
+            scale_y_log10()
+        </program>
+    </listing>
+    <image width="75%" source="images/US-popn-population-v-time-five.png"/>
+    <p>
+        Curiously, the approach outlined above is <em>not</em> the recommended approach.
+        We will take a quick side-trip to discuss an alternative approach.
+        In reality, our graph consists of points all of the form <m>(x,y)</m> where the <m>x</m>-value is a year and the <m>y</m>-value is either a population size, a number of births, or a number of deaths.
+        It is cleaner to take our data and create a new data set with just two columns, say <c>Year</c> and <c>Count</c>, with a new classification column <c>Count_Type</c> (spaces are problematic) that indicates which data point is being represented.
+        The graphing tool then will run through a <em>single</em> geometric object but can provide different styling options based on the classification of the points.
+        A nice side-effect of adopting this new strategy is that we get easy legends for our plot.
+    </p>
+    <p>
+        The restructuring of our data is completed with the use of a command <c>pivot_longer</c> (make the table longer by moving columns into extra rows),
+        defined in the <c>tidyr</c> library.
+        This restructured data is temporary, so we can pass it through to the <c>ggplot</c> command using a <term>pipe</term>, represented by the operator <c>|&gt;</c>.
+        A pipe takes the output of one function (<c>pivot_longer</c>) and passes it directly into the input of the next function (<c>ggplot</c>).
+        In our aesthetics, we assign both <c>color</c> and <c>shape</c> to look at the <c>Count_Type</c> column, so that each type is automatically assigned a unique color and shape.
+    </p>
+    <listing xml:id="listing-US-popn-population-v-time-six">
+        <program language="R">
+        library(tidyr)
+        pivot_longer(focus_population_data,
+                cols = !Year,  # every column *but* Year into separate rows
+                names_to = "Count_Type",
+                values_to = "Count"
+        ) |&gt;
+        ggplot(mapping = aes(x = Year, y = Count, 
+                    color = Count_Type, shape = Count_Type)
+            ) +
+            geom_point() + 
+            scale_y_log10()
+        </program>
+    </listing>
+    <image width="85%" source="images/US-popn-population-v-time-six.png"/>
+    <p>
+        Putting all of this together into a single block, we have a repeatable script that will generate the plot of interest.
+        Note that we commonly put all of the libraries at the top of the script.
+        Comments help us remember why we did steps.
+    </p>
+    <listing xml:id="listing-US-popn-population-v-time-final">
+        <program language="R">
+        library(readr)    # To load CSV files (read_csv)
+        library(dplyr)    # To reorganize (filter)
+        library(tidyr)    # To tidy data (pivot_longer)
+        library(ggplot2)  # To work with graphs (ggplot)
+
+        # Load the data from a file
+        US_population_data &lt;- read_csv("US-population-data.csv", 
+            skip = 5)
+        
+        # Focus on the the years 1991-2010
+        focus_population_data &lt;- filter(US_population_data, Year &gt;= 1991 &amp; Year &lt; 2010)
+
+        # Reorganize to plot Births, Deaths, Population vs Year
+        pivot_longer(focus_population_data,
+                cols = !Year,  # every column *but* Year into separate rows
+                names_to = "Count_Type",
+                values_to = "Count"
+        ) |&gt;
+        # And pipe the resulting frame into ggplot
+        ggplot(mapping = aes(x = Year, y = Count, 
+                    color = Count_Type, shape = Count_Type)
+            ) +
+            geom_point() + 
+            scale_y_log10()
+        </program>
+    </listing>
+</section>

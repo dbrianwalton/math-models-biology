@@ -2,7 +2,7 @@
 
 <!-- This file is part of the book                -->
 <!--                                              -->
-<!--      A Modeling Approach to Calculus         -->
+<!--      Dynamic Models for Biology         -->
 <!--                                              -->
 <!-- Copyright (C) 2015  D. Brian Walton          -->
 <!-- See the file COPYING for copying conditions. -->
@@ -29,5 +29,7 @@
 <xi:include href="./sec-mm-role-of-models.ptx" />
 <xi:include href="./sec-mm-measurements.ptx" />
 <xi:include href="./sec-mm-state-system.ptx" />
+<xi:include href="./sec-mm-intro-ggplot.ptx" />
+<xi:include href="./sec-mm-variable-relations.ptx" />
 
 </chapter>

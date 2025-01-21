@@ -24,6 +24,7 @@
         <image width="50%">
             <shortdescription>Simplified diagram representation of a population model</shortdescription>
             <latex-image>
+            <![CDATA[
                 \begin{tikzpicture}
                     \draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- (0,0);
                     \node at (0.5,0.5) {$\large{P}$};
@@ -32,6 +33,7 @@
                     \draw [->] (1,0.75) -- (2.25,.75) node [pos=0.5, below] {\tiny{death}};
                     \draw [->] (1,0.25) -- (2.25,0.25) node [pos=0.5, below] {\tiny{emigrate}};
                 \end{tikzpicture}
+            ]]>
             </latex-image>
         </image>
     </figure>

@@ -2,12 +2,12 @@
 
 <!-- This file is part of the book                -->
 <!--                                              -->
-<!--      A Modeling Approach to Calculus         -->
+<!--      Dynamic Models for Biology         -->
 <!--                                              -->
 <!-- Copyright (C) 2015  D. Brian Walton          -->
 <!-- See the file COPYING for copying conditions. -->
    
-<section xml:id="system-state">
+<section xml:id="system-state" xmlns:xi="http://www.w3.org/2001/XInclude">>
 <title>The State of a System</title>
 
 <p>When we use the word <term>system</term>, we are referring to the subject of study and all of the possible quantities associated with that subject. In principle, every object interacts with so many other objects that a system’s complexity would be incomprehensible. For the sake of simplification and sanity, we adopt a reductionist viewpoint and consider the system as representing only those quantities that are relevant for addressing specific scientific questions.</p>
@@ -48,7 +48,7 @@
     The next example introduces some particular data that we will use for additional exploration of the ideas in this section.
 </p>
 
-<example>
+<example xml:id="ex-US-population-data">
     <p>
         Consider the following data about the population, births and deaths in the United States.
         To conserve space, the data are given using scientific notation expressed in the standard machine form

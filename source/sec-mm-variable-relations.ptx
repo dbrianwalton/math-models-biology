@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Dynamic Models for Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2015  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+<section xml:id="sec-mm-variable-relations">
+    <title>Relations between Variables</title>
+    <p>
+        In the previous section, we explored the US census population data set as the variables of <c>Births</c>, <c>Deaths</c>, and <c>Populations</c> changed with <c>Year</c>.
+        Mathematical models are often built by exploring the relations between the state variables themselves other than time.
+        How do birth and death rates relate to the population size?
+        We can start to visualize this by creating a plot.
+    </p>
+    <p>
+        We will work with the same data file <dataurl source="data/US-population-data.csv" visual="US-population-data.csv"/>.
+        Using the same basic pattern as the previous work, we will load the data into R using <c>read_csv</c> and then restrict to the years of interest using <c>filter</c>.
+        This time we will want to be plotting points <m>(x,y)</m> where <m>x</m>-values correspond to the <c>Population</c> values and <m>y</m>-values correspond to the <c>Births</c> and <c>Deaths</c>.
+        As there are two distinct types of <m>y</m>-values, we will again use <c>pivot_longer</c> to create a tidy version of the data for plotting.
+    </p>
+    <listing xml:id="listing-US-popn-rates-vs-population-1">
+        <program language="R">
+        library(readr)    # To load CSV files (read_csv)
+        library(dplyr)    # To reorganize (filter)
+        library(tidyr)    # To tidy data (pivot_longer)
+        library(ggplot2)  # To work with graphs (ggplot)
+
+        # Load the data from a file
+        US_population_data &lt;- read_csv("US-population-data.csv", 
+            skip = 5)
+        
+        # Focus on the the years 1991-2010
+        focus_population_data &lt;- filter(US_population_data, Year &gt;= 1991 &amp; Year &lt; 2010)
+
+        # Reorganize to plot Births, Deaths vs Population
+        pivot_longer(focus_population_data,
+                cols = c(Births, Deaths),  # these columns get separate rows
+                names_to = "Rate_Type",    # category column
+                values_to = "Rate"         # column for actual values
+        ) |&gt;
+        # And pipe the resulting frame into ggplot
+        ggplot(mapping = aes(x = Population, y = Rate, 
+                    color = Rate_Type, shape = Rate_Type)
+            ) +
+            geom_point()
+        </program>
+    </listing>
+    <image width="85%" source="images/US-rates-population-v-rates-01.png"/>
+    <p>
+        From the resulting figure, we can see that the birth rate goes up and down in an unusual manner.
+        This is typical in human populations, where birth rates are affected significantly by socioeconomic and political conditions.
+        The death rate on the other hand appears to steadily increase with an increase in the population size.
+        So we will spend some time in this section exploring that relationship.
+    </p>
+    <p>
+        The simplest models for relationships are constant and linear relations.
+        Let us look at the possibility of a linear relation between the death rate and the population size.
+        We can add a best-fit line to our data and see what it looks like.
+        The following script assumes that we have already imported the data as shown in the previous listing.
+        Because we are looking at just the <c>Deaths</c> for <m>y</m>-values, we will revert back to the original data structure.
+    </p>
+    <listing xml:id="listing-US-popn-rates-vs-population-2">
+        <program language="R">
+        ggplot(focus_population_data,
+                mapping = aes(x = Population, y = Deaths)
+            ) +
+            geom_point(color = "green") +
+            geom_smooth(method = "lm", formula = 'y ~ x', se = FALSE)
+        </program>
+    </listing>
+    <p>
+        The geometric object that was added is <c>geom_smooth</c>, which has several different methods.
+        The method we used is <c>lm</c> which stands for <q>linear model</q>.
+        The associated <c>formula</c> option indicates that we want a linear model where <m>y</m> is a linear function of <m>x</m>.
+        The option <c>se = FALSE</c> indicates that we do not want to include the <q>standard error</q> as part of our linear model.
+        Change this to <c>TRUE</c> to see the effect, which essentially shows how much confidence we have that given the data, a linear model would be predicting a linear model values.
+    </p>
+    <p>
+        Adding the graph of the line does not show us the formula for the model.
+        We need to make a new call to find the values.
+        Before introducing the command, recall that the standard high school representation of a line uses the form <m>y = mx + b</m>, where <m>m</m> is the slope of the line and <m>b</m> is the <m>y</m>-intercept, meaning the point <m>(0,b)</m> is on the line.
+        The symbols <m>m</m> and <m>b</m>, although common, are not actually standard.
+        For example, in physics, <m>m</m> more commonly refers to <em>mass</em>.
+        We could instead use a model <m>y = a + bx</m>, and with this representation, <m>a</m> is the <m>y</m>-intercept and <m>b</m> is the slope.
+    </p>
+    <p>
+        In R, the method that we use to find the best linear model is <c>lm</c>.
+        The first argument is <c>formula</c>, which wants to know which columns in our data are related.
+        The <em>dependent</em> variable goes on the <em>left</em> of the formula.
+        The <em>right</em> side of the formula is going to be a sum of columns that each are included with their individual slope terms.
+        And the two sides of the formula are connected with a <em>tilde</em> symbol <c>~</c>.
+        In our example, we want a model <c>Deaths ~ Population</c> because we want to predict <c>Deaths</c> (dependent variable) as a linear function of <c>Population</c> (explanatory or independent variable).
+        The result of our call will be a structure that gives an <em>intercept</em> and a coefficient for <c>Population</c>.
+        (Results are shown in the listing.)
+    </p>
+    <listing xml:id="listing-lm-deaths-vs-population">
+        <console prompt="&gt; " language="R">
+            <input>
+            lm(formula = Deaths ~ Population, data = focus_population_data)
+            </input>
+            <output>
+            # ---------------
+            # Call:
+            # lm(formula = Deaths ~ Population, data = focus_population_data)
+            # 
+            # Coefficients:
+            # (Intercept)   Population  
+            # 9.160e+05    5.215e-03  
+            </output>
+        </console>
+    </listing>
+    <p>
+        The results of the linear model calculation tell us that the intercept is 9.160e+05 and the coefficient for <c>Population</c> is 5.215e-03.
+        Using these values in the equation of a line, and using <m>P</m> for <c>Population</c> and <m>D</m> for <c>Deaths</c>, we get a model equation
+        <me>D = 9.16 \times 10^5 + 5.215 \times 10^{-3} \cdot P.</me>
+    </p>
+    <p>
+        Another very important linear model is a <term>proportional</term> model.
+        This corresponds to a linear model where the intercept is required to be 0.
+        The equation <m>y = 2 + 3x</m> is a linear model but is not proportional.
+        The equation <m>y = 0 + 3x</m>, or more simply <m>y = 3x</m>, is a proportional model.
+        We can find the best proportinal model using <c>lm</c> by using a formula with structure <c>y ~ 0 + x</c>, and by explicitly adding <q>0</q>, we force the intercept value to be 0 and then find the best matching slope coefficients.
+        The following listing shows that our best proportional regression model would be given by
+        <me>D = 0.008455 P.</me>
+    </p>
+    <listing xml:id="listing-lm-deaths-vs-population-proportional">
+        <console prompt="&gt; " language="R">
+            <input>
+            lm(formula = Deaths ~ 0 + Population, data = focus_population_data)
+            </input>
+            <output>
+            # ---------------
+            # Call:
+            # lm(formula = Deaths ~ 0 + Population, data = focus_population_data)
+            # 
+            # Coefficients:
+            # Population  
+            # 0.008455  
+            </output>
+        </console>
+    </listing>
+    <p>
+        What do we do about other models?
+        For example, can we find the best quadratic model?
+        Some tools, like <url ref="https://desmos.com/calculator" visual="Desmos"/>, make this very easy.
+        R, which was written as a statistical software package, was designed to work with data sets and not formulas.
+        However, we can work around this quite easily.
+    </p>
+    <p>
+        If our data set has multiple explanatory variables <m>X_1</m>, <m>X_2</m>, and <m>X_3</m> for a dependent variable <m>Y</m>, the generalization of a simiple linear model takes the form
+        <me>Y = a + b_1 X_1 + b_2 X_2 + b_3 X_3</me>.
+        We still have an intercept <m>a</m> along with separate slope coefficients for each of the explanatory variables.
+        To find the best fit model of this form, we would use <c>formula = Y ~ X1 + X2 + X3</c>.
+    </p>
+    <p>
+        To get models like quadratics or other polynomials, we can find the coefficients we need by engineering new columns in our data set.
+        For example, a quadratic model for our death rate would have the form
+        <me>D = a + b P + c P^2</me>.
+        Our data set already has a column for <m>P</m> with <c>Population</c>.
+        We need to generate a new column containing <m>P^2</m>.
+        The function that adds new calculated columns is <c>mutate</c> command in the <c>dplyr</c> library.
+        We will use the <term>pipe</term> method to illustrate the steps we need.
+    </p>
+    <listing xml:id="listing-lm-deaths-vs-population-quadratic">
+        <console prompt="&gt; " language="R">
+            <input>
+            expand_data &lt;- focus_population_data |&gt;    # Start with our data
+                select(P = Population, D = Deaths) |&gt;    # Keep only P and D 
+                mutate(P2 = P^2)                            # Add column for P^2
+                
+            lm(formula = D ~ P + P2, data = expand_data)
+            </input>
+            <output>
+            # ---------------
+            # Call:
+            # lm(formula = D ~ P + P2, data = expand_data)
+            # 
+            # Coefficients:
+            # (Intercept)            P           P2  
+            #  -9.163e+06    7.684e-02   -1.269e-10  
+            </output>
+        </console>
+    </listing>
+    <p>
+        As a result of this calculation, our best quadratic model given the data is given by the model
+        <me>D = -9.163 \times 10^6 + 7.684 \times 10^{-2} P - 1.269 \times 10^{-10} P^2</me>.
+    </p>
+    <p>
+        As you can see, the summary of our calculation only gave four significant digits to each of the coefficients.
+        When working with population sizes on the order of <m>10^8</m> (hundreds of millions), small changes in the coefficients can result in fairly noticable differences in calculated values.
+        If we want to have more digits, we need to look at the returned structure directly and not just the summary that is provided by the call.
+        Assign a name to the result of the <c>lm</c> call and then examine the <c>coefficients</c> stored in the result.
+    </p>
+    <listing xml:id="listing-lm-deaths-vs-population-quadratic-2">
+        <console prompt="&gt; " language="R">
+            <input>
+            D_model &lt;- lm(formula = D ~ P + P2, data = expand_data)
+            D_model$coefficients
+            </input>
+            <output>
+            # ---------------
+            # (Intercept)               P            P2  
+            # -9.163022e+06  7.683889e-02 -1.268641e-10
+            </output>
+        </console>
+    </listing>
+    <p>
+        Again, because R was not designed to work with formulas but with data,
+        there is not an automatic method to draw the curve we want based on this best quadratic fit.
+        We need to know how to graph a function instead of data.
+        The graph of a continuous function can be approximated by using a sequence of calculated points connected together to form a curve.
+        Our task is to do the following:
+        <ul>
+            <li><p>Identify our domain interval,</p></li>
+            <li><p>Create a sequence of <m>x</m>-values from that interval,</p></li>
+            <li><p>Use formula to calculate <m>y</m>-values for each point,</p></li>
+            <li><p>Graph the calculated <m>(x,y)</m> points connected.</p></li>
+        </ul>
+        We will first generate a graph without trying to connect it to our data.
+    </p>
+    <listing xml:id="listing-qm-graph-function">
+        <console prompt="&gt; " language="R">
+            <input>
+            # Create the sequence of x-values
+            x_vals &lt;- seq(from = 2.55e8, to = 3.10e8, length.out = 50)
+            # Extract the coefficients for an easier name to calculate the y-values
+            c &lt;- D_model$coefficients
+            y_vals &lt;- c[1] + c[2] * x_vals + c[2] * x_vals^2
+
+            # Put the data in a table and pipe the result to ggplot
+            tibble(P = x_vals, D = y_vals) |&gt;
+                ggplot(mapping = aes(x = P, y = D)) +
+                geom_path(color = "blue", size = 2)
+            </input>
+        </console>
+    </listing>
+    <image width="75%" source="images/US-rates-quadratic-death-rate-01.png"/>
+    <p>
+        In order to combine graphs that come from different data sets, we will create geometric layers resulting from different <c>data</c> features.
+        This means that when we open up our graphics layout using <c>ggplot</c>,
+        we should not pass a common dataset for all of the layers.
+        Instead, we pass an empty dataset indicator <c>NULL</c>.
+        We can still name our axes in the aesthetics.
+        Then when we generate the geometric layers, we will specify our datasets
+        and indicate the columns for <m>(x,y)</m> in each case separately.
+    </p>
+    <listing xml:id="listing-qm-combining-graphs">
+        <console prompt="&gt; " language="R">
+            <input>
+            ggplot(data = NULL, 
+                    mapping = aes(x = Population, y = Deaths)) +
+                geom_point(data = focus_population_data,
+                            aes(x = Population, y = Deaths),
+                            color = "blue", shape = 16) +
+                geom_path(data = tibble(P = x_vals, D = y_vals),
+                            aes(x = P, y = D),
+                            color = "violet", size = 1)
+            </input>
+        </console>
+    </listing>
+    <image width="75%" source="images/US-rates-quadratic-death-rate-02.png"/>
+    <p>
+        Next, we want to look at derived state variables.
+        (Note: <q>derived</q> means generated from and is not related to the calculus idea of <q>derivative</q>.)
+        For populations, we are often interested in <term>per capita rates</term>, which are calculated by taking a total rate (like a birth rate or death rate) and dividing it by the population size.
+        This gives the number of births or deaths per year <em>per individual</em>.
+    </p>
+    <p>
+        We add new columns to our dataset using <c>mutate</c> to represent these new values.
+        Let's take a look at how per capita birth and death rates relate to population size.
+    </p>
+    <listing xml:id="listing-US-per-capita-rates-01">
+        <console prompt="&gt; " language="R">
+            <input>
+            focus_population_data |&gt;
+                mutate(Births_per_capita = Births / Population,
+                    Deaths_per_capita = Deaths / Population) |&gt;
+                pivot_longer(cols = c(Births_per_capita, Deaths_per_capita),
+                        names_to = "rate_name",
+                        values_to = "per_capita_rate") |&gt;
+                ggplot(mapping = aes(x = Population, y = per_capita_rate,
+                                    color = rate_name, shape = rate_name)) +
+                geom_point()
+            </input>
+        </console>
+    </listing>
+    <image width="85%" source="images/US-per-capita-rates-01.png"/>
+    <p>
+        This new view suggests that perhaps the population saw a transition in per capita birth rates for a time and then settled down to something approximately constant around 0.014 (births per individual per year), or 14 births per year per thousand individuals.
+        The per capita death rate possibly was seeing a gradual decline.
+        Because death rates are based on economics as well as medical innovations, we are unlikely going to want to attribute the falling death rate to the increasing population.
+        However, from a modeling perspective, we could ignore this good sense and determine what the relationship is <em>if</em> we wanted to attribute all of the change to population size.
+    </p>
+    <listing xml:id="listing-US-per-capita-death-01">
+        <console prompt="&gt; " language="R">
+            <input>
+            work_data &lt;- focus_population_data |&gt;
+                mutate(Births_per_capita = Births / Population,
+                    Deaths_per_capita = Deaths / Population)
+            death_pc_model &lt;-
+                lm(formula = Deaths_per_capita ~ Population, data = work_data)
+            death_pc_model$coefficients
+            ggplot(data = work_data,
+                   mapping = aes(x = Population, y = Deaths_per_capita)) +
+                geom_point() +
+                geom_smooth(method = "lm", formula = 'y ~ x', se = FALSE)
+            </input>
+            <output>
+            # ---------------
+            #  (Intercept)    Population 
+            # 1.164158e-02 -1.123642e-11 
+            </output>
+        </console>
+    </listing>
+    <image width="85%" source="images/US-per-capita-death-01.png"/>
+</section>
