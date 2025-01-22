@@ -232,7 +232,7 @@
             # Put the data in a table and pipe the result to ggplot
             tibble(P = x_vals, D = y_vals) |&gt;
                 ggplot(mapping = aes(x = P, y = D)) +
-                geom_path(color = "blue", size = 2)
+                geom_path(color = "blue", linewidth = 2)
             </input>
         </console>
     </listing>
@@ -256,7 +256,7 @@
                             color = "blue", shape = 16) +
                 geom_path(data = tibble(P = x_vals, D = y_vals),
                             aes(x = P, y = D),
-                            color = "violet", size = 1)
+                            color = "violet", linewidth = 1)
             </input>
         </console>
     </listing>

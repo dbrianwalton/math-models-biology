@@ -167,7 +167,7 @@
             mutate(P_start = P_end - B + D)
         
         # Pivot columns B and D values into a single column Rate
-        # The plot Rate vs P_start to see relations
+        # Then plot Rate vs P_start to see relations
         netlogo_table |&gt; pivot_longer(cols = c(B, D),
                                     names_to = "Rate_Type",
                                     values_to = "Rate") |&gt;
@@ -187,8 +187,8 @@
         Let's add best fit proportional lines and then see what the corresponding coefficients for the models mean.
     </p>
 
-    <listing xml:id="listing-naive-population-rates">
-        <console prompt="&gt; " language="R">
+    <listing xml:id="listing-naive-population-rates-lm">
+        <console language="R">
         <input>
         # Find the model coefficients
         lm(formula = B ~ 0 + P_start, data = netlogo_table)
@@ -203,7 +203,7 @@
                             color = Rate_Type, shape = Rate_Type)) +
             geom_point() +
             geom_smooth(method = "lm", formula = y ~ 0 + x,
-                        size = 1, se = FALSE)
+                        linewidth = 1, se = FALSE)
         </input>
         <output>
         # -----
@@ -233,6 +233,41 @@
 
     <p>
         Finally, we look at the per capita birth and death rates.
+        Recall that per capita rates are calculated by dividing the regular rate by the population size.
+        In our case, this means we divide it by the value <c>P_start</c>.
+    </p>
+
+    <listing xml:id="listing-naive-population-rates-per-capita">
+        <program language="R">
+        # Pivot columns B and D values into a single column Rate
+        # Then calculate per capita rates
+        # Then plot per_capita_rate vs P_start to see relations
+        netlogo_table |&gt; pivot_longer(cols = c(B, D),
+                                    names_to = "Rate_Type",
+                                    values_to = "Rate") |&gt;
+            mutate(per_capita_rate = Rate / P_start) |&gt;
+            ggplot(mapping = aes(x = P_start, y = Rate,
+                                color = Rate_Type, shape = Rate_Type)) +
+            geom_point()
+        </program>
+    </listing>
+    <image source='images/rates-agent-naive-graph-03.png'/>
+
+    <p>
+        Notice that the per capita graph has more randomness for small populations.
+        This is typical behavior for <term>demographic stochasticity</term>, as the random variation in births and deaths is much larger <em>relative</em> to the population size when the population size itself is small.
+        However, you should still be able to see that the per capita rates are roughly constant across the populations.
+        Those constant values correspond precisely to the proportionality constants that we found earlier.
+    </p>
+    <p>
+        This should make sense.
+        The proportional models we found earlier were saying that the number of births <m>B</m> are a coefficient times <m>P_{\mathrm{start}}</m>, say <m>B = b \cdot P_{\mathrm{start}}</m> where we estimated <m>b \approx 0.1575</m> (and our simulation used the exact value <m>b=0.16</m>).
+        But the per capita rate is <em>defined</em> by <m>\frac{B}{P_{\mathrm{start}}}</m>.
+        Based on our proportional model, this must mean the per capita birth rate is
+        <me>\frac{B}{P_{\mathrm{start}}} = \frac{b \cdot P_{\mathrm{start}}}{P_{\mathrm{start}}} = b</me>.
+    </p>
+    <p>
+        In other words, a birth or death rate that is proportional to the population size means the same thing as saying that the corresponding <em>per capita rate</em> is constant.
     </p>
 </subsection>
 
