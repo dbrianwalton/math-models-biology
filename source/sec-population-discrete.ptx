@@ -128,7 +128,7 @@
             We require that <m>b \ge 0</m> and <m>0 \le d \le 1</m>.
         </p>
         <p>
-            A visual model for our constant per capita birth and death rates is shown in <xref ref="fig-population-visual-birth-death-rates"/>.
+            A visual model for our constant per capita birth and death rates is shown in <xref ref="fig-population-visual-model-birth-death-rates"/>.
             The formulas for the individual rates are shown on the rate arrows.
             In addition, to emphasize the dependence of the birth rate on the population size, a dashed line is drawn from the population's box circling back to the birth rate.
             Rates leaving a population (like the death rate) are always assumed to have this dependence.
@@ -144,7 +144,7 @@
             <me>P_{n+1} = (1+b-d) P_n = (1+r) P_n,</me>
             where <m>r=b-d</m> is called the per capita net growth rate.
             The value of <m>r</m> physically must satisfy <m>r \ge -1</m>, as <m>r=-1</m> corresponds to no new births (<m>b=0</m>) and every individual dying (<m>d=1</m>).
-            This simplified model is often visualized as the graphical model shown in <xref ref="fig-population-visual-net-growth-rate"/>.
+            This simplified model is often visualized as the graphical model shown in <xref ref="fig-population-visual-model-net-growth-rate"/>.
             The birth and death contributions are combined into the loop, which represents both losses (individuals leaving the population) and gains (individuals entering the population).
             This equation, called the <term>recursive equation</term>, is identical to the equation for compounded interest where <m>r</m> represents that percent growth rate.
         </p>
