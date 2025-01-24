@@ -67,7 +67,7 @@
                 mapping = aes(x = Population, y = Deaths)
             ) +
             geom_point(color = "green") +
-            geom_smooth(method = "lm", formula = 'y ~ x', se = FALSE)
+            geom_smooth(method = "lm", formula = y ~ x, se = FALSE)
         </program>
     </listing>
     <p>
@@ -93,21 +93,22 @@
         And the two sides of the formula are connected with a <em>tilde</em> symbol <c>~</c>.
         In our example, we want a model <c>Deaths ~ Population</c> because we want to predict <c>Deaths</c> (dependent variable) as a linear function of <c>Population</c> (explanatory or independent variable).
         The result of our call will be a structure that gives an <em>intercept</em> and a coefficient for <c>Population</c>.
-        (Results are shown in the listing.)
+        (Results are shown following the code that you input.)
     </p>
     <listing xml:id="listing-lm-deaths-vs-population">
-        <console prompt="&gt; " language="R">
+        <program language="R">
             <input>
             lm(formula = Deaths ~ Population, data = focus_population_data)
             </input>
+        </program>
+        <console>
             <output>
-            # ---------------
-            # Call:
-            # lm(formula = Deaths ~ Population, data = focus_population_data)
-            # 
-            # Coefficients:
-            # (Intercept)   Population  
-            # 9.160e+05    5.215e-03  
+            Call:
+            lm(formula = Deaths ~ Population, data = focus_population_data)
+             
+            Coefficients:
+            (Intercept)   Population  
+            9.160e+05    5.215e-03  
             </output>
         </console>
     </listing>
@@ -126,18 +127,17 @@
         <me>D = 0.008455 P.</me>
     </p>
     <listing xml:id="listing-lm-deaths-vs-population-proportional">
-        <console prompt="&gt; " language="R">
-            <input>
+        <program language="R">
             lm(formula = Deaths ~ 0 + Population, data = focus_population_data)
-            </input>
+        </program>
+        <console prompt="&gt; " language="R">
             <output>
-            # ---------------
-            # Call:
-            # lm(formula = Deaths ~ 0 + Population, data = focus_population_data)
-            # 
-            # Coefficients:
-            # Population  
-            # 0.008455  
+            Call:
+            lm(formula = Deaths ~ 0 + Population, data = focus_population_data)
+             
+            Coefficients:
+            Population  
+            0.008455  
             </output>
         </console>
     </listing>
@@ -164,22 +164,21 @@
         We will use the <term>pipe</term> method to illustrate the steps we need.
     </p>
     <listing xml:id="listing-lm-deaths-vs-population-quadratic">
-        <console prompt="&gt; " language="R">
-            <input>
+        <program language="R">
             expand_data &lt;- focus_population_data |&gt;    # Start with our data
                 select(P = Population, D = Deaths) |&gt;    # Keep only P and D 
                 mutate(P2 = P^2)                            # Add column for P^2
                 
             lm(formula = D ~ P + P2, data = expand_data)
-            </input>
+        </program>
+        <console prompt="&gt; " language="R">
             <output>
-            # ---------------
-            # Call:
-            # lm(formula = D ~ P + P2, data = expand_data)
-            # 
-            # Coefficients:
-            # (Intercept)            P           P2  
-            #  -9.163e+06    7.684e-02   -1.269e-10  
+            Call:
+            lm(formula = D ~ P + P2, data = expand_data)
+            
+            Coefficients:
+            (Intercept)            P           P2  
+             -9.163e+06    7.684e-02   -1.269e-10  
             </output>
         </console>
     </listing>
@@ -194,15 +193,14 @@
         Assign a name to the result of the <c>lm</c> call and then examine the <c>coefficients</c> stored in the result.
     </p>
     <listing xml:id="listing-lm-deaths-vs-population-quadratic-2">
-        <console prompt="&gt; " language="R">
-            <input>
+        <program language="R">
             D_model &lt;- lm(formula = D ~ P + P2, data = expand_data)
             D_model$coefficients
-            </input>
+        </program>
+        <console prompt="&gt; " language="R">
             <output>
-            # ---------------
-            # (Intercept)               P            P2  
-            # -9.163022e+06  7.683889e-02 -1.268641e-10
+            (Intercept)               P            P2  
+            -9.163022e+06  7.683889e-02 -1.268641e-10
             </output>
         </console>
     </listing>
@@ -221,20 +219,18 @@
         We will first generate a graph without trying to connect it to our data.
     </p>
     <listing xml:id="listing-qm-graph-function">
-        <console prompt="&gt; " language="R">
-            <input>
+        <program language="R">
             # Create the sequence of x-values
             x_vals &lt;- seq(from = 2.55e8, to = 3.10e8, length.out = 50)
             # Extract the coefficients for an easier name to calculate the y-values
             c &lt;- D_model$coefficients
-            y_vals &lt;- c[1] + c[2] * x_vals + c[2] * x_vals^2
+            y_vals &lt;- c[1] + c[2] * x_vals + c[3] * x_vals^2
 
             # Put the data in a table and pipe the result to ggplot
             tibble(P = x_vals, D = y_vals) |&gt;
                 ggplot(mapping = aes(x = P, y = D)) +
                 geom_path(color = "blue", linewidth = 2)
-            </input>
-        </console>
+        </program>
     </listing>
     <image width="75%" source="images/US-rates-quadratic-death-rate-01.png"/>
     <p>
@@ -247,8 +243,7 @@
         and indicate the columns for <m>(x,y)</m> in each case separately.
     </p>
     <listing xml:id="listing-qm-combining-graphs">
-        <console prompt="&gt; " language="R">
-            <input>
+        <program language="R">
             ggplot(data = NULL, 
                     mapping = aes(x = Population, y = Deaths)) +
                 geom_point(data = focus_population_data,
@@ -257,8 +252,7 @@
                 geom_path(data = tibble(P = x_vals, D = y_vals),
                             aes(x = P, y = D),
                             color = "violet", linewidth = 1)
-            </input>
-        </console>
+        </program>
     </listing>
     <image width="75%" source="images/US-rates-quadratic-death-rate-02.png"/>
     <p>
@@ -272,8 +266,7 @@
         Let's take a look at how per capita birth and death rates relate to population size.
     </p>
     <listing xml:id="listing-US-per-capita-rates-01">
-        <console prompt="&gt; " language="R">
-            <input>
+        <program language="R">
             focus_population_data |&gt;
                 mutate(Births_per_capita = Births / Population,
                     Deaths_per_capita = Deaths / Population) |&gt;
@@ -283,8 +276,7 @@
                 ggplot(mapping = aes(x = Population, y = per_capita_rate,
                                     color = rate_name, shape = rate_name)) +
                 geom_point()
-            </input>
-        </console>
+        </program>
     </listing>
     <image width="85%" source="images/US-per-capita-rates-01.png"/>
     <p>
@@ -294,8 +286,7 @@
         However, from a modeling perspective, we could ignore this good sense and determine what the relationship is <em>if</em> we wanted to attribute all of the change to population size.
     </p>
     <listing xml:id="listing-US-per-capita-death-01">
-        <console prompt="&gt; " language="R">
-            <input>
+        <program language="R">
             work_data &lt;- focus_population_data |&gt;
                 mutate(Births_per_capita = Births / Population,
                     Deaths_per_capita = Deaths / Population)
@@ -305,12 +296,12 @@
             ggplot(data = work_data,
                    mapping = aes(x = Population, y = Deaths_per_capita)) +
                 geom_point() +
-                geom_smooth(method = "lm", formula = 'y ~ x', se = FALSE)
-            </input>
+                geom_smooth(method = "lm", formula = y ~ x, se = FALSE)
+        </program>
+        <console prompt="&gt; " language="R">
             <output>
-            # ---------------
-            #  (Intercept)    Population 
-            # 1.164158e-02 -1.123642e-11 
+             (Intercept)    Population 
+            1.164158e-02 -1.123642e-11 
             </output>
         </console>
     </listing>
