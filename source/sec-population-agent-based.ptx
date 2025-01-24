@@ -8,342 +8,370 @@
 <!-- See the file COPYING for copying conditions. -->
    
 <section xml:id="population-agent-based" xmlns:xi="http://www.w3.org/2001/XInclude">
-<title>An Agent Based Motivation for Dynamics</title>
+    <title>An Agent Based Motivation for Dynamics</title>
 
-<introduction>
-    <p>We start our modeling by thinking about an <term>agent-based model</term>. An agent-based model is a computer simulation in which abstract agents are defined on a computer with a collection of rules for what they do in time and how the different agents interact with one another. In the context of a population, we might think of the agents as simulating individuals within a virtual population. The rules describe the patterns of life that the individuals follow.</p>
-    
-    <p>By first thinking about how we would implement an agent-based model for a system, we are engaging the process of establishing an abstract representation of the fundamental assumptions identified in a hypothesis on how the system develops in time. Generally, we want to minimize the number of rules while still capturing the essence of our hypothesis. Allowing the computer simulation to follow our rules, we can observe the dynamics relatively quickly and make virtual measurements that might guide a more mathematical model.</p>
-</introduction>
-    
-<subsection>
-    <title>NetLogo Overview</title>
-    
-    <p><image source='images/NetLogoIcon.png' width='10%'/> NetLogo (see <url href='https://ccl.northwestern.edu/netlogo/'>https://ccl.northwestern.edu/netlogo/</url>) is an example of an agent-based modeling environment, made freely available under the <url href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU General Public License</url>. The agents are easily visualized as characters (called turtles) that move about a rectangular plot. The plot is subdivided into patches so that you can assign different rules of behavior that depend on which patch each turtle is on.</p>
-    
-    <p>Rather than explain everything about NetLogo here, I refer you to the excellent documentation on the NetLogo website. There are three useful tutorials to get started: <url href='https://ccl.northwestern.edu/netlogo/docs/tutorial1.html'>Tutorial 1</url> (Running Models), <url href='https://ccl.northwestern.edu/netlogo/docs/tutorial2.html'>Tutorial 2</url> (On Turtles and Patches), and <url href='https://ccl.northwestern.edu/netlogo/docs/tutorial3.html'>Tutorial 3</url> (Building a Model). In addition, the <url href='https://ccl.northwestern.edu/netlogo/docs/programming.html'>NetLogo Programming Guide</url> explains the structure of how to program and the <url href='https://ccl.northwestern.edu/netlogo/docs/dictionary.html'>NetLogo Dictionary</url> summarizes the commands that agents automatically inherit.</p>
-    
-    <p>Demo code associated with this document was written to run in NetLogo 6.4. Links are provided to download the full model. Elements of the code will be discussed. Individuals in the population will be modeled as turtle agents (meaning they are movable).</p>
-</subsection>
-
-<subsection xml:id='population-agent-naive'>
-    <title>Environmentally Naive Births and Deaths</title>
-    
-    <p>
-        When trying to define rules for how an individual will give birth to new individuals or die, we might consider complicating factors. For example, we might expect that births and death would depend on the health of the individual as well as the state of the environment in which the individual is living. However, the simplest models would not take these into account. The simplest rule for reproduction might be to decide randomly whether or not to give birth at a given cycle (tick) for the system. Similarly, we might have death be decided randomly.
-    </p>
-    <p>
-        We start with the NetLogo simulation available here: <dataurl source="code/netlogo/naive-population.nlogo" visual="naive-population.nlogo"/>.
-        The interface for the simulation is illustrated in <xref ref="fig-naive-population-interface"/>.
-        In the <c>initial-population</c> data field, you can set the number of individuals in the population at the start of the simulation.
-        Then there are sliders that allow you to control the percent of individuals during each population cycle that will give birth or that will die.
-        When you press the <c>setup</c> button, the population will reset based on your <c>initial-population</c> entry.
-        When you press the <c>go</c> button, individuals will scramble around the screen randomly and give birth or die based on your settings. Press <c>go</c> a second time to stop the simulation.
-    </p>
-
-    <figure xml:id="fig-naive-population-interface">
-        <caption>Interface for <c>naive-population.nlogo</c>.</caption>
-        <image source="images/naive-population-interface.png"/>
-    </figure>
-
-    <p>
-        You can inspect the code describing the rules for the simulation by selecting the <c>code</c> tab at the top of the NetLogo window.
-        Much of the code specifies rules for the agent and environment visualization, such as stating that our individuals are <c>people</c>, defining their shapes and colors, and giving rules for how to move randomly on the screen.
-        This gives us something interesting to look at, but does not have much to do with the biologically relevant questions of how the population changes.
-    </p>
-
-    <p>
-        In the <c>go</c> code fragment, there are statements where we ask all <c>people</c> to do three things: <c>try-reproduce</c> (give birth or not), <c>move</c>, <c>try-survive</c> (die or not).
-        The names include <q>try-</q> as a way to indicate there is some decision involved here.
-        The code fragment in <xref ref="listing-naive-population-reproduce-survive"/> is a minimal approach for implementing random birth and death that is naive in regards to the environment.
-        The expression <c>random-float 100</c> creates a random number between 0 and 100, so saying <c>if random-float 100 &lt; birth-percent [...]</c> calculates such a random number and compares it to the number in the <c>birth-percent</c> input field.
-        If the random number is less than <c>birth-percent</c>, then the command inside the brackets (<c>hatch 1</c>) is sent to the corresponding <c>person</c> under simulation (creating a new person).
-        A similar calculation occurs for each <c>person</c> to see if they should die (remove the person).
-    </p>
-    
-    <listing xml:id="listing-naive-population-reproduce-survive" language="netlogo">
-        <program>
-        <![CDATA[
-        to try-reproduce
-          ;; global 'birth-percent' = percent of cycles
-          ;; in which to reproduce
-          if random-float 100 < birth-percent [ hatch 1 ]
-        end
-
-        to try-survive  ;; and failure is to die
-          ;; global 'death-percent' = percent of cycles
-          ;; in which to die
-          if random-float 100 < death-percent [ die ]
-        end
-        ]]>
-        </program>
-    </listing>
-    
-    <p>
-        The actual code is slightly more complex, in that it actually creates temporary agents that are <em>markers</em> for birth and death events.
-        This allows the simulation to count how many events occur each cycle by checking the simulation for how many <c>birth-markers</c> or <c>death-markers</c> are in the system.
-        You will also find code at the start of the <c>go</c> code that kills all of the markers before proceeding so that each cycle of the simulation only shows markers for the most recent set of events.
-    </p>
-
-    <p>
-        If we ran a simulation using these naive rules for reproduction and survival, with every agent randomly deciding whether it will reproduce and whether it will die, we would discover that there is a lot of randomness but that the number of births and deaths seem to be related to the population size. The following graph is typical of such a simulation.
-    </p>
-    
-    <figure xml:id="fig-nl-pop-dyn-naive-dynamics">
-        <image source='images/nl-pop-dyn-naive-graph.png' width='70%'/>
-        <caption>Plot of total population, the number of births and deaths for a naive reproductive model with <c>birth-percent = 16</c> and <c>death-percent = 9</c> and <c>initial-population = 20</c>.</caption>
-    </figure>
-    
-    <p>
-        This figure illustrates that larger populations result in more births and deaths.
-        In fact, because of how the birth and death events were randomly determined based on a percentage of the number of tick cycles for each individual, we would expect that the number of births and deaths are approximately just the corresponding percentage of the total population size.
-        Of course, because the simulation involves random decisions, there are fluctuations above and below that amount.
-        This randomness is called <term>demographic stochasticity</term>.
-    </p>
-    
-    <p>
-        We would like to look at the relationship between the number of births and deaths with respect to the population size.
-        From the simulation, we can export the data for the simulation graph.
-        If you right-click (or control-click) on the graph, you should see a menu that includes an option to copy the image or to export the results.
-        When you select <c>Export...</c>, NetLogo will save the data points for the graph as a CSV file that can be imported into a spreadsheet or data analysis file.
-        The file corresponding to our graph is available here: <dataurl source="data/naive-population-graph-export.csv" visual="naive-population-graph-export.csv"/>.
-        If you open this with a spreadsheet application (e.g., Excel), you should see a view similar to <xref ref="fig-nl-pop-dyn-naive-csv"/>.
-    </p>
-
-    <figure xml:id="fig-nl-pop-dyn-naive-csv">
-        <image source='images/nl-pop-dyn-naive-csv.png' width='90%'/>
-        <caption>Spreadsheet view of the exported data coresponding to <xref ref="fig-nl-pop-dyn-naive-dynamics"/></caption>
-    </figure>
-
-    <p>
-        How is this sheet organized?
-        NetLogo reports a variety of <term>metadata</term> at the top of the export file.
-        For example, the second row contains the name of the NetLogo program and the third row contains the time when the data were created.
-        Then we have a summary of the <term>model parameters</term> that were used for the given simulation, which we need to properly document the data or to perform analysis on the results.
-        The last set of metadata for this file is a list of the <q>pens</q> (plots) that were included in the graph.
-    </p>
-
-    <p>
-        The actual data coming from the simulation starts in row 20.
-        Each pen (plot) gets four reported values, where the first two values are the <term>coordinates</term> of the plotted point.
-        Because this graph was plotting values against time, the <m>x</m>-coordinates for each pen are all the same and correspond to the time as tracked by the number of completed cycles.
-        The values of the state variables <m>P</m>, <m>B</m>, and <m>D</m> correspond to the <m>y</m>-coordinates of each plot, appearing in columns <c>B</c>, <c>F</c>, and <c>J</c>, which are ordinally (counting order) the 2nd, 6th, and 10th columns.
-    </p>
-
-    <p>
-        Before we proceed, we also need to understand that NetLogo is reporting values for the population <m>P</m>, births <m>B</m>, and deaths <m>D</m> that were present at the <em>end</em> of each cycle.
-        That is, there are actually two different population values associated with each time cycle.
-        The population at the start of the cycle <m>P_{\mathrm{start}}</m> represents the number of individual people in the simulation.
-        Then we go through the births and deaths resulting in a new population value at the end of the cycle <m>P_{\mathrm{end}}</m>.
-        The values are related by the equation
-        <me>P_{\mathrm{end}} = P_{\mathrm{start}} + B - D</me>,
-        in that the final number of individuals can be found by adding the number of births and then subtracting the number of deaths.
-        The population column in the dataset corresponds to <m>P_{\mathrm{end}}</m>, and we are going to want to know <m>P_{\mathrm{start}}</m>, which we can find by solving the equation.
-        This gives
-        <me>P_{\mathrm{start}} = P_{\mathrm{end}} - B + D</me>.
-    </p>
-    <p>
-        Once we import our data, we will generate a new column that contains the value of <m>P_{\mathrm{start}}</m>.
-        Then we will examine the relation between the number of births and deaths and the starting population value.
-        Specifically, we will create graph corresponding to <m>(P_{\mathrm{start}},B)</m> and <m>(P_{\mathrm{start}},D)</m>.
-        The code to generate this result using tidyverse libraries is given below.
-    </p>
-    
-    <listing xml:id="listing-naive-population-rates">
-        <program language="R">
-        library(readr)    # To load CSV files (read_csv)
-        library(dplyr)    # To reorganize (select)
-        library(tidyr)    # To tidy data (pivot_longer)
-        library(ggplot2)  # To work with graphs (ggplot)
-
-        # Import the data
-        netlogo_data &lt;- read_csv("naive-population-graph-export.csv", 
-                                skip = 19, col_names = FALSE)
+    <introduction>
+        <p>
+            We start our modeling by thinking about an <term>agent-based model</term>.
+            An agent-based model is a computer simulation in which abstract agents are defined on a computer with a collection of rules for what they do in time and how the different agents interact with one another.
+            In the context of a population, we might think of the agents as simulating individuals within a virtual population.
+            The rules describe the patterns of life that the individuals follow.
+        </p>
         
-        # Select only columns 1, 2, 6, 10 and assign names
-        # Then add a new column for P_start
-        netlogo_table &lt;- netlogo_data |&gt;
-            select(tick = 1, P_end = 2, B = 6, D = 10) |&gt;
-            mutate(P_start = P_end - B + D)
+        <p>
+            By first thinking about how we would implement an agent-based model for a system, we are engaging the process of establishing an abstract representation of the fundamental assumptions identified in a hypothesis on how the system develops in time.
+            Generally, we want to minimize the number of rules while still capturing the essence of our hypothesis.
+            Allowing the computer simulation to follow our rules, we can observe the dynamics relatively quickly and make virtual measurements that might guide a more mathematical model.
+        </p>
+    </introduction>
         
-        # Pivot columns B and D values into a single column Rate
-        # Then plot Rate vs P_start to see relations
-        netlogo_table |&gt; pivot_longer(cols = c(B, D),
-                                    names_to = "Rate_Type",
-                                    values_to = "Rate") |&gt;
-            ggplot(mapping = aes(x = P_start, y = Rate,
+    <subsection>
+        <title>NetLogo Overview</title>
+        
+        <p>
+            <image source='images/NetLogoIcon.png' width='10%'/> NetLogo (see <url href='https://ccl.northwestern.edu/netlogo/'>https://ccl.northwestern.edu/netlogo/</url>) is an example of an agent-based modeling environment, made freely available under the <url href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU General Public License</url>.
+            The agents are easily visualized as characters (called turtles) that move about a rectangular plot.
+            The plot is subdivided into patches so that you can assign different rules of behavior that depend on which patch each turtle is on.
+        </p>
+        
+        <p>
+            Rather than explain everything about NetLogo here, I refer you to the excellent documentation on the NetLogo website.
+            There are three useful tutorials to get started: 
+            <url href='https://ccl.northwestern.edu/netlogo/docs/tutorial1.html'>Tutorial 1</url> (Running Models), 
+            <url href='https://ccl.northwestern.edu/netlogo/docs/tutorial2.html'>Tutorial 2</url> (On Turtles and Patches), 
+            and <url href='https://ccl.northwestern.edu/netlogo/docs/tutorial3.html'>Tutorial 3</url> (Building a Model).
+            In addition, the <url href='https://ccl.northwestern.edu/netlogo/docs/programming.html'>NetLogo Programming Guide</url> explains the structure of how to program and the <url href='https://ccl.northwestern.edu/netlogo/docs/dictionary.html'>NetLogo Dictionary</url> summarizes the commands that agents automatically inherit.
+        </p>
+        
+        <p>
+            Demo code associated with this document was written to run in NetLogo 6.4. Links are provided to download the full model.
+            Elements of the code will be discussed.
+            Individuals in the population will be modeled as turtle agents (meaning they are movable).
+        </p>
+    </subsection>
+
+    <subsection xml:id='population-agent-naive'>
+        <title>Environmentally Naive Births and Deaths</title>
+        
+        <p>
+            When trying to define rules for how an individual will give birth to new individuals or die, we might consider complicating factors. For example, we might expect that births and death would depend on the health of the individual as well as the state of the environment in which the individual is living. However, the simplest models would not take these into account. The simplest rule for reproduction might be to decide randomly whether or not to give birth at a given cycle (tick) for the system. Similarly, we might have death be decided randomly.
+        </p>
+        <p>
+            We start with the NetLogo simulation available here: <dataurl source="code/netlogo/naive-population.nlogo" visual="naive-population.nlogo"/>.
+            The interface for the simulation is illustrated in <xref ref="fig-naive-population-interface"/>.
+            In the <c>initial-population</c> data field, you can set the number of individuals in the population at the start of the simulation.
+            Then there are sliders that allow you to control the percent of individuals during each population cycle that will give birth or that will die.
+            When you press the <c>setup</c> button, the population will reset based on your <c>initial-population</c> entry.
+            When you press the <c>go</c> button, individuals will scramble around the screen randomly and give birth or die based on your settings. Press <c>go</c> a second time to stop the simulation.
+        </p>
+        <figure xml:id="fig-naive-population-interface">
+            <caption>Interface for <c>naive-population.nlogo</c>.</caption>
+            <image source="images/naive-population-interface.png"/>
+        </figure>
+        <p>
+            You can inspect the code describing the rules for the simulation by selecting the <c>code</c> tab at the top of the NetLogo window.
+            Much of the code specifies rules for the agent and environment visualization, such as stating that our individuals are <c>people</c>, defining their shapes and colors, and giving rules for how to move randomly on the screen.
+            This gives us something interesting to look at, but does not have much to do with the biologically relevant questions of how the population changes.
+        </p>
+        <p>
+            In the <c>go</c> code fragment, there are statements where we ask all <c>people</c> to do three things: <c>try-reproduce</c> (give birth or not), <c>move</c>, <c>try-survive</c> (die or not).
+            The names include <q>try-</q> as a way to indicate there is some decision involved here.
+            The code fragment in <xref ref="listing-naive-population-reproduce-survive"/> is a minimal approach for implementing random birth and death that is naive in regards to the environment.
+            The expression <c>random-float 100</c> creates a random number between 0 and 100, so saying <c>if random-float 100 &lt; birth-percent [...]</c> calculates such a random number and compares it to the number in the <c>birth-percent</c> input field.
+            If the random number is less than <c>birth-percent</c>, then the command inside the brackets (<c>hatch 1</c>) is sent to the corresponding <c>person</c> under simulation (creating a new person).
+            A similar calculation occurs for each <c>person</c> to see if they should die (remove the person).
+        </p>
+        <listing xml:id="listing-naive-population-reproduce-survive" language="netlogo">
+            <program>
+            <![CDATA[
+            to try-reproduce
+            ;; global 'birth-percent' = percent of cycles
+            ;; in which to reproduce
+            if random-float 100 < birth-percent [ hatch 1 ]
+            end
+
+            to try-survive  ;; and failure is to die
+            ;; global 'death-percent' = percent of cycles
+            ;; in which to die
+            if random-float 100 < death-percent [ die ]
+            end
+            ]]>
+            </program>
+        </listing>
+        <p>
+            The actual code is slightly more complex, in that it actually creates temporary agents that are <em>markers</em> for birth and death events.
+            This allows the simulation to count how many events occur each cycle by checking the simulation for how many <c>birth-markers</c> or <c>death-markers</c> are in the system.
+            You will also find code at the start of the <c>go</c> code that kills all of the markers before proceeding so that each cycle of the simulation only shows markers for the most recent set of events.
+        </p>
+        <p>
+            If we ran a simulation using these naive rules for reproduction and survival, with every agent randomly deciding whether it will reproduce and whether it will die, we would discover that there is a lot of randomness but that the number of births and deaths seem to be related to the population size. The following graph is typical of such a simulation.
+        </p>
+        <figure xml:id="fig-nl-pop-dyn-naive-dynamics">
+            <image source='images/nl-pop-dyn-naive-graph.png' width='70%'/>
+            <caption>Plot of total population, the number of births and deaths for a naive reproductive model with <c>birth-percent = 16</c> and <c>death-percent = 9</c> and <c>initial-population = 20</c>.</caption>
+        </figure>
+        <p>
+            This figure illustrates that larger populations result in more births and deaths.
+            In fact, because of how the birth and death events were randomly determined based on a percentage of the number of tick cycles for each individual, we would expect that the number of births and deaths are approximately just the corresponding percentage of the total population size.
+            Of course, because the simulation involves random decisions, there are fluctuations above and below that amount.
+            This randomness is called <term>demographic stochasticity</term>.
+        </p>
+        <p>
+            We would like to look at the relationship between the number of births and deaths with respect to the population size.
+            From the simulation, we can export the data for the simulation graph.
+            If you right-click (or control-click) on the graph, you should see a menu that includes an option to copy the image or to export the results.
+            When you select <c>Export...</c>, NetLogo will save the data points for the graph as a CSV file that can be imported into a spreadsheet or data analysis file.
+            The file corresponding to our graph is available here: <dataurl source="data/naive-population-graph-export.csv" visual="naive-population-graph-export.csv"/>.
+            If you open this with a spreadsheet application (e.g., Excel), you should see a view similar to <xref ref="fig-nl-pop-dyn-naive-csv"/>.
+        </p>
+        <figure xml:id="fig-nl-pop-dyn-naive-csv">
+            <image source='images/nl-pop-dyn-naive-csv.png' width='90%'/>
+            <caption>Spreadsheet view of the exported data coresponding to <xref ref="fig-nl-pop-dyn-naive-dynamics"/></caption>
+        </figure>
+        <p>
+            How is this sheet organized?
+            NetLogo reports a variety of <term>metadata</term> at the top of the export file.
+            For example, the second row contains the name of the NetLogo program and the third row contains the time when the data were created.
+            Then we have a summary of the <term>model parameters</term> that were used for the given simulation, which we need to properly document the data or to perform analysis on the results.
+            The last set of metadata for this file is a list of the <q>pens</q> (plots) that were included in the graph.
+        </p>
+        <p>
+            The actual data coming from the simulation starts in row 20.
+            Each pen (plot) gets four reported values, where the first two values are the <term>coordinates</term> of the plotted point.
+            Because this graph was plotting values against time, the <m>x</m>-coordinates for each pen are all the same and correspond to the time as tracked by the number of completed cycles.
+            The values of the state variables <m>P</m>, <m>B</m>, and <m>D</m> correspond to the <m>y</m>-coordinates of each plot, appearing in columns <c>B</c>, <c>F</c>, and <c>J</c>, which are ordinally (counting order) the 2nd, 6th, and 10th columns.
+        </p>
+        <p>
+            Before we proceed, we also need to understand that NetLogo is reporting values for the population <m>P</m>, births <m>B</m>, and deaths <m>D</m> that were present at the <em>end</em> of each cycle.
+            That is, there are actually two different population values associated with each time cycle.
+            The population at the start of the cycle <m>P_{\mathrm{start}}</m> represents the number of individual people in the simulation.
+            Then we go through the births and deaths resulting in a new population value at the end of the cycle <m>P_{\mathrm{end}}</m>.
+            The values are related by the equation
+            <me>P_{\mathrm{end}} = P_{\mathrm{start}} + B - D</me>,
+            in that the final number of individuals can be found by adding the number of births and then subtracting the number of deaths.
+            The population column in the dataset corresponds to <m>P_{\mathrm{end}}</m>, and we are going to want to know <m>P_{\mathrm{start}}</m>, which we can find by solving the equation.
+            This gives
+            <me>P_{\mathrm{start}} = P_{\mathrm{end}} - B + D</me>.
+        </p>
+        <p>
+            Once we import our data, we will generate a new column that contains the value of <m>P_{\mathrm{start}}</m>.
+            Then we will examine the relation between the number of births and deaths and the starting population value.
+            Specifically, we will create graph corresponding to <m>(P_{\mathrm{start}},B)</m> and <m>(P_{\mathrm{start}},D)</m>.
+            The code to generate this result using tidyverse libraries is given below.
+        </p>
+        <listing xml:id="listing-naive-population-rates">
+            <program language="R">
+            library(readr)    # To load CSV files (read_csv)
+            library(dplyr)    # To reorganize (select)
+            library(tidyr)    # To tidy data (pivot_longer)
+            library(ggplot2)  # To work with graphs (ggplot)
+
+            # Import the data
+            netlogo_data &lt;- read_csv("naive-population-graph-export.csv", 
+                                    skip = 19, col_names = FALSE)
+            
+            # Select only columns 1, 2, 6, 10 and assign names
+            # Then add a new column for P_start
+            netlogo_table &lt;- netlogo_data |&gt;
+                select(tick = 1, P_end = 2, B = 6, D = 10) |&gt;
+                mutate(P_start = P_end - B + D)
+            
+            # Pivot columns B and D values into a single column Rate
+            # Then plot Rate vs P_start to see relations
+            netlogo_table |&gt; pivot_longer(cols = c(B, D),
+                                        names_to = "Rate_Type",
+                                        values_to = "Rate") |&gt;
+                ggplot(mapping = aes(x = P_start, y = Rate,
+                                    color = Rate_Type, shape = Rate_Type)) +
+                geom_point()
+            </program>
+        </listing>
+        <figure>
+            <image source='images/rates-agent-naive-graph.png'/>
+            <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the naive model.</caption>
+        </figure>
+        <p>
+            The plot suggests that the number of births and deaths occurring during each time period is approximately proportional to the population size (i.e., linear graphs passing through <m>(0,0)</m>).
+            Let's add best fit proportional lines and then see what the corresponding coefficients for the models mean.
+        </p>
+        <listing xml:id="listing-naive-population-rates-lm">
+            <program language="R">
+            # Find the model coefficients
+            lm(formula = B ~ 0 + P_start, data = netlogo_table)
+            lm(formula = D ~ 0 + P_start, data = netlogo_table)
+
+            # Redraw the figure adding the best fit proportional lines
+            netlogo_table |&gt; 
+                pivot_longer(cols = c(B, D),
+                            names_to = "Rate_Type",
+                            values_to = "Rate") |&gt;
+                ggplot(mapping = aes(x = P_start, y = Rate,
                                 color = Rate_Type, shape = Rate_Type)) +
-            geom_point()
-        </program>
-    </listing>
+                geom_point() +
+                geom_smooth(method = "lm", formula = y ~ 0 + x,
+                            linewidth = 1, se = FALSE)
+            </program>
+            <console language="R">
+                <output>
+                Call:
+                lm(formula = B ~ 0 + P_start, data = netlogo_table)
+                
+                Coefficients:
+                P_start  
+                0.1575  
+                -----
+                Call:
+                lm(formula = D ~ 0 + P_start, data = netlogo_table)
+                
+                Coefficients:
+                P_start  
+                0.09003  
+                </output>
+            </console>
+        </listing>
+        <image source='images/rates-agent-naive-graph-02.png'/>
 
-    <figure>
-        <image source='images/rates-agent-naive-graph.png'/>
-        <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the naive model.</caption>
-    </figure>
-    
-    <p>
-        The plot suggests that the number of births and deaths occurring during each time period is approximately proportional to the population size (i.e., linear graphs passing through <m>(0,0)</m>).
-        Let's add best fit proportional lines and then see what the corresponding coefficients for the models mean.
-    </p>
+        <p>
+            When we look at the coefficients, notice that they are essentially the model parameters.
+            The proportionality coefficient for the birth rate was estimated as 0.1575, which is remarkable close to decimal value for the model parameter <c>birth-percent</c> of 0.16.
+            Similarly, the proportionality coefficient for the death rate was estimated as 0.09003 and is remarkably close to the decimal value of <c>death-percent</c> of 0.09.
+        </p>
+        <p>
+            Finally, we look at the per capita birth and death rates.
+            Recall that per capita rates are calculated by dividing the regular rate by the population size.
+            In our case, this means we divide it by the value <c>P_start</c>.
+        </p>
+        <listing xml:id="listing-naive-population-rates-per-capita">
+            <program language="R">
+            # Pivot columns B and D values into a single column Rate
+            # Then calculate per capita rates
+            # Then plot per_capita_rate vs P_start to see relations
+            netlogo_table |&gt; pivot_longer(cols = c(B, D),
+                                        names_to = "Rate_Type",
+                                        values_to = "Rate") |&gt;
+                mutate(per_capita_rate = Rate / P_start) |&gt;
+                ggplot(mapping = aes(x = P_start, y = Rate,
+                                    color = Rate_Type, shape = Rate_Type)) +
+                geom_point()
+            </program>
+        </listing>
+        <image source='images/rates-agent-naive-graph-03.png'/>
 
-    <listing xml:id="listing-naive-population-rates-lm">
-        <console language="R">
-        <input>
-        # Find the model coefficients
-        lm(formula = B ~ 0 + P_start, data = netlogo_table)
-        lm(formula = D ~ 0 + P_start, data = netlogo_table)
+        <p>
+            Notice that the per capita graph has more randomness for small populations.
+            This is typical behavior for <term>demographic stochasticity</term>, as the random variation in births and deaths is much larger <em>relative</em> to the population size when the population size itself is small.
+            However, you should still be able to see that the per capita rates are roughly constant across the populations.
+            Those constant values correspond precisely to the proportionality constants that we found earlier.
+        </p>
+        <p>
+            This should make sense.
+            The proportional models we found earlier were saying that the number of births <m>B</m> are a coefficient times <m>P_{\mathrm{start}}</m>, say <m>B = b \cdot P_{\mathrm{start}}</m> where we estimated <m>b \approx 0.1575</m> (and our simulation used the exact value <m>b=0.16</m>).
+            But the per capita rate is <em>defined</em> by <m>\frac{B}{P_{\mathrm{start}}}</m>.
+            Based on our proportional model, this must mean the per capita birth rate is
+            <me>\frac{B}{P_{\mathrm{start}}} = \frac{b \cdot P_{\mathrm{start}}}{P_{\mathrm{start}}} = b</me>.
+        </p>
+        <p>
+            In other words, a birth or death rate that is proportional to the population size means the same thing as saying that the corresponding <em>per capita rate</em> is constant.
+        </p>
+    </subsection>
 
-        # Redraw the figure adding the best fit proportional lines
-        netlogo_table |&gt; 
-            pivot_longer(cols = c(B, D),
-                         names_to = "Rate_Type",
-                         values_to = "Rate") |&gt;
-            ggplot(mapping = aes(x = P_start, y = Rate,
-                            color = Rate_Type, shape = Rate_Type)) +
-            geom_point() +
-            geom_smooth(method = "lm", formula = y ~ 0 + x,
-                        linewidth = 1, se = FALSE)
-        </input>
-        <output>
-        # -----
-        # Call:
-        # lm(formula = B ~ 0 + P_start, data = netlogo_table)
-        #
-        # Coefficients:
-        # P_start  
-        # 0.1575  
-        # -----
-        # Call:
-        # lm(formula = D ~ 0 + P_start, data = netlogo_table)
-        #
-        # Coefficients:
-        # P_start  
-        # 0.09003  
-        </output>
-        </console>
-    </listing>
-    <image source='images/rates-agent-naive-graph-02.png'/>
-
-    <p>
-        When we look at the coefficients, notice that they are essentially the model parameters.
-        The proportionality coefficient for the birth rate was estimated as 0.1575, which is remarkable close to decimal value for the model parameter <c>birth-percent</c> of 0.16.
-        Similarly, the proportionality coefficient for the death rate was estimated as 0.09003 and is remarkably close to the decimal value of <c>death-percent</c> of 0.09.
-    </p>
-
-    <p>
-        Finally, we look at the per capita birth and death rates.
-        Recall that per capita rates are calculated by dividing the regular rate by the population size.
-        In our case, this means we divide it by the value <c>P_start</c>.
-    </p>
-
-    <listing xml:id="listing-naive-population-rates-per-capita">
-        <program language="R">
-        # Pivot columns B and D values into a single column Rate
-        # Then calculate per capita rates
-        # Then plot per_capita_rate vs P_start to see relations
-        netlogo_table |&gt; pivot_longer(cols = c(B, D),
-                                    names_to = "Rate_Type",
-                                    values_to = "Rate") |&gt;
-            mutate(per_capita_rate = Rate / P_start) |&gt;
-            ggplot(mapping = aes(x = P_start, y = Rate,
-                                color = Rate_Type, shape = Rate_Type)) +
-            geom_point()
-        </program>
-    </listing>
-    <image source='images/rates-agent-naive-graph-03.png'/>
-
-    <p>
-        Notice that the per capita graph has more randomness for small populations.
-        This is typical behavior for <term>demographic stochasticity</term>, as the random variation in births and deaths is much larger <em>relative</em> to the population size when the population size itself is small.
-        However, you should still be able to see that the per capita rates are roughly constant across the populations.
-        Those constant values correspond precisely to the proportionality constants that we found earlier.
-    </p>
-    <p>
-        This should make sense.
-        The proportional models we found earlier were saying that the number of births <m>B</m> are a coefficient times <m>P_{\mathrm{start}}</m>, say <m>B = b \cdot P_{\mathrm{start}}</m> where we estimated <m>b \approx 0.1575</m> (and our simulation used the exact value <m>b=0.16</m>).
-        But the per capita rate is <em>defined</em> by <m>\frac{B}{P_{\mathrm{start}}}</m>.
-        Based on our proportional model, this must mean the per capita birth rate is
-        <me>\frac{B}{P_{\mathrm{start}}} = \frac{b \cdot P_{\mathrm{start}}}{P_{\mathrm{start}}} = b</me>.
-    </p>
-    <p>
-        In other words, a birth or death rate that is proportional to the population size means the same thing as saying that the corresponding <em>per capita rate</em> is constant.
-    </p>
-</subsection>
-
-<subsection xml:id='population-agent-density-dependent'>
-    <title>Density-Dependent Births and Deaths</title>
-    
-    <p>A more complex rule for population dynamics would include density-dependence. A population does not grow without bound. When the population is crowded, the birth and death rates for individuals change. Competition between individuals might result in fewer resources per individual. Crowded conditions might increase sickness or injuries. Such conditions generally lower the birth rates and increase the death rates for the population.</p>
-    
-    <p>One simplistic approach to simulate these density-dependent effects in NetLogo would be to identify how many individuals are on a common patch and treat that as the local density. We might then directly increase the percentage of individuals that would die based on this density. This approach captures the idea of density dependence but does not attempt to attribute those changes to actual interactions. More advanced simulations would require directly modeling the environment itself.</p>
-    
-    <p>
-        One possible implementation for a NetLogo simulation is given here: <dataurl source="code/netlogo/density-dependent-population.nlogo" visual="density-dependent-population.nlogo"/>.
-        To accomplish this process, each <c>person</c> in the simulation has its own death probability defined by <c>local-death-percent</c>.
-    </p>
-    <program language="netlogo">
-    people-own [ local-death-percent ]
-    </program>
-
-    <p>
-        In NetLogo, we can have each patch influence all of the agents that belong to the patch.
-        We define an action for the patches called <c>density-update</c>.
-        We have each path identify all individuals and then tell each person on the patch what their local death probability should be based on how many neighbors are competing for the same resources.
-    </p>
-    <program language="netlogo">
-    to density-update ;; this is a command for patches
-        ;; create a temporary variable that counts all individuals on patch
-        let density count turtles-here
+    <subsection xml:id='population-agent-density-dependent'>
+        <title>Density-Dependent Births and Deaths</title>
         
-        ;; use that density to compute a variable death percentage for
-        ;; each individual living on the current patch
-        ask turtles-here [
-            ;; death-percent is "y-intercept"
-            ;; death-increment is "slope"
-            set local-death-percent (death-percent + death-increment * density)
-        ]
-    end
-    </program>
-
-    <p>
-        Now, the rest of the simulation is essentially the same as before, except that the <c>attempt-survive</c> action has been modified to use <c>local-death-percent</c>.
-    </p>
-    <program language="netlogo">
-        <![CDATA[
-        to attempt-survive  ;; and failure is to die
-          ;; 'local-death-percent' = calculated by patches
-          if random-float 100 < local-death-percent [ die ]
+        <p>
+            A more complex rule for population dynamics would include density-dependence.
+            A population does not grow without bound.
+            When the population is crowded, the birth and death rates for individuals change.
+            Competition between individuals might result in fewer resources per individual.
+            Crowded conditions might increase sickness or injuries.
+            Such conditions generally lower the birth rates and increase the death rates for the population.
+        </p>
+        <p>
+            One simplistic approach to simulate these density-dependent effects in NetLogo would be to identify how many individuals are on a common patch and treat that as the local density.
+            We might then directly increase the percentage of individuals that would die based on this density.
+            This approach captures the idea of density dependence but does not attempt to attribute those changes to actual interactions.
+            More advanced simulations would require directly modeling the environment itself.
+        </p>
+        <p>
+            One possible implementation for a NetLogo simulation is given here: <dataurl source="code/netlogo/density-dependent-population.nlogo" visual="density-dependent-population.nlogo"/>.
+            To accomplish this process, each <c>person</c> in the simulation has its own death probability defined by <c>local-death-percent</c>.
+        </p>
+        <program language="netlogo">
+        people-own [ local-death-percent ]
+        </program>
+        <p>
+            In NetLogo, we can have each patch influence all of the agents that belong to the patch.
+            We define an action for the patches called <c>density-update</c>.
+            We have each path identify all individuals and then tell each person on the patch what their local death probability should be based on how many neighbors are competing for the same resources.
+        </p>
+        <program language="netlogo">
+        to density-update ;; this is a command for patches
+            ;; create a temporary variable that counts all individuals on patch
+            let density count turtles-here
+            
+            ;; use that density to compute a variable death percentage for
+            ;; each individual living on the current patch
+            ask turtles-here [
+                ;; death-percent is "y-intercept"
+                ;; death-increment is "slope"
+                set local-death-percent (death-percent + death-increment * density)
+            ]
         end
-        ]]>
-    </program>
-    
-    <p>The following graph comes from such a simulation using this type of density-dependence.</p>
-    
-    <figure>
-        <image source='images/nl-pop-dyn-densdep-graph.png' width='70%'/>
-        <caption>Plot of total population, the number of births and deaths for a density-dependent growth model with <c>birth-percent = 16</c> and <c>death-percent = 9</c> and <c>death-increment = 0.3</c>.</caption>
-    </figure>
-    
-    <p>Notice that the population does not grow indefinitely. As the population increases, the death rate increases faster than the birth rate so that the population growth rate ultimately decreases. The population levels out. We say that the population has a <term>carrying capacity</term>, which is the population that the environment can sustain at a steady-state. Mathematically, we will call our carrying capacity an <term>equilibrium</term>.</p>
-    
-    <p>An <term>equilibrium</term> occurs when state variables are not changing (in this case, the population). This corresponds to when the birth rate and death rate are in balance. Plotting the birth and death rates with respect to the population size is illustrated in the figure below. The carrying capacity corresponds to where these rates intersect.</p>
+        </program>
+        <p>
+            Now, the rest of the simulation is essentially the same as before, except that the <c>attempt-survive</c> action has been modified to use <c>local-death-percent</c>.
+        </p>
+        <program language="netlogo">
+            <![CDATA[
+            to attempt-survive  ;; and failure is to die
+            ;; 'local-death-percent' = calculated by patches
+            if random-float 100 < local-death-percent [ die ]
+            end
+            ]]>
+        </program>
 
-    <figure>
-        <image source='images/rates-densdep-graph'/>
-        <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</caption>
-    </figure>
-    
-    <p>Because the population grows according to the difference between the birth rate and the death rate <m>B-D</m>, we call this difference the <term>net growth rate</term> <m>R</m>. The figure below illustrates a plot of the net growth rate <m>R</m> with respect to the population size <m>P</m>, giving us a new way to think about our data. Notice that the net growth rate increases and then decreases as the population increases. The carrying capacity corresponds to the population size at which the net growth rate returns to <m>R=0</m>.</p>
-    
-    <figure>
-        <image source='images/netrate-densdep-graph'/>
-        <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</caption>
-    </figure>
-    
-</subsection>
+        <p>The following graph comes from such a simulation using this type of density-dependence.</p>
+        <figure>
+            <image source='images/nl-pop-dyn-densdep-graph.png' width='70%'/>
+            <caption>Plot of total population, the number of births and deaths for a density-dependent growth model with <c>birth-percent = 16</c> and <c>death-percent = 9</c> and <c>death-increment = 0.3</c>.</caption>
+        </figure>
+        
+        <p>
+            Notice that the population does not grow indefinitely.
+            As the population increases, the death rate increases faster than the birth rate so that the population growth rate ultimately decreases.
+            The population levels out.
+            We say that the population has a <term>carrying capacity</term>, which is the population that the environment can sustain at a steady-state.
+            Mathematically, we will call our carrying capacity an <term>equilibrium</term>.
+        </p>
+        <p>
+            An <term>equilibrium</term> occurs when state variables are not changing (in this case, the population).
+            This corresponds to when the birth rate and death rate are in balance.
+            Plotting the birth and death rates with respect to the population size is illustrated in the figure below.
+            The carrying capacity corresponds to where these rates intersect.
+        </p>
+        <figure>
+            <image source='images/rates-densdep-graph'/>
+            <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</caption>
+        </figure>
+        <p>
+            Because the population grows according to the difference between the birth rate and the death rate <m>B-D</m>, we call this difference the <term>net growth rate</term> <m>R</m>.
+            The figure below illustrates a plot of the net growth rate <m>R</m> with respect to the population size <m>P</m>, giving us a new way to think about our data.
+            Notice that the net growth rate increases and then decreases as the population increases.
+            The carrying capacity corresponds to the population size at which the net growth rate returns to <m>R=0</m>.
+        </p>
+        <figure>
+            <image source='images/netrate-densdep-graph'/>
+            <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</caption>
+        </figure>
+    </subsection>
 
-<conclusion>
-    <p>Motivated by dynamics of a population simulated with births and deaths, we will next look at deterministic models for population growth. The agent-based simulations we have just been discussing included demographic stochasticity, the randomness related to random birth and death events. In our deterministic models that are about to be developed, the models will not include the stochasticity. They will represent the average behavior expected for a population. For large population sizes, demographic stochasticity is negligible, so we could also think of our deterministic models as describing behavior of large populations.</p>
-</conclusion>
+    <conclusion>
+        <p>
+            Motivated by dynamics of a population simulated with births and deaths, we will next look at deterministic models for population growth.
+            The agent-based simulations we have just been discussing included demographic stochasticity, the randomness related to random birth and death events.
+            In our deterministic models that are about to be developed, the models will not include the stochasticity.
+            They will represent the average behavior expected for a population.
+            For large population sizes, demographic stochasticity is negligible, so we could also think of our deterministic models as describing behavior of large populations.
+        </p>
+    </conclusion>
 </section>
