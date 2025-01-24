@@ -278,46 +278,44 @@
     
     <p>One simplistic approach to simulate these density-dependent effects in NetLogo would be to identify how many individuals are on a common patch and treat that as the local density. We might then directly increase the percentage of individuals that would die based on this density. This approach captures the idea of density dependence but does not attempt to attribute those changes to actual interactions. More advanced simulations would require directly modeling the environment itself.</p>
     
-    <p>In NetLogo, we can have each patch influence all of the agents that belong to the patch. The following code fragments illustrate how such a model might be implemented.</p>
-    
+    <p>
+        One possible implementation for a NetLogo simulation is given here: <dataurl source="code/netlogo/density-dependent-population.nlogo" visual="density-dependent-population.nlogo"/>.
+        To accomplish this process, each <c>person</c> in the simulation has its own death probability defined by <c>local-death-percent</c>.
+    </p>
     <program language="netlogo">
-        <code>
-        <![CDATA[
-        to density-update ;; this is a command for patches
-          ;; create a temporary variable that counts all individuals on patch
-          let density count turtles-here
-          ;; use that density to compute a variable death percentage for
-          ;; each individual living on the current patch
-          ask turtles-here [
+    people-own [ local-death-percent ]
+    </program>
+
+    <p>
+        In NetLogo, we can have each patch influence all of the agents that belong to the patch.
+        We define an action for the patches called <c>density-update</c>.
+        We have each path identify all individuals and then tell each person on the patch what their local death probability should be based on how many neighbors are competing for the same resources.
+    </p>
+    <program language="netlogo">
+    to density-update ;; this is a command for patches
+        ;; create a temporary variable that counts all individuals on patch
+        let density count turtles-here
+        
+        ;; use that density to compute a variable death percentage for
+        ;; each individual living on the current patch
+        ask turtles-here [
             ;; death-percent is "y-intercept"
             ;; death-increment is "slope"
             set local-death-percent (death-percent + death-increment * density)
-          ]
-        end
-        
-        to attempt-reproduce
-          ;; global 'birth-percent' = percent that reproduce
-          if random-float 100 < birth-percent [ hatch 1 ]
-        end
-        
+        ]
+    end
+    </program>
+
+    <p>
+        Now, the rest of the simulation is essentially the same as before, except that the <c>attempt-survive</c> action has been modified to use <c>local-death-percent</c>.
+    </p>
+    <program language="netlogo">
+        <![CDATA[
         to attempt-survive  ;; and failure is to die
           ;; 'local-death-percent' = calculated by patches
           if random-float 100 < local-death-percent [ die ]
         end
-        
-        to go  ;; minimal code of the standard go command
-          ask patches [
-            density-update
-          ]
-          ask turtles [
-            attempt-reproduce
-            move  ;; not shown
-            attempt-survive
-          ]
-          tick
-        end
         ]]>
-        </code>
     </program>
     
     <p>The following graph comes from such a simulation using this type of density-dependence.</p>
@@ -327,9 +325,9 @@
         <caption>Plot of total population, the number of births and deaths for a density-dependent growth model with <c>birth-percent = 16</c> and <c>death-percent = 9</c> and <c>death-increment = 0.3</c>.</caption>
     </figure>
     
-    <p>Notice that the population does not grow indefinitely. As the population increases, the death rate increases faster than the birth rate so that the population growth rate ultimately decreases. The population levels out. We say that the population has a <term>carrying capacity</term>, which is the population that the environment can sustain at a steady-state or equilibrium.</p>
+    <p>Notice that the population does not grow indefinitely. As the population increases, the death rate increases faster than the birth rate so that the population growth rate ultimately decreases. The population levels out. We say that the population has a <term>carrying capacity</term>, which is the population that the environment can sustain at a steady-state. Mathematically, we will call our carrying capacity an <term>equilibrium</term>.</p>
     
-    <p>An <term>equilibrium</term> occurs when the population does not change. This corresponds to when the birth rate and death rate are in balance. Plotting the birth and death rates with respect to the population size is illustrated in the figure below. The carrying capacity corresponds to where these rates intersect.</p>
+    <p>An <term>equilibrium</term> occurs when state variables are not changing (in this case, the population). This corresponds to when the birth rate and death rate are in balance. Plotting the birth and death rates with respect to the population size is illustrated in the figure below. The carrying capacity corresponds to where these rates intersect.</p>
 
     <figure>
         <image source='images/rates-densdep-graph'/>
@@ -346,6 +344,6 @@
 </subsection>
 
 <conclusion>
-    <p>Motivated by dynamics of a population simulated with births and deaths, we will next look at deterministic models for population growth. These simulations included demographic stochasticity, the randomness related to random birth and death events. The models we will be looking at do not include the stochasticity but will represent the average behavior expected for a population.</p>
+    <p>Motivated by dynamics of a population simulated with births and deaths, we will next look at deterministic models for population growth. The agent-based simulations we have just been discussing included demographic stochasticity, the randomness related to random birth and death events. In our deterministic models that are about to be developed, the models will not include the stochasticity. They will represent the average behavior expected for a population. For large population sizes, demographic stochasticity is negligible, so we could also think of our deterministic models as describing behavior of large populations.</p>
 </conclusion>
 </section>
