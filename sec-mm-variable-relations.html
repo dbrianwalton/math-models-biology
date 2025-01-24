@@ -310,19 +310,19 @@ ggplot(mapping = aes(x = Population, y = Rate,
         mapping = aes(x = Population, y = Deaths)
     ) +
     geom_point(color = "green") +
-    geom_smooth(method = "lm", formula = 'y ~ x', se = FALSE)
+    geom_smooth(method = "lm", formula = y ~ x, se = FALSE)
 </code></pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">1.6.2<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-mm-variable-relations-9">The geometric object that was added is <code class="code-inline tex2jax_ignore">geom_smooth</code>, which has several different methods. The method we used is <code class="code-inline tex2jax_ignore">lm</code> which stands for “linear model”. The associated <code class="code-inline tex2jax_ignore">formula</code> option indicates that we want a linear model where <span class="process-math">\(y\)</span> is a linear function of <span class="process-math">\(x\text{.}\)</span> The option <code class="code-inline tex2jax_ignore">se = FALSE</code> indicates that we do not want to include the “standard error” as part of our linear model. Change this to <code class="code-inline tex2jax_ignore">TRUE</code> to see the effect, which essentially shows how much confidence we have that given the data, a linear model would be predicting a linear model values.</div>
 <div class="para" id="sec-mm-variable-relations-10">Adding the graph of the line does not show us the formula for the model. We need to make a new call to find the values. Before introducing the command, recall that the standard high school representation of a line uses the form <span class="process-math">\(y = mx + b\text{,}\)</span> where <span class="process-math">\(m\)</span> is the slope of the line and <span class="process-math">\(b\)</span> is the <span class="process-math">\(y\)</span>-intercept, meaning the point <span class="process-math">\((0,b)\)</span> is on the line. The symbols <span class="process-math">\(m\)</span> and <span class="process-math">\(b\text{,}\)</span> although common, are not actually standard. For example, in physics, <span class="process-math">\(m\)</span> more commonly refers to <em class="emphasis">mass</em>. We could instead use a model <span class="process-math">\(y = a + bx\text{,}\)</span> and with this representation, <span class="process-math">\(a\)</span> is the <span class="process-math">\(y\)</span>-intercept and <span class="process-math">\(b\)</span> is the slope.</div>
-<div class="para" id="sec-mm-variable-relations-11">In R, the method that we use to find the best linear model is <code class="code-inline tex2jax_ignore">lm</code>. The first argument is <code class="code-inline tex2jax_ignore">formula</code>, which wants to know which columns in our data are related. The <em class="emphasis">dependent</em> variable goes on the <em class="emphasis">left</em> of the formula. The <em class="emphasis">right</em> side of the formula is going to be a sum of columns that each are included with their individual slope terms. And the two sides of the formula are connected with a <em class="emphasis">tilde</em> symbol <code class="code-inline tex2jax_ignore">~</code>. In our example, we want a model <code class="code-inline tex2jax_ignore">Deaths ~ Population</code> because we want to predict <code class="code-inline tex2jax_ignore">Deaths</code> (dependent variable) as a linear function of <code class="code-inline tex2jax_ignore">Population</code> (explanatory or independent variable). The result of our call will be a structure that gives an <em class="emphasis">intercept</em> and a coefficient for <code class="code-inline tex2jax_ignore">Population</code>. (Results are shown in the listing.)</div>
-<figure class="listing figure-like" id="listing-lm-deaths-vs-population"><div class="code-box"><pre class="console"><span class="prompt unselectable">&gt; </span><b>lm(formula = Deaths ~ Population, data = focus_population_data)
-</b># ---------------
-# Call:
-# lm(formula = Deaths ~ Population, data = focus_population_data)
-# 
-# Coefficients:
-# (Intercept)   Population  
-# 9.160e+05    5.215e-03
+<div class="para" id="sec-mm-variable-relations-11">In R, the method that we use to find the best linear model is <code class="code-inline tex2jax_ignore">lm</code>. The first argument is <code class="code-inline tex2jax_ignore">formula</code>, which wants to know which columns in our data are related. The <em class="emphasis">dependent</em> variable goes on the <em class="emphasis">left</em> of the formula. The <em class="emphasis">right</em> side of the formula is going to be a sum of columns that each are included with their individual slope terms. And the two sides of the formula are connected with a <em class="emphasis">tilde</em> symbol <code class="code-inline tex2jax_ignore">~</code>. In our example, we want a model <code class="code-inline tex2jax_ignore">Deaths ~ Population</code> because we want to predict <code class="code-inline tex2jax_ignore">Deaths</code> (dependent variable) as a linear function of <code class="code-inline tex2jax_ignore">Population</code> (explanatory or independent variable). The result of our call will be a structure that gives an <em class="emphasis">intercept</em> and a coefficient for <code class="code-inline tex2jax_ignore">Population</code>. (Results are shown following the code that you input.)</div>
+<figure class="listing figure-like" id="listing-lm-deaths-vs-population"><div class="code-box"><pre class="program"><code class="language-none">lm(formula = Deaths ~ Population, data = focus_population_data)
+</code></pre></div>
+<div class="code-box"><pre class="console">Call:
+lm(formula = Deaths ~ Population, data = focus_population_data)
+ 
+Coefficients:
+(Intercept)   Population  
+9.160e+05    5.215e-03
 </pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">1.6.3<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para logical" id="sec-mm-variable-relations-13">
 <div class="para">The results of the linear model calculation tell us that the intercept is 9.160e+05 and the coefficient for <code class="code-inline tex2jax_ignore">Population</code> is 5.215e-03. Using these values in the equation of a line, and using <span class="process-math">\(P\)</span> for <code class="code-inline tex2jax_ignore">Population</code> and <span class="process-math">\(D\)</span> for <code class="code-inline tex2jax_ignore">Deaths</code>, we get a model equation</div>
@@ -340,14 +340,14 @@ D = 0.008455 P.
 \end{equation*}
 </div>
 </div>
-<figure class="listing figure-like" id="listing-lm-deaths-vs-population-proportional"><div class="code-box"><pre class="console"><span class="prompt unselectable">&gt; </span><b>lm(formula = Deaths ~ 0 + Population, data = focus_population_data)
-</b># ---------------
-# Call:
-# lm(formula = Deaths ~ 0 + Population, data = focus_population_data)
-# 
-# Coefficients:
-# Population  
-# 0.008455
+<figure class="listing figure-like" id="listing-lm-deaths-vs-population-proportional"><div class="code-box"><pre class="program"><code class="language-none">lm(formula = Deaths ~ 0 + Population, data = focus_population_data)
+</code></pre></div>
+<div class="code-box"><pre class="console">Call:
+lm(formula = Deaths ~ 0 + Population, data = focus_population_data)
+ 
+Coefficients:
+Population  
+0.008455
 </pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">1.6.4<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-mm-variable-relations-16">What do we do about other models? For example, can we find the best quadratic model? Some tools, like <a class="external" href="" target="_blank"><code class="code-inline tex2jax_ignore">Desmos</code></a>, make this very easy. R, which was written as a statistical software package, was designed to work with data sets and not formulas. However, we can work around this quite easily.</div>
 <div class="para logical" id="sec-mm-variable-relations-17">
@@ -368,18 +368,18 @@ D = a + b P + c P^2\text{.}
 </div>
 <div class="para">Our data set already has a column for <span class="process-math">\(P\)</span> with <code class="code-inline tex2jax_ignore">Population</code>. We need to generate a new column containing <span class="process-math">\(P^2\text{.}\)</span> The function that adds new calculated columns is <code class="code-inline tex2jax_ignore">mutate</code> command in the <code class="code-inline tex2jax_ignore">dplyr</code> library. We will use the <dfn class="terminology">pipe</dfn> method to illustrate the steps we need.</div>
 </div>
-<figure class="listing figure-like" id="listing-lm-deaths-vs-population-quadratic"><div class="code-box"><pre class="console"><span class="prompt unselectable">&gt; </span><b>expand_data &lt;- focus_population_data |&gt;    # Start with our data
+<figure class="listing figure-like" id="listing-lm-deaths-vs-population-quadratic"><div class="code-box"><pre class="program"><code class="language-none">expand_data &lt;- focus_population_data |&gt;    # Start with our data
     select(P = Population, D = Deaths) |&gt;    # Keep only P and D 
     mutate(P2 = P^2)                            # Add column for P^2
     
 lm(formula = D ~ P + P2, data = expand_data)
-</b># ---------------
-# Call:
-# lm(formula = D ~ P + P2, data = expand_data)
-# 
-# Coefficients:
-# (Intercept)            P           P2  
-#  -9.163e+06    7.684e-02   -1.269e-10
+</code></pre></div>
+<div class="code-box"><pre class="console">Call:
+lm(formula = D ~ P + P2, data = expand_data)
+
+Coefficients:
+(Intercept)            P           P2  
+ -9.163e+06    7.684e-02   -1.269e-10
 </pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">1.6.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para logical" id="sec-mm-variable-relations-20">
 <div class="para">As a result of this calculation, our best quadratic model given the data is given by the model</div>
@@ -390,11 +390,11 @@ D = -9.163 \times 10^6 + 7.684 \times 10^{-2} P - 1.269 \times 10^{-10} P^2\text
 </div>
 </div>
 <div class="para" id="sec-mm-variable-relations-21">As you can see, the summary of our calculation only gave four significant digits to each of the coefficients. When working with population sizes on the order of <span class="process-math">\(10^8\)</span> (hundreds of millions), small changes in the coefficients can result in fairly noticable differences in calculated values. If we want to have more digits, we need to look at the returned structure directly and not just the summary that is provided by the call. Assign a name to the result of the <code class="code-inline tex2jax_ignore">lm</code> call and then examine the <code class="code-inline tex2jax_ignore">coefficients</code> stored in the result.</div>
-<figure class="listing figure-like" id="listing-lm-deaths-vs-population-quadratic-2"><div class="code-box"><pre class="console"><span class="prompt unselectable">&gt; </span><b>D_model &lt;- lm(formula = D ~ P + P2, data = expand_data)
+<figure class="listing figure-like" id="listing-lm-deaths-vs-population-quadratic-2"><div class="code-box"><pre class="program"><code class="language-none">D_model &lt;- lm(formula = D ~ P + P2, data = expand_data)
 D_model$coefficients
-</b># ---------------
-# (Intercept)               P            P2  
-# -9.163022e+06  7.683889e-02 -1.268641e-10
+</code></pre></div>
+<div class="code-box"><pre class="console">(Intercept)               P            P2  
+-9.163022e+06  7.683889e-02 -1.268641e-10
 </pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">1.6.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para logical" id="sec-mm-variable-relations-23">
 <div class="para">Again, because R was not designed to work with formulas but with data, there is not an automatic method to draw the curve we want based on this best quadratic fit. We need to know how to graph a function instead of data. The graph of a continuous function can be approximated by using a sequence of calculated points connected together to form a curve. Our task is to do the following:</div>
@@ -406,20 +406,20 @@ D_model$coefficients
 </ul>
 <div class="para">We will first generate a graph without trying to connect it to our data.</div>
 </div>
-<figure class="listing figure-like" id="listing-qm-graph-function"><div class="code-box"><pre class="console"><span class="prompt unselectable">&gt; </span><b># Create the sequence of x-values
+<figure class="listing figure-like" id="listing-qm-graph-function"><div class="code-box"><pre class="program"><code class="language-none"># Create the sequence of x-values
 x_vals &lt;- seq(from = 2.55e8, to = 3.10e8, length.out = 50)
 # Extract the coefficients for an easier name to calculate the y-values
 c &lt;- D_model$coefficients
-y_vals &lt;- c[1] + c[2] * x_vals + c[2] * x_vals^2
+y_vals &lt;- c[1] + c[2] * x_vals + c[3] * x_vals^2
 
 # Put the data in a table and pipe the result to ggplot
 tibble(P = x_vals, D = y_vals) |&gt;
     ggplot(mapping = aes(x = P, y = D)) +
     geom_path(color = "blue", linewidth = 2)
-</b></pre></div>
+</code></pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">1.6.7<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 75%; margin-left: 12.5%; margin-right: 12.5%;"><img src="external/images/US-rates-quadratic-death-rate-01.png" class="contained"></div>
 <div class="para" id="sec-mm-variable-relations-26">In order to combine graphs that come from different data sets, we will create geometric layers resulting from different <code class="code-inline tex2jax_ignore">data</code> features. This means that when we open up our graphics layout using <code class="code-inline tex2jax_ignore">ggplot</code>, we should not pass a common dataset for all of the layers. Instead, we pass an empty dataset indicator <code class="code-inline tex2jax_ignore">NULL</code>. We can still name our axes in the aesthetics. Then when we generate the geometric layers, we will specify our datasets and indicate the columns for <span class="process-math">\((x,y)\)</span> in each case separately.</div>
-<figure class="listing figure-like" id="listing-qm-combining-graphs"><div class="code-box"><pre class="console"><span class="prompt unselectable">&gt; </span><b>ggplot(data = NULL, 
+<figure class="listing figure-like" id="listing-qm-combining-graphs"><div class="code-box"><pre class="program"><code class="language-none">ggplot(data = NULL, 
         mapping = aes(x = Population, y = Deaths)) +
     geom_point(data = focus_population_data,
                 aes(x = Population, y = Deaths),
@@ -427,11 +427,11 @@ tibble(P = x_vals, D = y_vals) |&gt;
     geom_path(data = tibble(P = x_vals, D = y_vals),
                 aes(x = P, y = D),
                 color = "violet", linewidth = 1)
-</b></pre></div>
+</code></pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">1.6.8<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 75%; margin-left: 12.5%; margin-right: 12.5%;"><img src="external/images/US-rates-quadratic-death-rate-02.png" class="contained"></div>
 <div class="para" id="sec-mm-variable-relations-29">Next, we want to look at derived state variables. (Note: “derived” means generated from and is not related to the calculus idea of “derivative”.) For populations, we are often interested in <dfn class="terminology">per capita rates</dfn>, which are calculated by taking a total rate (like a birth rate or death rate) and dividing it by the population size. This gives the number of births or deaths per year <em class="emphasis">per individual</em>.</div>
 <div class="para" id="sec-mm-variable-relations-30">We add new columns to our dataset using <code class="code-inline tex2jax_ignore">mutate</code> to represent these new values. Let’s take a look at how per capita birth and death rates relate to population size.</div>
-<figure class="listing figure-like" id="listing-US-per-capita-rates-01"><div class="code-box"><pre class="console"><span class="prompt unselectable">&gt; </span><b>focus_population_data |&gt;
+<figure class="listing figure-like" id="listing-US-per-capita-rates-01"><div class="code-box"><pre class="program"><code class="language-none">focus_population_data |&gt;
     mutate(Births_per_capita = Births / Population,
         Deaths_per_capita = Deaths / Population) |&gt;
     pivot_longer(cols = c(Births_per_capita, Deaths_per_capita),
@@ -440,10 +440,10 @@ tibble(P = x_vals, D = y_vals) |&gt;
     ggplot(mapping = aes(x = Population, y = per_capita_rate,
                         color = rate_name, shape = rate_name)) +
     geom_point()
-</b></pre></div>
+</code></pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">1.6.9<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 85%; margin-left: 7.5%; margin-right: 7.5%;"><img src="external/images/US-per-capita-rates-01.png" class="contained"></div>
 <div class="para" id="sec-mm-variable-relations-33">This new view suggests that perhaps the population saw a transition in per capita birth rates for a time and then settled down to something approximately constant around 0.014 (births per individual per year), or 14 births per year per thousand individuals. The per capita death rate possibly was seeing a gradual decline. Because death rates are based on economics as well as medical innovations, we are unlikely going to want to attribute the falling death rate to the increasing population. However, from a modeling perspective, we could ignore this good sense and determine what the relationship is <em class="emphasis">if</em> we wanted to attribute all of the change to population size.</div>
-<figure class="listing figure-like" id="listing-US-per-capita-death-01"><div class="code-box"><pre class="console"><span class="prompt unselectable">&gt; </span><b>work_data &lt;- focus_population_data |&gt;
+<figure class="listing figure-like" id="listing-US-per-capita-death-01"><div class="code-box"><pre class="program"><code class="language-none">work_data &lt;- focus_population_data |&gt;
     mutate(Births_per_capita = Births / Population,
         Deaths_per_capita = Deaths / Population)
 death_pc_model &lt;-
@@ -452,10 +452,10 @@ death_pc_model$coefficients
 ggplot(data = work_data,
        mapping = aes(x = Population, y = Deaths_per_capita)) +
     geom_point() +
-    geom_smooth(method = "lm", formula = 'y ~ x', se = FALSE)
-</b># ---------------
-#  (Intercept)    Population 
-# 1.164158e-02 -1.123642e-11
+    geom_smooth(method = "lm", formula = y ~ x, se = FALSE)
+</code></pre></div>
+<div class="code-box"><pre class="console"> (Intercept)    Population 
+1.164158e-02 -1.123642e-11
 </pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">1.6.10<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 85%; margin-left: 7.5%; margin-right: 7.5%;"><img src="external/images/US-per-capita-death-01.png" class="contained"></div></section></div>
 <div class="ptx-content-footer">
