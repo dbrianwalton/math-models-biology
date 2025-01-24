@@ -293,15 +293,15 @@ eBookConfig.enable_chatcodes =  false;
 <figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.1.1<span class="period">.</span></span><span class="space"> </span>Interface for <code class="code-inline tex2jax_ignore">naive-population.nlogo</code>.</figcaption></figure><div class="para" id="population-agent-naive-5">You can inspect the code describing the rules for the simulation by selecting the <code class="code-inline tex2jax_ignore">code</code> tab at the top of the NetLogo window. Much of the code specifies rules for the agent and environment visualization, such as stating that our individuals are <code class="code-inline tex2jax_ignore">people</code>, defining their shapes and colors, and giving rules for how to move randomly on the screen. This gives us something interesting to look at, but does not have much to do with the biologically relevant questions of how the population changes.</div>
 <div class="para" id="population-agent-naive-6">In the <code class="code-inline tex2jax_ignore">go</code> code fragment, there are statements where we ask all <code class="code-inline tex2jax_ignore">people</code> to do three things: <code class="code-inline tex2jax_ignore">try-reproduce</code> (give birth or not), <code class="code-inline tex2jax_ignore">move</code>, <code class="code-inline tex2jax_ignore">try-survive</code> (die or not). The names include “try-” as a way to indicate there is some decision involved here. The code fragment in <a href="population-agent-based.html#listing-naive-population-reproduce-survive" class="xref" data-knowl="./knowl/xref/listing-naive-population-reproduce-survive.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 2.1.2">Listing 2.1.2</a> is a minimal approach for implementing random birth and death that is naive in regards to the environment. The expression <code class="code-inline tex2jax_ignore">random-float 100</code> creates a random number between 0 and 100, so saying <code class="code-inline tex2jax_ignore">if random-float 100 &lt; birth-percent [...]</code> calculates such a random number and compares it to the number in the <code class="code-inline tex2jax_ignore">birth-percent</code> input field. If the random number is less than <code class="code-inline tex2jax_ignore">birth-percent</code>, then the command inside the brackets (<code class="code-inline tex2jax_ignore">hatch 1</code>) is sent to the corresponding <code class="code-inline tex2jax_ignore">person</code> under simulation (creating a new person). A similar calculation occurs for each <code class="code-inline tex2jax_ignore">person</code> to see if they should die (remove the person).</div>
 <figure class="listing figure-like" id="listing-naive-population-reproduce-survive"><div class="code-box"><pre class="program"><code class="language-none">to try-reproduce
-  ;; global 'birth-percent' = percent of cycles
-  ;; in which to reproduce
-  if random-float 100 &lt; birth-percent [ hatch 1 ]
+;; global 'birth-percent' = percent of cycles
+;; in which to reproduce
+if random-float 100 &lt; birth-percent [ hatch 1 ]
 end
 
 to try-survive  ;; and failure is to die
-  ;; global 'death-percent' = percent of cycles
-  ;; in which to die
-  if random-float 100 &lt; death-percent [ die ]
+;; global 'death-percent' = percent of cycles
+;; in which to die
+if random-float 100 &lt; death-percent [ die ]
 end
 </code></pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.1.2<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="population-agent-naive-8">The actual code is slightly more complex, in that it actually creates temporary agents that are <em class="emphasis">markers</em> for birth and death events. This allows the simulation to count how many events occur each cycle by checking the simulation for how many <code class="code-inline tex2jax_ignore">birth-markers</code> or <code class="code-inline tex2jax_ignore">death-markers</code> are in the system. You will also find code at the start of the <code class="code-inline tex2jax_ignore">go</code> code that kills all of the markers before proceeding so that each cycle of the simulation only shows markers for the most recent set of events.</div>
@@ -353,34 +353,34 @@ netlogo_table |&gt; pivot_longer(cols = c(B, D),
 </code></pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.1.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="population-agent-naive-19"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/rates-agent-naive-graph.png" class="contained"></div>
 <figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.1.6<span class="period">.</span></span><span class="space"> </span>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the naive model.</figcaption></figure><div class="para" id="population-agent-naive-20">The plot suggests that the number of births and deaths occurring during each time period is approximately proportional to the population size (i.e., linear graphs passing through <span class="process-math">\((0,0)\)</span>). Let’s add best fit proportional lines and then see what the corresponding coefficients for the models mean.</div>
-<figure class="listing figure-like" id="listing-naive-population-rates-lm"><div class="code-box"><pre class="console"><span class="prompt unselectable">$ </span><b># Find the model coefficients
+<figure class="listing figure-like" id="listing-naive-population-rates-lm"><div class="code-box"><pre class="program"><code class="language-none"># Find the model coefficients
 lm(formula = B ~ 0 + P_start, data = netlogo_table)
 lm(formula = D ~ 0 + P_start, data = netlogo_table)
 
 # Redraw the figure adding the best fit proportional lines
 netlogo_table |&gt; 
     pivot_longer(cols = c(B, D),
-                 names_to = "Rate_Type",
-                 values_to = "Rate") |&gt;
+                names_to = "Rate_Type",
+                values_to = "Rate") |&gt;
     ggplot(mapping = aes(x = P_start, y = Rate,
                     color = Rate_Type, shape = Rate_Type)) +
     geom_point() +
     geom_smooth(method = "lm", formula = y ~ 0 + x,
                 linewidth = 1, se = FALSE)
-</b># -----
-# Call:
-# lm(formula = B ~ 0 + P_start, data = netlogo_table)
-#
-# Coefficients:
-# P_start  
-# 0.1575  
-# -----
-# Call:
-# lm(formula = D ~ 0 + P_start, data = netlogo_table)
-#
-# Coefficients:
-# P_start  
-# 0.09003
+</code></pre></div>
+<div class="code-box"><pre class="console">Call:
+lm(formula = B ~ 0 + P_start, data = netlogo_table)
+
+Coefficients:
+P_start  
+0.1575  
+-----
+Call:
+lm(formula = D ~ 0 + P_start, data = netlogo_table)
+
+Coefficients:
+P_start  
+0.09003
 </pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.1.7<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/rates-agent-naive-graph-02.png" class="contained"></div>
 <div class="para" id="population-agent-naive-23">When we look at the coefficients, notice that they are essentially the model parameters. The proportionality coefficient for the birth rate was estimated as 0.1575, which is remarkable close to decimal value for the model parameter <code class="code-inline tex2jax_ignore">birth-percent</code> of 0.16. Similarly, the proportionality coefficient for the death rate was estimated as 0.09003 and is remarkably close to the decimal value of <code class="code-inline tex2jax_ignore">death-percent</code> of 0.09.</div>
@@ -411,50 +411,38 @@ netlogo_table |&gt; pivot_longer(cols = c(B, D),
 </h3>
 <div class="para" id="population-agent-density-dependent-2">A more complex rule for population dynamics would include density-dependence. A population does not grow without bound. When the population is crowded, the birth and death rates for individuals change. Competition between individuals might result in fewer resources per individual. Crowded conditions might increase sickness or injuries. Such conditions generally lower the birth rates and increase the death rates for the population.</div>
 <div class="para" id="population-agent-density-dependent-3">One simplistic approach to simulate these density-dependent effects in NetLogo would be to identify how many individuals are on a common patch and treat that as the local density. We might then directly increase the percentage of individuals that would die based on this density. This approach captures the idea of density dependence but does not attempt to attribute those changes to actual interactions. More advanced simulations would require directly modeling the environment itself.</div>
-<div class="para" id="population-agent-density-dependent-4">In NetLogo, we can have each patch influence all of the agents that belong to the patch. The following code fragments illustrate how such a model might be implemented.</div>
+<div class="para" id="population-agent-density-dependent-4">One possible implementation for a NetLogo simulation is given here: <a class="external" href="external/code/netlogo/density-dependent-population.nlogo" target="_blank"><code class="code-inline tex2jax_ignore">density-dependent-population.nlogo</code></a>. To accomplish this process, each <code class="code-inline tex2jax_ignore">person</code> in the simulation has its own death probability defined by <code class="code-inline tex2jax_ignore">local-death-percent</code>.</div>
+<div class="code-box"><pre class="program"><code class="language-none">people-own [ local-death-percent ]
+</code></pre></div>
+<div class="para" id="population-agent-density-dependent-6">In NetLogo, we can have each patch influence all of the agents that belong to the patch. We define an action for the patches called <code class="code-inline tex2jax_ignore">density-update</code>. We have each path identify all individuals and then tell each person on the patch what their local death probability should be based on how many neighbors are competing for the same resources.</div>
 <div class="code-box"><pre class="program"><code class="language-none">to density-update ;; this is a command for patches
-  ;; create a temporary variable that counts all individuals on patch
-  let density count turtles-here
-  ;; use that density to compute a variable death percentage for
-  ;; each individual living on the current patch
-  ask turtles-here [
-    ;; death-percent is "y-intercept"
-    ;; death-increment is "slope"
-    set local-death-percent (death-percent + death-increment * density)
-  ]
-end
-
-to attempt-reproduce
-  ;; global 'birth-percent' = percent that reproduce
-  if random-float 100 &lt; birth-percent [ hatch 1 ]
-end
-
-to attempt-survive  ;; and failure is to die
-  ;; 'local-death-percent' = calculated by patches
-  if random-float 100 &lt; local-death-percent [ die ]
-end
-
-to go  ;; minimal code of the standard go command
-  ask patches [
-    density-update
-  ]
-  ask turtles [
-    attempt-reproduce
-    move  ;; not shown
-    attempt-survive
-  ]
-  tick
+    ;; create a temporary variable that counts all individuals on patch
+    let density count turtles-here
+    
+    ;; use that density to compute a variable death percentage for
+    ;; each individual living on the current patch
+    ask turtles-here [
+        ;; death-percent is "y-intercept"
+        ;; death-increment is "slope"
+        set local-death-percent (death-percent + death-increment * density)
+    ]
 end
 </code></pre></div>
-<div class="para" id="population-agent-density-dependent-6">The following graph comes from such a simulation using this type of density-dependence.</div>
-<figure class="figure figure-like" id="population-agent-density-dependent-7"><div class="image-box" style="width: 70%; margin-left: 15%; margin-right: 15%;"><img src="external/images/nl-pop-dyn-densdep-graph.png" class="contained"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.1.9<span class="period">.</span></span><span class="space"> </span>Plot of total population, the number of births and deaths for a density-dependent growth model with <code class="code-inline tex2jax_ignore">birth-percent = 16</code> and <code class="code-inline tex2jax_ignore">death-percent = 9</code> and <code class="code-inline tex2jax_ignore">death-increment = 0.3</code>.</figcaption></figure><div class="para" id="population-agent-density-dependent-8">Notice that the population does not grow indefinitely. As the population increases, the death rate increases faster than the birth rate so that the population growth rate ultimately decreases. The population levels out. We say that the population has a <dfn class="terminology">carrying capacity</dfn>, which is the population that the environment can sustain at a steady-state or equilibrium.</div>
-<div class="para" id="population-agent-density-dependent-9">An <dfn class="terminology">equilibrium</dfn> occurs when the population does not change. This corresponds to when the birth rate and death rate are in balance. Plotting the birth and death rates with respect to the population size is illustrated in the figure below. The carrying capacity corresponds to where these rates intersect.</div>
-<figure class="figure figure-like" id="population-agent-density-dependent-10"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/rates-densdep-graph.svg" role="img" class="contained"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.1.10<span class="period">.</span></span><span class="space"> </span>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</figcaption></figure><div class="para" id="population-agent-density-dependent-11">Because the population grows according to the difference between the birth rate and the death rate <span class="process-math">\(B-D\text{,}\)</span> we call this difference the <dfn class="terminology">net growth rate</dfn> <span class="process-math">\(R\text{.}\)</span> The figure below illustrates a plot of the net growth rate <span class="process-math">\(R\)</span> with respect to the population size <span class="process-math">\(P\text{,}\)</span> giving us a new way to think about our data. Notice that the net growth rate increases and then decreases as the population increases. The carrying capacity corresponds to the population size at which the net growth rate returns to <span class="process-math">\(R=0\text{.}\)</span>
+<div class="para" id="population-agent-density-dependent-8">Now, the rest of the simulation is essentially the same as before, except that the <code class="code-inline tex2jax_ignore">attempt-survive</code> action has been modified to use <code class="code-inline tex2jax_ignore">local-death-percent</code>.</div>
+<div class="code-box"><pre class="program"><code class="language-none">to attempt-survive  ;; and failure is to die
+;; 'local-death-percent' = calculated by patches
+if random-float 100 &lt; local-death-percent [ die ]
+end
+</code></pre></div>
+<div class="para" id="population-agent-density-dependent-10">The following graph comes from such a simulation using this type of density-dependence.</div>
+<figure class="figure figure-like" id="population-agent-density-dependent-11"><div class="image-box" style="width: 70%; margin-left: 15%; margin-right: 15%;"><img src="external/images/nl-pop-dyn-densdep-graph.png" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.1.9<span class="period">.</span></span><span class="space"> </span>Plot of total population, the number of births and deaths for a density-dependent growth model with <code class="code-inline tex2jax_ignore">birth-percent = 16</code> and <code class="code-inline tex2jax_ignore">death-percent = 9</code> and <code class="code-inline tex2jax_ignore">death-increment = 0.3</code>.</figcaption></figure><div class="para" id="population-agent-density-dependent-12">Notice that the population does not grow indefinitely. As the population increases, the death rate increases faster than the birth rate so that the population growth rate ultimately decreases. The population levels out. We say that the population has a <dfn class="terminology">carrying capacity</dfn>, which is the population that the environment can sustain at a steady-state. Mathematically, we will call our carrying capacity an <dfn class="terminology">equilibrium</dfn>.</div>
+<div class="para" id="population-agent-density-dependent-13">An <dfn class="terminology">equilibrium</dfn> occurs when state variables are not changing (in this case, the population). This corresponds to when the birth rate and death rate are in balance. Plotting the birth and death rates with respect to the population size is illustrated in the figure below. The carrying capacity corresponds to where these rates intersect.</div>
+<figure class="figure figure-like" id="population-agent-density-dependent-14"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/rates-densdep-graph.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.1.10<span class="period">.</span></span><span class="space"> </span>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</figcaption></figure><div class="para" id="population-agent-density-dependent-15">Because the population grows according to the difference between the birth rate and the death rate <span class="process-math">\(B-D\text{,}\)</span> we call this difference the <dfn class="terminology">net growth rate</dfn> <span class="process-math">\(R\text{.}\)</span> The figure below illustrates a plot of the net growth rate <span class="process-math">\(R\)</span> with respect to the population size <span class="process-math">\(P\text{,}\)</span> giving us a new way to think about our data. Notice that the net growth rate increases and then decreases as the population increases. The carrying capacity corresponds to the population size at which the net growth rate returns to <span class="process-math">\(R=0\text{.}\)</span>
 </div>
-<figure class="figure figure-like" id="population-agent-density-dependent-12"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/netrate-densdep-graph.svg" role="img" class="contained"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.1.11<span class="period">.</span></span><span class="space"> </span>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</figcaption></figure></section><section class="conclusion" id="population-agent-based-6"><div class="para" id="population-agent-based-6-1">Motivated by dynamics of a population simulated with births and deaths, we will next look at deterministic models for population growth. These simulations included demographic stochasticity, the randomness related to random birth and death events. The models we will be looking at do not include the stochasticity but will represent the average behavior expected for a population.</div></section></section></div>
+<figure class="figure figure-like" id="population-agent-density-dependent-16"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/netrate-densdep-graph.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.1.11<span class="period">.</span></span><span class="space"> </span>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</figcaption></figure></section><section class="conclusion" id="population-agent-based-6"><div class="para" id="population-agent-based-6-1">Motivated by dynamics of a population simulated with births and deaths, we will next look at deterministic models for population growth. The agent-based simulations we have just been discussing included demographic stochasticity, the randomness related to random birth and death events. In our deterministic models that are about to be developed, the models will not include the stochasticity. They will represent the average behavior expected for a population. For large population sizes, demographic stochasticity is negligible, so we could also think of our deterministic models as describing behavior of large populations.</div></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="populations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="population-discrete.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
