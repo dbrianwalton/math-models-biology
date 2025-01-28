@@ -8,7 +8,7 @@
 <html lang="en-US" dir="ltr">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Colophon</title>
+<title>Density Dependent Population Growth Models</title>
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
@@ -149,7 +149,7 @@ eBookConfig.enable_chatcodes =  false;
 <ol id="searchresults" class="searchresults"></ol>
 </div>
 </div>
-<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="frontmatter.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="frontmatter.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="mathematical-modeling.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="sec-population-discrete.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="populations.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="population-projection.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
 </div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
 \newcommand{\gt}{&gt;}
@@ -174,9 +174,9 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-mm-variable-relations.html" class="internal"><span class="codenumber">1.6</span> <span class="title">Relations between Variables</span></a></div></li>
 </ul>
 </li>
-<li class="toc-item toc-chapter">
+<li class="toc-item toc-chapter contains-active">
 <div class="toc-title-box"><a href="populations.html" class="internal"><span class="codenumber">2</span> <span class="title">Population Dynamics</span></a></div>
-<ul class="structural toc-item-list">
+<ul class="structural toc-item-list contains-active">
 <li class="toc-item toc-section">
 <div class="toc-title-box"><a href="population-agent-based.html" class="internal"><span class="codenumber">2.1</span> <span class="title">An Agent Based Motivation for Dynamics</span></a></div>
 <ul class="structural toc-item-list">
@@ -186,7 +186,7 @@ eBookConfig.enable_chatcodes =  false;
 </ul>
 </li>
 <li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-discrete.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Discrete Population Models</span></a></div></li>
-<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-density-dependent.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Density Dependent Population Growth Models</span></a></div></li>
+<li class="toc-item toc-section active"><div class="toc-title-box"><a href="sec-population-density-dependent.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Density Dependent Population Growth Models</span></a></div></li>
 <li class="toc-item toc-section">
 <div class="toc-title-box"><a href="population-projection.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Projection Models</span></a></div>
 <ul class="structural toc-item-list">
@@ -268,17 +268,60 @@ eBookConfig.enable_chatcodes =  false;
 </li>
 <li class="toc-item toc-backmatter"><div class="toc-title-box"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
-<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="colophon" id="front-colophon"><h2 class="heading hide-type">
-<span class="type">Colophon</span><span class="space"> </span><span class="codenumber"></span><span class="space"> </span><span class="title">Colophon</span>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="sec-population-density-dependent"><h2 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">2.3</span><span class="space"> </span><span class="title">Density Dependent Population Growth Models</span>
 </h2>
-<div class="credit">
-<b class="title">Website</b> <a class="external" href="https://pretextbook.org" target="_blank">My Website</a><details class="ptx-footnote" aria-live="polite" id="frontmatter-1-3-2"><summary class="ptx-footnote__number" title="Footnote 0.0.1"><sup> 1 </sup></summary><div class="ptx-footnote__contents" id="frontmatter-1-3-2"><code class="code-inline tex2jax_ignore">pretextbook.org</code></div></details>
+<div class="para" id="sec-population-density-dependent-2">A population with constant per capita growth rates sees exponential growth when the birth rate <span class="process-math">\(b\)</span> exceeds the death rate <span class="process-math">\(d\text{,}\)</span> and exponential decay when the ordering is reversed. However, real population can not really grow exponentially as there iare limited resources in the environment. Thus, for populations that experience environmental constraints, constant per capita growth rates are not appropriate.</div>
+<div class="para logical" id="sec-population-density-dependent-3">
+<div class="para">We previously defined the per capita net growth rate <span class="process-math">\(r=b-d\)</span> where <span class="process-math">\(b\)</span> is the per capita birth rate and <span class="process-math">\(d\)</span> is the per capita death rate. Sometimes it is inconvenient or impossible to determine the birth and death rates separately. If we can at least measure the net change in the population, which will be equal to <span class="process-math">\(\Delta P_{n+1} = B_{n+1}-D_{n+1}\text{,}\)</span> then the per capita net growth rate will be a sequence defined by</div>
+<div class="displaymath process-math">
+\begin{equation*}
+r_{n+1} = \frac{\Delta P_{n+1}}{P_{n}}.
+\end{equation*}
 </div>
-<div class="para copyright">©2025– D. Brian Walton</div>
-<div class="para license">This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit <a class="external" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CreativeCommons.org</a><details class="ptx-footnote" aria-live="polite" id="frontmatter-1-4-3-2"><summary class="ptx-footnote__number" title="Footnote 0.0.2"><sup> 2 </sup></summary><div class="ptx-footnote__contents" id="frontmatter-1-4-3-2"><code class="code-inline tex2jax_ignore">creativecommons.org/licenses/by-sa/4.0</code></div></details>
-</div></section></div>
+<div class="para">Density dependence means that the relation <span class="process-math">\((P_n, r_{n+1})\)</span> is not constant, but that <span class="process-math">\(r_{n+1}\)</span> depends on <span class="process-math">\(P_n\text{.}\)</span>
+</div>
+</div>
+<div class="para" id="sec-population-density-dependent-4">We turn our attention to the case that the per capita net growth rate can be modeled as a function of the population size <span class="process-math">\(P_n\text{,}\)</span> where a scatter plot of the points <span class="process-math">\((P_n, r_{n+1})\)</span> could be reasonably approximated by a function. We generally expect that the graph will be a decreasing function because as the population gets larger, the growth rate should decrease. For a very large population, we expect <span class="process-math">\(r \lt 0\)</span> since the population would be greater than its carrying capacity. Physically, however, we will always have <span class="process-math">\(r \ge -1\text{,}\)</span> with <span class="process-math">\(r=-1\)</span> corresponding to complete extinction.</div>
+<article class="example example-like" id="sec-population-density-dependent-5"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.3.1</span><span class="period">.</span>
+</h3>
+<div class="para" id="sec-population-density-dependent-5-1">If we revisited the density-dependent agent-based model in Section <a href="population-agent-based.html#population-agent-density-dependent" class="internal" title="Subsection 2.1.3: Density-Dependent Births and Deaths">Subsection 2.1.3</a>, we can plot the per capita net growth rate computed at each time step with respect to the size of the population at the beginning of the step. The figure below illustrates this relationship. Values when the population was small and demographic stochasticity is high were not included.</div>
+<figure class="figure figure-like" id="sec-population-density-dependent-5-2"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/percap-rate-densdep-graph.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.3.2<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-population-density-dependent-5-3">We see in the graph that the per capita net growth rate is decreasing. The data seem consistent with a model where the per capita rate decreases linearly. This makes sense because the rules of the agent-based model were that the death rate increased linearly in terms of the number of individuals on a shared patch.</div></article><div class="para" id="sec-population-density-dependent-6">In order to develop an actual model, we need to find a formula that captures the relation. There are infinitely many different formulas that we might try to use, especially if we only have a few data points. To be more precise, we generally choose families of formulas that are simple and are described by only a few <dfn class="terminology">parameters</dfn>. A <dfn class="terminology">parameter</dfn> is a symbol that represents a constant that appears in the formula, like a variable that helps describe the model while not necessarily representing anything physical in the actual state of the system.</div>
+<div class="para logical" id="sec-population-density-dependent-7">
+<div class="para">The simplest density dependent model to write down would be when <span class="process-math">\(r\)</span> is a linear function of <span class="process-math">\(P\text{,}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+r(P) = r_0 - a P.
+\end{equation*}
+</div>
+<div class="para">The values <span class="process-math">\(r_0\)</span> and <span class="process-math">\(a\)</span> are the <dfn class="terminology">parameters</dfn> of the model. Here <span class="process-math">\(r_0\)</span> is called the <dfn class="terminology">intrinsic per capita net growth rate</dfn> and represents the per capita net growth rate when <span class="process-math">\(P \approx 0\text{.}\)</span> For a small population, far from the carrying capacity, this represents the value of <span class="process-math">\(r\)</span> that looks like an exponential growth model until the population size starts to cause density dependent effects. The parameter <span class="process-math">\(a\)</span> is the size of the slope indicating how much the growth rate <span class="process-math">\(r\)</span> decreases per individual.</div>
+</div>
+<article class="example example-like" id="sec-population-density-dependent-8"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.3.3</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="sec-population-density-dependent-8-1">
+<div class="para">Using the density dependent data from our agent-based model, we can use linear regression to find a line of best fit. This gives us the following values for the parameters:</div>
+<div class="displaymath process-math" id="sec-population-density-dependent-8-1-1">
+\begin{gather*}
+r_0 = 6.616 \times 10^{-2}, \\
+a = 6.275 \times 10^{-6}. 
+\end{gather*}
+</div>
+<div class="para">The resulting parametric model for the per capita growth rate is then given by</div>
+<div class="displaymath process-math">
+\begin{equation*}
+r(P) = 6.616 \times 10^{-2} - 6.275 \times 10^{-6} \, P.
+\end{equation*}
+</div>
+<div class="para">A graph showing the trend line with the data is given below.</div>
+</div>
+<figure class="figure figure-like" id="sec-population-density-dependent-8-2"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/percap-rate-densdep-model-graph.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.3.4<span class="period">.</span></span><span class="space"> </span></figcaption></figure></article></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="frontmatter.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="mathematical-modeling.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+<a class="previous-button button" href="sec-population-discrete.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="population-projection.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
 </div>
 <div id="ptx-page-footer" class="ptx-page-footer">
