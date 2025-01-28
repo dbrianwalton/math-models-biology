@@ -50,6 +50,7 @@
         
     <xi:include href="./sec-population-agent-based.ptx" />
     <xi:include href="./sec-population-discrete.ptx" />
+    <xi:include href="./sec-population-density-dependent.ptx" />
     <xi:include href="./sec-population-projection.ptx" />
     <xi:include href="./sec-population-projection-analysis.ptx" />
     <xi:include href="./sec-population-projection-cobweb.ptx" />

@@ -97,9 +97,7 @@
     </p>
     <listing xml:id="listing-lm-deaths-vs-population">
         <program language="R">
-            <input>
             lm(formula = Deaths ~ Population, data = focus_population_data)
-            </input>
         </program>
         <console>
             <output>

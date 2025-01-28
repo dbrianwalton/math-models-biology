@@ -1,0 +1,71 @@
+
+<section xml:id="sec-population-density-dependent">
+    <title>Density Dependent Population Growth Models</title>
+    <p>
+        A population with constant per capita growth rates sees exponential growth when the birth rate <m>b</m> exceeds the death rate <m>d</m>, and exponential decay when the ordering is reversed.
+        However, real population can not really grow exponentially as there iare limited resources in the environment.
+        Thus, for populations that experience environmental constraints, constant per capita growth rates are not appropriate.
+    </p>
+    <p>
+        We previously defined the per capita net growth rate <m>r=b-d</m> where <m>b</m> is the per capita birth rate and <m>d</m> is the per capita death rate.
+        Sometimes it is inconvenient or impossible to determine the birth and death rates separately.
+        If we can at least measure the net change in the population, which will be equal to <m>\Delta P_{n+1} = B_{n+1}-D_{n+1}</m>,
+        then the per capita net growth rate will be a sequence defined by
+        <me>r_{n+1} = \frac{\Delta P_{n+1}}{P_{n}}.</me>
+        Density dependence means that the relation <m>(P_n, r_{n+1})</m> is not constant, but that <m>r_{n+1}</m> depends on <m>P_n</m>.
+    </p>
+    <p>
+        We turn our attention to the case that the per capita net growth rate can be modeled as a function of the population size <m>P_n</m>, where a scatter plot of the points <m>(P_n, r_{n+1})</m> could be reasonably approximated by a function.
+        We generally expect that the graph will be a decreasing function because as the population gets larger, the growth rate should decrease.
+        For a very large population, we expect <m>r \lt 0</m> since the population would be greater than its carrying capacity.
+        Physically, however, we will always have <m>r \ge -1</m>, with <m>r=-1</m> corresponding to complete extinction.
+    </p>
+    
+    <example>
+        <p>
+            If we revisited the density-dependent agent-based model in Section <xref ref='population-agent-density-dependent'/>,
+            we can plot the per capita net growth rate computed at each time step with respect to the size of the population at the beginning of the step.
+            The figure below illustrates this relationship.
+            Values when the population was small and demographic stochasticity is high were not included.
+        </p>
+        <figure>
+            <image source="images/percap-rate-densdep-graph"/>
+        </figure>
+        <p>
+            We see in the graph that the per capita net growth rate is decreasing.
+            The data seem consistent with a model where the per capita rate decreases linearly.
+            This makes sense because the rules of the agent-based model were that the death rate increased linearly in terms of the number of individuals on a shared patch.
+        </p>
+    </example>
+    
+    <p>
+        In order to develop an actual model, we need to find a formula that captures the relation.
+        There are infinitely many different formulas that we might try to use, especially if we only have a few data points.
+        To be more precise, we generally choose families of formulas that are simple and are described by only a few <term>parameters</term>.
+        A <term>parameter</term> is a symbol that represents a constant that appears in the formula, like a variable that helps describe the model while not necessarily representing anything physical in the actual state of the system.
+    </p>
+    
+    <p>
+        The simplest density dependent model to write down would be when <m>r</m> is a linear function of <m>P</m>, 
+        <me>r(P) = r_0 - a P.</me>
+        The values <m>r_0</m> and <m>a</m> are the <term>parameters</term> of the model.
+        Here <m>r_0</m> is called the <term>intrinsic per capita net growth rate</term> and represents the per capita net growth rate when <m>P \approx 0</m>.
+        For a small population, far from the carrying capacity, this represents the value of <m>r</m> that looks like an exponential growth model until the population size starts to cause density dependent effects.
+        The parameter <m>a</m> is the size of the slope indicating how much the growth rate <m>r</m> decreases per individual.
+    </p>
+    <example>
+        <p>
+            Using the density dependent data from our agent-based model, we can use linear regression to find a line of best fit. This gives us the following values for the parameters: 
+            <md>
+                <mrow> r_0 = 6.616 \times 10^{-2}, </mrow>
+                <mrow> a = 6.275 \times 10^{-6}. </mrow>
+            </md>
+            The resulting parametric model for the per capita growth rate is then given by
+            <me>r(P) = 6.616 \times 10^{-2} - 6.275 \times 10^{-6} \, P.</me>
+            A graph showing the trend line with the data is given below.
+        </p>
+        <figure>
+            <image source="images/percap-rate-densdep-model-graph"/>
+        </figure>
+    </example>
+</section>
