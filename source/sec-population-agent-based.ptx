@@ -294,15 +294,28 @@
         </p>
         <p>
             One possible implementation for a NetLogo simulation is given here: <dataurl source="code/netlogo/density-dependent-population.nlogo" visual="density-dependent-population.nlogo"/>.
-            To accomplish this process, each <c>person</c> in the simulation has its own death probability defined by <c>local-death-percent</c>.
+            The interface is illustrated in <xref ref="fig-density-dependent-population-interface"/>.
+            The simulation allows you to specify the initial population size, the birth rate as number of births per thousand individuals per cycle, and options to find the death rate that decreases as a population increases.
+            The death rate calculates for each individual a value <c>local-death-percent</c> based on the how many individuals are sharing the patch where the individual is located.
+            Let <m>p</m> represent a specific patch, and let <m>n_p</m> represent the number of individuals located on patch <m>p</m>.
+            Then <c>local-death-percent</c>, represented by a variable <m>d_p</m> (per capita death) at the patch is calculated by
+            <me>d_p = d_0 - a n_p,</me>
+            where <m>d_0</m> is the reference <c>death-per-thousand</c> converted to a decimal and <m>a</m> is the <c>death-increment</c>.
+        </p>
+        <figure xml:id="fig-density-dependent-population-interface">
+            <caption>Interface for <c>density-dependent-population.nlogo</c>.</caption>
+            <image source="images/density-dependent-population-interface.png"/>
+        </figure>
+        <p>
+            To implement this strategy, each individual will need to keep track of its own <c>local-death-percent</c>,
+            which is implemented in NetLogo by the following command.
         </p>
         <program language="netlogo">
         people-own [ local-death-percent ]
         </program>
         <p>
-            In NetLogo, we can have each patch influence all of the agents that belong to the patch.
-            We define an action for the patches called <c>density-update</c>.
-            We have each path identify all individuals and then tell each person on the patch what their local death probability should be based on how many neighbors are competing for the same resources.
+            We cause each patch to update all of the agents that belong to that patch with an action called <c>density-update</c>.
+            The patch identifies all local individuals and then tells each person on the patch what their local death probability should be based on how many neighbors are competing for the same resources.
         </p>
         <program language="netlogo">
         to density-update ;; this is a command for patches
@@ -330,7 +343,10 @@
             ]]>
         </program>
 
-        <p>The following graph comes from such a simulation using this type of density-dependence.</p>
+        <p>
+            The following graph comes from such a simulation using this type of density-dependence.
+            The data for the graph has been exported as <dataurl ref="data/density-dependent-population-graph-export.csv" visual="density-dependent-population-graph-export.csv" />.
+        </p>
         <figure>
             <image source='images/nl-pop-dyn-densdep-graph.png' width='70%'/>
             <caption>Plot of total population, the number of births and deaths for a density-dependent growth model with <c>birth-percent = 16</c> and <c>death-percent = 9</c> and <c>death-increment = 0.3</c>.</caption>
@@ -340,29 +356,55 @@
             Notice that the population does not grow indefinitely.
             As the population increases, the death rate increases faster than the birth rate so that the population growth rate ultimately decreases.
             The population levels out.
-            We say that the population has a <term>carrying capacity</term>, which is the population that the environment can sustain at a steady-state.
-            Mathematically, we will call our carrying capacity an <term>equilibrium</term>.
+            We say that the population is approaching a <term>carrying capacity</term>, which is the population that the environment can sustain at a steady-state.
         </p>
         <p>
-            An <term>equilibrium</term> occurs when state variables are not changing (in this case, the population).
-            This corresponds to when the birth rate and death rate are in balance.
-            Plotting the birth and death rates with respect to the population size is illustrated in the figure below.
-            The carrying capacity corresponds to where these rates intersect.
+            Let us look at how the birth and death rates relate to the population size, similar to what we did earlier with the naive birth/death model.
+            We will import the density-dependent data into R and plot the per capita birth and death rates against the population size at the start of the cycle.
         </p>
-        <figure>
-            <image source='images/rates-densdep-graph'/>
-            <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</caption>
-        </figure>
+
+        <listing xml:id="listing-density-dependent-population-rates">
+            <program language="R">
+            library(readr)    # To load CSV files (read_csv)
+            library(dplyr)    # To reorganize (select)
+            library(tidyr)    # To tidy data (pivot_longer)
+            library(ggplot2)  # To work with graphs (ggplot)
+
+            # Import the data
+            netlogo_data &lt;- read_csv("density-dependent-population-graph-export.csv", 
+                                    skip = 19, col_names = FALSE)
+            
+            # Select only columns 1, 2, 6, 10 and assign names
+            # Then add a new column for P_start
+            netlogo_table &lt;- netlogo_data |&gt;
+                select(tick = 1, P_end = 2, B = 6, D = 10) |&gt;
+                mutate(P_start = P_end - B + D)
+            
+            # Pivot columns B and D values into a single column Rate
+            # Calculate per capita rates.
+            # Then plot per capita rates vs P_start to see relations
+            netlogo_table |&gt; pivot_longer(cols = c(B, D),
+                                        names_to = "Rate_Type",
+                                        values_to = "Rate") |&gt;
+                mutate(per_capita_rate = Rate / P_start) |&gt;    
+                ggplot(mapping = aes(x = P_start, y = per_capita_rate,
+                                    color = Rate_Type, shape = Rate_Type)) +
+                geom_point() +
+                geom_smooth(method = "lm", formula = y ~ x)
+            </program>
+        </listing>
+        <image source='images/rates-agent-density-dependent-graph.png'/>
+
         <p>
-            Because the population grows according to the difference between the birth rate and the death rate <m>B-D</m>, we call this difference the <term>net growth rate</term> <m>R</m>.
-            The figure below illustrates a plot of the net growth rate <m>R</m> with respect to the population size <m>P</m>, giving us a new way to think about our data.
-            Notice that the net growth rate increases and then decreases as the population increases.
-            The carrying capacity corresponds to the population size at which the net growth rate returns to <m>R=0</m>.
+            Notice that the per capita birth rate is essentially constant across the different population sizes.
+            That is exactly how the simulation was set up to behave.
+            Now notice how the per capita death rate is <em>increasing</em> as the population gets larger.
+            There will be a point where the per capita death rate exactly matches the per capita birth rate.
+            At that population size, the number of new births will exactly balance the number of deaths.
+            This population will be the carrying capactiy.
+            Notice that if the population is above the carrying capacity, the per capita death rate will exceed the birth rate causing the population to decline.
+            We will explore this idea mathematically in the study of <term>equilibrium values</term>, of which a carrying capacity is an example.
         </p>
-        <figure>
-            <image source='images/netrate-densdep-graph'/>
-            <caption>Plot of birth and death rates for each time step of the simulation with respect to the population size at the beginning of that time step for the density-dependent model.</caption>
-        </figure>
     </subsection>
 
     <conclusion>
