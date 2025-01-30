@@ -20,52 +20,122 @@
         For a very large population, we expect <m>r \lt 0</m> since the population would be greater than its carrying capacity.
         Physically, however, we will always have <m>r \ge -1</m>, with <m>r=-1</m> corresponding to complete extinction.
     </p>
-    
-    <example>
-        <p>
-            If we revisited the density-dependent agent-based model in Section <xref ref='population-agent-density-dependent'/>,
-            we can plot the per capita net growth rate computed at each time step with respect to the size of the population at the beginning of the step.
-            The figure below illustrates this relationship.
-            Values when the population was small and demographic stochasticity is high were not included.
-        </p>
-        <figure>
-            <image source="images/percap-rate-densdep-graph"/>
-        </figure>
-        <p>
-            We see in the graph that the per capita net growth rate is decreasing.
-            The data seem consistent with a model where the per capita rate decreases linearly.
-            This makes sense because the rules of the agent-based model were that the death rate increased linearly in terms of the number of individuals on a shared patch.
-        </p>
-    </example>
-    
+
+    <p>
+        If we revisited the density-dependent agent-based model in Section <xref ref='population-agent-density-dependent'/>,
+        we can plot the per capita net growth rate computed at each time step with respect to the size of the population at the beginning of the step.
+        We will actually start with the per capita birth and death rates, <m>b = B/P</m> and <m>d = D/P</m>.
+    </p>
+    <listing xml:id="listing-nl-density-dependent-per-capita-rates">
+        <program language="R">
+        library(readr)    # To load CSV files (read_csv)
+        library(dplyr)    # To reorganize (select)
+        library(ggplot2)  # To work with graphs (ggplot)
+
+        # Import the data
+        # Then select only columns 1, 2, 6, 10
+        # Then add a column for P_start
+        # Then add more columns for per capita
+        # Then save the result as our data
+        read_csv("density-dependent-population-graph-export.csv", 
+                    skip = 19, col_names = FALSE) |&gt;
+            select(tick = 1, P_end = 2, B = 6, D = 10) |&gt;
+            mutate(P_start = P_end - B + D) |&gt;
+            mutate(b = B/P_start, d = D/P_start) -&gt;
+            density_data
+
+        # Create a graph for per capita births
+        ggplot(data = density_data
+                mapping = aes(x = P_start, y = b) +
+            geom_point(color = "blue") +
+            geom_smooth(method = "lm", formula = y ~ x, color = "black") +
+            labs(x = "Population", y = "per capita births")
+
+        # Create a graph for per capita deaths
+        ggplot(data = density_data
+                mapping = aes(x = P_start, y = d) +
+            geom_point(color = "red") +
+            geom_smooth(method = "lm", formula = y ~ x, color = "black") +
+            labs(x = "Population", y = "per capita deaths")
+        </program>
+    </listing>
+    <image source='images/nl-density-per-capita-birth.png'/>
+    <image source='images/nl-density-per-capita-death.png'/>
+    <p>
+        Based on our result, it would appear that the per capita birth rate is constant with respect to the population size.
+        But the per capita death rate is an increasing linear function of the population size.
+        This should make sense based on how the simulation was generated, because that is exactly what happened.
+        The overall per capita growth rate can then be found,
+        <me>r = \frac{B-D}{P} = \frac{bP - dP}{P} = b - d</me>,
+        as the difference of the per capita birth rate minus the per capita death rate.
+    </p>
     <p>
         In order to develop an actual model, we need to find a formula that captures the relation.
-        There are infinitely many different formulas that we might try to use, especially if we only have a few data points.
-        To be more precise, we generally choose families of formulas that are simple and are described by only a few <term>parameters</term>.
-        A <term>parameter</term> is a symbol that represents a constant that appears in the formula, like a variable that helps describe the model while not necessarily representing anything physical in the actual state of the system.
+        The per capita birth rate in our example was constant, which we can just represent by the parameter <m>b</m>.
+        The per capita death rate was an increasing linear function of population, so we need two parameters for the intercept and slope of that function,
+        <me>d = d_0 + a P</me>.
+        The value <m>d_0</m> is the per capita death rate when there are no individuals around.
+        The value <m>a</m> represents the additional probability of death per individual added to the population.
+        With these formulas, we can no calculate the per capita growth rate,
+        <me>r = b - d = b - (d_0 + a P) = (b-d_0) - a P</me>.
+        If we defined <m>r_0 = b - d_0</m> as the per capita growth rate in the absence of individuals, then we see that <m>r</m> is a decreasing linear function of <m>P</m>,
+        <me>r = r_0 - a P</me>.
     </p>
-    
     <p>
-        The simplest density dependent model to write down would be when <m>r</m> is a linear function of <m>P</m>, 
-        <me>r(P) = r_0 - a P.</me>
-        The values <m>r_0</m> and <m>a</m> are the <term>parameters</term> of the model.
-        Here <m>r_0</m> is called the <term>intrinsic per capita net growth rate</term> and represents the per capita net growth rate when <m>P \approx 0</m>.
-        For a small population, far from the carrying capacity, this represents the value of <m>r</m> that looks like an exponential growth model until the population size starts to cause density dependent effects.
-        The parameter <m>a</m> is the size of the slope indicating how much the growth rate <m>r</m> decreases per individual.
+        Once we have our model formula for <m>r</m>, we can use it to create a model for the population itself.
+        The new population <m>P_{n+1}</m> will be found by taking the old population <m>P_n</m> and adding the net change in population <m>B_n - D_n = r P_n</m>.
+        This gives us the basic model equation
+        <me>P_{n+1} = P_n + r P_n</me>.
+        We now use the model formula for <m>r</m>, which itself depends on <m>P_n</m> (in place of <m>P</m>), to give
+        <me>P_{n+1} = P_n + (r_0 - a P_n) P_n</me>.
+        Distributing out the <m>P_n</m> on the right, we arrive at a model equation,
+        <me>P_{n+1} = P_n + r_0 P_n - a P_n^2</me>,
+        where <m>r_0 \ge -1</m> and <m>a &gt; 0</m> are the model parameters.
     </p>
-    <example>
-        <p>
-            Using the density dependent data from our agent-based model, we can use linear regression to find a line of best fit. This gives us the following values for the parameters: 
-            <md>
-                <mrow> r_0 = 6.616 \times 10^{-2}, </mrow>
-                <mrow> a = 6.275 \times 10^{-6}. </mrow>
-            </md>
-            The resulting parametric model for the per capita growth rate is then given by
-            <me>r(P) = 6.616 \times 10^{-2} - 6.275 \times 10^{-6} \, P.</me>
-            A graph showing the trend line with the data is given below.
-        </p>
-        <figure>
-            <image source="images/percap-rate-densdep-model-graph"/>
-        </figure>
-    </example>
+    <p>
+        This model is a classic model in mathematical biology called the <term>discrete logistic model</term>, and it is an example of a <term>nonlinear dynamic model</term>.
+        It is called nonlinear because the formula for <m>P_{n+1}</m> is not just a linear function of <m>P_n</m> due to the presence of the squared term <m>a P_n^2</m>.
+        Nonlinear models generally do not have known explicity solutions.
+        But we can implement numerical approximations through iteration.
+    </p>
+    <sage language="r">
+        <input>
+        library(tidyr)
+        library(ggplot2)
+
+        # Set model parameters
+        b &lt;- 0.04788
+        d0 &lt;- 0.03249
+        r0 &lt;- b - d0
+        a &lt;- 3.797e-6
+
+        # Initial value
+        P0 = 20
+        dt = 1
+
+        # Set aside space for sequence values
+        N_pts &lt;- 51    # How many points we want, including initial
+        t_vals &lt;- double(N_pts)
+        P_vals &lt;- double(N_pts)
+
+        # First cycle starting values
+        t_vals[1] &lt;- 0
+        P_vals[1] &lt;- P0
+
+        # Iterate through the model for remaining values
+        for (n in 2:N_pts) {
+            # New time is previous time + dt
+            t_vals[n] &lt;- t_vals[n-1] + dt
+            # New population using model
+            P_vals[n] &lt;- P_vals[n-1] * (1 + r0 - a * P_vals[n-1])
+        }
+
+        # Plot the population
+        data2 &lt;- tibble(t = t_vals, P = P_vals)
+        ggplot(data2, mapping = aes(x = t, y = P)) +
+            geom_point(color = "blue") +
+            labs(x = "time [months]", y = "Population")
+        </input>
+    </sage>
+
 </section>
