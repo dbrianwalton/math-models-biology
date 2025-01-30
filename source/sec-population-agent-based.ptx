@@ -345,7 +345,7 @@
 
         <p>
             The following graph comes from such a simulation using this type of density-dependence.
-            The data for the graph has been exported as <dataurl ref="data/density-dependent-population-graph-export.csv" visual="density-dependent-population-graph-export.csv" />.
+            The data for the graph has been exported as <dataurl source="data/density-dependent-population-graph-export.csv" visual="density-dependent-population-graph-export.csv" />.
         </p>
         <figure>
             <image source='images/nl-pop-dyn-densdep-graph.png' width='70%'/>
