@@ -65,11 +65,38 @@
         Based on our result, it would appear that the per capita birth rate is constant with respect to the population size.
         But the per capita death rate is an increasing linear function of the population size.
         This should make sense based on how the simulation was generated, because that is exactly what happened.
+        We can use R to estimate the parameters of the constant per capita birth rate and the coefficients of the line for the per capita death rate.
+    </p>
+    <listing>
+        <program language="r">
+        # per capita birth has no dependence on P_start, just y-intercept
+        b_model &lt;- lm(formula = b ~ 1, data = density_data)
+        b_model$coefficients
+        </program>
+    </listing>
+    <console>
+        <output>
+        (Intercept) 
+        0.04787737 
+        </output>
+    </console>
+    <listing>
+        <program language="r">
+        # per capita death has linear dependence on P_start
+        d_model &lt;- lm(formula = d ~ P_start, data = density_data)
+        d_model$coefficients
+        </program>
+    </listing>
+    <console>
+        <output>
+        (Intercept)      P_start 
+        3.249201e-02 3.796575e-06 
+        </output>
+    </console>
+    <p>
         The overall per capita growth rate can then be found,
         <me>r = \frac{B-D}{P} = \frac{bP - dP}{P} = b - d</me>,
         as the difference of the per capita birth rate minus the per capita death rate.
-    </p>
-    <p>
         In order to develop an actual model, we need to find a formula that captures the relation.
         The per capita birth rate in our example was constant, which we can just represent by the parameter <m>b</m>.
         The per capita death rate was an increasing linear function of population, so we need two parameters for the intercept and slope of that function,
@@ -80,6 +107,8 @@
         <me>r = b - d = b - (d_0 + a P) = (b-d_0) - a P</me>.
         If we defined <m>r_0 = b - d_0</m> as the per capita growth rate in the absence of individuals, then we see that <m>r</m> is a decreasing linear function of <m>P</m>,
         <me>r = r_0 - a P</me>.
+        Specifically for our simulation, our estimates for the parameters are <m>b = 0.047877</m>
+        and <m>d = 0.032492 + 3.7966 \times 10^{-6} P</m>, so that <m>r_0 = 0.015385</m> and <m>a = 3.7966 \times 10^{-6}</m>.
     </p>
     <p>
         Once we have our model formula for <m>r</m>, we can use it to create a model for the population itself.
@@ -98,8 +127,8 @@
         Nonlinear models generally do not have known explicity solutions.
         But we can implement numerical approximations through iteration.
     </p>
-    <sage language="r">
-        <input>
+    <listing>
+        <program language="r">
         library(tidyr)
         library(ggplot2)
 
@@ -114,7 +143,7 @@
         dt = 1
 
         # Set aside space for sequence values
-        N_pts &lt;- 51    # How many points we want, including initial
+        N_pts &lt;- 501    # How many points we want, including initial
         t_vals &lt;- double(N_pts)
         P_vals &lt;- double(N_pts)
 
@@ -135,7 +164,42 @@
         ggplot(data2, mapping = aes(x = t, y = P)) +
             geom_point(color = "blue") +
             labs(x = "time [months]", y = "Population")
-        </input>
+        </program>
+    </listing>
+    <figure xml:id="fig-discrete-logistic-simulation-01">
+        <caption>Resulting plot for the discrete logistic model simulation with stated parameter values and initial value <m>P_0 = 20</m>.</caption>
+        <image width="80%" source='images/discrete-logistic-simulation-01.png'/>
+    </figure>
+    <p>
+        Below is a live Sage cell which can run self-contained R code.
+        It can not support loading external files, so we can't use it with our CSV files.
+        But it can do the simulation above if you copy the code into the cell and the press the <c>Evaluate</c> button.
+        You also can try changing some of the parameters in the model to see how the dynamics change.
+    </p>
+    <sage language="r">
+        <input/>
     </sage>
-
+    <p>
+        We are likely curious about how well the model matches the data that motivated it.
+        Assuming that you have both the imported data from NetLogo and the simulation calculated above in the same R session,
+        we can combine the graphs of the two datasets into a single figure.
+        The results shown in <xref ref="fig-discrete-logistic-with-nl-data"/> show a clear resemblance between the NetLogo simulation data with the modeled sequence.
+        The demographic stochasticity of the NetLogo simulation as well as the estimated nature of our model parameters explain the discrepancies between the two models.
+    </p>
+    <listing>
+        <program language="R">
+            <code>
+            # Two datasets, so the global source of data is NULL
+            ggplot(data=NULL, mapping=aes(x = "time", y = "P")) +
+              # Each geometric layer specifies its own data set.
+              geom_point(data=netlogo_data, mapping = aes(x=X1, y=X2), color="blue") +
+              geom_point(data=data2, mapping = aes(x=t, y=P), color="black", size=0.5) +
+              labs(x = "time", y = "P")
+            </code>
+        </program>
+    </listing>
+    <figure xml:id="fig-discrete-logistic-with-nl-data">
+        <caption>Resulting plot for the discrete logistic model simulation with stated parameter values and initial value <m>P_0 = 20</m>.</caption>
+        <image width="80%" source='images/discrete-logistic-with-nl-data.png'/>
+    </figure>
 </section>
