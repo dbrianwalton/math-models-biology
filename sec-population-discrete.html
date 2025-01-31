@@ -436,64 +436,69 @@ P_{12} = 400 \cdot 1.025^{12} \approx 538.
 <div class="para">Under the assumptions of our model, namely constant per capita growth rates, we would predict a population of 538 individuals after one year.</div>
 </div>
 </div></details></div></article><div class="para" id="sec-population-discrete-23">How can we create this model in R? Because the model has an explicit formula for the population as a function of time, we first illustrate an explicit approach. For that approach, we generate a sequence to represent time and then calculate the corresponding population values. The time sequence is an array of values called a <dfn class="terminology">vector</dfn>. In R (and other languages like Python and Matlab), it is possible to perform the same calculation on every entry in a vector with a single command. This is called a <dfn class="terminology">vectorized calculation</dfn>. Basic arithmetic and mathematical functions are vectorized.</div>
-<div id="sec-population-discrete-24" class="ptx-sagecell sagecell-r"><script type="text/x-sage">library(tidyr)
+<figure class="listing figure-like" id="sec-population-discrete-24"><div class="code-box"><pre class="program"><code class="language-r">library(tidyr)
 library(ggplot2)
 
 # Set model parameters
-b <- 50/400
-d <- 40/400
-r <- b - d
-P0 <- 400
+b &lt;- 50/400
+d &lt;- 40/400
+r &lt;- b - d
+P0 &lt;- 400
 
 # Create a sequence of times
-t_vals <- seq(from = 0, to = 50)
+t_vals &lt;- seq(from = 0, to = 50)
 
 # Calculate the population using explicit model
-P_vals <- P0 * (1 + r)^t_vals
+P_vals &lt;- P0 * (1 + r)^t_vals
 
 # Plot the population
-data <- tibble(t = t_vals, P = P_vals)
+data &lt;- tibble(t = t_vals, P = P_vals)
 ggplot(data, mapping = aes(x = t, y = P)) +
     geom_point(color = "blue") +
     labs(x = "time [months]", y = "Population")
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.2.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-population-discrete-25">Below is a live Sage cell which can run self-contained R code. It can not support loading external files, so we can’t use it with our CSV files. But it can do the simulation above if you copy the code into the cell and the press the <code class="code-inline tex2jax_ignore">Evaluate</code> button. You also can try changing some of the parameters in the model to see how the dynamics change.</div>
+<div id="sec-population-discrete-26" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
 </script></div>
-<div class="para" id="sec-population-discrete-25">Sometimes (usually) an explicit formula is not going to be known. We can use the dynamic model equation itself to generate our sequence. The dynamic model gives us an equation to calculate a population at the end of a cycle based on the population at the beginning of the corresponding cycle. Because the equation relates a calculated value based on the previous value, we can only calculate one value at a time, instead of the vectorized all-at-once approach that was possible using the explicit formula. To repeat a calculation in a sequence of steps, we need to use a programming strategy called a <dfn class="terminology">loop</dfn>. This approach is called an <dfn class="terminology">iterative</dfn> calculation, because we <em class="emphasis">iterate</em> (or repeat) our calculation over and over again to find our results.</div>
-<div class="para" id="sec-population-discrete-26">In R, the most common type of loop is the <code class="code-inline tex2jax_ignore">for</code>-loop. This uses a basic coding pattern <code class="code-inline tex2jax_ignore">for (variable in vector) { command }</code>. The <code class="code-inline tex2jax_ignore">vector</code> will be replaced by an actual vector (array) of values that we want to iterate over, applying the <code class="code-inline tex2jax_ignore">command</code> to each of them in turn. The <code class="code-inline tex2jax_ignore">variable</code> is replaced by a variable name that will store the corresponding value from the vector, one at a time, so that we can refer to the value by a name in <code class="code-inline tex2jax_ignore">command</code>. We can use multiple commands if they are put on separate lines (or separated by semicolons).</div>
-<div class="para" id="sec-population-discrete-27">We will construct the same sequence of populations using an iterative approach. Our approach will compute two different sequences, one for the time of observation, and the other for the population value. And we will illustrate how we can do this in a tibble data-frame that was built to the size we wanted. R refers to positions in arrays starting at an index 1, but our starting time is typically starting at 0. The variable <code class="code-inline tex2jax_ignore">n</code> in the code will refer to the index and not the time. To refer to the value in a vector at a given index, we use rectangular brackets with the index value inside, as in <code class="code-inline tex2jax_ignore">P_vals[12]</code> would refer to the value in the vector <code class="code-inline tex2jax_ignore">P_vals</code> at index position 12.</div>
-<div id="sec-population-discrete-28" class="ptx-sagecell sagecell-r"><script type="text/x-sage">library(tidyr)
+<div class="para" id="sec-population-discrete-27">Sometimes (usually) an explicit formula is not going to be known. We can use the dynamic model equation itself to generate our sequence. The dynamic model gives us an equation to calculate a population at the end of a cycle based on the population at the beginning of the corresponding cycle. Because the equation relates a calculated value based on the previous value, we can only calculate one value at a time, instead of the vectorized all-at-once approach that was possible using the explicit formula. To repeat a calculation in a sequence of steps, we need to use a programming strategy called a <dfn class="terminology">loop</dfn>. This approach is called an <dfn class="terminology">iterative</dfn> calculation, because we <em class="emphasis">iterate</em> (or repeat) our calculation over and over again to find our results.</div>
+<div class="para" id="sec-population-discrete-28">In R, the most common type of loop is the <code class="code-inline tex2jax_ignore">for</code>-loop. This uses a basic coding pattern <code class="code-inline tex2jax_ignore">for (variable in vector) { command }</code>. The <code class="code-inline tex2jax_ignore">vector</code> will be replaced by an actual vector (array) of values that we want to iterate over, applying the <code class="code-inline tex2jax_ignore">command</code> to each of them in turn. The <code class="code-inline tex2jax_ignore">variable</code> is replaced by a variable name that will store the corresponding value from the vector, one at a time, so that we can refer to the value by a name in <code class="code-inline tex2jax_ignore">command</code>. We can use multiple commands if they are put on separate lines (or separated by semicolons).</div>
+<div class="para" id="sec-population-discrete-29">We will construct the same sequence of populations using an iterative approach. Our approach will compute two different sequences, one for the time of observation, and the other for the population value. And we will illustrate how we can do this in a tibble data-frame that was built to the size we wanted. R refers to positions in arrays starting at an index 1, but our starting time is typically starting at 0. The variable <code class="code-inline tex2jax_ignore">n</code> in the code will refer to the index and not the time. To refer to the value in a vector at a given index, we use rectangular brackets with the index value inside, as in <code class="code-inline tex2jax_ignore">P_vals[12]</code> would refer to the value in the vector <code class="code-inline tex2jax_ignore">P_vals</code> at index position 12.</div>
+<figure class="listing figure-like" id="sec-population-discrete-30"><div class="code-box"><pre class="program"><code class="language-r">library(tidyr)
 library(ggplot2)
 
 # Set model parameters
-b <- 50/400
-d <- 40/400
-r <- b - d
-P0 <- 400
-dt <- 1        # How much time between points
+b &lt;- 50/400
+d &lt;- 40/400
+r &lt;- b - d
+P0 &lt;- 400
+dt &lt;- 1        # How much time between points
 
 # Set aside space for sequence values
-N_pts <- 51    # How many points we want, including initial
-t_vals <- double(N_pts)
-P_vals <- double(N_pts)
+N_pts &lt;- 51    # How many points we want, including initial
+t_vals &lt;- double(N_pts)
+P_vals &lt;- double(N_pts)
 
 # First cycle starting values
-t_vals[1] <- 0
-P_vals[1] <- P0
+t_vals[1] &lt;- 0
+P_vals[1] &lt;- P0
 
 # Iterate through the model for remaining values
 for (n in 2:N_pts) {
     # New time is previous time + dt
-    t_vals[n] <- t_vals[n-1] + dt
+    t_vals[n] &lt;- t_vals[n-1] + dt
     # New population using model
-    P_vals[n] <- P_vals[n-1] * (1+r)
+    P_vals[n] &lt;- P_vals[n-1] * (1+r)
 }
 
 # Plot the population
-data2 <- tibble(t = t_vals, P = P_vals)
+data2 &lt;- tibble(t = t_vals, P = P_vals)
 ggplot(data2, mapping = aes(x = t, y = P)) +
     geom_point(color = "blue") +
     labs(x = "time [months]", y = "Population")
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.2.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="sec-population-discrete-31" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
 </script></div>
-<div class="para" id="sec-population-discrete-29">Because computer calculations always work with approximations to exact numbers, computer arithmetic introduces various rounding errors as calculations take place. Different methods of calculation create different rounding errors. Consequently, sequences calculated explicitly are unlikely to exactly match those calculated iteratively. However, these errors are generally small enough that we won’t notice the difference.</div></section></div>
+<div class="para" id="sec-population-discrete-32">Because computer calculations always work with approximations to exact numbers, computer arithmetic introduces various rounding errors as calculations take place. Different methods of calculation create different rounding errors. Consequently, sequences calculated explicitly are unlikely to exactly match those calculated iteratively. However, these errors are generally small enough that we won’t notice the difference.</div></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="population-agent-based.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="sec-population-density-dependent.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>

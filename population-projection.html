@@ -98,6 +98,18 @@ sagecell.makeSagecell({
   ],
   "evalButtonText": "Evaluate (Sage)"
 });
+</script><script>// Make *any* div with class 'sagecell-r' an executable Sage cell
+// Their results will be linked, only within language type
+sagecell.makeSagecell({
+  "inputLocation": "div.sagecell-r",
+  "linked": true,
+  "linkKey": "linked-r",
+  "autoeval": false,
+  "languages": [
+    "r"
+  ],
+  "evalButtonText": "Evaluate (R)"
+});
 </script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
 </script><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -305,38 +317,133 @@ P_{n+1} = P_n + r(P_n) \cdot P_n.
 <div class="para">A sequence <span class="process-math">\(x=(x_n)\)</span> is defined <dfn class="terminology">recursively</dfn> if you have a formula to compute <span class="process-math">\(x_{n+1}\)</span> in terms of the value for <span class="process-math">\(x_n\text{.}\)</span> Generally, we have an equation that is solved for the new value in the form of</div>
 <div class="displaymath process-math">
 \begin{equation*}
-x_{n+1} = f(x_n).
+x_{n+1} = f(x_n)\text{.}
 \end{equation*}
 </div>
-<div class="para">The function <span class="process-math">\(f\)</span> in this equation is named the <dfn class="terminology">projection function</dfn> for the sequence because it allows us to <em class="emphasis">project</em> the next value of the sequence knowing the current value in the sequence.</div>
+<div class="para">That is, the equation has been rewritten so that the <em class="emphasis">new</em> value is isolated on one side of the equation and is equal to some formula involving the <em class="emphasis">previous</em> value of the sequence. We then think of the formula involving <span class="process-math">\(x_n\)</span> as a <em class="emphasis">function</em> of <span class="process-math">\(x_n\text{.}\)</span> That function is named the <dfn class="terminology">projection function</dfn> for the sequence because it allows us to <em class="emphasis">project</em> (i.e., forecast) the next value of the sequence knowing the current value in the sequence.</div>
 </div>
 <article class="example example-like" id="projection-functions-3"><h4 class="heading">
 <span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.1</span><span class="period">.</span>
 </h4>
 <div class="para logical" id="projection-functions-3-1">
-<div class="para">The difference equation <span class="process-math">\(x_{n+1} - x_n = r x_n\)</span> with an initial value defines a sequence recursively. If we solve this equation for <span class="process-math">\(x_{n+1}\text{,}\)</span> we get a function of <span class="process-math">\(x_n\text{:}\)</span>
+<div class="para">The difference equation <span class="process-math">\(P_{n+1} - P_n = r P_n\)</span> with an initial value defines a sequence recursively. This is the model for constant per capita growth rates. If we solve this equation for <span class="process-math">\(P_{n+1}\text{,}\)</span>
 </div>
 <div class="displaymath process-math">
 \begin{equation*}
-x_{n+1} = x_n + r x_n = f(x_n).
+P_{n+1} = P_n + r P_n\text{,}
 \end{equation*}
 </div>
-<div class="para">The function being used,  <span class="process-math">\(f(x) = x+rx = (1+r)x\text{,}\)</span> is the projection function.</div>
-</div></article><article class="example example-like" id="projection-functions-4"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.2</span><span class="period">.</span>
-</h4>
-<div class="para logical" id="projection-functions-4-1">
-<div class="para">In Calculus, Newton’s method to find the positive square root of any positive number <span class="process-math">\(a \gt 0\text{,}\)</span> which is the positive solution to <span class="process-math">\(x^2-a=0\text{,}\)</span> involves creating a sequence that satisfies the recursive equation</div>
+<div class="para">we think of the right hand side as the projection function, <span class="process-math">\(f(P_n) = P_n + r P_n\text{.}\)</span> In terms of a simple variable (change <span class="process-math">\(P_n\)</span> to <span class="process-math">\(x\)</span>), the projection function is defined by</div>
 <div class="displaymath process-math">
 \begin{equation*}
-x_n^2 - a + 2x_n(x_{n+1}-x_n) = 0.
+f(x) = x+rx = (1+r)x\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="projection-functions-3-2">We saw earlier that this sequence results in geometric sequences that grow or decay exponentially. If we generate this sequence <span class="process-math">\(P = (P_0, P_1, P_2, \ldots)\)</span> and look at the relation <span class="process-math">\((P_n, P_{n+1})\text{,}\)</span> all of those points are on the graph of the projection function <span class="process-math">\(y=(1+r)x\text{.}\)</span> The following code generates the sequence recursively and demonstrates this relation.</div>
+<figure class="listing figure-like" id="projection-functions-3-3"><div class="code-box"><pre class="program"><code class="language-r">library(tidyr)   # for tibble
+library(ggplot2) # for ggplot
+
+# Set values for the model parameters and initial value
+r &lt;- 0.25
+P0 &lt;- 10
+
+# Specify the size of the sequence and create space in memory
+num_pts &lt;- 50
+P &lt;- double(num_pts)
+
+# Generate the sequence
+P[1] &lt;- P0
+for (n in 2:num_pts) {
+    P[n] &lt;- (1+r) * P[n-1]
+}
+# Store as P_start and P_end
+seq_data &lt;- tibble(P_start = P[1:(num_pts-1)],
+                      P_end=P[2:num_pts])
+
+# Generate a graph of the projection function
+# Create x-values between 0 and the largest value of P in our data
+x_vals &lt;- seq(from=0, to=max(P), length=500)
+# Vectorized calculation of y = f(x)
+y_vals &lt;- (1+r)*x_vals
+
+# Create a plot with sequential values (P_n,P_(n+1)) and y=f(x)
+ggplot(data = NULL,   # different data for different layers 
+      mapping = aes(x = P_start, y = P_end, color = "sequence")) +
+  geom_point(data = seq_data, size=3) +
+  geom_path(mapping = aes(x = x_vals, y = y_vals, color = "projection")) +
+  scale_color_manual(values=c("sequence"="blue", "projection"="black"))
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.2<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="projection-functions-3-4" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
+</script></div></article><article class="example example-like" id="projection-functions-4"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.3</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="projection-functions-4-1">
+<div class="para">The difference equation <span class="process-math">\(P_{n+1} - P_n = (r_0 - a P_n) P_n\)</span> is the difference equation perspective for the discrete logistic model. Solving this equation for <span class="process-math">\(P_{n+1}\)</span> gives</div>
+<div class="displaymath process-math">
+\begin{equation*}
+P_{n+1} = (1+r_0) P_n - P_n^2\text{.}
+\end{equation*}
+</div>
+<div class="para">The projection function must therefore be <span class="process-math">\(f(P_n) = (1+r_0) P_n - a P_n^2\text{.}\)</span> More simply written, the projection function for the discrete logistic model is</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f(x) = (1+r_0) x - ax^2\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="projection-functions-4-2">Again, if we generate a sequence to follow this model, each point in the relation <span class="process-math">\((P_n, P_{n+1})\)</span> will be on the graph of the projection function <span class="process-math">\(y=f(x)\text{.}\)</span>
+</div>
+<figure class="listing figure-like" id="projection-functions-4-3"><div class="code-box"><pre class="program"><code class="language-r">library(tidyr)   # for tibble
+library(ggplot2) # for ggplot
+
+# Set values for the model parameters and initial value
+r0 &lt;- 0.4
+a &lt;- 0.001
+P0 &lt;- 10
+
+# Specify the size of the sequence and create space in memory
+num_pts &lt;- 50
+P &lt;- double(num_pts)
+
+# Generate the sequence
+P[1] &lt;- P0
+for (n in 1:(num_pts-1)) {
+    P[n+1] &lt;- (1+r0) * P[n] - a * P[n]^2
+}
+# Store as P_start and P_end
+seq_data &lt;- tibble(P_start = P[1:(num_pts-1)],
+                      P_end=P[2:num_pts])
+
+# Generate a graph of the projection function
+# Create x-values between 0 and the largest value of P in our data
+x_vals &lt;- seq(from=0, to=max(P), length=500)
+# Vectorized calculation of y = f(x)
+y_vals &lt;- (1+r0) * x_vals - a * x_vals^2
+
+# Create a plot with sequential values (P_n,P_(n+1)) and y=f(x)
+ggplot(data = NULL,   # different data for different layers 
+      mapping = aes(x = P_start, y = P_end, color = "sequence")) +
+  geom_point(data = seq_data, size=3) +
+  geom_path(mapping = aes(x = x_vals, y = y_vals, color = "projection")) +
+  scale_color_manual(values=c("sequence"="blue", "projection"="black"))
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.4<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="projection-functions-4-4" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
+</script></div></article><article class="example example-like" id="projection-functions-5"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.5</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="projection-functions-5-1">
+<div class="para">Not all recursive sequences have biological motivations. In Calculus, Newton’s method is frequently taught as a way to find the positive square root of any positive number <span class="process-math">\(a \gt 0\text{.}\)</span> The square root <span class="process-math">\(\sqrt{a}\)</span> is the positive solution to <span class="process-math">\(x^2-a=0\text{.}\)</span> Newton’s method involves creating a sequence using the recursive equation</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x_n^2 - a + 2x_n(x_{n+1}-x_n) = 0\text{.}
 \end{equation*}
 </div>
 <div class="para">Solving this equation for <span class="process-math">\(x_{n+1}\text{,}\)</span> we find the equation that writes <span class="process-math">\(x_{n+1}\)</span> as a function of <span class="process-math">\(x_n\text{,}\)</span>
 </div>
 <div class="displaymath process-math">
 \begin{equation*}
-x_{n+1} = \frac{x_n}{2} + \frac{a}{2x_n} = f(x_n).
+x_{n+1} = \frac{x_n}{2} + \frac{a}{2x_n} = f(x_n)\text{.}
 \end{equation*}
 </div>
 <div class="para">The projection function in this example is</div>
@@ -345,12 +452,47 @@ x_{n+1} = \frac{x_n}{2} + \frac{a}{2x_n} = f(x_n).
 f(x) = \frac{x}{2} + \frac{a}{2x}.
 \end{equation*}
 </div>
-</div></article><div class="para" id="projection-functions-5">When thinking about models as approximating relationships between actual data, we find projection functions by looking at the relation given by the scatter plot of consecutive values of the sequence, <span class="process-math">\((x_n, x_{n+1})\text{.}\)</span>
 </div>
-<article class="example example-like" id="projection-functions-6"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.3</span><span class="period">.</span>
+<div class="para" id="projection-functions-5-2">The sequence generated in the code below solves for <span class="process-math">\(\sqrt{3}\)</span> by using <span class="process-math">\(a=3\text{.}\)</span> The initial value was chosen as <span class="process-math">\(a=1\text{.}\)</span> The relation <span class="process-math">\((x_n, x_{n+1})\)</span> is graphed along with <span class="process-math">\(y=f(x)\text{.}\)</span> The method converges very quickly, so not many distinct points appear.</div>
+<figure class="listing figure-like" id="projection-functions-5-3"><div class="code-box"><pre class="program"><code class="language-r">library(tidyr)   # for tibble
+library(ggplot2) # for ggplot
+
+# Set values for the model parameters and initial value
+a &lt;- 3
+x0 &lt;- 1
+
+# Specify the size of the sequence and create space in memory
+num_pts &lt;- 20
+newton &lt;- double(num_pts)
+
+# Generate the sequence
+newton[1] &lt;- x0
+for (n in 1:(num_pts-1)) {
+    newton[n+1] &lt;- newton[n]/2 + a/(2 * newton[n])
+}
+# Store as x_start and x_end
+seq_data &lt;- tibble(x_start = newton[1:(num_pts-1)],
+                      x_end=newton[2:num_pts])
+
+# Generate a graph of the projection function
+# Create x-values between 0 and the largest value of P in our data
+x_vals &lt;- seq(from=min(newton), to=max(newton), length=200)
+# Vectorized calculation of y = f(x)
+y_vals &lt;- x_vals / 2 + a / (2 * x_vals)
+
+# Create a plot with sequential values (P_n,P_(n+1)) and y=f(x)
+ggplot(data = NULL,   # different data for different layers 
+      mapping = aes(x = x_start, y = x_end, color = "sequence")) +
+  geom_point(data = seq_data, size=3) +
+  geom_path(mapping = aes(x = x_vals, y = y_vals, color = "projection")) +
+  scale_color_manual(values=c("sequence"="blue", "projection"="black"))
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="projection-functions-5-4" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
+</script></div></article><div class="para" id="projection-functions-6">In our examples above, we started with sequences defined recursively and showed that the relation <span class="process-math">\((x_n, x_{n+1})\)</span> always matched the graph <span class="process-math">\(y=f(x)\)</span> for the projection function <span class="process-math">\(f\text{.}\)</span>` The projection function is the rule that when given the value of <span class="process-math">\(x_n\text{,}\)</span> we can predict the value of <span class="process-math">\(x_{n+1} = f(x_n)\text{.}\)</span> From a modeling perspective, we <em class="emphasis">find</em> projection functions by looking at the relation given by the scatter plot of <span class="process-math">\((x_n, x_{n+1})\)</span> and find an appropriate function.</div>
+<article class="example example-like" id="projection-functions-7"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.7</span><span class="period">.</span>
 </h4>
-<div class="para" id="projection-functions-6-1-1">The table below gives the values of a sequence <span class="process-math">\(z_n\)</span> for <span class="process-math">\(n=0,\ldots,10\text{.}\)</span> Analyze the data to find a reasonable projection function.</div> <figure class="table table-like" id="projection-functions-6-1-2"><figcaption><span class="type">Table</span><span class="space"> </span><span class="codenumber">2.4.4<span class="period">.</span></span><span class="space"> </span></figcaption><div class="tabular-box natural-width"><table class="tabular">
+<div class="para" id="projection-functions-7-1-1">The table below gives the values of a sequence <span class="process-math">\(z_n\)</span> for <span class="process-math">\(n=0,\ldots,10\text{.}\)</span> Analyze the data to find a reasonable projection function.</div> <figure class="table table-like" id="projection-functions-7-1-2"><figcaption><span class="type">Table</span><span class="space"> </span><span class="codenumber">2.4.8<span class="period">.</span></span><span class="space"> </span></figcaption><div class="tabular-box natural-width"><table class="tabular">
 <tr>
 <td class="l m b3 r3 l0 t0 lines"><span class="process-math">\(n\)</span></td>
 <td class="l m b3 r0 l0 t0 lines"><span class="process-math">\(z_n\)</span></td>
@@ -399,21 +541,47 @@ f(x) = \frac{x}{2} + \frac{a}{2x}.
 <td class="l m b0 r3 l0 t0 lines"><span class="process-math">\(10\)</span></td>
 <td class="l m b0 r0 l0 t0 lines"><span class="process-math">\(7.82\)</span></td>
 </tr>
-</table></div></figure><div class="solutions"><details id="projection-functions-6-2" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
-<div class="para logical" id="projection-functions-6-2-1">
+</table></div></figure><div class="solutions"><details id="projection-functions-7-2" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para logical" id="projection-functions-7-2-1">
 <div class="para">We start by creating a plot of the projection relation, corresponding to a scatter plot of points <span class="process-math">\((z_n,z_{n+1})\text{.}\)</span> When <span class="process-math">\(n=0\text{,}\)</span> we have <span class="process-math">\((z_0,z_1) = (1.0, 3.42)\text{.}\)</span> The next few points are expressed below:</div>
-<div class="displaymath process-math" id="projection-functions-6-2-1-4">
+<div class="displaymath process-math" id="projection-functions-7-2-1-4">
 \begin{gather*}
 n=1 \quad \Rightarrow \quad (z_1,z_2) = (3.42, 10.21) \\
 n=2 \quad \Rightarrow \quad (z_2,z_3) = (10.21, 17.99) \\
 n=3 \quad \Rightarrow \quad (z_3,z_4) = (17.99, 6.50) 
 \end{gather*}
 </div>
-<div class="para">The resulting scatter plot from all of the available projection relation points given the data is shown below.</div>
+<div class="para">We can create this graph in R using the following script.</div>
 </div>
-<figure class="figure figure-like" id="projection-functions-6-2-2"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/proj-relation-quadratic-example.svg" role="img" class="contained"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.4.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para logical" id="projection-functions-6-2-3">
-<div class="para">The figure strongly suggests the shape of a parabola so that the relation likely involves a quadratic formula. Using a computer to perform a regression to find the quadratic polynomial trend curve for these points, we find an equation</div>
+<figure class="listing figure-like" id="projection-functions-7-2-2"><div class="code-box"><pre class="program"><code class="language-r"># Create the sequence vector directly
+z &lt;- c(1.00, 3.42, 10.21, 17.99, 6.50, 15.80, 11.95, 17.32, 8.37, 17.52, 7.82)
+N &lt;- length(z)
+z_data &lt;- tibble(z_start = z[1:N-1], z_end = z[2:N])
+
+# Graph the relation
+library(ggplot2)
+ggplot(data = z_data,
+       mapping = aes(x = z_start, y = z_end)) +
+  geom_point(color="blue")
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.9<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="projection-functions-7-2-3"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/projection-from-data-01.png" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.4.10<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="projection-functions-7-2-4" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
+</script></div>
+<div class="para" id="projection-functions-7-2-5">The figure strongly suggests the shape of a parabola so that the relation likely involves a quadratic formula. We can continue our script to estimate the coefficients for the model by using <code class="code-inline tex2jax_ignore">lm</code> with <code class="code-inline tex2jax_ignore">formula = y ~ x + x2</code> where <code class="code-inline tex2jax_ignore">x2</code> is going to be an extra column defined by <code class="code-inline tex2jax_ignore">x2 = x^2</code>. Add the following code to the script defined above or after having already executed the code above.</div>
+<figure class="listing figure-like" id="projection-functions-7-2-6"><div class="code-box"><pre class="program"><code class="language-r"># Add new columns to z_data
+library(dplyr)
+z_data |&gt;
+  mutate(z = z_start) |&gt;
+  mutate(z2 = z^2) -&gt;
+  z_data2
+# Do linear model
+z_model &lt;- lm(formula = z_end ~ z + z2, data = z_data2)
+z_model$coefficients
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.11<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="projection-functions-7-2-7" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
+</script></div>
+<div class="para logical" id="projection-functions-7-2-8">
+<div class="para">Using a computer to perform a regression to find the quadratic polynomial trend curve for these points, we find an equation</div>
 <div class="displaymath process-math">
 \begin{equation*}
 z_{n+1} = 0.007003 + 3.59705 z_n - 0.179759 z_n^2.
@@ -432,7 +600,7 @@ z_{n+1} = 3.5985z_n -0.1798 z_n^2.
 \end{equation*}
 </div>
 </div>
-<div class="para logical" id="projection-functions-6-2-4">
+<div class="para logical" id="projection-functions-7-2-9">
 <div class="para">The right way to do this would be to do a statistical hypothesis test on whether the constant term is significantly different from zero. However, we will keep things simple and just look at the graph and see if there appears to be a significant advantage in including the extra term. The figure below was generated to show both graphs with the data, even though it looks like only a single curve. Including the extra term has no significant impact in the model. We consider our sequence following the recursive formula <span class="process-math">\(z_{n+1} = f(z_n)\)</span> using the projection function</div>
 <div class="displaymath process-math">
 \begin{equation*}
@@ -441,8 +609,8 @@ f(x) = 3.5985x - 0.1798x^2.
 </div>
 <div class="para">In fact, the data were generated from a sequence with projection function <span class="process-math">\(f(x)=3.6x-0.18x^2\)</span> with sequence values rounded to two decimal places.</div>
 </div>
-<figure class="figure figure-like" id="projection-functions-6-2-5"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/proj-function-quadratic-example.svg" role="img" class="contained"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.4.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure>
+<figure class="figure figure-like" id="projection-functions-7-2-10"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/proj-function-quadratic-example.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.4.12<span class="period">.</span></span><span class="space"> </span></figcaption></figure>
 </div></details></div></article></section><section class="subsection" id="projection-fixed-points"><h3 class="heading hide-type">
 <span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.4.2</span><span class="space"> </span><span class="title">Fixed Points and Equilibria</span>
 </h3>
@@ -458,7 +626,7 @@ P_{n+1} = P_n.
 <div class="para" id="projection-fixed-points-4">When a population is modeled by a projection function, <span class="process-math">\(P_{n+1} = f(P_n)\text{,}\)</span> we can test whether an equilibrium is possible by seeing whether the equation <span class="process-math">\(x=f(x)\)</span> has any solutions. That is, since <span class="process-math">\(P_{n+1}=P_n\)</span> is true for an equilibrium, we are looking for all values of <span class="process-math">\(x\)</span> that might be used for the sequence <span class="process-math">\(P_n=x\text{.}\)</span> We call solutions to the equation <span class="process-math">\(x=f(x)\)</span> the <dfn class="terminology">fixed points</dfn> of the function <span class="process-math">\(f(x)\text{.}\)</span>
 </div>
 <article class="example example-like" id="projection-fixed-points-5"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.7</span><span class="period">.</span>
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.13</span><span class="period">.</span>
 </h4>
 <div class="para logical" id="projection-fixed-points-5-1-1">
 <div class="para">Recall that Newton’s method for finding the square root <span class="process-math">\(\sqrt{a}\)</span> introduced the projection function</div>
@@ -488,7 +656,7 @@ x=\pm \sqrt{a}
 <div class="para">So the fixed points are the positive and negative square roots of <span class="process-math">\(a\text{.}\)</span>
 </div>
 </div></div></details></div></article><article class="example example-like" id="projection-fixed-points-6"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.8</span><span class="period">.</span>
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.14</span><span class="period">.</span>
 </h4>
 <div class="para logical" id="projection-fixed-points-6-1-1">
 <div class="para">A population has a per capita net growth rate that linearly decreases with the population,</div>

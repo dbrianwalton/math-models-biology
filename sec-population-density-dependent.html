@@ -327,8 +327,8 @@ ggplot(data = density_data
     geom_smooth(method = "lm", formula = y ~ x, color = "black") +
     labs(x = "Population", y = "per capita deaths")
 </code></pre></div>
-<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.3.1<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/nl-density-per-capita-birth.png" class="contained"></div>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/nl-density-per-capita-death.png" class="contained"></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.3.1<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 75%; margin-left: 12.5%; margin-right: 12.5%;"><img src="external/images/nl-density-per-capita-birth.png" class="contained"></div>
+<div class="image-box" style="width: 75%; margin-left: 12.5%; margin-right: 12.5%;"><img src="external/images/nl-density-per-capita-death.png" class="contained"></div>
 <div class="para" id="sec-population-density-dependent-9">Based on our result, it would appear that the per capita birth rate is constant with respect to the population size. But the per capita death rate is an increasing linear function of the population size. This should make sense based on how the simulation was generated, because that is exactly what happened. We can use R to estimate the parameters of the constant per capita birth rate and the coefficients of the line for the per capita death rate.</div>
 <figure class="listing figure-like" id="sec-population-density-dependent-10"><div class="code-box"><pre class="program"><code class="language-r"># per capita birth has no dependence on P_start, just y-intercept
 b_model &lt;- lm(formula = b ~ 1, data = density_data)
