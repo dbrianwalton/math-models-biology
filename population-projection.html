@@ -8,7 +8,7 @@
 <html lang="en-US" dir="ltr">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Projection Models</title>
+<title>Recursive Models Using Projection</title>
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
@@ -212,7 +212,7 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-discrete.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Discrete Population Models</span></a></div></li>
 <li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-density-dependent.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Density Dependent Population Growth Models</span></a></div></li>
 <li class="toc-item toc-section contains-active">
-<div class="toc-title-box"><a href="population-projection.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Projection Models</span></a></div>
+<div class="toc-title-box"><a href="population-projection.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Recursive Models Using Projection</span></a></div>
 <ul class="structural toc-item-list active">
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-functions" class="internal"><span class="codenumber">2.4.1</span> <span class="title">Projection Functions</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-fixed-points" class="internal"><span class="codenumber">2.4.2</span> <span class="title">Fixed Points and Equilibria</span></a></div></li>
@@ -293,7 +293,7 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-backmatter"><div class="toc-title-box"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
 <main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="population-projection"><h2 class="heading hide-type">
-<span class="type">Section</span><span class="space"> </span><span class="codenumber">2.4</span><span class="space"> </span><span class="title">Projection Models</span>
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">2.4</span><span class="space"> </span><span class="title">Recursive Models Using Projection</span>
 </h2>
 <section class="introduction" id="population-projection-2"><div class="para logical" id="population-projection-2-1">
 <div class="para">In the previous section, we considered a recursive formula for the new population in terms of the per capita net growth rate, <span class="process-math">\(r(P)\text{,}\)</span> where the new population is computed by the difference equation</div>
@@ -488,7 +488,7 @@ ggplot(data = NULL,   # different data for different layers
   scale_color_manual(values=c("sequence"="blue", "projection"="black"))
 </code></pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="projection-functions-5-4" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
-</script></div></article><div class="para" id="projection-functions-6">In our examples above, we started with sequences defined recursively and showed that the relation <span class="process-math">\((x_n, x_{n+1})\)</span> always matched the graph <span class="process-math">\(y=f(x)\)</span> for the projection function <span class="process-math">\(f\text{.}\)</span>` The projection function is the rule that when given the value of <span class="process-math">\(x_n\text{,}\)</span> we can predict the value of <span class="process-math">\(x_{n+1} = f(x_n)\text{.}\)</span> From a modeling perspective, we <em class="emphasis">find</em> projection functions by looking at the relation given by the scatter plot of <span class="process-math">\((x_n, x_{n+1})\)</span> and find an appropriate function.</div>
+</script></div></article><div class="para" id="projection-functions-6">In each of our examples above, we started with sequences defined recursively and showed that the relation <span class="process-math">\((x_n, x_{n+1})\)</span> always matched the graph <span class="process-math">\(y=f(x)\)</span> for the projection function <span class="process-math">\(f\text{.}\)</span>` The projection function is the rule that when given the value of <span class="process-math">\(x_n\text{,}\)</span> we can predict the value of <span class="process-math">\(x_{n+1} = f(x_n)\text{.}\)</span> From a modeling perspective, we <em class="emphasis">find</em> projection functions by looking at the relation given by the scatter plot of <span class="process-math">\((x_n, x_{n+1})\)</span> when data are available and find an appropriate function. When data are not available, we can construct hypotheses for the relation and build an appropriate model to explore the behavior if such a model were relevant.</div>
 <article class="example example-like" id="projection-functions-7"><h4 class="heading">
 <span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.7</span><span class="period">.</span>
 </h4>
@@ -551,15 +551,18 @@ n=2 \quad \Rightarrow \quad (z_2,z_3) = (10.21, 17.99) \\
 n=3 \quad \Rightarrow \quad (z_3,z_4) = (17.99, 6.50) 
 \end{gather*}
 </div>
-<div class="para">We can create this graph in R using the following script.</div>
+<div class="para">We can create this graph in R using the following script. Our original set of data had index values <span class="process-math">\(n=0, 1, \ldots, 10\text{,}\)</span> which corresponds to 11 points. However, when we think of our data as values before/after, there can be at most 10 pairs. The code below defines columns that use a subset of the entries.</div>
 </div>
-<figure class="listing figure-like" id="projection-functions-7-2-2"><div class="code-box"><pre class="program"><code class="language-r"># Create the sequence vector directly
+<figure class="listing figure-like" id="projection-functions-7-2-2"><div class="code-box"><pre class="program"><code class="language-r">library(tidyr)
+library(ggplot2)
+
+# Create the sequence vector directly
 z &lt;- c(1.00, 3.42, 10.21, 17.99, 6.50, 15.80, 11.95, 17.32, 8.37, 17.52, 7.82)
 N &lt;- length(z)
+# z_start has all but the last value; z_end has all but the first value
 z_data &lt;- tibble(z_start = z[1:N-1], z_end = z[2:N])
 
 # Graph the relation
-library(ggplot2)
 ggplot(data = z_data,
        mapping = aes(x = z_start, y = z_end)) +
   geom_point(color="blue")
@@ -567,50 +570,98 @@ ggplot(data = z_data,
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.9<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="projection-functions-7-2-3"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/projection-from-data-01.png" class="contained"></div>
 <figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.4.10<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="projection-functions-7-2-4" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
 </script></div>
-<div class="para" id="projection-functions-7-2-5">The figure strongly suggests the shape of a parabola so that the relation likely involves a quadratic formula. We can continue our script to estimate the coefficients for the model by using <code class="code-inline tex2jax_ignore">lm</code> with <code class="code-inline tex2jax_ignore">formula = y ~ x + x2</code> where <code class="code-inline tex2jax_ignore">x2</code> is going to be an extra column defined by <code class="code-inline tex2jax_ignore">x2 = x^2</code>. Add the following code to the script defined above or after having already executed the code above.</div>
+<div class="para" id="projection-functions-7-2-5">The figure strongly suggests the shape of a parabola so that the relation likely involves a quadratic formula. A quadratic function has the form <span class="process-math">\(f(x) = ax^2 + bx + c\text{,}\)</span> which we could rewrite in the form <span class="process-math">\(f(x) = c + bx + ax^2\text{.}\)</span> This can be interpreted as a <em class="emphasis">linear</em> model with a <span class="process-math">\(y\)</span>-intercept <span class="process-math">\(c\)</span> and two explanatory variables coming from <span class="process-math">\(x\)</span> and <span class="process-math">\(x^2\text{.}\)</span> We can continue our script to estimate the coefficients for the model by using <code class="code-inline tex2jax_ignore">lm</code> with <code class="code-inline tex2jax_ignore">formula = y ~ x + x2</code> where <code class="code-inline tex2jax_ignore">x2</code> is going to be an extra column defined by <code class="code-inline tex2jax_ignore">x2 = x^2</code>. Add the following code to the script defined above or after having already executed the code above.</div>
 <figure class="listing figure-like" id="projection-functions-7-2-6"><div class="code-box"><pre class="program"><code class="language-r"># Add new columns to z_data
 library(dplyr)
 z_data |&gt;
-  mutate(z = z_start) |&gt;
+  mutate(z = z_start) |&gt;  # z is a simpler name than z_start
   mutate(z2 = z^2) -&gt;
   z_data2
 # Do linear model
 z_model &lt;- lm(formula = z_end ~ z + z2, data = z_data2)
 z_model$coefficients
 </code></pre></div>
-<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.11<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="projection-functions-7-2-7" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.11<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="code-box"><pre class="console"> (Intercept)             z            z2 
+0.0005194086  3.6003271165 -0.1800141078
+</pre></div>
+<div id="projection-functions-7-2-8" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
 </script></div>
-<div class="para logical" id="projection-functions-7-2-8">
-<div class="para">Using a computer to perform a regression to find the quadratic polynomial trend curve for these points, we find an equation</div>
-<div class="displaymath process-math">
-\begin{equation*}
-z_{n+1} = 0.007003 + 3.59705 z_n - 0.179759 z_n^2.
-\end{equation*}
-</div>
-<div class="para">Most programs would have reported this as</div>
-<div class="displaymath process-math">
-\begin{equation*}
-y=0.007003 + 3.59705 x - 0.179759 x^2,
-\end{equation*}
-</div>
-<div class="para">but our relation involved <span class="process-math">\((z_n,z_{n+1})\)</span> rather than the usual variables <span class="process-math">\((x,y)\text{.}\)</span> The constant term in this equation is small, and we can ask for a regression where that term is set to zero, which gives an alternative equation</div>
-<div class="displaymath process-math">
-\begin{equation*}
-z_{n+1} = 3.5985z_n -0.1798 z_n^2.
-\end{equation*}
-</div>
-</div>
 <div class="para logical" id="projection-functions-7-2-9">
-<div class="para">The right way to do this would be to do a statistical hypothesis test on whether the constant term is significantly different from zero. However, we will keep things simple and just look at the graph and see if there appears to be a significant advantage in including the extra term. The figure below was generated to show both graphs with the data, even though it looks like only a single curve. Including the extra term has no significant impact in the model. We consider our sequence following the recursive formula <span class="process-math">\(z_{n+1} = f(z_n)\)</span> using the projection function</div>
+<div class="para">From the regression, we see that we have values <span class="process-math">\(a = -0.180014\text{,}\)</span> <span class="process-math">\(b = 3.600327\text{,}\)</span> and <span class="process-math">\(c = 0.0005194\text{.}\)</span> Based on those values, we could construct a sequence using the recursive equation</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f(x) = 3.5985x - 0.1798x^2.
+z_{n+1} = 0.0005194 + 3.600327 z_n - 0.180014 z_n^2\text{.}
 \end{equation*}
 </div>
-<div class="para">In fact, the data were generated from a sequence with projection function <span class="process-math">\(f(x)=3.6x-0.18x^2\)</span> with sequence values rounded to two decimal places.</div>
+<div class="para">Our original sequence data only showed two decimal places in the values, so we should think of our coefficients as having their own uncertainty. Let’s compare what happens with the sequence using those estimated values with another sequence using the very similar <span class="process-math">\(u_{n+1} = 3.6 u_n - 0.18 u_n^2\text{.}\)</span> The code below also illustrates how we can format a table.</div>
 </div>
-<figure class="figure figure-like" id="projection-functions-7-2-10"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/proj-function-quadratic-example.svg" role="img" class="contained"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.4.12<span class="period">.</span></span><span class="space"> </span></figcaption></figure>
+<figure class="listing figure-like" id="projection-functions-7-2-10"><div class="code-box"><pre class="program"><code class="language-r"># Model parameters
+a &lt;- -0.180014
+a2 &lt;- -0.18
+b &lt;- 3.600327
+b2 &lt;- 3.6
+c &lt;- 0.0005194
+
+# Initial value
+z0 &lt;- 1.00
+num_pts &lt;- 10
+
+# Build the sequences z and u
+z &lt;- double(num_pts + 1)
+u &lt;- double(num_pts + 1)
+z[1] &lt;- z0
+u[1] &lt;- z0
+for (n in 1:num_pts) {
+    z[n+1] &lt;- c + b * z[n] + a * z[n]^2
+    u[n+1] &lt;- b2 * u[n] + a2 * u[n]^2
+}
+
+# Layout a table showing the values
+my_data &lt;- tibble(t = 0:num_pts, z = z, u = u)
+print(my_data)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.12<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="code-box"><pre class="console"># A tibble: 11 × 3
+    t     z     u
+&lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0  1     1   
+2     1  3.42  3.42
+3     2 10.2  10.2 
+4     3 18.0  18.0 
+5     4  6.50  6.50
+6     5 15.8  15.8 
+7     6 12.0  11.9 
+8     7 17.3  17.3 
+9     8  8.38  8.37
+10     9 17.5  17.5 
+11    10  7.80  7.82
+</pre></div>
+<div id="projection-functions-7-2-12" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
+</script></div>
+<div class="para" id="projection-functions-7-2-13">Perhaps surprisingly, the rounded model did better than the fitted values. Why would this happen? The actual values of the original sequence, which I generated with a computer using the simplified parameters, were rounded in order to present them with two decimal places. Thus our starting sequence had built-in errors. When we calculated our parameters using the linear model, we did in fact find the model that matched our results with the least squared errors for the rounded sequence. However, the fitted equation did not reproduce the sequence because it actually models a nearby sequence. If we had worked with more decimal values in the original sequence, we would have found a closer model.</div>
+<div class="para" id="projection-functions-7-2-14">To close the topic, the two projection functions will be visually indistinguishable in a figure. So the code below generates the graph of the original sequence as points coupled with a smooth graph showing the projection function.</div>
+<figure class="listing figure-like" id="projection-functions-7-2-15"><div class="code-box"><pre class="program"><code class="language-r">library(tidyr)   # for tibble
+library(ggplot2) # for ggplot
+
+# Original sequence
+z &lt;- c(1.00, 3.42, 10.21, 17.99, 6.50, 15.80, 11.95, 17.32, 8.37, 17.52, 7.82)
+# Create the before/after pairings
+z_proj_data &lt;- tibble(z_start = z[1:10], z_end = z[2:11])
+
+# Data for the projection function
+x &lt;- seq(from = 0, to = 20, length=200)
+y &lt;- 3.6 * x - 0.18 * x^2
+
+# Create a plot with sequential values (P_n,P_(n+1)) and y=f(x)
+ggplot(data = NULL,   # different data for different layers 
+      mapping = aes(x = z_start, y = z_end, color = "sequence")) +
+    geom_point(data = z_proj_data, size=3) +
+    geom_path(mapping = aes(x = x, y = y, color = "projection")) +
+    scale_color_manual(values=c("sequence"="blue", "projection"="black"))
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.13<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div id="projection-functions-7-2-16" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
+</script></div>
+<figure class="figure figure-like" id="projection-functions-7-2-17"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/proj-function-quadratic-example.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.4.14<span class="period">.</span></span><span class="space"> </span></figcaption></figure>
 </div></details></div></article></section><section class="subsection" id="projection-fixed-points"><h3 class="heading hide-type">
 <span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.4.2</span><span class="space"> </span><span class="title">Fixed Points and Equilibria</span>
 </h3>
@@ -626,7 +677,7 @@ P_{n+1} = P_n.
 <div class="para" id="projection-fixed-points-4">When a population is modeled by a projection function, <span class="process-math">\(P_{n+1} = f(P_n)\text{,}\)</span> we can test whether an equilibrium is possible by seeing whether the equation <span class="process-math">\(x=f(x)\)</span> has any solutions. That is, since <span class="process-math">\(P_{n+1}=P_n\)</span> is true for an equilibrium, we are looking for all values of <span class="process-math">\(x\)</span> that might be used for the sequence <span class="process-math">\(P_n=x\text{.}\)</span> We call solutions to the equation <span class="process-math">\(x=f(x)\)</span> the <dfn class="terminology">fixed points</dfn> of the function <span class="process-math">\(f(x)\text{.}\)</span>
 </div>
 <article class="example example-like" id="projection-fixed-points-5"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.13</span><span class="period">.</span>
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.15</span><span class="period">.</span>
 </h4>
 <div class="para logical" id="projection-fixed-points-5-1-1">
 <div class="para">Recall that Newton’s method for finding the square root <span class="process-math">\(\sqrt{a}\)</span> introduced the projection function</div>
@@ -656,7 +707,7 @@ x=\pm \sqrt{a}
 <div class="para">So the fixed points are the positive and negative square roots of <span class="process-math">\(a\text{.}\)</span>
 </div>
 </div></div></details></div></article><article class="example example-like" id="projection-fixed-points-6"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.14</span><span class="period">.</span>
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.16</span><span class="period">.</span>
 </h4>
 <div class="para logical" id="projection-fixed-points-6-1-1">
 <div class="para">A population has a per capita net growth rate that linearly decreases with the population,</div>
