@@ -8,7 +8,7 @@
 <!-- See the file COPYING for copying conditions. -->
    
 <section xml:id="population-projection">
-<title>Projection Models</title>
+<title>Recursive Models Using Projection</title>
 
 <introduction>
     <p>
@@ -202,9 +202,10 @@
     </example>
     
     <p>
-        In our examples above, we started with sequences defined recursively and showed that the relation <m>(x_n, x_{n+1})</m> always matched the graph <m>y=f(x)</m> for the projection function <m>f</m>.`
+        In each of our examples above, we started with sequences defined recursively and showed that the relation <m>(x_n, x_{n+1})</m> always matched the graph <m>y=f(x)</m> for the projection function <m>f</m>.`
         The projection function is the rule that when given the value of <m>x_n</m>, we can predict the value of <m>x_{n+1} = f(x_n)</m>.
-        From a modeling perspective, we <em>find</em> projection functions by looking at the relation given by the scatter plot of <m>(x_n, x_{n+1})</m> and find an appropriate function.
+        From a modeling perspective, we <em>find</em> projection functions by looking at the relation given by the scatter plot of <m>(x_n, x_{n+1})</m> when data are available and find an appropriate function.
+        When data are not available, we can construct hypotheses for the relation and build an appropriate model to explore the behavior if such a model were relevant.
     </p>
     
     <example>
@@ -243,6 +244,9 @@
                     <mrow> n=3 \quad \Rightarrow \quad (z_3,z_4) = (17.99, 6.50) </mrow>
                 </md>
                 We can create this graph in R using the following script.
+                Our original set of data had index values <m>n=0, 1, \ldots, 10</m>, which corresponds to 11 points.
+                However, when we think of our data as values before/after, there can be at most 10 pairs.
+                The code below defines columns that use a subset of the entries.
             </p>
             <listing>
                 <program language="r">
@@ -252,6 +256,7 @@
                     # Create the sequence vector directly
                     z &lt;- c(1.00, 3.42, 10.21, 17.99, 6.50, 15.80, 11.95, 17.32, 8.37, 17.52, 7.82)
                     N &lt;- length(z)
+                    # z_start has all but the last value; z_end has all but the first value
                     z_data &lt;- tibble(z_start = z[1:N-1], z_end = z[2:N])
 
                     # Graph the relation
@@ -266,6 +271,8 @@
             <sage language="r"><input/></sage>
             <p>
                 The figure strongly suggests the shape of a parabola so that the relation likely involves a quadratic formula.
+                A quadratic function has the form <m>f(x) = ax^2 + bx + c</m>, which we could rewrite in the form <m>f(x) = c + bx + ax^2</m>.
+                This can be interpreted as a <em>linear</em> model with a <m>y</m>-intercept <m>c</m> and two explanatory variables coming from <m>x</m> and <m>x^2</m>.
                 We can continue our script to estimate the coefficients for the model by using <c>lm</c> with <c>formula = y ~ x + x2</c> where <c>x2</c> is going to be an extra column defined by <c>x2 = x^2</c>.
                 Add the following code to the script defined above or after having already executed the code above.
             </p>
@@ -274,7 +281,7 @@
                     # Add new columns to z_data
                     library(dplyr)
                     z_data |&gt;
-                      mutate(z = z_start) |&gt;
+                      mutate(z = z_start) |&gt;  # z is a simpler name than z_start
                       mutate(z2 = z^2) -&gt;
                       z_data2
                     # Do linear model
@@ -282,10 +289,105 @@
                     z_model$coefficients
                 </program>
             </listing>
+            <console language="r">
+                <output>
+                 (Intercept)             z            z2 
+                0.0005194086  3.6003271165 -0.1800141078 
+                 </output>
+            </console>
             <sage language="r"><input/></sage>
             <p>
-                Using a computer to perform a regression to find the quadratic polynomial trend curve for these points, we find an equation <me>z_{n+1} = 0.007003 + 3.59705 z_n - 0.179759 z_n^2.</me> Most programs would have reported this as <me>y=0.007003 + 3.59705 x - 0.179759 x^2,</me> but our relation involved <m>(z_n,z_{n+1})</m> rather than the usual variables <m>(x,y)</m>. The constant term in this equation is small, and we can ask for a regression where that term is set to zero, which gives an alternative equation <me>z_{n+1} = 3.5985z_n -0.1798 z_n^2.</me></p>
-            <p>The right way to do this would be to do a statistical hypothesis test on whether the constant term is significantly different from zero. However, we will keep things simple and just look at the graph and see if there appears to be a significant advantage in including the extra term. The figure below was generated to show both graphs with the data, even though it looks like only a single curve. Including the extra term has no significant impact in the model. We consider our sequence following the recursive formula <m>z_{n+1} = f(z_n)</m> using the projection function <me>f(x) = 3.5985x - 0.1798x^2.</me> In fact, the data were generated from a sequence with projection function <m>f(x)=3.6x-0.18x^2</m> with sequence values rounded to two decimal places.</p>
+                From the regression, we see that we have values <m>a = -0.180014</m>, <m>b = 3.600327</m>, and <m>c = 0.0005194</m>.
+                Based on those values, we could construct a sequence using the recursive equation
+                <me>z_{n+1} = 0.0005194 + 3.600327 z_n - 0.180014 z_n^2</me>.
+                Our original sequence data only showed two decimal places in the values, so we should think of our coefficients as having their own uncertainty.
+                Let's compare what happens with the sequence using those estimated values with another sequence using the very similar <m>u_{n+1} = 3.6 u_n - 0.18 u_n^2</m>.
+                The code below also illustrates how we can format a table.
+            </p>
+            <listing>
+                <program language="r">
+                    # Model parameters
+                    a &lt;- -0.180014
+                    a2 &lt;- -0.18
+                    b &lt;- 3.600327
+                    b2 &lt;- 3.6
+                    c &lt;- 0.0005194
+                    
+                    # Initial value
+                    z0 &lt;- 1.00
+                    num_pts &lt;- 10
+
+                    # Build the sequences z and u
+                    z &lt;- double(num_pts + 1)
+                    u &lt;- double(num_pts + 1)
+                    z[1] &lt;- z0
+                    u[1] &lt;- z0
+                    for (n in 1:num_pts) {
+                        z[n+1] &lt;- c + b * z[n] + a * z[n]^2
+                        u[n+1] &lt;- b2 * u[n] + a2 * u[n]^2
+                    }
+
+                    # Layout a table showing the values
+                    my_data &lt;- tibble(t = 0:num_pts, z = z, u = u)
+                    print(my_data)
+                </program>
+            </listing>
+            <console language="r">
+                <output><![CDATA[
+                # A tibble: 11 × 3
+                    t     z     u
+                <int> <dbl> <dbl>
+                1     0  1     1   
+                2     1  3.42  3.42
+                3     2 10.2  10.2 
+                4     3 18.0  18.0 
+                5     4  6.50  6.50
+                6     5 15.8  15.8 
+                7     6 12.0  11.9 
+                8     7 17.3  17.3 
+                9     8  8.38  8.37
+                10     9 17.5  17.5 
+                11    10  7.80  7.82
+                ]]></output>
+            </console>
+            <sage language="r"><input/></sage>
+
+            <p>
+                Perhaps surprisingly, the rounded model did better than the fitted values.
+                Why would this happen?
+                The actual values of the original sequence, which I generated with a computer using the simplified parameters, were rounded in order to present them with two decimal places.
+                Thus our starting sequence had built-in errors.
+                When we calculated our parameters using the linear model, we did in fact find the model that matched our results with the least squared errors for the rounded sequence.
+                However, the fitted equation did not reproduce the sequence because it actually models a nearby sequence.
+                If we had worked with more decimal values in the original sequence, we would have found a closer model.
+            </p>
+            <p>
+                To close the topic, the two projection functions will be visually indistinguishable in a figure.
+                So the code below generates the graph of the original sequence as points coupled with a smooth graph showing the projection function.
+            </p>
+            <listing>
+                <program language="r">
+                library(tidyr)   # for tibble
+                library(ggplot2) # for ggplot
+
+                # Original sequence
+                z &lt;- c(1.00, 3.42, 10.21, 17.99, 6.50, 15.80, 11.95, 17.32, 8.37, 17.52, 7.82)
+                # Create the before/after pairings
+                z_proj_data &lt;- tibble(z_start = z[1:10], z_end = z[2:11])
+
+                # Data for the projection function
+                x &lt;- seq(from = 0, to = 20, length=200)
+                y &lt;- 3.6 * x - 0.18 * x^2
+
+                # Create a plot with sequential values (P_n,P_(n+1)) and y=f(x)
+                ggplot(data = NULL,   # different data for different layers 
+                      mapping = aes(x = z_start, y = z_end, color = "sequence")) +
+                    geom_point(data = z_proj_data, size=3) +
+                    geom_path(mapping = aes(x = x, y = y, color = "projection")) +
+                    scale_color_manual(values=c("sequence"="blue", "projection"="black"))
+                </program>
+            </listing>
+        <sage language="r"><input/></sage>
             <figure>
                 <image source="images/proj-function-quadratic-example"/>
             </figure>
