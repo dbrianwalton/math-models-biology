@@ -204,8 +204,8 @@
         This is called a <term>vectorized calculation</term>.
         Basic arithmetic and mathematical functions are vectorized.
     </p>
-    <sage language="r">
-        <input>
+    <listing>
+        <program language="r">
         library(tidyr)
         library(ggplot2)
 
@@ -226,7 +226,16 @@
         ggplot(data, mapping = aes(x = t, y = P)) +
             geom_point(color = "blue") +
             labs(x = "time [months]", y = "Population")
-        </input>
+        </program>
+    </listing>
+    <p>
+        Below is a live Sage cell which can run self-contained R code.
+        It can not support loading external files, so we can't use it with our CSV files.
+        But it can do the simulation above if you copy the code into the cell and the press the <c>Evaluate</c> button.
+        You also can try changing some of the parameters in the model to see how the dynamics change.
+    </p>
+    <sage language="r">
+        <input/>
     </sage>
     <p>
         Sometimes (usually) an explicit formula is not going to be known.
@@ -251,8 +260,8 @@
         The variable <c>n</c> in the code will refer to the index and not the time.
         To refer to the value in a vector at a given index, we use rectangular brackets with the index value inside, as in <c>P_vals[12]</c> would refer to the value in the vector <c>P_vals</c> at index position 12.
     </p>
-    <sage language="r">
-        <input>
+    <listing> 
+        <program language="r">
         library(tidyr)
         library(ggplot2)
 
@@ -285,7 +294,10 @@
         ggplot(data2, mapping = aes(x = t, y = P)) +
             geom_point(color = "blue") +
             labs(x = "time [months]", y = "Population")
-        </input>
+        </program>
+    </listing>
+    <sage language="r">
+        <input/>
     </sage>
     <p>
         Because computer calculations always work with approximations to exact numbers,

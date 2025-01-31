@@ -59,8 +59,8 @@
             labs(x = "Population", y = "per capita deaths")
         </program>
     </listing>
-    <image source='images/nl-density-per-capita-birth.png'/>
-    <image source='images/nl-density-per-capita-death.png'/>
+    <image width="75%" source='images/nl-density-per-capita-birth.png'/>
+    <image width="75%" source='images/nl-density-per-capita-death.png'/>
     <p>
         Based on our result, it would appear that the per capita birth rate is constant with respect to the population size.
         But the per capita death rate is an increasing linear function of the population size.
