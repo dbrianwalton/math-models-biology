@@ -86,19 +86,7 @@ window.MathJax = {
     )}
   }
 };
-</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script>// Make *any* div with class 'sagecell-sage' an executable Sage cell
-// Their results will be linked, only within language type
-sagecell.makeSagecell({
-  "inputLocation": "div.sagecell-sage",
-  "linked": true,
-  "linkKey": "linked-sage",
-  "autoeval": false,
-  "languages": [
-    "sage"
-  ],
-  "evalButtonText": "Evaluate (Sage)"
-});
-</script><script>// Make *any* div with class 'sagecell-r' an executable Sage cell
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script>// Make *any* div with class 'sagecell-r' an executable Sage cell
 // Their results will be linked, only within language type
 sagecell.makeSagecell({
   "inputLocation": "div.sagecell-r",
@@ -137,14 +125,14 @@ eBookConfig.allow_pairs = false;
 eBookConfig.enableScratchAC = false;
 eBookConfig.build_info = "";
 eBookConfig.python3 = null;
-eBookConfig.runestone_version = '7.5.4';
+eBookConfig.runestone_version = '7.5.5';
 eBookConfig.jobehost = '';
 eBookConfig.proxyuri_runs = '';
 eBookConfig.proxyuri_files = '';
 eBookConfig.enable_chatcodes =  false;
 </script>
 <!--*** Runestone Services ***-->
-<script src="_static/prefix-runtime.596d7408a9995282.bundle.js"></script><script src="_static/prefix-723.3e6434f80549315a.bundle.js"></script><script src="_static/prefix-runestone.f6bda0c0ccce4835.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-723.3bccd435914aa0ff.css">
+<script src="_static/prefix-runtime.82032a8574f6ce75.bundle.js"></script><script src="_static/prefix-723.3e6434f80549315a.bundle.js"></script><script src="_static/prefix-runestone.f6bda0c0ccce4835.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-723.3bccd435914aa0ff.css">
 <link rel="stylesheet" type="text/css" href="_static/prefix-runestone.6a985cbf816db5c7.css">
 <style>
 #ex-measure-distance-conversions-1-1-1 { counter-set: ex-measure-distance-conversions-1-1-1 0; }
@@ -216,7 +204,6 @@ eBookConfig.enable_chatcodes =  false;
 <ul class="structural toc-item-list active">
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-functions" class="internal"><span class="codenumber">2.4.1</span> <span class="title">Projection Functions</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-fixed-points" class="internal"><span class="codenumber">2.4.2</span> <span class="title">Fixed Points and Equilibria</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-computation" class="internal"><span class="codenumber">2.4.3</span> <span class="title">Computing Recursive Sequences</span></a></div></li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -670,7 +657,7 @@ ggplot(data = NULL,   # different data for different layers
 <div class="para">A population can also be in equilibrium if the sources of all growth in the population is exactly balanced by the sources of all loss. That is, the rate of birth and immigration in a population would need to be exactly balanced by the rate of death and emigration. The effect of this balance is that the sequence is constant, namely that</div>
 <div class="displaymath process-math">
 \begin{equation*}
-P_{n+1} = P_n.
+P_{n+1} = P_n\text{.}
 \end{equation*}
 </div>
 </div>
@@ -683,7 +670,7 @@ P_{n+1} = P_n.
 <div class="para">Recall that Newton’s method for finding the square root <span class="process-math">\(\sqrt{a}\)</span> introduced the projection function</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f(x) = \frac{x}{2} + \frac{a}{2x}.
+f(x) = \frac{x}{2} + \frac{a}{2x}\text{.}
 \end{equation*}
 </div>
 <div class="para">Find all of the fixed points for this function.</div>
@@ -692,7 +679,7 @@ f(x) = \frac{x}{2} + \frac{a}{2x}.
 <div class="para">We are solving the fixed point equation <span class="process-math">\(x=f(x)\)</span> which becomes</div>
 <div class="displaymath process-math">
 \begin{equation*}
-x = \frac{x}{2} + \frac{a}{2x}.
+x = \frac{x}{2} + \frac{a}{2x}\text{.}
 \end{equation*}
 </div>
 <div class="para">Solving this equation by hand corresponds to the following steps.</div>
@@ -713,7 +700,7 @@ x=\pm \sqrt{a}
 <div class="para">A population has a per capita net growth rate that linearly decreases with the population,</div>
 <div class="displaymath process-math">
 \begin{equation*}
-r(P) = 0.12 - 0.0004 P.
+r(P) = 0.12 - 0.0004 P\text{.}
 \end{equation*}
 </div>
 <div class="para">Find the projection function and identify possible equilibria for this population.</div>
@@ -723,7 +710,7 @@ r(P) = 0.12 - 0.0004 P.
 <div class="para">The per capita net growth rate is related to the change in the population through births and deaths: <span class="process-math">\(B-D = r(P) \cdot P\text{.}\)</span> As a difference equation, the population can be modeled as</div>
 <div class="displaymath process-math">
 \begin{equation*}
-P_{n+1} - P_n = r(P_n) \cdot P_n.
+P_{n+1} - P_n = r(P_n) \cdot P_n\text{.}
 \end{equation*}
 </div>
 <div class="para">Using the given formula for <span class="process-math">\(r(P)\text{,}\)</span> we can rewrite our model in recursive form as</div>
@@ -737,7 +724,7 @@ P_{n+1} &amp;= P_n + r(P_n) \cdot P_n\\
 <div class="para">A projection function corresponds to the function in the equation <span class="process-math">\(P_{n+1}=f(P_n)\text{,}\)</span> which we can recognize in this problem involves</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f(x) = 1.12x - 0.0004x^2.
+f(x) = 1.12x - 0.0004x^2\text{.}
 \end{equation*}
 </div>
 </div>
@@ -752,66 +739,104 @@ x(0.12 - 0.0004x) = 0
 </div>
 <div class="para">By factoring an equation equal to zero, we find either <span class="process-math">\(x=0\)</span> (a fixed point) or <span class="process-math">\(0.12-0.0004x=0\)</span> (a simpler equation to find another fixed point). The other fixed point is <span class="process-math">\(x=\frac{0.12}{0.0004} = 300\text{.}\)</span> So the possible equilibria for this population model are the values <span class="process-math">\(P=0\)</span> or <span class="process-math">\(P=300\text{.}\)</span> (Notice how we interpreted in the context of the state variable <span class="process-math">\(P\)</span> rather than the fixed point variable <span class="process-math">\(x\text{.}\)</span>)</div>
 </div>
-</div></details></div></article><div class="para" id="projection-fixed-points-7">A sequence that start at a fixed point will lead to a constant sequence, holding steady at the same value indefinitely. Otherwise, it is not certain what will happen. Whether a sequence converges to a fixed point depends on whether the fixed point is stable or unstable. When a fixed point is <dfn class="terminology">stable</dfn>, a sequence that starts sufficiently close to the fixed point will always converge to the fixed point. Often, the sequence does not need to start very close at all to converge to a stable fixed point. However, an <dfn class="terminology">unstable</dfn> fixed point results in a sequence that moves further away from the fixed point instead. We will learn methods of classifying fixed points as stable or unstable later. For now, we will just look at the values of a sequence and see if they converge or not.</div></section><section class="subsection" id="projection-computation"><h3 class="heading hide-type">
-<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.4.3</span><span class="space"> </span><span class="title">Computing Recursive Sequences</span>
-</h3>
-<div class="para" id="projection-computation-2">In order to explore our models, we need to compute the values of the sequences we are studying. We recruit our computers to do the work for us. One approach is to use a spreadsheet. We create a table for our sequence. The first entry in our table is the initial value of the sequence. Then we use cell formulas to compute the next sequence value in the cell below the initial value. So long as the formula is the same at each step, we can then copy our formula down and additional values will be automatically generated.</div>
-<div class="para" id="projection-computation-3">A better approach is to use a scriptable computational tool. In other words, we will program the computer to generate our sequences. One such tool is the online computational tool Sage. Sage is similar to Mathematica or Maple but is available for free. We can even embed a Sage cell directly in the online text, as shown below. The online version allows us to edit the cell to adjust the formulas to match any problem that we want.</div>
-<div class="para" id="projection-computation-4">The default entry for the script below corresponds to Newton’s method with <span class="process-math">\(a=3\text{.}\)</span> Notice how quickly the sequence converges to the fixed point at <span class="process-math">\(x^*=\sqrt{3} \approx 1.73205\text{.}\)</span> This informs us that <span class="process-math">\(x^*=\sqrt{3}\)</span> is a stable fixed point. What happens if you start close to the other fixed point at <span class="process-math">\(x^*=-\sqrt{3} \approx -1.73205\text{?}\)</span>
+</div></details></div></article><div class="para" id="projection-fixed-points-7">A sequence that starts at a fixed point will lead to a constant sequence, holding steady at the same value indefinitely. If the initial value of the sequence is not a fixed point, then next value will definitely be different and it can be challenging to predict in advance whether the sequence will eventually converge or not. Whether a sequence converges to a fixed point depends significantly on whether the fixed point is stable or unstable.</div>
+<div class="para" id="projection-fixed-points-8">A fixed point is <dfn class="terminology">locally stable</dfn> if every sequence that starts sufficiently close to the fixed point will always converge to the fixed point. Often, the sequence does not need to start very close at all to converge to a stable fixed point. However, a fixed point is <dfn class="terminology">locally unstable</dfn> if regardless of how close you look, there will be at least one nearby initial value that results in a sequence that moves further away from the fixed point instead. That sequence might eventually return to this or another fixed point, but we only care if it initially moves away. For now, we will just look at the values of nearby sequences and see if they converge or not.</div>
+<article class="example example-like" id="projection-fixed-points-9"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.4.17</span><span class="period">.</span>
+</h4>
+<div class="para" id="projection-fixed-points-9-1-1">Find the fixed points for the projection function <span class="process-math">\(f(x) = 1.3x - 0.05x^2\text{.}\)</span> Use numerical evidence to determine if each fixed point is locally stable or unstable.</div>
+<div class="solutions"><details id="projection-fixed-points-9-2" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para logical" id="projection-fixed-points-9-2-1">
+<div class="para">We start by looking for fixed points algebraically. A fixed point is a solution to the equation <span class="process-math">\(x = f(x)\text{.}\)</span> Using the formula of the projection function, the relevant equation is</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x = 1.3x - 0.05x^2\text{.}
+\end{equation*}
 </div>
-<div id="projection-computation-5" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># This is a comment (ignored by the computer)
-# Initial value is assigned and projection function is defined
-u = 5               # initial value
-f(x) = x/2+1.5/x    # projection function
-nMax = 20           # number of terms to compute
+<div class="para">Even though <span class="process-math">\(x\)</span> is a common factor, avoid the temptation to divide it out. This is a sure-fire way to lose an important solution. Instead, it is better to adopt a strategy solving <span class="process-math">\(f(x)-x = 0\)</span> using factoring.</div>
+<div class="displaymath process-math" id="projection-fixed-points-9-2-1-5">
+\begin{align*}
+x \amp= 1.3x - 0.05 x^2 \\
+0 \amp= -x + 1.3x - 0.05 x^2 \\
+0 \amp= 0.3x - 0.05 x^2 \\
+0 \amp= x(0.3 - 0.05 x) 
+\end{align*}
+</div>
+<div class="para">From this factored equation, we see solutions occur when <span class="process-math">\(x=0\)</span> or when <span class="process-math">\(0.3 - 0.05x = 0\text{.}\)</span> That is, <span class="process-math">\(x=0\)</span> is one fixed point. Solving <span class="process-math">\(0.3-0.05x = 0\)</span> results in a second fixed point <span class="process-math">\(x = 6\text{.}\)</span>
+</div>
+</div>
+<div class="para" id="projection-fixed-points-9-2-2">To see if a fixed point is locally stable or unstable, we can get some numerical intuition by looking at sequence solutions that start relatively close to the fixed point. The first constructed sequence will look at the fixed point <span class="process-math">\(x=0\text{.}\)</span>
+</div>
+<figure class="listing figure-like" id="projection-fixed-points-9-2-3"><div class="code-box"><pre class="program"><code class="language-r">N &lt;- 20    # Number of values we calculate
 
-# Create an empty list (using brackets) where to store sequence
-uSeq = []
-# Repeat in a loop the calculation of the sequence values
-for n in range(nMax):
-    # The indentation is essential in loops:
-    # Repeats everything indented this level
-    # Append the current sequence value to the end of our list
-    uSeq.append(u)
-    # Calculate the new value and use it for next current value
-    u = f(u)
-# No longer indented, so nothing below is repeated.
-# To do below after the loop is complete.
-# Display the values of the sequence (new loop)
-for n in range(len(uSeq)):
-    # This command is a formatted print command in python
-    # %d means to display an integer
-    # \t means to add a tab
-    # %10.8f means to display a floating point value with 8 decimals
-    # The values in parentheses are the numbers to be displayed
-    print("%d\t%10.8f" % (n,uSeq[n]))
-# Create a plot of the sequence values.
-# Putting dollar signs around the labels formats as math (LaTeX)
-list_plot(uSeq, figsize=[5,3], axes_labels=["$n$","$u_n$"])
+# One sequence will have the fixed point as initial value
+fp_seq &lt;- double(N+1)
+# Another sequence will be close
+nearby_seq &lt;- double(N+1)
+
+# Define a projection function as a function
+project_fcn &lt;- function(x) { 1.3*x - 0.05*x^2 }
+
+# Do two sequences at the same time
+fp_seq[1] &lt;- 0       # At the fixed point
+nearby_seq[1] &lt;- 0.1 # Just above the fixed point
+for (n in 1:N) {
+    fp_seq[n+1] &lt;- project_fcn( fp_seq[n] )
+    nearby_seq[n+1] &lt;- project_fcn( nearby_seq[n] )
+}
+
+# Organize into a tibble dataframe so both can be plotted together
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+seq_data &lt;- tibble(t = 0:N, fp = fp_seq, nearby = nearby_seq)
+# Combine fp and nearby into same common to be tidy style, then plot
+pivot_longer(seq_data, cols = c(fp, nearby),
+             values_to = "value", names_to = "sequence") |&gt;
+    ggplot(mapping = aes(x = t, y = value, color = sequence)) +
+    geom_point()
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.18<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/proj-function-fp-stability-01.png" class="contained"></div>
+<div id="projection-fixed-points-9-2-5" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
 </script></div>
-<div class="para logical" id="projection-computation-6">
-<div class="para">Here is the same script without any comments, just so that you can see there aren’t that many steps. It is good practice to use comments to explain what your code is doing. Try modifying the script to learn how the different steps affect the overall results.</div>
-<ul class="disc" id="projection-computation-6-1">
-<li id="projection-computation-6-1-1"><div class="para" id="p-derived-projection-computation-6-1-1">use a different projection function</div></li>
-<li id="projection-computation-6-1-2"><div class="para" id="p-derived-projection-computation-6-1-2">use a different initial value</div></li>
-<li id="projection-computation-6-1-3"><div class="para" id="p-derived-projection-computation-6-1-3">change the number of terms calculated</div></li>
-<li id="projection-computation-6-1-4"><div class="para" id="p-derived-projection-computation-6-1-4">change the number of decimal places shown</div></li>
-<li id="projection-computation-6-1-5"><div class="para" id="p-derived-projection-computation-6-1-5">change the <code class="code-inline tex2jax_ignore">figsize</code> option on the <code class="code-inline tex2jax_ignore">list_plot</code>
-</div></li>
-</ul>
-</div>
-<div id="projection-computation-7" class="ptx-sagecell sagecell-sage"><script type="text/x-sage">u = 5
-f(x) = x/2+1.5/x
-nMax = 20
-uSeq = []
-for n in range(nMax):
-    uSeq.append(u)
-    u = f(u)
+<div class="para" id="projection-fixed-points-9-2-6">From the result, we see that the sequence that started just off the fixed point had sequence values the moved <em class="emphasis">away</em> from the fixed point sequence. This is strong evidence that the fixed point <span class="process-math">\(x=0\)</span> is locally unstable. It is not definitive because this one example doesn’t show whether an even closer starting value might instead move toward the fixed point.</div>
+<div class="para" id="projection-fixed-points-9-2-7">We next consider the fixed point at <span class="process-math">\(x=6\text{.}\)</span> Again, we visualize the fixed point sequence along with a sequence that starts nearby.</div>
+<figure class="listing figure-like" id="projection-fixed-points-9-2-8"><div class="code-box"><pre class="program"><code class="language-r">N &lt;- 20    # Number of values we calculate
 
-for n in range(len(uSeq)):
-    print("%d\t%10.8f" % (n,uSeq[n]))
-list_plot(uSeq, figsize=[5,3], axes_labels=["$n$","$u_n$"])
-</script></div></section></section></div>
+# One sequence will have the fixed point as initial value
+fp_seq &lt;- double(N+1)
+# Another sequence will be close
+nearby_seq &lt;- double(N+1)
+
+# Define a projection function as a function
+project_fcn &lt;- function(x) { 1.3*x - 0.05*x^2 }
+
+# Do two sequences at the same time
+fp_seq[1] &lt;- 6       # At the fixed point
+nearby_seq[1] &lt;- 6.1 # Just above the fixed point
+for (n in 1:N) {
+    fp_seq[n+1] &lt;- project_fcn( fp_seq[n] )
+    nearby_seq[n+1] &lt;- project_fcn( nearby_seq[n] )
+}
+
+# Organize into a tibble dataframe so both can be plotted together
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+seq_data &lt;- tibble(t = 0:N, fp = fp_seq, nearby = nearby_seq)
+# Combine fp and nearby into same common to be tidy style, then plot
+pivot_longer(seq_data, cols = c(fp, nearby),
+             values_to = "value", names_to = "sequence") |&gt;
+    ggplot(mapping = aes(x = t, y = value, color = sequence)) +
+    geom_point()
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.4.19<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/proj-function-fp-stability-02.png" class="contained"></div>
+<div id="projection-fixed-points-9-2-10" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
+</script></div>
+<div class="para" id="projection-fixed-points-9-2-11">In this case, we see that the sequence that started just off the fixed point had sequence values the moved <em class="emphasis">toward</em> the fixed point sequence. This is strong evidence that the fixed point <span class="process-math">\(x=0\)</span> might be locally stable. It is not definitive <em class="emphasis">all</em> sequences that start sufficiently close need to demonstrate this behavior. We are only able to inspect a few at a time through graphs.</div>
+</div></details></div></article><div class="para" id="projection-fixed-points-10">We will want a more definitive approach to determining whether fixed points are locally stable or unstable. The next section will demonstrate how the derivative of the projection function contains the necessary information to make this decision.</div></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="sec-population-density-dependent.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="projection-analysis.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
