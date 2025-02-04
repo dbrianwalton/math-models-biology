@@ -294,42 +294,43 @@ eBookConfig.enable_chatcodes =  false;
 <div class="para">Consider a population model that uses a constant per capita growth rate <span class="process-math">\(r\)</span> for which we introduce an emigration term that is constant, say <span class="process-math">\(E_{n} = m\)</span> (for migration). Then our population model would be</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\hbox{New Population} = \hbox{Old Population} + \hbox{Natural Growth} - \hbox{Emigration},
+\hbox{New Population} = \hbox{Old Population} + \hbox{Natural Growth} - \hbox{Emigration}\text{.}
 \end{equation*}
 </div>
-<div class="para">which using sequences would be written</div>
+<div class="para">Using sequences, this would be written</div>
 <div class="displaymath process-math">
 \begin{equation*}
-P_{n+1} = P_{n} + r \cdot P_n - m = (1+r) P_n - m.
+P_{n+1} = P_{n} + r \cdot P_n - m = (1+r) P_n - m\text{.}
 \end{equation*}
 </div>
 <div class="para">The projection function for this model is linear with a slope <span class="process-math">\(\alpha = 1+r\)</span> given by</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f(x) = \alpha x - m = (1+r)x - m.
+f(x) = \alpha x - m = (1+r)x - m\text{.}
 \end{equation*}
 </div>
 </div></article><article class="example example-like" id="linear-projection-analysis-4"><h4 class="heading">
 <span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.2</span><span class="period">.</span>
 </h4>
-<div class="para" id="linear-projection-analysis-4-1-1">Consider a population that is decreasing by 5\% per year. Suppose an intervention is established that supplements the population by 100 new individuals per year. Express a recursive sequence model for this population and identify the projection function.</div>
+<div class="para" id="linear-projection-analysis-4-1-1">Consider a population that is decreasing by 5% per year. Suppose an intervention is established that supplements the population by 100 new individuals per year.</div> <div class="para" id="linear-projection-analysis-4-1-2">Express a recursive sequence model for this population and identify the projection function.</div>
 <div class="solutions"><details id="linear-projection-analysis-4-2" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content"><div class="para logical" id="linear-projection-analysis-4-2-1">
 <div class="para">The recursive model for the population is motivated by the descriptive equation</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\hbox{New Population} = \hbox{Old Population} - \hbox{Natural Losses} + \hbox{Supplements}.
+\hbox{New Population} = \hbox{Old Population} - \hbox{Natural Losses} + \hbox{Supplements}\text{.}
 \end{equation*}
 </div>
 <div class="para">If <span class="process-math">\(P_n\)</span> is the population after <span class="process-math">\(n\)</span> years, then our recursive model is</div>
-<div class="displaymath process-math">
-\begin{equation*}
-P_{n+1} = P_n - 0.05 P_n + 100 = 0.95 P_n + 100.
-\end{equation*}
+<div class="displaymath process-math" id="linear-projection-analysis-4-2-1-4">
+\begin{align*}
+P_{n+1} \amp = P_n - 0.05 P_n + 100\\
+\amp = 0.95 P_n + 100
+\end{align*}
 </div>
 <div class="para">We identify the projection function <span class="process-math">\(P_{n+1} = f(P_n)\)</span> as</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f(x) = 0.95 x + 100,
+f(x) = 0.95 x + 100\text{,}
 \end{equation*}
 </div>
 <div class="para">which is linear with slope <span class="process-math">\(\alpha=0.95\text{.}\)</span>
@@ -342,22 +343,23 @@ f(x) = 0.95 x + 100,
 <div class="para">The recursive model for the loan balance is motivated by the descriptive equation</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\hbox{New Balance} = \hbox{Old Balance} + \hbox{Added Interest} - \hbox{Monthly Payment}.
+\hbox{New Balance} = \hbox{Old Balance} + \hbox{Added Interest} - \hbox{Monthly Payment}\text{.}
 \end{equation*}
 </div>
 <div class="para">Our recursive model is</div>
+<div class="displaymath process-math" id="linear-projection-analysis-5-2-1-2">
+\begin{align*}
+B_{n+1} \amp = B_n + \frac{r}{12} B_n - m \\
+\amp = (1+\frac{r}{12}) B_n - m
+\end{align*}
+</div>
+<div class="para">The projection function is therefore</div>
 <div class="displaymath process-math">
 \begin{equation*}
-B_{n+1} = B_n + \frac{r}{12} B_n - m = (1+\frac{r}{12}) B_n - m.
+f(x) = (1+\frac{r}{12}) x - m\text{,}
 \end{equation*}
 </div>
-<div class="para">The projection function <span class="process-math">\(B_{n+1} = f(B_n)\)</span> as</div>
-<div class="displaymath process-math">
-\begin{equation*}
-f(x) = (1+\frac{r}{12}) x - m
-\end{equation*}
-</div>
-<div class="para">is linear with slope <span class="process-math">\(\alpha = 1+\frac{r}{12}\text{.}\)</span>
+<div class="para">which is linear with slope <span class="process-math">\(\alpha = 1+\frac{r}{12}\text{.}\)</span>
 </div>
 </div></div></details></div></article><div class="para logical" id="linear-projection-analysis-6">
 <div class="para">The first step in analysis is to identify the fixed points which we use to rewrite our function. A linear projection function <span class="process-math">\(f(x)=\alpha x + \beta\)</span> for constants <span class="process-math">\(\alpha\)</span> (alpha) and <span class="process-math">\(\beta\)</span> (beta) has exactly one fixed point so long as <span class="process-math">\(\alpha \ne 1\text{.}\)</span> Recall that a fixed point is a solution <span class="process-math">\(x^*\)</span> to the equation <span class="process-math">\(x=f(x)\text{:}\)</span>
@@ -373,7 +375,7 @@ x^* = \frac{\beta}{1-\alpha} = \frac{-\beta}{\alpha-1}.
 <div class="para">Because it is a fixed point, we know <span class="process-math">\(f(x^*)=x^*\)</span> and the slope is <span class="process-math">\(\alpha\text{.}\)</span> Rewriting <span class="process-math">\(f(x)\)</span> in point–slope form, we find the alternative representation</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f(x) = \alpha(x-x^*) + x^*.
+f(x) = \alpha(x-x^*) + x^*\text{.}
 \end{equation*}
 </div>
 </div>
@@ -381,43 +383,44 @@ f(x) = \alpha(x-x^*) + x^*.
 <div class="para">The new representation allows us to rewrite our recursive equation for the sequence. Suppose that <span class="process-math">\(x_n\)</span> refers to a sequence generated by the projection function <span class="process-math">\(x_{n+1} = f(x_n)\text{.}\)</span> Using the new representation, this becomes</div>
 <div class="displaymath process-math">
 \begin{equation*}
-x_{n+1} = \alpha (x_n-x^*) + x^*.
+x_{n+1} = \alpha (x_n-x^*) + x^*\text{.}
 \end{equation*}
 </div>
 <div class="para">This is equivalent to the equation</div>
 <div class="displaymath process-math">
 \begin{equation*}
-x_{n+1} - x^* = \alpha (x_n - x^*).
+x_{n+1} - x^* = \alpha (x_n - x^*)\text{.}
 \end{equation*}
 </div>
 <div class="para">If we define a new sequence <span class="process-math">\(z_n\)</span> as the difference between <span class="process-math">\(x_n\)</span> and the fixed point <span class="process-math">\(x^*\text{,}\)</span>
 </div>
 <div class="displaymath process-math">
 \begin{equation*}
-z_n = x_n - x^*,
+z_n = x_n - x^*\text{,}
 \end{equation*}
 </div>
 <div class="para">then our equation is showing that the difference is a geometric sequence,</div>
 <div class="displaymath process-math">
 \begin{equation*}
-z_{n+1} = \alpha z_n.
+z_{n+1} = \alpha z_n\text{.}
 \end{equation*}
 </div>
 <div class="para">Geometric sequences have an explicit formula</div>
 <div class="displaymath process-math">
 \begin{equation*}
-z_n = z_0 \cdot \alpha^n,
+z_n = z_0 \cdot \alpha^n\text{,}
 \end{equation*}
 </div>
 <div class="para">which leads to an explicit formula for <span class="process-math">\(x_n\)</span> given by</div>
 <div class="displaymath process-math">
 \begin{equation*}
-x_n = x^* + z_n = x^* + (x_0 - x^*) \cdot \alpha^n.
+x_n = x^* + z_n = x^* + (x_0 - x^*) \cdot \alpha^n\text{.}
 \end{equation*}
 </div>
-<div class="para">For this reason, I call such sequences a <dfn class="terminology">shifted geometric sequence</dfn>.</div>
+<div class="para">For this reason, I call such sequences a <dfn class="terminology">shifted geometric sequence</dfn>, where the sequence has been shifted to be centered around the fixed point <span class="process-math">\(x^*\text{.}\)</span>
 </div>
-<div class="para" id="linear-projection-analysis-8">Now that we have an explicit formula for our sequence, we can analyze the stability. The geometric sequence <span class="process-math">\(z_n = z_0 \alpha^n\)</span> corresponds to repeated multiplication by the same number <span class="process-math">\(\alpha\text{.}\)</span> When <span class="process-math">\(\alpha \lt 0\)</span> (negative), the sings of <span class="process-math">\(z_n\)</span> alternate between positive and negative. When <span class="process-math">\(|\alpha| \gt 1\text{,}\)</span> the sequence <span class="process-math">\(z_n\)</span> grows in magnitude; when <span class="process-math">\(|\alpha| \lt 1\text{,}\)</span> the magnitude of <span class="process-math">\(z_n\)</span> converges to zero.</div>
+</div>
+<div class="para" id="linear-projection-analysis-8">Now that we have an explicit formula for our sequence, we can analyze the stability. The geometric sequence <span class="process-math">\(z_n = z_0 \cdot \alpha^n\)</span> corresponds to repeated multiplication by the same number <span class="process-math">\(\alpha\text{.}\)</span> When <span class="process-math">\(\alpha \lt 0\)</span> (negative), the sings of <span class="process-math">\(z_n\)</span> alternate between positive and negative. When <span class="process-math">\(|\alpha| \gt 1\text{,}\)</span> the sequence <span class="process-math">\(z_n\)</span> grows in magnitude; when <span class="process-math">\(|\alpha| \lt 1\text{,}\)</span> the magnitude of <span class="process-math">\(z_n\)</span> converges to zero.</div>
 <article class="theorem theorem-like" id="thm-linear-projection-stability"><h4 class="heading">
 <span class="type">Theorem</span><span class="space"> </span><span class="codenumber">2.5.4</span><span class="period">.</span><span class="space"> </span><span class="title">Stability of Fixed Points for Linear Projection Functions.</span>
 </h4>
@@ -425,15 +428,15 @@ x_n = x^* + z_n = x^* + (x_0 - x^*) \cdot \alpha^n.
 <div class="para">For a projection function <span class="process-math">\(f(x)=\alpha x + \beta\)</span> with fixed point</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\displaystyle x^* = \frac{\beta}{1-\alpha} = \frac{-\beta}{\alpha-1},
+\displaystyle x^* = \frac{\beta}{1-\alpha} = \frac{-\beta}{\alpha-1}\text{,}
 \end{equation*}
 </div>
 <div class="para">the stability of the fixed point as an equilibrium for a sequence defined as <span class="process-math">\(x_{n+1} = f(x_n)\)</span> is determined by the value of the slope <span class="process-math">\(\alpha\text{.}\)</span>
 </div>
 <ul class="disc" id="thm-linear-projection-stability-2-1-5">
-<li id="thm-linear-projection-stability-2-1-5-1"><div class="para" id="p-derived-thm-linear-projection-stability-2-1-5-1">If <span class="process-math">\(|\alpha| \lt 1\text{,}\)</span> then every sequence converges <span class="process-math">\(x_n \to x^*\)</span> and <span class="process-math">\(x^*\)</span> is a stable equilibrium.</div></li>
-<li id="thm-linear-projection-stability-2-1-5-2"><div class="para" id="p-derived-thm-linear-projection-stability-2-1-5-2">If <span class="process-math">\(|\alpha| \gt 1\text{,}\)</span> then every sequence with <span class="process-math">\(x_0 \ne x^*\)</span> diverges away from <span class="process-math">\(x^*\)</span> and <span class="process-math">\(x^*\)</span> is an <dfn class="terminology">unstable</dfn> equilibrium.</div></li>
-<li id="thm-linear-projection-stability-2-1-5-3"><div class="para" id="p-derived-thm-linear-projection-stability-2-1-5-3">If <span class="process-math">\(\alpha = -1\text{,}\)</span> then the sequence <span class="process-math">\(x_n\)</span> alternates between two values and <span class="process-math">\(x^*\)</span> is neutrally stable as the sequence does not diverge.</div></li>
+<li id="thm-linear-projection-stability-2-1-5-1"><div class="para" id="p-derived-thm-linear-projection-stability-2-1-5-1">If <span class="process-math">\(|\alpha| \lt 1\text{,}\)</span> then every sequence converges <span class="process-math">\(x_n \to x^*\)</span> and <span class="process-math">\(x^*\)</span> is a <dfn class="terminology">locally stable</dfn> equilibrium.</div></li>
+<li id="thm-linear-projection-stability-2-1-5-2"><div class="para" id="p-derived-thm-linear-projection-stability-2-1-5-2">If <span class="process-math">\(|\alpha| \gt 1\text{,}\)</span> then every sequence with <span class="process-math">\(x_0 \ne x^*\)</span> diverges away from <span class="process-math">\(x^*\)</span> and <span class="process-math">\(x^*\)</span> is a <dfn class="terminology">locally unstable</dfn> equilibrium.</div></li>
+<li id="thm-linear-projection-stability-2-1-5-3"><div class="para" id="p-derived-thm-linear-projection-stability-2-1-5-3">If <span class="process-math">\(\alpha = -1\text{,}\)</span> then the sequence <span class="process-math">\(x_n\)</span> alternates between two values and <span class="process-math">\(x^*\)</span> is <dfn class="terminology">neutrally stable</dfn> as the sequence does not diverge.</div></li>
 <li id="thm-linear-projection-stability-2-1-5-4"><div class="para" id="p-derived-thm-linear-projection-stability-2-1-5-4">If <span class="process-math">\(\alpha = 1\)</span> and <span class="process-math">\(\beta=0\)</span> (<span class="process-math">\(f(x)=x\)</span>), then every number is a fixed point. If <span class="process-math">\(\beta \ne 0\text{,}\)</span> then no fixed point exists.</div></li>
 </ul>
 </div></article><article class="example example-like" id="linear-projection-analysis-10"><h4 class="heading">
@@ -456,10 +459,10 @@ x_n = x^* + z_n = x^* + (x_0 - x^*) \cdot \alpha^n.
 <span class="type">Theorem</span><span class="space"> </span><span class="codenumber">2.5.7</span><span class="period">.</span>
 </h4>
 <div class="para logical" id="thm-function-linearization-1-1">
-<div class="para">If a function <span class="process-math">\(f\)</span> is differentiable at <span class="process-math">\(x=c\)</span> (<span class="process-math">\(f'(c)\)</span> exists), then we can define the linear approximation of <span class="process-math">\(f\)</span> around <span class="process-math">\(x=c\)</span> as the linear function with slope <span class="process-math">\(f'(c)\)</span> and passing through the point <span class="process-math">\((c,f(c))\)</span> given by</div>
+<div class="para">If a function <span class="process-math">\(f\)</span> is differentiable at <span class="process-math">\(x=c\)</span> (<span class="process-math">\(f'(c)\)</span> exists), then we can define the linear approximation of <span class="process-math">\(f\)</span> around <span class="process-math">\(x=c\text{.}\)</span> The linearization is the linear function with slope <span class="process-math">\(f'(c)\)</span> and passing through the point <span class="process-math">\((c,f(c))\)</span> given by</div>
 <div class="displaymath process-math">
 \begin{equation*}
-L_{f,c}(x) = f(c) + f'(c) \cdot (x-c).
+L_{f,c}(x) = f(c) + f'(c) \cdot (x-c)\text{.}
 \end{equation*}
 </div>
 <div class="para">When <span class="process-math">\(x\)</span> is sufficiently close to <span class="process-math">\(c\text{,}\)</span> the functions are nearly indistinguishable.</div>
@@ -467,19 +470,19 @@ L_{f,c}(x) = f(c) + f'(c) \cdot (x-c).
 <div class="para">The tangent line equation is a consequence of standard calculus definitions. To clarify the idea of sufficiently close without trying to recreate an entire course in analysis, let us start by pointing out that because <span class="process-math">\(f'(c)\)</span> exists, the average rate of change defined by <span class="process-math">\(\frac{f(x)-f(c)}{x-c}\)</span> must converge to <span class="process-math">\(f'(c)\)</span> as <span class="process-math">\(x\)</span> approaches <span class="process-math">\(c\text{,}\)</span> as given in the limit</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\lim_{x \to c} \frac{f(x)-f(c)}{x-c} = f'(c).
+\lim_{x \to c} \frac{f(x)-f(c)}{x-c} = f'(c)\text{.}
 \end{equation*}
 </div>
 <div class="para">This is equivalent to saying</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\lim_{x \to c} \left(\frac{f(x)-f(c)}{x-c} - f'(c)\right) = 0.
+\lim_{x \to c} \left(\frac{f(x)-f(c)}{x-c} - f'(c)\right) = 0\text{.}
 \end{equation*}
 </div>
 <div class="para">This can be rewritten as</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\lim_{x \to c} \frac{f(x)-L_{f,c}(x)}{x-c} = 0.
+\lim_{x \to c} \frac{f(x)-L_{f,c}(x)}{x-c} = 0\text{.}
 \end{equation*}
 </div>
 <div class="para">Because the denominator goes to zero, the numerator must go to zero even faster for the limit to equal zero.</div>
@@ -487,10 +490,10 @@ L_{f,c}(x) = f(c) + f'(c) \cdot (x-c).
 <div class="para">Now, suppose that we are working with a projection function <span class="process-math">\(f\)</span> with a fixed point at <span class="process-math">\(x=x^*\text{.}\)</span> This means that <span class="process-math">\(f(x^*) = x^*\text{.}\)</span> The tangent line of the projection function around the fixed point will be</div>
 <div class="displaymath process-math">
 \begin{equation*}
-L_{f,x^*}(x) = f(x^*) + f'(x^*) \cdot (x-x^*) = x^* + f'(x^*) \cdot (x-x^*).
+L_{f,x^*}(x) = f(x^*) + f'(x^*) \cdot (x-x^*) = x^* + f'(x^*) \cdot (x-x^*)\text{.}
 \end{equation*}
 </div>
-<div class="para">By construction, we know that <span class="process-math">\(x=x^*\)</span> is a fixed point of the linearized projection function and the stability of the fixed point as an equilibrium is determined by the slope <span class="process-math">\(f'(x^*)\text{.}\)</span> The following theorem guarantees that so long as <span class="process-math">\(|f'(x^*)| \ne 1\text{,}\)</span> the stability of the fixed point for the projection function is the same as the linearized function.</div>
+<div class="para">By construction, we know that <span class="process-math">\(x=x^*\)</span> is a fixed point of the linearized projection function and the stability of the fixed point as an equilibrium is determined by the slope <span class="process-math">\(f'(x^*)\text{.}\)</span> The following theorem guarantees that so long as <span class="process-math">\(|f'(x^*)| \ne 1\text{,}\)</span> the stability of the fixed point for the projection function is the same as the linearized function. (There is no clear conclusion if <span class="process-math">\(|f'(x^*)| = 1\text{.}\)</span>)</div>
 </div>
 <article class="theorem theorem-like" id="thm-projection-fixed-point-stability"><h4 class="heading">
 <span class="type">Theorem</span><span class="space"> </span><span class="codenumber">2.5.8</span><span class="period">.</span><span class="space"> </span><span class="title">Stability of Fixed Points for Projection Functions.</span>
@@ -498,54 +501,65 @@ L_{f,x^*}(x) = f(x^*) + f'(x^*) \cdot (x-x^*) = x^* + f'(x^*) \cdot (x-x^*).
 <div class="para logical" id="thm-projection-fixed-point-stability-2-1">
 <div class="para">Suppose a projection function <span class="process-math">\(f\)</span> has a fixed point at <span class="process-math">\(x=x^*\)</span> and <span class="process-math">\(f'(x^*)\)</span> exists. So long as <span class="process-math">\(|f'(x^*)| \ne 1\text{,}\)</span> the local stability of the fixed point is determined by the value of <span class="process-math">\(f'(x^*)\)</span> as follows.</div>
 <ul class="disc" id="thm-projection-fixed-point-stability-2-1-6">
-<li id="thm-projection-fixed-point-stability-2-1-6-1"><div class="para" id="p-derived-thm-projection-fixed-point-stability-2-1-6-1">If <span class="process-math">\(|f'(x^*)| \lt 1\text{,}\)</span> then <span class="process-math">\(x^*\)</span> is a stable fixed point.</div></li>
-<li id="thm-projection-fixed-point-stability-2-1-6-2"><div class="para" id="p-derived-thm-projection-fixed-point-stability-2-1-6-2">If <span class="process-math">\(|f'(x^*)| \gt 1\text{,}\)</span> then <span class="process-math">\(x^*\)</span> is an unstable fixed point.</div></li>
+<li id="thm-projection-fixed-point-stability-2-1-6-1"><div class="para" id="p-derived-thm-projection-fixed-point-stability-2-1-6-1">If <span class="process-math">\(|f'(x^*)| \lt 1\text{,}\)</span> then <span class="process-math">\(x^*\)</span> is a locally stable fixed point.</div></li>
+<li id="thm-projection-fixed-point-stability-2-1-6-2"><div class="para" id="p-derived-thm-projection-fixed-point-stability-2-1-6-2">If <span class="process-math">\(|f'(x^*)| \gt 1\text{,}\)</span> then <span class="process-math">\(x^*\)</span> is a locally unstable fixed point.</div></li>
 </ul>
 </div></article></section><section class="subsection" id="projection-analysis-5"><h3 class="heading hide-type">
 <span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.5.3</span><span class="space"> </span><span class="title">Computer Assisted Analysis</span>
 </h3>
-<div class="para" id="projection-analysis-5-2">Sage is a computer algebra system, meaning that it can work with formulas symbolically. When we use an algebra system, we have confidence that the algebra and calculus operations are performed properly. Here we will see how we can use Sage to assist in computing the value of the derivative quickly in order to analyze stability of fixed points.</div>
-<div class="para" id="projection-analysis-5-3">The first thing we need to do is tell Sage what our independent variable will be. If we want to use <span class="process-math">\(x\)</span> as our independent variable, then we start with a command <code class="code-inline tex2jax_ignore">var('x')</code>. Technically, this is only needed for variables other than <span class="process-math">\(x\text{.}\)</span> But it is good practice for those times we choose another variable. Sometimes we will have other parameters in our model. We include those as variables as well.</div>
-<div class="para" id="projection-analysis-5-4">The second step is to define our projection function. Recall that you must show every multiplication symbol. Once this is complete, we can solve the fixed point equation. In Sage, an assignment (setting a variable or function to an expression) is performed with a single equal sign <code class="code-inline tex2jax_ignore">=</code>. A comparison of equality is performed with two equal signs <code class="code-inline tex2jax_ignore">==</code>. There is a possibility of multiple fixed points, so an algebra system reports the solutions to the equation as a list. An example follows.</div>
-<article class="example example-like" id="projection-analysis-5-5"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.9</span><span class="period">.</span>
-</h4>
-<div class="para" id="projection-analysis-5-5-1">Find the fixed points of the projection function <span class="process-math">\(f(x)=x+0.2x(1-0.005x)\text{.}\)</span>
+<div class="para" id="projection-analysis-5-2">This course has the assumption that you have completed a first semester university calculus course. Therefore, it is assumed that you are able to calculate basic derivatives and integrals. However, there are many computational tools available that can compute these directly and help us avoid mistakes. Here, I introduce you to one such service called SageMath that supports an open-source mathematical programming language called Sage. You can get a blank Sage cell in which you can perform computations at the following link: <a class="external" href="https://sagecell.sagemath.org/" target="_blank"><code class="code-inline tex2jax_ignore">https://sagecell.sagemath.org/</code></a>. Note that from this site, you are actually able to choose from a variety of different languages. When doing algebraic manipulation of formulas as described here, be sure to choose the language <code class="code-inline tex2jax_ignore">Sage</code>. This text embeds Sage cells within the document with the language set by default. (We have seen previous SageMath cells with the language set to R previously.)</div>
+<div class="para" id="projection-analysis-5-3">Sage is built on top of Python, and any valid Python code can be included with Sage commands. In our work with R, we have stored results in <dfn class="terminology">variables</dfn> that represent memory locations to keep track of data. Sage allows us to create objects that represent constants, variables, and formulas in a mathematical sense. We then can manipulate those mathematical objects.</div>
+<div class="para logical" id="projection-analysis-5-4">
+<div class="para">Suppose we wanted to consider a projection function <span class="process-math">\(f(x) = x+0.2x(1-0.005x)\text{.}\)</span> The tasks we want to accomplish are as follows:</div>
+<ul class="disc" id="projection-analysis-5-4-2">
+<li id="projection-analysis-5-4-2-1"><div class="para" id="projection-analysis-5-4-2-1-1">Define our projection formula.</div></li>
+<li id="projection-analysis-5-4-2-2"><div class="para" id="projection-analysis-5-4-2-2-1">Solve for the fixed points of the formula.</div></li>
+<li id="projection-analysis-5-4-2-3"><div class="para" id="projection-analysis-5-4-2-3-1">Calculate the derivative of the projection formula.</div></li>
+<li id="projection-analysis-5-4-2-4"><div class="para" id="projection-analysis-5-4-2-4-1">Evaluate the derivative at each identified fixed point.</div></li>
+</ul>
+<div class="para">After we see the mathematical results, we will apply <a href="projection-analysis.html#thm-projection-fixed-point-stability" class="xref" data-knowl="./knowl/xref/thm-projection-fixed-point-stability.html" data-reveal-label="Reveal" data-close-label="Close" title="Theorem 2.5.8: Stability of Fixed Points for Projection Functions">Theorem 2.5.8</a> to determine stability.</div>
 </div>
-<div id="projection-analysis-5-5-2" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Declare the variables
-var('x')
+<div class="para" id="projection-analysis-5-5">The process of defining a formula in Sage requires first declaring all math symbols that will be variables. In our example, the only variable is <span class="process-math">\(x\text{.}\)</span> Sometimes we might have parameters that we leave in symbolic form and they would also need to be declared. The Sage command for declaring a variable is the function <code class="code-inline tex2jax_ignore">var(...)</code>, where the input consists of variable names in quotes and separated by commas. This command must be evaluated before we start using the symbols in a formula. For our problem, we will use the command <code class="code-inline tex2jax_ignore">var("x")</code>.</div>
+<div class="para" id="projection-analysis-5-6">To actually define our expression, we need to choose a name for the expression for later reference as a programming variable name. Where R prefers that we use the assignment operators <code class="code-inline tex2jax_ignore">&lt;-</code> or <code class="code-inline tex2jax_ignore">-&gt;</code>, Python (and therefore Sage) requires the assignment operator is always <code class="code-inline tex2jax_ignore">=</code>, with the variable name on the left side of the statement. To declare our example as <code class="code-inline tex2jax_ignore">my_projection</code> we would type the statement <code class="code-inline tex2jax_ignore">my_projection = x + 0.2*x*(1-0.05*x)</code>. Notice how we need to explicitly type <code class="code-inline tex2jax_ignore">*</code> for multiplication.</div>
+<div class="para" id="projection-analysis-5-7">Sage is able to solve basic algebraic equations directly using the command <code class="code-inline tex2jax_ignore">solve(...)</code>. In the current problem, there is only one equation, but because we often want to solve a <dfn class="terminology">system</dfn> of equations, we will put a <em class="emphasis">list</em> of equations with only one list inside square brackets. Because <code class="code-inline tex2jax_ignore">=</code> is used for variable assignment, most computer languages including Python and R use a double equal <code class="code-inline tex2jax_ignore">==</code> for creating equations that are true or false. A solution will be a specific value of the variable <span class="process-math">\(x\text{,}\)</span> so we also need to specify what we are solving for. In the future, we will again be solving for multiple variables, we will again use a <em class="emphasis">list</em> of variables we are solving to find. Because we are solving <span class="process-math">\(f(x) = x\text{,}\)</span> the basic command will therefore be <code class="code-inline tex2jax_ignore">solve([my_projection == x], [x])</code>, and it returns a <em class="emphasis">list</em> of equations that solve the problem.</div>
+<div class="para" id="projection-analysis-5-8">Just as <code class="code-inline tex2jax_ignore">solve</code> was the command to solve an equation, we will use a command <code class="code-inline tex2jax_ignore">derivative</code> to find the derivative of our formula. Because there are potentially many symbols representing variables, we need to specify the symbol for the independent variable as part of the command. To differentiate <span class="process-math">\(f(x)\)</span> with respect to <span class="process-math">\(x\text{,}\)</span> we tell our expression object <code class="code-inline tex2jax_ignore">my_projection</code> to perform an action <code class="code-inline tex2jax_ignore">derivative</code> with respect to <span class="process-math">\(x\)</span> using the syntax <code class="code-inline tex2jax_ignore">my_projection.derivative(x)</code>. If the variable was something other than <span class="process-math">\(x\text{,}\)</span> we just change that part of the formula.</div>
+<div class="para" id="projection-analysis-5-9">We will store the results of solving the equation and finding the derivative so that we can use the results later. The last thing we need to do is to evaluate the derivative at the point of the solution to the fixed point equation. Suppose we named the result of our derivative <code class="code-inline tex2jax_ignore">f_prime</code>. We need to tell that object to make a substitution using the <code class="code-inline tex2jax_ignore">subs</code> command. We can also ask that the result is simplified as much as possible. Since we want to do this for <em class="emphasis">each</em> fixed point solution, we will do this step in a loop.</div>
+<div class="para" id="projection-analysis-5-10">The entire structure of our analysis is accomplished with the following commands.</div>
+<div id="projection-analysis-5-11" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Declare the variables
+var("x")
+
 # Define the function
-f(x)=x+0.2*x*(1-0.005*x)
+my_projection = x+0.2*x*(1-0.005*x)
+show(my_projection)
 
-# Solving an equation starts with the equality x==f(x)
-# then you give the variable you are solving x
-fixPoints = solve( x==f(x), x )
-# The assigned output fixPoints is a list of solutions.
-show(fixPoints)
-</script></div>
-<div class="para" id="projection-analysis-5-5-3">This shows that the fixed points are <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=200\text{.}\)</span> Sage internally stored those values as two equations in the list named <code class="code-inline tex2jax_ignore">fixPoints</code>. Sage refers to entries in a list like a sequence, with the first value having index 0. That is, <code class="code-inline tex2jax_ignore">fixPoints[0]</code> corresponds to the equation <code class="code-inline tex2jax_ignore">x==0</code>.</div>
-<div class="para" id="projection-analysis-5-5-4">The next step is to compute the derivative at each fixed point. In Sage, we will compute the derivative using the <code class="code-inline tex2jax_ignore">derivative</code> command, which expects a formula and the variable of differentiation. We will define a new function <span class="process-math">\(f'(x)\text{,}\)</span> but the apostrophe in Sage represents a quotation and not a derivative. So let us use <code class="code-inline tex2jax_ignore">df(x)</code> in place of <span class="process-math">\(f'(x)\text{.}\)</span> We can evaluate the derivative at our fixed point if we use a substitution based on our equations in <code class="code-inline tex2jax_ignore">fixPoints</code>. The following commands must be done after the previous script has already been evaluated.</div>
-<div id="projection-analysis-5-5-5" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Assume f(x) and fixPoints already complete
-df(x) = derivative(f(x), x)
-show(df(x))  # Display so we can admire its beauty!
+# Find the derivative
+f_prime = my_projection.derivative(x)
+show(f_prime)
 
-# Repeat the block of steps for each fixed point
-for fp in fixPoints:
-    show("Evaluation of slope for %s gives" % fp)
-    slope = df(x).substitute(fp)
-    # Let Sage simplify the formula as much as possible.
-    show(slope.simplify())
+# Solve the fixed point equation. Returns a list.
+fixed_points = solve( [my_projection == x], [x] )
+for fp in fixed_points:
+    print("Fixed point", fp)
+    slope = f_prime.subs(fp).simplify()
+    print("Calculated slope", slope)
 </script></div>
-<div class="para logical" id="projection-analysis-5-5-6">
-<div class="para">We can interpret our results for the projection function</div>
+<div class="para logical" id="projection-analysis-5-12">
+<div class="para">The previous code will show formulas giving</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f(x)=x+0.2x(1-0.005x).
+f(x) = 0.2x(-0.005x + 1) + x
 \end{equation*}
 </div>
-<div class="para">At the fixed point <span class="process-math">\(x = 0\text{,}\)</span> <span class="process-math">\(f(x)\)</span> has slope <span class="process-math">\(f'(0)=1.2\text{.}\)</span> Since <span class="process-math">\(|f'(0)|=1.2 \gt 1\text{,}\)</span> we know that the fixed point is unstable and the sequence diverges away from the equilibrium. On the other hand, <span class="process-math">\(f(x)\)</span> at the second fixed <span class="process-math">\(x=200\)</span> has slope <span class="process-math">\(f'(200)=0.8\)</span> so that <span class="process-math">\(|f'(200)| \lt 1\text{.}\)</span> This fixed point is stable and a sequence nearby would converge to that value. You can explore the dynamics of this sequence in the graph below, choosing different initial values.</div>
+<div class="para">and</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f'(x) = -0.002 x + 1.200\text{.}
+\end{equation*}
 </div>
-<figure class="figure figure-like" id="projection-analysis-5-5-7"><iframe id="jsxgraph-projection-function-example" width="600" height="600" src="jsxgraph-projection-function-example-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.5.10<span class="period">.</span></span><span class="space"> </span>Dynamic graph illustrating the sequence generated by <span class="process-math">\(f(x)=x+0.2x(1-0.005x)\)</span> where a slider selects the initial value.</figcaption></figure></article></section></section></div>
+<div class="para">It identifies fixed points at <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=200\text{.}\)</span> Surprisingly, when evaluating <span class="process-math">\(f'(200)\text{,}\)</span> it gives a value <span class="process-math">\(0.79999999999\text{.}\)</span> This is a consequence of computers being unable to represent numbers in decimal form exactly. If you changed the code to use <code class="code-inline tex2jax_ignore">2/10</code> instead of <code class="code-inline tex2jax_ignore">0.2</code> and <code class="code-inline tex2jax_ignore">5/1000</code> instead of <code class="code-inline tex2jax_ignore">0.005</code>, you will get exact results. That is, we find that <span class="process-math">\(f'(0) = \frac{6}{5} = 1.2\)</span> and <span class="process-math">\(f'(200) = \frac{4}{5} = 0.8\text{.}\)</span>
+</div>
+</div>
+<div class="para" id="projection-analysis-5-13">It is <em class="emphasis">our</em> task to interpret the results. Because the slope of the projection function at the fixed point <span class="process-math">\(x=0\)</span> is <em class="emphasis">greater than</em> 1, the fixed point <span class="process-math">\(x=0\)</span> is a locally unstable fixed point. However, because <span class="process-math">\(f'(200)\)</span> has a value 0.8 which is positive and less than 1, the fixed point <span class="process-math">\(x=200\)</span> is locally stable. If a population starts small and close to <span class="process-math">\(x=0\text{,}\)</span> the subsequent population values will move farther away from 0. (This is good for a population as it is increasing in size.) On the other hand, a population that is close to 200 will move closer to 200, as that fixed point is stable. The population value of 200 acts as a <dfn class="terminology">carrying capacity</dfn>.</div></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="population-projection.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="projection-cobweb.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
