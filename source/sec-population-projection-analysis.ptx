@@ -336,5 +336,75 @@
         On the other hand, a population that is close to 200 will move closer to 200, as that fixed point is stable.
         The population value of 200 acts as a <term>carrying capacity</term>.
     </p>
+    <example>
+        <statement>
+            <p>
+                Use computer analysis to find the fixed points for the discrete logistic model <m>P_{n+1} = (1+r_0)P_n - a P_n^2</m>. Find the slopes <m>f'(x^*)</m> for each fixed point and then discuss how the stability depends on the values of the parameters.
+            </p>
+        </statement>
+        <solution>
+            <p>
+                The projection function is <m>f(x) = (1+r_0) x - a x^2</m>, which is a function of <m>x</m> involving two additional parameters <m>r_0</m> and <m>a</m>.
+                To perform our analysis using Sage, we will need to declare all three symbols as mathematical variables.
+                Nevertheless, we can still solve the fixed point equation for <m>x</m>, and Sage will provide answers in terms of the paramters.
+            </p>
+            <sage>
+                <input>
+                <![CDATA[# Declare the variables
+                var("x,r0,a")
+
+                # Define the function
+                my_projection = (1+r0)*x - a*x^2
+                show(my_projection)
+
+                # Find the derivative
+                f_prime = my_projection.derivative(x)
+                show(f_prime)
+                
+                # Solve the fixed point equation. Returns a list.
+                fixed_points = solve( [my_projection == x], [x] )
+                for fp in fixed_points:
+                    print("Fixed point", fp)
+                    slope = f_prime.subs(fp).simplify()
+                    print("Calculated slope", slope)
+                ]]>
+                </input>
+            </sage>
+            <p>
+                When you evaluate that work, we will match results we would get using basic calculus.
+                If <m>f(x) = (1+r_0)x - ax^2</m>, we know how to find a derivative as
+                <me>f'(x) = (1+r_0) - 2 a x</me>.
+                Similarly, we can algebraically write down the fixed point equation and solve it by hand:
+                <md>
+                    <mrow>f(x) \amp = x </mrow>
+                    <mrow>(1+r_0)x - a x^2 \amp = x </mrow>
+                    <mrow>x+r_0 x - a x^2 \amp = x </mrow>
+                    <mrow>r_0 x - a x^2 \amp = 0</mrow>
+                    <mrow>x(r_0 - a x) \amp = 0</mrow>
+                </md>
+                Because this equation says the product of <m>x</m> with <m>r_0 - ax</m> equals zero, the solutions are found by setting each factor individually to zero, giving us <m>x=0</m> and <m>x = \frac{r_0}{a}</m> as our two solutions.
+                This matches what Sage tells us.
+            </p>
+            <p>
+                From our Sage work, or by evaluating <m>f'(0)</m>, we find <m>f'(0) = 1+r_0</m>.
+                This means that whenever <m>r_0 \gt 0</m>, <m>f'(0) \gt 1</m>.
+                By <xref ref="thm-projection-fixed-point-stability"/>, we now know that <m>x^* = 0</m> is an unstable fixed point whenever <m>r_0 \gt 0</m>
+                It is actually possible to have <m>-1 \lt r_0 \lt 0</m> if the per capita death rate exceeds the per capita birth rate.
+                In that circumstance, we have <m>0 \lt f'(0) \lt 1</m>.
+                Consequently, <m>x^*=0</m> is a stable fixed when the death rate exceeds the birth rate for <m>P=0</m>.
+            </p>
+            <p>
+                For the second fixed point <m>x^* = \frac{r_0}{a}</m>, we have <m>f'(x^*) = 1 - r_0</m>.
+                We think through the same conditions as above.
+                If <m>-1 \lt r_0 \lt 0</m> (negative <m>r_0</m>), we have <m>f'(x^*) \gt 1</m> but we also have a fixed point <m>x^* \lt 0</m> with a negative value.
+                In the current setting for populations, <m>P\lt 0</m> does not make sense.
+                But mathematically, such a negative fixed point would be unstable.
+                If <m>0 \lt r_0 \lt 1</m>, we have <m>f'(x^*)</m> between 0 and 1, which means the fixed point is locally stable and sequences converge without oscillation.
+                Once we have <m>r_0 \gt 1</m>, we have <m>f'(x*) \lt 0</m> so that nearby sequences oscillate above and then below the fixed point. 
+                For <m>1 \lt r_0 \lt 2</m>, we have <m>|f'(x^*)| \lt 1</m> and the oscillation decays away to the stable fixed point.
+                Once we have <m>r_0 \gt 2</m>, this causes <m>|f'(x^*)| \gt 1</m> such that oscillation grows and the fixed point is locally unstable.
+            </p>
+        </solution>
+    </example>
 </subsection>
 </section>
