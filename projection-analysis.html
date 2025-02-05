@@ -559,7 +559,54 @@ f'(x) = -0.002 x + 1.200\text{.}
 <div class="para">It identifies fixed points at <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=200\text{.}\)</span> Surprisingly, when evaluating <span class="process-math">\(f'(200)\text{,}\)</span> it gives a value <span class="process-math">\(0.79999999999\text{.}\)</span> This is a consequence of computers being unable to represent numbers in decimal form exactly. If you changed the code to use <code class="code-inline tex2jax_ignore">2/10</code> instead of <code class="code-inline tex2jax_ignore">0.2</code> and <code class="code-inline tex2jax_ignore">5/1000</code> instead of <code class="code-inline tex2jax_ignore">0.005</code>, you will get exact results. That is, we find that <span class="process-math">\(f'(0) = \frac{6}{5} = 1.2\)</span> and <span class="process-math">\(f'(200) = \frac{4}{5} = 0.8\text{.}\)</span>
 </div>
 </div>
-<div class="para" id="projection-analysis-5-13">It is <em class="emphasis">our</em> task to interpret the results. Because the slope of the projection function at the fixed point <span class="process-math">\(x=0\)</span> is <em class="emphasis">greater than</em> 1, the fixed point <span class="process-math">\(x=0\)</span> is a locally unstable fixed point. However, because <span class="process-math">\(f'(200)\)</span> has a value 0.8 which is positive and less than 1, the fixed point <span class="process-math">\(x=200\)</span> is locally stable. If a population starts small and close to <span class="process-math">\(x=0\text{,}\)</span> the subsequent population values will move farther away from 0. (This is good for a population as it is increasing in size.) On the other hand, a population that is close to 200 will move closer to 200, as that fixed point is stable. The population value of 200 acts as a <dfn class="terminology">carrying capacity</dfn>.</div></section></section></div>
+<div class="para" id="projection-analysis-5-13">It is <em class="emphasis">our</em> task to interpret the results. Because the slope of the projection function at the fixed point <span class="process-math">\(x=0\)</span> is <em class="emphasis">greater than</em> 1, the fixed point <span class="process-math">\(x=0\)</span> is a locally unstable fixed point. However, because <span class="process-math">\(f'(200)\)</span> has a value 0.8 which is positive and less than 1, the fixed point <span class="process-math">\(x=200\)</span> is locally stable. If a population starts small and close to <span class="process-math">\(x=0\text{,}\)</span> the subsequent population values will move farther away from 0. (This is good for a population as it is increasing in size.) On the other hand, a population that is close to 200 will move closer to 200, as that fixed point is stable. The population value of 200 acts as a <dfn class="terminology">carrying capacity</dfn>.</div>
+<article class="example example-like" id="projection-analysis-5-14"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.5.9</span><span class="period">.</span>
+</h4>
+<div class="para" id="projection-analysis-5-14-1-1">Use computer analysis to find the fixed points for the discrete logistic model <span class="process-math">\(P_{n+1} = (1+r_0)P_n - a P_n^2\text{.}\)</span> Find the slopes <span class="process-math">\(f'(x^*)\)</span> for each fixed point and then discuss how the stability depends on the values of the parameters.</div>
+<div class="solutions"><details id="projection-analysis-5-14-2" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
+<div class="para" id="projection-analysis-5-14-2-1">The projection function is <span class="process-math">\(f(x) = (1+r_0) x - a x^2\text{,}\)</span> which is a function of <span class="process-math">\(x\)</span> involving two additional parameters <span class="process-math">\(r_0\)</span> and <span class="process-math">\(a\text{.}\)</span> To perform our analysis using Sage, we will need to declare all three symbols as mathematical variables. Nevertheless, we can still solve the fixed point equation for <span class="process-math">\(x\text{,}\)</span> and Sage will provide answers in terms of the paramters.</div>
+<div id="projection-analysis-5-14-2-2" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Declare the variables
+var("x,r0,a")
+
+# Define the function
+my_projection = (1+r0)*x - a*x^2
+show(my_projection)
+
+# Find the derivative
+f_prime = my_projection.derivative(x)
+show(f_prime)
+
+# Solve the fixed point equation. Returns a list.
+fixed_points = solve( [my_projection == x], [x] )
+for fp in fixed_points:
+    print("Fixed point", fp)
+    slope = f_prime.subs(fp).simplify()
+    print("Calculated slope", slope)
+</script></div>
+<div class="para logical" id="projection-analysis-5-14-2-3">
+<div class="para">When you evaluate that work, we will match results we would get using basic calculus. If <span class="process-math">\(f(x) = (1+r_0)x - ax^2\text{,}\)</span> we know how to find a derivative as</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f'(x) = (1+r_0) - 2 a x\text{.}
+\end{equation*}
+</div>
+<div class="para">Similarly, we can algebraically write down the fixed point equation and solve it by hand:</div>
+<div class="displaymath process-math" id="projection-analysis-5-14-2-3-3">
+\begin{align*}
+f(x) \amp = x \\
+(1+r_0)x - a x^2 \amp = x \\
+x+r_0 x - a x^2 \amp = x \\
+r_0 x - a x^2 \amp = 0\\
+x(r_0 - a x) \amp = 0
+\end{align*}
+</div>
+<div class="para">Because this equation says the product of <span class="process-math">\(x\)</span> with <span class="process-math">\(r_0 - ax\)</span> equals zero, the solutions are found by setting each factor individually to zero, giving us <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x = \frac{r_0}{a}\)</span> as our two solutions. This matches what Sage tells us.</div>
+</div>
+<div class="para" id="projection-analysis-5-14-2-4">From our Sage work, or by evaluating <span class="process-math">\(f'(0)\text{,}\)</span> we find <span class="process-math">\(f'(0) = 1+r_0\text{.}\)</span> This means that whenever <span class="process-math">\(r_0 \gt 0\text{,}\)</span> <span class="process-math">\(f'(0) \gt 1\text{.}\)</span> By <a href="projection-analysis.html#thm-projection-fixed-point-stability" class="xref" data-knowl="./knowl/xref/thm-projection-fixed-point-stability.html" data-reveal-label="Reveal" data-close-label="Close" title="Theorem 2.5.8: Stability of Fixed Points for Projection Functions">Theorem 2.5.8</a>, we now know that <span class="process-math">\(x^* = 0\)</span> is an unstable fixed point whenever <span class="process-math">\(r_0 \gt 0\)</span> It is actually possible to have <span class="process-math">\(-1 \lt r_0 \lt 0\)</span> if the per capita death rate exceeds the per capita birth rate. In that circumstance, we have <span class="process-math">\(0 \lt f'(0) \lt 1\text{.}\)</span> Consequently, <span class="process-math">\(x^*=0\)</span> is a stable fixed when the death rate exceeds the birth rate for <span class="process-math">\(P=0\text{.}\)</span>
+</div>
+<div class="para" id="projection-analysis-5-14-2-5">For the second fixed point <span class="process-math">\(x^* = \frac{r_0}{a}\text{,}\)</span> we have <span class="process-math">\(f'(x^*) = 1 - r_0\text{.}\)</span> We think through the same conditions as above. If <span class="process-math">\(-1 \lt r_0 \lt 0\)</span> (negative <span class="process-math">\(r_0\)</span>), we have <span class="process-math">\(f'(x^*) \gt 1\)</span> but we also have a fixed point <span class="process-math">\(x^* \lt 0\)</span> with a negative value. In the current setting for populations, <span class="process-math">\(P\lt 0\)</span> does not make sense. But mathematically, such a negative fixed point would be unstable. If <span class="process-math">\(0 \lt r_0 \lt 1\text{,}\)</span> we have <span class="process-math">\(f'(x^*)\)</span> between 0 and 1, which means the fixed point is locally stable and sequences converge without oscillation. Once we have <span class="process-math">\(r_0 \gt 1\text{,}\)</span> we have <span class="process-math">\(f'(x*) \lt 0\)</span> so that nearby sequences oscillate above and then below the fixed point. For <span class="process-math">\(1 \lt r_0 \lt 2\text{,}\)</span> we have <span class="process-math">\(|f'(x^*)| \lt 1\)</span> and the oscillation decays away to the stable fixed point. Once we have <span class="process-math">\(r_0 \gt 2\text{,}\)</span> this causes <span class="process-math">\(|f'(x^*)| \gt 1\)</span> such that oscillation grows and the fixed point is locally unstable.</div>
+</div></details></div></article></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="population-projection.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="projection-cobweb.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
