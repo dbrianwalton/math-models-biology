@@ -34,6 +34,9 @@
         However, we will more frequently use the point<ndash/>slope form, <m>f(x)=m(x-a)+b</m>, which has slope <m>m</m> and passes through a point <m>(a,b)</m>, or more precisely, <m>f(a)=b</m>.
         As an additional warning, note in advance that we will often use symbols other than <m>m</m> to represent slope.
     </p>
+    <p>
+        We start by looking at some examples that have linear projection functions.
+    </p>
 
     <example>
         <p>
@@ -77,6 +80,7 @@
                 A loan balance grows by <m>1/12</m> of the annual percentage rate each month.
                 But a monthly payment reduces the loan balance.
                 Write down a recursive model for the loan balance <m>B_n</m> where <m>n</m> is the number of months since the loan began, <m>r</m> is the annual percentage rate and <m>p</m> is the amount of the monthly payment.
+                Then identify the projection function for this sequence.
             </p>
         </statement>
         <solution>
@@ -131,6 +135,8 @@
         When <m>\alpha \lt 0</m> (negative), the sings of <m>z_n</m> alternate between positive and negative.
         When <m>|\alpha| \gt 1</m>, the sequence <m>z_n</m> grows in magnitude;
         when <m>|\alpha| \lt 1</m>, the magnitude of <m>z_n</m> converges to zero.
+        Overall, the distance from the fixed point grows (<m>|\alpha| \gt 1</m>),
+        or the distance decays (<m>|\alpha| \lt 1</m>)), or the distance stays the same (<m>|\alpha| = 1</m>).
     </p>
     
     <theorem xml:id='thm-linear-projection-stability'>
@@ -185,7 +191,7 @@
     <theorem xml:id='thm-function-linearization'>
         <statement>
             <p>
-                If a function <m>f</m> is differentiable at <m>x=c</m> (<m>f'(c)</m> exists), then we can define the linear approximation of <m>f</m> around <m>x=c</m>.
+                If a function <m>f</m> is differentiable at <m>x=c</m> (that is, <m>f'(c)</m> exists), then we can define the linear approximation of <m>f</m> around <m>x=c</m>.
                 The linearization is the linear function with slope <m>f'(c)</m> and passing through the point <m>(c,f(c))</m> given by
                 <me>L_{f,c}(x) = f(c) + f'(c) \cdot (x-c)</me>.
                 When <m>x</m> is sufficiently close to <m>c</m>, the functions are nearly indistinguishable.
