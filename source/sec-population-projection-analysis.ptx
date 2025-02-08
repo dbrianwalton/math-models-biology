@@ -342,7 +342,7 @@
         On the other hand, a population that is close to 200 will move closer to 200, as that fixed point is stable.
         The population value of 200 acts as a <term>carrying capacity</term>.
     </p>
-    <example>
+    <example xml:id="ex-discrete-logistic-projection-analysis">
         <statement>
             <p>
                 Use computer analysis to find the fixed points for the discrete logistic model <m>P_{n+1} = (1+r_0)P_n - a P_n^2</m>. Find the slopes <m>f'(x^*)</m> for each fixed point and then discuss how the stability depends on the values of the parameters.
