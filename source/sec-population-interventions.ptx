@@ -126,6 +126,7 @@
             </code>
         </program>
     </listing>
+    <image width="90%" source="images/discrete-logistic-const-harvesting-bifurcation.png"/>
     <sage language="r"><input/></sage>
     <p>
         This type of bifurcation where two fixed points with opposite stability merge and subsequently vanish is called a <term>saddle node bifurcation</term>.
@@ -231,6 +232,7 @@
             </code>
         </program>
     </listing>
+    <image width="90%" source="images/discrete-logistic-prop-harvesting-bifurcation.png"/>
     <sage language="r"><input/></sage>
     
     <p>
