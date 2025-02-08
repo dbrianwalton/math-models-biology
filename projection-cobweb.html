@@ -86,19 +86,7 @@ window.MathJax = {
     )}
   }
 };
-</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script>// Make *any* div with class 'sagecell-sage' an executable Sage cell
-// Their results will be linked, only within language type
-sagecell.makeSagecell({
-  "inputLocation": "div.sagecell-sage",
-  "linked": true,
-  "linkKey": "linked-sage",
-  "autoeval": false,
-  "languages": [
-    "sage"
-  ],
-  "evalButtonText": "Evaluate (Sage)"
-});
-</script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
 </script><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
@@ -125,7 +113,7 @@ eBookConfig.allow_pairs = false;
 eBookConfig.enableScratchAC = false;
 eBookConfig.build_info = "";
 eBookConfig.python3 = null;
-eBookConfig.runestone_version = '7.5.5';
+eBookConfig.runestone_version = '7.5.6';
 eBookConfig.jobehost = '';
 eBookConfig.proxyuri_runs = '';
 eBookConfig.proxyuri_files = '';
@@ -290,43 +278,49 @@ eBookConfig.enable_chatcodes =  false;
 <div class="para">The increment for a sequence <span class="process-math">\(x = (x_n)_{n=0}^{\infty}\)</span> is the difference between consecutive terms, defined by the backward difference</div>
 <div class="displaymath process-math">
 \begin{equation*}
-\Delta x_{n} = x_{n}-x_{n-1}.
+\Delta x_{n} = x_{n}-x_{n-1}\text{.}
 \end{equation*}
 </div>
 <div class="para">We call it the increment because the increment is what we add to the current value to find the next value of the sequence,</div>
 <div class="displaymath process-math">
 \begin{equation*}
-x_{n+1} = x_n + \Delta x_{n+1}.
+x_{n+1} = x_n + \Delta x_{n+1}\text{.}
 \end{equation*}
 </div>
 <div class="para">For populations, the increment corresponds to the sum of births and net migration minus the deaths.</div>
 </div>
 <div class="para logical" id="projection-compare-replacement-4">
-<div class="para">When a population model involves a projection function <span class="process-math">\(x_{n+1} = f(x_n)\text{,}\)</span> then the increment depends on the value of the function <span class="process-math">\(f\text{,}\)</span>
+<div class="para">When a population model is defined by a projection function <span class="process-math">\(x_{n+1} = f(x_n)\text{,}\)</span> then the increment depends on the value of the function <span class="process-math">\(f\text{,}\)</span>
 </div>
 <div class="displaymath process-math">
 \begin{equation*}
-\Delta x_{n+1} = x_{n+1}-x_n = f(x_n) - x_n.
+\Delta x_{n+1} = x_{n+1}-x_n = f(x_n) - x_n\text{.}
 \end{equation*}
 </div>
 <div class="para">Consequently, we can identify when the population will grow or decline based on the value of <span class="process-math">\(f(x)-x\text{.}\)</span> When <span class="process-math">\(f(x) \gt x\text{,}\)</span> the sequence increases. When <span class="process-math">\(f(x) \lt x\text{,}\)</span> the sequence decreases.</div>
 </div>
-<article class="example example-like" id="projection-compare-replacement-5"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.1</span><span class="period">.</span>
-</h4>
-<div class="para logical" id="projection-compare-replacement-5-1">
+<div class="para logical" id="projection-compare-replacement-5">
 <div class="para">Consider a model for population growth where the per capita net growth rate is a decreasing linear function of the population size, <span class="process-math">\(r(P) = r_0 - a P\text{.}\)</span> The projection function for this model is given by</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f(x) = x + (r_0 - ax) x = x + r_0 x - ax^2.
+f(x) = x + (r_0 - ax) x = x + r_0 x - ax^2\text{.}
 \end{equation*}
 </div>
-<div class="para">The fixed points for this are <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=\frac{r_0}{a}\text{.}\)</span> The second fixed point is often denoted by <span class="process-math">\(K=\frac{r_0}{a}\text{,}\)</span> and the per capita growth can then written in the equivalent form <span class="process-math">\(r(P) = r_0(1-\frac{P}{K})\text{.}\)</span> This model is called the <dfn class="terminology">discrete logistic</dfn> model for population growth.</div>
+<div class="para">The fixed points for this are <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=\frac{r_0}{a}\text{.}\)</span> The second fixed point is often denoted by <span class="process-math">\(K=\frac{r_0}{a}\text{,}\)</span> and the per capita growth can then written in the equivalent form <span class="process-math">\(r(P) = r_0(1-\frac{P}{K})\text{.}\)</span> This results in a modified representation of the projection function,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f(x) = x + r_0 x (1-\frac{x}{K})\text{.}
+\end{equation*}
 </div>
-<div class="para" id="projection-compare-replacement-5-2">We consider the case when <span class="process-math">\(r_0 \gt 0\)</span> so that <span class="process-math">\(K \gt 0\text{.}\)</span> A graph of <span class="process-math">\(y = f(x) - x\)</span> is illustrated below. The graph is a concave down parabola with intercepts at <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=K\text{.}\)</span> We see that <span class="process-math">\(f(x)-x\)</span> is positive for <span class="process-math">\(x\)</span> in the interval <span class="process-math">\((0,K)\)</span> and negative in the intervals <span class="process-math">\((-\infty,0)\)</span> and <span class="process-math">\((K,\infty)\text{.}\)</span> In the context of population growth, the negative interval has no physical interpretation. (In other contexts, the same model might apply and have an interpretation.) So the population will increase whenever <span class="process-math">\(P_n \lt K\)</span> and will decrease whenever <span class="process-math">\(P_n \gt K\text{.}\)</span>
+<div class="para">This model is called the <dfn class="terminology">discrete logistic</dfn> model for population growth. We consider only the case when <span class="process-math">\(r_0 \gt 0\)</span> so that <span class="process-math">\(K \gt 0\text{.}\)</span>
 </div>
-<figure class="figure figure-like" id="projection-compare-replacement-5-3"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="generated/latex-image/projection-compare-replacement-5-3-1.svg" role="img" class="contained"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.2<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="projection-compare-replacement-5-4">The equilibrium value <span class="process-math">\(K\)</span> is called the <dfn class="terminology">carrying capacity</dfn>, representing the population that the environment can sustain. When the population is below carrying capacity, the environment can sustain growth in the population. However, when the population is above the carrying capacity, the environment puts so much pressure on the population that the next cycle results in a smaller population.</div></article><div class="para" id="projection-compare-replacement-6">It is often better to graph <span class="process-math">\(y=f(x)\)</span> and <span class="process-math">\(y=x\)</span> on the same graph. Growth in the population will correspond to intervals over which <span class="process-math">\(f(x) \gt x\)</span> and decay occurs on intervals where <span class="process-math">\(f(x) \lt x\text{.}\)</span> We can think of the line <span class="process-math">\(y=x\)</span> as the projection that would be required for exact replacement. Anytime the projection function is above this line, the population exceeds replacement. Anytime the projection function is below this line, the population falls. Points where the graphs intersect are <dfn class="terminology">fixed points</dfn> and correspond to the equilibrium values of the sequence. In addition, such a graph allows us to analyze a sequence using something called a cobweb diagram.</div></section><section class="subsection" id="cobweb-diagrams"><h3 class="heading hide-type">
+</div>
+<div class="para" id="projection-compare-replacement-6">There are two graphical perspectives to consider the increments. One method is to graph <span class="process-math">\(y = f(x) - x\text{,}\)</span> looking at the relation between the increment and the current population. Such a graph is illustrated below. When looking at the value of the <em class="emphasis">increment</em> of a sequence with respect to the current sequence value, the <em class="emphasis">roots</em> where <span class="process-math">\(f(x)-x = 0\)</span> are the fixed points. The graph is a concave down parabola with intercepts at <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=K\text{,}\)</span> which are the two fixed points for this sequence. In addition, the <em class="emphasis">sign</em> of the increments (above vs below the axis) tells us whether the sequence will increase or decrease for the next value. In this example, we see that <span class="process-math">\(f(x)-x\)</span> is positive for <span class="process-math">\(x\)</span> in the interval <span class="process-math">\((0,K)\)</span> and negative in the intervals <span class="process-math">\((-\infty,0)\)</span> and <span class="process-math">\((K,\infty)\text{.}\)</span> Based on these signs, we see the population will increase whenever <span class="process-math">\(0 \lt P_n \lt K\)</span> and will decrease whenever <span class="process-math">\(P_n \gt K\text{.}\)</span> In the context of population growth, the negative interval of <span class="process-math">\(x\)</span>-values has no physical interpretation. In other contexts where negative values could have physical meaning, seeing <span class="process-math">\(f(x)-x\)</span> being negative for <span class="process-math">\(x \lt 0\)</span> implies a sequence would decrease for values in that interval.</div>
+<figure class="figure figure-like" id="projection-compare-replacement-7"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="generated/latex-image/projection-compare-replacement-7-1.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.1<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="projection-compare-replacement-8">The equilibrium value <span class="process-math">\(K\)</span> is called the <dfn class="terminology">carrying capacity</dfn>, representing the population that the environment can sustain. When the population is below carrying capacity, the environment can sustain growth in the population. However, when the population is above the carrying capacity, the environment puts so much pressure on the population that the next cycle results in a smaller population.</div>
+<div class="para" id="projection-compare-replacement-9">The second graphical visualization is to consider a graph that shows both <span class="process-math">\(y=f(x)\)</span> and <span class="process-math">\(y=x\text{.}\)</span> Whenever <span class="process-math">\(f(x) \gt x\text{,}\)</span> the projected value <span class="process-math">\(f(x)\)</span> is predicted to be above the current value <span class="process-math">\(x\text{.}\)</span> Conversely, whenever <span class="process-math">\(f(x) \lt x\text{,}\)</span> the projected value <span class="process-math">\(f(x)\)</span> is predicted to be below the current value <span class="process-math">\(x\text{.}\)</span> The <em class="emphasis">size</em> of the increment is the vertical gap between the two graphs. A fixed point corresponds to where the graphs intersect, <span class="process-math">\(f(x)=x\text{.}\)</span> This second visualization is also used to create cobweb diagrams that allow us to visualize the entire progression of the sequence, and not just whether it will increase or decrease in the immediate next step.</div>
+<figure class="figure figure-like" id="projection-compare-replacement-10"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="generated/latex-image/projection-compare-replacement-10-1.svg" role="img" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.2<span class="period">.</span></span><span class="space"> </span></figcaption></figure></section><section class="subsection" id="cobweb-diagrams"><h3 class="heading hide-type">
 <span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.6.2</span><span class="space"> </span><span class="title">Cobweb Diagrams</span>
 </h3>
 <div class="para logical" id="cobweb-diagrams-2">
@@ -351,49 +345,68 @@ f(x) = x + (r_0 - ax) x = x + r_0 x - ax^2.
 </div>
 <div class="para" id="cobweb-diagrams-3-2">First, we consider the cobweb diagram for <span class="process-math">\(f(x) = x + 0.75x(1-x)\text{.}\)</span> The figure below is interactive in that you can see the repetition in drawing the segments of the diagram. For this projection function and initial value, the sequence steadily increases toward the fixed point. We can see that the fixed point is stable.</div>
 <figure class="figure figure-like" id="cobweb-diagrams-3-3"><iframe id="jsxgraph-cobweb-discrete-logistic-ex1" width="600" height="600" src="jsxgraph-cobweb-discrete-logistic-ex1-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.4<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="cobweb-diagrams-3-4">Next we look at the cobweb diagram for <span class="process-math">\(f(x)=x + 1.5x(1-x)\text{.}\)</span> In this example, the vertex of the parabola is to the left of the fixed point so that our sequence actually exceeds the carrying capacity and begins to oscillate above and below the equilibrium. However, it does still eventually converge to the fixed point.</div>
-<figure class="figure figure-like" id="cobweb-diagrams-3-5"><iframe id="jsxgraph-cobweb-discrete-logistic-ex2" width="600" height="600" src="jsxgraph-cobweb-discrete-logistic-ex2-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="cobweb-diagrams-3-6">Because we can, here is a figure where you can choose the value of <span class="process-math">\(r_0\)</span> (<span class="process-math">\(0 \lt r_0 \lt 3\)</span>) and the initial value <span class="process-math">\(x_0\)</span> and explore a variety of cobweb diagrams in a single figure. Notice in particular that when the value of <span class="process-math">\(r_0\)</span> is larger, so that the peak of the parabola is higher, the dynamics become more complex.</div>
-<figure class="figure figure-like" id="cobweb-diagrams-3-7"><iframe id="jsxgraph-cobweb-discrete-logistic-ex3" width="600" height="600" src="jsxgraph-cobweb-discrete-logistic-ex3-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure></article><div class="para" id="cobweb-diagrams-4">The code below generates the graph of <span class="process-math">\(y=f(x)\)</span> and <span class="process-math">\(y=x\)</span> in preparation for a cobweb diagram in Sage, with the benefit that the resulting graphic can be copied for other uses.</div>
-<div id="cobweb-diagrams-5" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Declare the variable
-var('x')
-# Declare values for parameters
-r = 1.9
-k = 10
-# Define the projection function
-f(x) = x*(1+r*(1-x/k))
-bounds = [0,15]   # [xmin,xmax]
-# Base plot
-plotF = plot(f(x), (x,bounds[0],bounds[1]), thickness=2)
-plotId = plot(x, (x,bounds[0],bounds[1]), color='red', linestyle='--')
-basePlot = plotF+plotId
-show(basePlot, figsize=[5,5])
-</script></div>
-<div class="para" id="cobweb-diagrams-6">Building on the figure above, you can then add a particular cobweb diagram corresponding to an initial value of your choice.</div>
-<div id="cobweb-diagrams-7" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># Setup needed for cobweb
-x0 = 1 # Initial value
-N = 10 # Number of cobweb steps.
-doTable = false  # Do you want a table of values?
-# Now generate the cobweb adding one line at a time.
-x = x0
-seq = [x0]
-cobweb = Graphics()
-for i in range(N):
-    # Vertical line
-    cobweb = cobweb + line([[x,x], [x,f(x)]], color='black') 
-    # Horizontal line
-    cobweb = cobweb + line([[x,f(x)],[f(x),f(x)]], color='black')
-    # Update for the next iteration.
-    x = f(x)
-    seq.append(x)
-# Draw the cobweb in a plot.
-show(basePlot+cobweb, figsize=[5,5])
+<figure class="figure figure-like" id="cobweb-diagrams-3-5"><iframe id="jsxgraph-cobweb-discrete-logistic-ex2" width="600" height="600" src="jsxgraph-cobweb-discrete-logistic-ex2-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="cobweb-diagrams-3-6">Because we can, here is an interactive figure where you can choose the value of <span class="process-math">\(r_0\)</span> (<span class="process-math">\(0 \lt r_0 \lt 3\)</span>) and the initial value <span class="process-math">\(x_0\)</span> and explore a variety of cobweb diagrams in a single figure. Notice in particular that when the value of <span class="process-math">\(r_0\)</span> is larger, so that the peak of the parabola is higher, the dynamics become more complex.</div>
+<figure class="figure figure-like" id="cobweb-diagrams-3-7"><iframe id="jsxgraph-cobweb-discrete-logistic-ex3" width="600" height="600" src="jsxgraph-cobweb-discrete-logistic-ex3-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure></article><div class="para" id="cobweb-diagrams-4">The code below demonstrates how you can create the graph of a projection function and the line <span class="process-math">\(y=x\text{,}\)</span> and then how to add a cobweb diagram corresponding to a particular value.</div>
+<figure class="listing figure-like" id="cobweb-diagrams-5"><div class="code-box"><pre class="program"><code class="language-r"># Define the projection function
+my_proj &lt;- function(x, params) {
+    with(params,
+    { # Expecting values for r0 and K
+        x_out &lt;- x + r0*x*(1-x/K)
+    }
+    )
+}
 
-# Generate a table of values only if asked
-if doTable:
-    print("Table of sequence values")
-    print("k\tx_k")
-    for i in range(len(seq)):
-        print("%d\t%f" % (i, seq[i]))
-</script></div></section><section class="subsection" id="projection-cobweb-5"><h3 class="heading hide-type">
+# Parameters for this example
+my_params &lt;- list(r0 = 0.75, K = 10)
+
+# Initial value and number of steps
+x0 &lt;- 1
+num_steps &lt;- 10
+
+# Window for the plot
+x_min &lt;- 0
+x_max &lt;- 15
+
+# Generate the smooth functions
+xvals &lt;- seq(from = x_min, to = x_max, length.out = 100)
+yvals &lt;- my_proj(xvals, my_params)
+
+library(ggplot2)
+base_plot &lt;- ggplot() +
+    geom_line(mapping = aes(x = xvals, y = yvals), color="blue", linewidth=1) +
+    geom_abline(intercept = 0, slope = 1) +
+    xlim(x_min, x_max) + ylim(x_min, x_max) +
+    labs(x = "x[n]", y = "x[n+1]")
+
+# Generate the sequence used for the cobweb
+x_seq &lt;- double(num_steps + 1)
+x_seq[1] &lt;- x0
+for (n in 1:num_steps) {
+    x_seq[n+1] &lt;- my_proj(x_seq[n], my_params)
+}
+# Create a sequence of points.
+cobweb_x &lt;- double(2*num_steps + 1)
+cobweb_y &lt;- double(2*num_steps + 1)
+# First point at (x0, 0)
+cobweb_x[1] &lt;- x0
+cobweb_y[1] &lt;- 0
+# For each step, add two points
+for (n in 1:num_steps) {
+    # Move vertically to projection function
+    cobweb_x[2*n] &lt;- x_seq[n]
+    cobweb_y[2*n] &lt;- x_seq[n+1]
+    # Move horizontally
+    cobweb_x[2*n+1] &lt;- x_seq[n+1]
+    cobweb_y[2*n+1] &lt;- x_seq[n+1]
+}
+
+# Draw the cobweb on top of the base plot
+cobweb_plot &lt;- base_plot +
+    geom_path(mapping = aes(x = cobweb_x, y = cobweb_y),
+            color="orange", linewidth=1)
+cobweb_plot
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.6.7<span class="period">.</span></span><span class="space"> </span></figcaption></figure></section><section class="subsection" id="projection-cobweb-5"><h3 class="heading hide-type">
 <span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.6.3</span><span class="space"> </span><span class="title">Cobwebs and Stability</span>
 </h3>
 <div class="para logical" id="projection-cobweb-5-2">
@@ -408,7 +421,7 @@ if doTable:
 </div>
 </div>
 <div class="para" id="projection-cobweb-5-3">A dynamic cobweb diagram of a linear projection function <span class="process-math">\(f(x)=1+a(x-1)\)</span> where you can choose the slope <span class="process-math">\(a\)</span> at the fixed point <span class="process-math">\(x^*=1\)</span> is illustrated below. Can you relate this behavior to what you observed in the discrete logistic model earlier?</div>
-<figure class="figure figure-like" id="projection-cobweb-5-4"><iframe id="jsxgraph-cobweb-linear-ex4" width="600" height="600" src="jsxgraph-cobweb-linear-ex4-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.7<span class="period">.</span></span><span class="space"> </span></figcaption></figure></section></section></div>
+<figure class="figure figure-like" id="projection-cobweb-5-4"><iframe id="jsxgraph-cobweb-linear-ex4" width="600" height="600" src="jsxgraph-cobweb-linear-ex4-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.6.8<span class="period">.</span></span><span class="space"> </span></figcaption></figure></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="projection-analysis.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="population-interventions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>

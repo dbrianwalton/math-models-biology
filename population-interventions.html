@@ -86,17 +86,17 @@ window.MathJax = {
     )}
   }
 };
-</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script>// Make *any* div with class 'sagecell-sage' an executable Sage cell
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script>// Make *any* div with class 'sagecell-r' an executable Sage cell
 // Their results will be linked, only within language type
 sagecell.makeSagecell({
-  "inputLocation": "div.sagecell-sage",
+  "inputLocation": "div.sagecell-r",
   "linked": true,
-  "linkKey": "linked-sage",
+  "linkKey": "linked-r",
   "autoeval": false,
   "languages": [
-    "sage"
+    "r"
   ],
-  "evalButtonText": "Evaluate (Sage)"
+  "evalButtonText": "Evaluate (R)"
 });
 </script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
 </script><link rel="preconnect" href="https://fonts.googleapis.com">
@@ -125,7 +125,7 @@ eBookConfig.allow_pairs = false;
 eBookConfig.enableScratchAC = false;
 eBookConfig.build_info = "";
 eBookConfig.python3 = null;
-eBookConfig.runestone_version = '7.5.5';
+eBookConfig.runestone_version = '7.5.6';
 eBookConfig.jobehost = '';
 eBookConfig.proxyuri_runs = '';
 eBookConfig.proxyuri_files = '';
@@ -289,143 +289,165 @@ eBookConfig.enable_chatcodes =  false;
 </div>
 <div class="displaymath process-math">
 \begin{equation*}
-P_{n+1} = f(P_n).
+P_{n+1} = f(P_n)\text{.}
 \end{equation*}
 </div>
 <div class="para">We are interested in the changes to the model when we introduce harvesting. Harvesting corresponds to removing additional individuals from the population than occur naturally through death and emigration. If we let <span class="process-math">\(H_{n+1}\)</span> be the sequence for the number of individuals harvested during the <span class="process-math">\((n+1)\)</span>st cycle for the population, then the new model for our sequence will be defined through</div>
 <div class="displaymath process-math">
 \begin{equation*}
-P_{n+1} = f(P_n) - H_{n+1}.
+P_{n+1} = f(P_n) - H_{n+1}\text{.}
 \end{equation*}
 </div>
 </div>
 <div class="para" id="population-interventions-2-4">The two simplest models for harvesting correspond to a constant harvesting rate and a proportional harvesting rate. A constant harvesting rate occurs when the same number of individuals are removed from the population during each cycle, independent of the current size of the population. A proportional harvesting rate occurs when the harvesting efforts remove a number of individuals that is proportional to the population size. This model is often used to approximate what happens when harvesting effort is constant but success in capturing an individual is proportional to the population size. Other models might also be formed that capture the idea that it is harder to find individuals to harvest when the population is small with nonlinear functions.</div>
-<div class="para" id="population-interventions-2-5">In addition, we will explore the effect of intervention on the potential equilibrium values of the model as well as the stability of those equilibria. Such fundamental changes in the behavior of the model are known as <dfn class="terminology">bifurcations</dfn>, and this section will introduce some examples of bifurcations.</div></section><section class="subsection" id="population-constant-harvesting"><h3 class="heading hide-type">
+<div class="para" id="population-interventions-2-5">In addition, we will explore the effect of intervention on the potential equilibrium values of the model as well as the stability of those equilibria. A fundamental structural change in the behavior of the model such as the creation or loss of an equilibrium or a change to an existing equilibrium’s stability is called a <dfn class="terminology">bifurcation</dfn>. This section will introduce some examples of bifurcations.</div></section><section class="subsection" id="population-constant-harvesting"><h3 class="heading hide-type">
 <span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.7.1</span><span class="space"> </span><span class="title">Constant Harvesting</span>
 </h3>
 <div class="para logical" id="population-constant-harvesting-2">
 <div class="para">The constant harvesting rate results in a model</div>
 <div class="displaymath process-math">
 \begin{equation*}
-P_{n+1} = f(P_n) - H, 
+P_{n+1} = f(P_n) - H\text{,}
 \end{equation*}
 </div>
-<div class="para">where <span class="process-math">\(H\)</span> is the number of individuals harvested per cycle. In the context of the graphical analysis of the projection function, this corresponds to shifting the graph of the projection function vertically downward by the value of <span class="process-math">\(H\text{.}\)</span> This changes the values of fixed points and for large enough values of <span class="process-math">\(H\)</span> make the fixed points vanish.</div>
+<div class="para">where <span class="process-math">\(H\)</span> is the number of individuals harvested per cycle. In the context of the graphical analysis of the projection function, this corresponds to shifting the graph of the projection function vertically downward by the value of <span class="process-math">\(H\text{.}\)</span> This changes the values of fixed points and for large enough values of <span class="process-math">\(H\)</span> can make the fixed points vanish.</div>
 </div>
 <article class="example example-like" id="population-constant-harvesting-3"><h4 class="heading">
 <span class="type">Example</span><span class="space"> </span><span class="codenumber">2.7.1</span><span class="period">.</span>
 </h4>
-<div class="para" id="population-constant-harvesting-3-1">Consider the discrete logistic model with projection function <span class="process-math">\(f(x) = (1+r_0)x - \alpha x^2.\)</span> The natural fixed points for this model are at <span class="process-math">\(P=0\)</span> and at <span class="process-math">\(P=K=\frac{r_0}{\alpha}\text{.}\)</span> Once constant harvesting is introduced, the modified projection function is given by <span class="process-math">\(f_H(x) = (1+r_0)x - \alpha x^2 - H\text{.}\)</span>
+<div class="para" id="population-constant-harvesting-3-1">Consider the discrete logistic model using the projection function parametrized as <span class="process-math">\(f(x) = (1+r_0)x - a x^2\text{.}\)</span> As discussed in <a href="projection-analysis.html#ex-discrete-logistic-projection-analysis" class="xref" data-knowl="./knowl/xref/ex-discrete-logistic-projection-analysis.html" data-reveal-label="Reveal" data-close-label="Close" title="Example 2.5.9">Example 2.5.9</a>, the natural fixed points for this model are at <span class="process-math">\(P=0\)</span> and at <span class="process-math">\(P=K=\frac{r_0}{a}\text{.}\)</span> Once constant harvesting is introduced, the modified projection function is given by <span class="process-math">\(f_H(x) = (1+r_0)x - a x^2 - H\text{.}\)</span>
 </div>
 <div class="para logical" id="population-constant-harvesting-3-2">
 <div class="para">The fixed points are the solution to the quadratic equation</div>
 <div class="displaymath process-math">
 \begin{equation*}
--\alpha x^2 + r_0 x - H = 0.
+-a x^2 + r_0 x - H = 0\text{.}
 \end{equation*}
 </div>
 <div class="para">The solutions are given by the quadratic formula</div>
 <div class="displaymath process-math">
 \begin{equation*}
-x = \frac{r_0 \pm \sqrt{r_0^2 -4 \alpha H}}{2\alpha}.
+x = \frac{r_0 \pm \sqrt{r_0^2 -4 a H}}{2a}\text{.}
 \end{equation*}
 </div>
-<div class="para">When <span class="process-math">\(H=0\text{,}\)</span> we recover the unperturbed fixed points. As <span class="process-math">\(H\)</span> increases, the expression inside the square root, <span class="process-math">\(r_0^2-4\alpha H\text{,}\)</span> decreases until it equals zero when <span class="process-math">\(H = \frac{r_0^2}{4 \alpha}\text{.}\)</span> For any value of <span class="process-math">\(H \gt \frac{r_0^2}{4 \alpha}\text{,}\)</span> there are no fixed points, a catastrophic result for the population that is predicted to decrease indefinitely.</div>
+<div class="para">When <span class="process-math">\(H=0\text{,}\)</span> we recover the unperturbed fixed points. As <span class="process-math">\(H\)</span> increases, the expression inside the square root, <span class="process-math">\(r_0^2-4a H\text{,}\)</span> decreases until it equals zero at the value <span class="process-math">\(H = \frac{r_0^2}{4 a}\text{.}\)</span> For any value of <span class="process-math">\(H \gt \frac{r_0^2}{4 a}\text{,}\)</span> there are no fixed points, a catastrophic result for the population that is predicted to decrease indefinitely.</div>
 </div>
 <div class="para" id="population-constant-harvesting-3-3">You should note that for <span class="process-math">\(H \gt 0\text{,}\)</span> <span class="process-math">\(P=0\)</span> is no longer a fixed point. Mathematically, even though there are no individuals, the model still harvests individuals resulting in a negative population. Although this does not make physical sense, it is biologically significant for very small populations. It would indicate that for small enough populations, constant harvesting would eradicate the population in a single step. And for populations that are below the lower fixed point, the population would be decreasing steadily towards this same fate.</div>
-<div class="para" id="population-constant-harvesting-3-4">You can explore the cobweb diagram for this situation for the discrete logistic model with <span class="process-math">\(r_0 = 1.8\)</span> and <span class="process-math">\(\alpha = 0.01\)</span> and varying values for <span class="process-math">\(H\text{.}\)</span> The bifurcation occurs when <span class="process-math">\(H = \frac{r_0^2}{4\alpha} = 81\text{.}\)</span> Notice that if your initial condition is below the lower fixed point, the population will die off. Also notice that if <span class="process-math">\(H\)</span> is above the bifurcation value, there is no population that will be able to survive.</div>
-<figure class="figure figure-like" id="population-constant-harvesting-3-5"><iframe id="jsxgraph-constant-harvest-cobweb-ex1" width="600" height="450" src="jsxgraph-constant-harvest-cobweb-ex1-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.7.2<span class="period">.</span></span><span class="space"> </span></figcaption></figure></article><div class="para" id="population-constant-harvesting-4">When working with bifurcations, it is often useful to create a <dfn class="terminology">bifurcation diagram</dfn>. For the example above, our bifurcation diagram might show the values of the fixed points as they depend on the value of <span class="process-math">\(H\text{.}\)</span> In addition, by changing the line style of the graph, we can indicate the local stability of the fixed points. For the parameter values used, the upper fixed point was stable so long as it existed and the lower fixed point was unstable. The following Sage code generates a graph that we can use.</div>
-<div id="population-constant-harvesting-5" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># H is the actual parameter that we vary
-var('H')
-# r0 and alpha are parameters with specific values
-r0 = 1.8
-alpha = 0.01
-# Create a plot using the equation of the upper fixed point
-upperBranch = plot( (r0 + sqrt(r0^2-4*alpha*H))/(2*alpha), (H,0,81),
-    color="blue", thickness=2 )
-# Create a plot using the equation of the lower fixed point
-lowerBranch = plot( (r0 - sqrt(r0^2-4*alpha*H))/(2*alpha), (H,0,81),
-    color="red", thickness=2, linestyle="--" )
-# Draw the figure combining the two plots
-show(upperBranch+lowerBranch,figsize=[4,3],axes_labels=['$H$','$P^*$'])
+<div class="para" id="population-constant-harvesting-3-4">You can explore the cobweb diagram for this situation for the discrete logistic model with <span class="process-math">\(r_0 = 1.8\)</span> and <span class="process-math">\(a = 0.01\)</span> and varying values for <span class="process-math">\(H\text{.}\)</span> The bifurcation occurs when <span class="process-math">\(H = \frac{r_0^2}{4a} = 81\text{.}\)</span> Notice that if your initial condition is below the lower fixed point, the population will die off. Also notice that if <span class="process-math">\(H\)</span> is above the bifurcation value, there is no population that will be able to survive.</div>
+<figure class="figure figure-like" id="population-constant-harvesting-3-5"><iframe id="jsxgraph-constant-harvest-cobweb-ex1" width="600" height="450" src="jsxgraph-constant-harvest-cobweb-ex1-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.7.2<span class="period">.</span></span><span class="space"> </span></figcaption></figure></article><div class="para" id="population-constant-harvesting-4">When working with bifurcations, it is often useful to create a <dfn class="terminology">bifurcation diagram</dfn>. For the example above, our bifurcation diagram might show the values of the fixed points as they depend on the value of <span class="process-math">\(H\text{.}\)</span> In addition, by changing the line style of the graph, we can indicate the local stability of the fixed points. A dotted or dashed line is often chosen to represent an unstablew fixed point. For the parameter values used, the upper fixed point was stable so long as it existed and the lower fixed point was unstable. The following code generates a graph that we can use.</div>
+<figure class="listing figure-like" id="population-constant-harvesting-5"><div class="code-box"><pre class="program"><code class="language-r"># Parameters for the diagram
+r0 &lt;- 1.8
+a &lt;- 0.01
+
+# We calculated the bifurcation point as H=81
+H_vals &lt;- seq(from = 0, to = 81, length.out = 100)
+
+# For these values of H, calculate the two fixed point locations
+fp1 &lt;- (r0 + sqrt(r0^2 - 4 * a * H_vals))/(2*a)
+fp2 &lt;- (r0 - sqrt(r0^2 - 4 * a * H_vals))/(2*a)
+
+# Make a graph
+library(ggplot2)
+ggplot() +
+  labs(x = "H", y = "P") +
+  geom_line(mapping = aes(x = H_vals, y = fp1, color="stable"),
+            linewidth = 1) +
+  geom_line(mapping = aes(x = H_vals, y = fp2, color="unstable"),
+            linewidth = 1, linetype = "dotted") +
+  scale_color_manual(name = "Stability",
+                     values = c("stable" = "blue", "unstable" = "red"))
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.7.3<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 90%; margin-left: 5%; margin-right: 5%;"><img src="external/images/discrete-logistic-const-harvesting-bifurcation.png" class="contained"></div>
+<div id="population-constant-harvesting-7" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
 </script></div>
-<div class="para" id="population-constant-harvesting-6">This type of bifurcation where two fixed points with opposite stability merge and subsequently vanish is called a <dfn class="terminology">saddle node bifurcation</dfn>. The bifurcation itself occurs at the parameter value where the two fixed points coalesce.</div></section><section class="subsection" id="population-interventions-4"><h3 class="heading hide-type">
+<div class="para" id="population-constant-harvesting-8">This type of bifurcation where two fixed points with opposite stability merge and subsequently vanish is called a <dfn class="terminology">saddle node bifurcation</dfn>. The bifurcation itself occurs at the parameter value where the two fixed points coalesce.</div></section><section class="subsection" id="population-interventions-4"><h3 class="heading hide-type">
 <span class="type">Subsection</span><span class="space"> </span><span class="codenumber">2.7.2</span><span class="space"> </span><span class="title">Proportional Harvesting</span>
 </h3>
 <div class="para logical" id="population-interventions-4-2">
-<div class="para">The proportional harvesting rate results in a model</div>
+<div class="para">A proportional harvesting rate results in a model</div>
 <div class="displaymath process-math">
 \begin{equation*}
-P_{n+1} = f(P_n) - h \cdot P_n, 
+P_{n+1} = f(P_n) - h \cdot P_n\text{,}
 \end{equation*}
 </div>
 <div class="para">where <span class="process-math">\(h\)</span> is the proportionality constant of <span class="process-math">\(H_{n+1} = h P_n\text{.}\)</span> For small populations, there will be small numbers harvested; for large populations, there will be large numbers harvested. If <span class="process-math">\(f(x)\)</span> has a fixed point at <span class="process-math">\(x=0\text{,}\)</span> the harvesting model will also have that fixed point. The following example considers the effect of proportional harvesting on the discrete logistic model.</div>
 </div>
 <article class="example example-like" id="population-interventions-4-3"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.7.3</span><span class="period">.</span>
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.7.4</span><span class="period">.</span>
 </h4>
-<div class="para" id="population-interventions-4-3-1">Again consider the discrete logistic model with projection function <span class="process-math">\(f(x) = (1+r_0)x - \alpha x^2\)</span> with fixed points at <span class="process-math">\(P=0\)</span> and at <span class="process-math">\(P=K=\frac{r_0}{\alpha}\text{.}\)</span> With proportional harvesting, the modified projection function is given by <span class="process-math">\(f_h(x) = (1+r_0)x - \alpha x^2 - hx\text{.}\)</span>
+<div class="para" id="population-interventions-4-3-1">Again consider the discrete logistic model parameterized by the projection function <span class="process-math">\(f(x) = (1+r_0)x - a x^2\)</span> with fixed points at <span class="process-math">\(P=0\)</span> and at <span class="process-math">\(P=K=\frac{r_0}{a}\text{.}\)</span> With proportional harvesting, the modified projection function is given by <span class="process-math">\(f_h(x) = (1+r_0)x - a x^2 - hx\)</span>
 </div>
 <div class="para logical" id="population-interventions-4-3-2">
 <div class="para">The fixed point equation</div>
 <div class="displaymath process-math">
 \begin{equation*}
-(1+r_0)x - \alpha x^2 - hx = x
+(1+r_0)x - a x^2 - hx = x
 \end{equation*}
 </div>
 <div class="para">can be rewritten in an equivalent factored form</div>
 <div class="displaymath process-math">
 \begin{equation*}
-x\big((r_0-h)-\alpha x\big)=0.
+x\big((r_0-h)-a x\big)=0\text{.}
 \end{equation*}
 </div>
-<div class="para">The fixed points of the perturbed model are <span class="process-math">\(x = 0\)</span> and <span class="process-math">\(x=\frac{r_0-h}{\alpha}\text{.}\)</span> When <span class="process-math">\(h=0\text{,}\)</span> the second fixed point corresponds to our original value <span class="process-math">\(K=\frac{r_0}{\alpha}\text{.}\)</span> As <span class="process-math">\(h\)</span> increases, location of the second fixed point steadily decreases. When <span class="process-math">\(h=r_0\text{,}\)</span> the two fixed points overlap, and when <span class="process-math">\(h \gt r_0\text{,}\)</span> the second fixed point is a negative value.</div>
+<div class="para">The fixed points of the perturbed model are <span class="process-math">\(x = 0\)</span> and <span class="process-math">\(x=\frac{r_0-h}{a}\text{.}\)</span> When <span class="process-math">\(h=0\text{,}\)</span> the second fixed point corresponds to our original value <span class="process-math">\(K=\frac{r_0}{a}\text{.}\)</span> As <span class="process-math">\(h\)</span> increases, the location of the second fixed point steadily decreases. When <span class="process-math">\(h=r_0\text{,}\)</span> the two fixed points overlap, and when <span class="process-math">\(h \gt r_0\text{,}\)</span> the second fixed point is a negative value.</div>
 </div>
-<div class="para" id="population-interventions-4-3-3">You can explore the cobweb diagram for this situation for the discrete logistic model with <span class="process-math">\(r_0 = 1.8\)</span> and <span class="process-math">\(\alpha = 0.01\)</span> and varying values for <span class="process-math">\(h\text{.}\)</span> The bifurcation occurs when <span class="process-math">\(h = r_0 = 1.8\text{.}\)</span> Notice that if your initial condition is between the two fixed points, the population increase. But if the harvesting rate exceeds the intrinsic per capita net growth rate <span class="process-math">\(h \gt r_0\text{,}\)</span> then the population converges to an extinct state.</div>
-<figure class="figure figure-like" id="population-interventions-4-3-4"><iframe id="jsxgraph-proportional-harvest-cobweb-ex2" width="600" height="600" src="jsxgraph-proportional-harvest-cobweb-ex2-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.7.4<span class="period">.</span></span><span class="space"> </span></figcaption></figure></article><div class="para logical" id="population-interventions-4-4">
+<div class="para" id="population-interventions-4-3-3">You can explore the cobweb diagram for this situation for the discrete logistic model with <span class="process-math">\(r_0 = 1.8\)</span> and <span class="process-math">\(a = 0.01\)</span> and varying values for <span class="process-math">\(h\text{.}\)</span> The bifurcation occurs when <span class="process-math">\(h = r_0 = 1.8\text{.}\)</span> Notice that if your initial condition is between the two fixed points, the population increase. But if the harvesting rate exceeds the intrinsic per capita net growth rate <span class="process-math">\(h \gt r_0\text{,}\)</span> then the population converges to an extinct state.</div>
+<figure class="figure figure-like" id="population-interventions-4-3-4"><iframe id="jsxgraph-proportional-harvest-cobweb-ex2" width="600" height="600" src="jsxgraph-proportional-harvest-cobweb-ex2-if.html"></iframe><figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">2.7.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure></article><div class="para logical" id="population-interventions-4-4">
 <div class="para">Before generating a bifurcation diagram, let us consider the stability of our fixed points. The projection function that includes harvesting is given by</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f(x) = (1+r_0)x - \alpha x^2 - h x.
+f(x) = (1+r_0)x - a x^2 - h x\text{.}
 \end{equation*}
 </div>
 <div class="para">The derivative is given by</div>
 <div class="displaymath process-math">
 \begin{equation*}
-f'(x) = (1+r_0 - h) - 2 \alpha x.
+f'(x) = (1+r_0 - h) - 2 a x\text{.}
 \end{equation*}
 </div>
-<div class="para">Finding the slope at the fixed points, <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=\frac{r_0-h}{\alpha}\text{,}\)</span> we find</div>
+<div class="para">Finding the slope at the fixed points, <span class="process-math">\(x=0\)</span> and <span class="process-math">\(x=\frac{r_0-h}{a}\text{,}\)</span> we find</div>
 <div class="displaymath process-math" id="population-interventions-4-4-5">
 \begin{align*}
 f'(0) &amp;= 1 + r_0 - h, \\
-f'(\frac{r_0-h}{\alpha}) &amp;= 1+r_0-h - 2(r_0-h) = 1-(r_0-h).
+f'(\frac{r_0-h}{a}) &amp;= 1+r_0-h - 2(r_0-h) = 1-(r_0-h)
 \end{align*}
 </div>
 <div class="para">Consequently, we see that <span class="process-math">\(x^*=0\)</span> is locally unstable when <span class="process-math">\(h \lt r_0\text{.}\)</span> That is, a small population will be able to grow so long as the per capita net growth rate exceeds the per capita harvesting rate. However, once <span class="process-math">\(h \gt r_0\text{,}\)</span> the slope <span class="process-math">\(f'(0)\)</span> has value less than 1 and the fixed point is stable. This means that a small population will converge towards extinction. (A population does not want extinction to be a stable equilibrium.) The other fixed point has the reverse stability. Note that it is possible for instability if <span class="process-math">\((r_0-h) \gt 2\text{,}\)</span> where the model would introduce unstable oscillations around the fixed point. For the parameters explored above, this does not happen.</div>
 </div>
-<div class="para" id="population-interventions-4-5">The following Sage code generates a bifurcation diagram. Note that the plots for the fixed points are divided into two parts to capture the change in stability.</div>
-<div id="population-interventions-4-6" class="ptx-sagecell sagecell-sage"><script type="text/x-sage"># h is the actual parameter that we vary
-var('h')
-# r0 and alpha are parameters with specific values
-r0 = 1.8
-alpha = 0.01
-# Create a plot using the equation of the upper fixed point
-upperBranch1 = plot( (r0-h)/alpha, (h,0,r0),
-    color="blue", thickness=2 )
-upperBranch2 = plot( (r0-h)/alpha, (h,r0,2.5),
-    color="red", thickness=2, linestyle="--" )
-upperBranch = upperBranch1+upperBranch2
-# Create a plot using the equation of the lower fixed point
-lowerBranch1 = plot( 0, (h,0,r0),
-    color="red", thickness=2, linestyle="--" )
-lowerBranch2 = plot( 0, (h,r0,2.5),
-    color="blue", thickness=2 )
-lowerBranch = lowerBranch1+lowerBranch2
-# Draw the figure combining the plots
-show(upperBranch+lowerBranch,figsize=[4,3],axes_labels=['$h$','$P^*$'])
+<div class="para" id="population-interventions-4-5">The following code generates a bifurcation diagram. Note that the plots for the fixed points are divided into two parts to capture the change in stability.</div>
+<figure class="listing figure-like" id="population-interventions-4-6"><div class="code-box"><pre class="program"><code class="language-r"># Parameters for the diagram
+r0 &lt;- 1.8
+a &lt;- 0.01
+
+# We calculated the bifurcation point as h=1.8
+h_vals_1 &lt;- seq(from = 0, to = 1.8, length.out = 10)
+fp1_1 &lt;- rep(0, length(h_vals_1)) # Need as many "0" as values of h
+fp2_1 &lt;- (r0 - h_vals_1)/(a)
+
+h_vals_2 &lt;- seq(from = 1.8, to = 2.5, length.out = 10)
+fp1_2 &lt;- rep(0, length(h_vals_2)) # Need as many "0" as values of h
+fp2_2 &lt;- (r0 - h_vals_2)/(a)
+
+# Make a graph
+library(ggplot2)
+ggplot() +
+  labs(x = "h", y = "P") +
+  geom_line(mapping = aes(x = h_vals_1, y = fp1_1, color="unstable"),
+            linewidth = 1, linetype = "dotted") +
+  geom_line(mapping = aes(x = h_vals_2, y = fp1_2, color="stable"),
+            linewidth = 1) +
+  geom_line(mapping = aes(x = h_vals_1, y = fp2_1, color="stable"),
+            linewidth = 1) +
+  geom_line(mapping = aes(x = h_vals_2, y = fp2_2, color="unstable"),
+            linewidth = 1, linetype = "dotted") +
+  scale_color_manual(name = "Stability",
+                     values = c("stable" = "blue", "unstable" = "red"))
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">2.7.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="image-box" style="width: 90%; margin-left: 5%; margin-right: 5%;"><img src="external/images/discrete-logistic-prop-harvesting-bifurcation.png" class="contained"></div>
+<div id="population-interventions-4-8" class="ptx-sagecell sagecell-r"><script type="text/x-sage">
 </script></div>
-<div class="para" id="population-interventions-4-7">This type of bifurcation where two fixed points with opposite stability cross through one another and subsequently switch stability is called a <dfn class="terminology">transcritical bifurcation</dfn>. The bifurcation itself occurs at the parameter value where the two fixed points coalesce, in this case when <span class="process-math">\(h=r_0\text{.}\)</span>
+<div class="para" id="population-interventions-4-9">This type of bifurcation where two fixed points with opposite stability cross through one another and subsequently switch stability is called a <dfn class="terminology">transcritical bifurcation</dfn>. The bifurcation itself occurs at the parameter value where the two fixed points coalesce, in this case when <span class="process-math">\(h=r_0\text{.}\)</span>
 </div></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="projection-cobweb.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="intro-differential-equations.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
