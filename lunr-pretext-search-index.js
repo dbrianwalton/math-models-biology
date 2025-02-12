@@ -1351,218 +1351,119 @@ var ptx_lunr_docs = [
   "body": "transcritical bifurcation "
 },
 {
-  "id": "intro-differential-equations",
+  "id": "sec-structure-two-stage",
   "level": "1",
-  "url": "intro-differential-equations.html",
+  "url": "sec-structure-two-stage.html",
   "type": "Section",
-  "number": "2.8",
-  "title": "Introduction to Differential Equations",
-  "body": " Introduction to Differential Equations   Sequences are useful for modeling quantities that change according to a regular cycle and we only need to predict or measure the quantity at the same moment in a cycle. For a population that has an annual reproductive cycle, we may only need to model the population size at a particular time each year. Even for populations that change continuously, we might only wish to model the value at regular intervals. We call these models discrete time models . However, we often desire models that give us functions describing a quantity of interest at arbitrary times and not just at discrete moments. Models that accomplish this are called continuous time models . Differential equation models are examples of continuous time models.    Rates of Change  In order to motivate differential equations, let us think back to population models where the population changed according to births and deaths. For discrete time models, we established functions that described how many births or deaths to add over the course of a cycle. Such a function represented the total accumulated births or deaths, regardless of exactly when those events occurred. For a continuous time model, we instead think in terms of the rate at which births and deaths are occurring.  A rate of change represents the ratio between the changes of two covarying variables. One of the simplest examples is velocity which is the rate of change of distance traveled with respect to time, for which you probably have heard the saying, distance equals rate times time. Mathematically, this is saying that the distance traveled is proportional to the time spent travelling and the rate (velocity) is the proportionality constant. However, this is technically only true for constant rates of change. Calculus introduced the derivative as the mathematical quantity that measures the instantaneous rate of change . This rate of change results from the idea of computing the limit of an average rate of change.  Consider a quantity that is a function of time . The instantaneous rate of change of with respect to at a particular moment is defined as the derivative Thinking of this in reverse, this is telling us that the value can approximately be found as That is, the increment of change in is approximately just the derivative times the increment of time. The approximation improves as the increment of time decreases and is exact in the limit.    Differential Equations  A differential equation is an equation that defines the rate of change (a derivative) for a quantity. Calculus classes often compute derivatives and write them with formulas involving the independent variable. These are technically differential equations, but they are not especially useful in modeling.   Given , we can find the derivative . This equation is a differential equation involving the independent variable . The original function is a solution to the differential equation because the differential equation is true for that function. However, is also a solution to the same differential equation. In general, the solution must be of the form for some constant . Solutions are not unique unless additional restrictions are provided. That is the purpose of the integration constant .   Differential equations in modeling occur when the formula that defines the rate of change is a function involving the dependent variable and not just the independent variable. To identify a unique solution, we also need an initial value.   The differential equation defines the rate of change using a formula involving the dependent variable . Recall that the exponential function has this behavior since . That is, since , we have just discovered that and are the same, which is precisely what the equation means.  In fact, will be a solution for any value of . The derivative, for this formula will be The value of depends on the initial value for the function.     Solutions to Differential Equations  There are many strategies for trying to solve differential equations. These strategies are taught in courses exclusively about differential equations. Our emphasis will be on creating models using differential equations and understanding the behavior of the solutions without requiring formulas as solutions. The following theorem guarantees that a differential equation with an initial value has a unique solution under reasonable conditions.   Existence and Uniqueness of Initial Value Problems   Suppose that represents a continuous function of both and such that exists and is bounded (i.e., small changes in should result in small changes in . Then the differential equation with initial value has a unique solution for some interval with .    The proof is outside the scope of this text but is based on the convergence of approximations.    Note that the existence-uniqueness theorem only guarantees that a solution will exist on an interval near the initial value. Sometimes, solutions exist on very short intervals. If the value of the function is very large, then the solution might run away to infinity. Other times, solutions might exist for all real numbers. The uniqueness property indicates that for any initial value, there can only be one solution.  Knowing that solutions exist, even if we can't find their formulas, we can turn to computers to help us approximate their values using numerical algorithms. One common numerical method will be to approximate the value of the solution at specific values. (Asking for the entire function is usually too much.) The following Sage examples illustrate how we might find such approximations.   Find numerical approximations for the solution of the differential equation with various initial values . The Sage script below allows you to vary the initial value and create a table of approximating values as well as generate a graph of the approximation.      Slope Fields  In addition to solving the differential equation numerically, we can explore a differential equation graphically through a plot called a slope field . Although a differential equation could be any equation that involves the derivative, in modeling we usually think of a differential equation in the form presented in the existence uniqueness theorem where the derivative is equal to an expression that depends on the independent and dependent variables, such as Because the value of the derivative represents a slope, this equation allows us to define what the slope would be at every point in the -plane.   Slope Field   A slope field is a geometric representation of a differential equation wherein every point in the plane is represented by a line segment at that point having the slope . Because every point is impossible to visualize, in practice the graph only shows the slope field at points on a grid of equally spaced points.    The solution to a differential equation with an initial value will be a function whose graph includes the point and then at every point has a tangent line that has the same slope as the slope field at that point. This means that the curve follows the direction of the arrows.  Computer packages allow us to easily generate slope fields. Evaluate the following Sage scripts to see a variety of different examples.   The differential equation has a rate formula that is constant. This means that every point has the same slope. Solutions will follow straight lines.   Note that there are infinitely many different solutions corresponding to a family of parallel lines with slope 3. Given any particular point (initial value), there will only be one of those lines passing through the point. That is the uniqueness of solutions of differential equations.    The differential equation has a rate formula . The rate formula in this case depends only on the independent variable . You should notice that the slope is the same at points that are on the same vertical line, .   In calculus, we learned that can be solved for using antiderivatives, where we get , where is a constant of integration. This corresponds to a horizontal translation or shift, which is the appropriate analogue for the parallel lines in the first example. That is, we should think of the lines in the first example as vertical shifts of one another.    The differential equation has a rate formula . The rate formula uses the same operations as the previous example but in terms of the dependent variable . You should notice that the slope is the same at points that are on the same horizontal line .   Notice that solutions are no longer vertical translations or shifts of one another. However, you should see that every solution will have corresponding solutions that are horizontal translations . Different curves correspond to different initial conditions. In this example, we can see that there are three basic classes of solutions. Above a certain point, the graphs grow without bound and head to infinity at some finite time. (This is an example of why the existence uniqueness theorem only guaranteed a solution for a limited interval.) Between two values that we will soon learn are equilibrium solutions, solutions form a transition from the upper equilibrium (unstable) to the lower equilibrium (stable). Solutions that begin below the lower equilibrium all rise and asymptotically approach the stable equilibrium.    The differential equation has a rate formula . Because this rate formula depends on both and , solutions do not share either horizontal or vertical translations.      "
+  "number": "3.1",
+  "title": "Two Stage Populations",
+  "body": " Two Stage Populations  To begin the study of populations with different stages, we first think of a population that has exactly two stages. A particular example is of a population of plants that mature in a single growing season to release seeds at the end of the growing season. Because some seeds might not germinate immediately, we will want to keep track of how many seeds remain viable but still in the ground. We call these seeds the seed bank   With this context in mind, let us consider a population of plants that has two state variables for each growing season. The first state variable is the number of viable but ungerminated seeds in the ground, . The second state variable is the number of plants, . For precision, we need to specify a specific time in the season when the measurements are made. Plants and seeds present at the start of the season may not survive to the end of the season. For this discussion, we will focus on the start of the growing season.  What will happen to the seeds over the course of a season? Some seeds will be eaten; others will be damaged or wash away. By the end of the season, only a fraction of those seeds will remain. At that time, the plants that matured will release a new batch of seeds adding to the seed bank. Then, at the start of the next growing season, some fraction of the seeds will germinate and become plants while the rest remain in the seed bank subject to additional losses during the season.  What will happen to the plants? Many species of plants are annual plants, meaning that at the end of one growing season the plant dies. Others are perrenial , meaning that a plant has a probability of surviving to the next year and repeat its reproductive cycle. Perrenial plants have the potential of more complicated life cycles, where reproduction does not necessarily happen every year. Additionally, a plant's ability to reproduce generally increases with the size of the plant so that surviving plants are able to produce more seeds. We will consider here only a simplified case where plants are either annual or there is no observable difference between plants of different ages.  We represent the dynamics for the population graphically by including a box for each state variable. We let represent the number of seeds in the seed bank that are viable but are not germinating, and we let represent the number of plants at the start of the growing season. Our state vector consists of the pair of values, . We include arrows between the state variables to represent transitions of existing individuals. Arrows into each state not coming from other states represent new individuals, either new seeds that did not germinate or new plants that germinated in their first season. However, we include dotted arrows to indicate the source of those new seeds or plants. An arrow leaving and re-entering the same variable may optionally be present to indicate an explicit representation of survival within a state to the next season. Arrows leaving a state but not entering another state represent removal from the system, whether by consumption, death or decay.   Model for a simple seedbank showing possible sources of change to the number of seeds and germinated plants.    The visual model helps us think through the different contributions that our model will need. The seedbank will need to account for new seeds from the previous season, survival of seeds that remain in the seedbank for the next year, and the reduction to the seedbank due to germination (transition to plants) or other losses. Similarly, the number of plants will need to account for newly germinated plants that from new seeds coming from the previous season as well as from seeds that were in the seedbank, survival of plants from the previous season, and losses of plants.  Many quantities can be calculated using values observed in the population. Given the number of plants that start a season, we might be able to observe the fraction that survive to the end of the season and release. Returning at the start of the next season, we could similarly count the fraction of plants that survive into the next season. For those plants that do release seeds, we might perform an observational experiment to count the average number of seeds that are released. An experiment might also be able to measure what fraction of seeds that are released germinate each year following their original planting.  A fraction of the plants at the start of the season make it to the end of the growing season Consequently, the number of plants that release seeds at the end of the th growing season is given by . Next suppose that a typical plant releases an average of (Greek letter sigma for seeds ) seeds. The total number of released seeds is therefore calculated by . A fraction of those seeds will germinate immediately while the other fraction are added to the seed bank. Consequently, the number of new seeds added to the seed bank for will be . The number of new plants counted as part of sprouting immediately from seeds will be . In addition, some fraction of plants in season will die at the end of the season; the fraction survive to the start of the next season.  For the seedbank, only a fraction of the seeds at the start of one growing season will survive to the start of the next growing season. If we let be the fraction that does not survive the season, then is the fraction that does survive. Then there will be a fraction of surviving seeds that germinate. This fraction could depend on the age of the seed, but the simplest model might use the same fraction as mentioned earlier. Consequently, the number of new plants resulting from germination of seeds in the seedbank will be calculated as . The number of seeds that survive but remain in the seedbank will be .  Based on our reasoning, if we had all of those parameters calculated experimentally, we could create a mathematical model for our seedbank model using the equations The first term in represents survival of seeds in the seedbank that do not germinate; the second term represents the new seeds added to the seedbank from plants in the previous season. The first term in represents germination of seeds that were previously in the seedbank; the second term represents the germination of seeds that were released the previous season; and the third term represents the survival of plants from the previous season. For annual plants, all plants die at the end of the season so that .  When we do not know the detailed parameter values, we might rewrite the model with single parameters, such as follows: Some of the parameters can then be inferred. Comparing the two models, we see that so that . Then we could calculate . In the case that (annual plants), we can find .  We can now explore the dynamics of this model using recursive sequences. Because there are two different state variables, each state variable gets its own projection function. Each of those functions depends on both state variables. Our initial state will also need a value for each of and . We will need to update both sequences within the same loop. When writing code, it is often better to use variable names for our parameters that reflect the meaning rather than the short symbol used within a mathematical equation. For example, instead of a short symbol for , we might use a variable named plant_death since the symbol represents the fraction of plants that die.  To visualize the dynamics of the population, we will start by looking at the values of and versus . The scales for these values are very different, so we will configure our plot to have scales for the two values on different sides of the graph.    # Parameters for the model plant_death <- 1 # mu_p: Fraction of plants that die after a season seed_death <- 0.9 # mu_s: Fraction of seeds in seedbank that do not survive plant_to_seed <- 0.2 # f: Fraction of plants that survive to seed seeds_per_plant <- 25 # sigma: Average number of seeds per plant seed_germinate <- 0.2 # alpha: Fraction of seeds that germinate # Calculated parameters a <- (1-seed_germinate) * (1-seed_death) b <- (1-seed_germinate) * seeds_per_plant c <- seed_germinate * (1-seed_death) d <- seed_germinate * (seeds_per_plant + 1 - plant_death) * plant_to_seed # Initial values and length of calculation S0 <- 0 P0 <- 20 N <- 15 # Create space for the data t_vec <- 0:N S_vec <- double(N+1) P_vec <- double(N+1) # Generate the sequences S_vec[1] <- S0 P_vec[1] <- P0 for (n in 1:N) { S_vec[n+1] <- a * S_vec[n] + b * P_vec[n] P_vec[n+1] <- c * S_vec[n] + d * P_vec[n] } my_plot <- ggplot() + geom_point(mapping = aes(x = t_vec, y = S_vec, color=\"S\")) + geom_path(mapping = aes(x = t_vec, y = S_vec, color=\"S\"), linetype=\"dashed\") + geom_point(mapping = aes(x = t_vec, y = P_vec, color=\"P\")) + geom_path(mapping = aes(x = t_vec, y = P_vec, color=\"P\"), linetype=\"dashed\") show(my_plot)     Plot of the seed and plant counts as a functions of time.    When we look at the resulting graph, we notice that the the graph for each of the subpopulations almost look like exponential growth. This is a consequence of linear algebra. A pair of related sequences and that has a recursive projection model with the form is said to have a linear projection model .    A pair of sequences with a linear projection model will asymptotically behave like geometric sequencees. That is, the ratios of values and both converge to a comstant called the asymptotic geometric growth rate. Furthermore, suppose we calculate the total and look at the ratios and , which represent the fractions of the total count in seed and plant form. The ratios always converge to values and , called the stable stage distribution , that are independent of initial values.    Let us add some additional calculations to the previous to calculate the ratios and the stage distribution. We will see the convergence directly. It will be more convenient to create a tibble in this circumstance and add the ratios as additional columns.    # Create a tibble library(tidyr) library(dplyr) # Some new columns are easy to compute seedbank_data <- tibble(t = t_vec, S = S_vec, P = P_vec) |> mutate(total = S + P) |> mutate(rho_S = S\/total, rho_P = P\/total) # Some require comparing terms in different positions seedbank_data$lambda_S <- NA seedbank_data$lambda_P <- NA seedbank_data$lambda_S[2:(N+1)] <- S_vec[2:(N+1)] \/ S_vec[1:N] seedbank_data$lambda_P[2:(N+1)] <- P_vec[2:(N+1)] \/ P_vec[1:N] # Create plots for the growth ratio of each count growth_ratio_plot <- seedbank_data |> pivot_longer(cols = c(lambda_S, lambda_P), values_to = \"lambda\", names_to = \"category\") |> ggplot(mapping = aes(x = t, y = lambda, color = category)) + geom_point() + geom_line(linetype = \"dashed\") show(growth_ratio_plot) # Create plots for the stage distribution stage_distribution_plot <- seedbank_data |> pivot_longer(cols = c(rho_S, rho_P), values_to = \"rho\", names_to = \"category\") |> ggplot(mapping = aes(x = t, y = rho, color = category)) + geom_point() + geom_line(linetype = \"dashed\") show(stage_distribution_plot)     Plot showing the ratio of growth giving and which converge to the asymptotic growth ratio.     Plot showing the fraction of the total count as seeds and plants and which converge to the the stable stage distribution.    "
 },
 {
-  "id": "intro-differential-equations-2-1",
+  "id": "sec-structure-two-stage-2",
   "level": "2",
-  "url": "intro-differential-equations.html#intro-differential-equations-2-1",
+  "url": "sec-structure-two-stage.html#sec-structure-two-stage-2",
   "type": "Paragraph (with a defined term)",
   "number": "",
   "title": "",
-  "body": "discrete time models continuous time models "
+  "body": "seed bank "
 },
 {
-  "id": "rate-of-change-3",
+  "id": "sec-structure-two-stage-5",
   "level": "2",
-  "url": "intro-differential-equations.html#rate-of-change-3",
+  "url": "sec-structure-two-stage.html#sec-structure-two-stage-5",
   "type": "Paragraph (with a defined term)",
   "number": "",
   "title": "",
-  "body": "rate of change derivative instantaneous rate of change "
+  "body": "annual perrenial "
 },
 {
-  "id": "differential-equations-3",
+  "id": "sec-structure-two-stage-6",
   "level": "2",
-  "url": "intro-differential-equations.html#differential-equations-3",
-  "type": "Example",
-  "number": "2.8.1",
+  "url": "sec-structure-two-stage.html#sec-structure-two-stage-6",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
   "title": "",
-  "body": " Given , we can find the derivative . This equation is a differential equation involving the independent variable . The original function is a solution to the differential equation because the differential equation is true for that function. However, is also a solution to the same differential equation. In general, the solution must be of the form for some constant . Solutions are not unique unless additional restrictions are provided. That is the purpose of the integration constant .  "
+  "body": "state vector "
 },
 {
-  "id": "differential-equations-5",
+  "id": "fig-simple-seedbank-visual-model",
   "level": "2",
-  "url": "intro-differential-equations.html#differential-equations-5",
-  "type": "Example",
-  "number": "2.8.2",
+  "url": "sec-structure-two-stage.html#fig-simple-seedbank-visual-model",
+  "type": "Figure",
+  "number": "3.1.1",
   "title": "",
-  "body": " The differential equation defines the rate of change using a formula involving the dependent variable . Recall that the exponential function has this behavior since . That is, since , we have just discovered that and are the same, which is precisely what the equation means.  In fact, will be a solution for any value of . The derivative, for this formula will be The value of depends on the initial value for the function.  "
+  "body": " Model for a simple seedbank showing possible sources of change to the number of seeds and germinated plants.   "
 },
 {
-  "id": "thm-diffeq-existence-uniqueness",
+  "id": "listing-seedbank-model-generate",
   "level": "2",
-  "url": "intro-differential-equations.html#thm-diffeq-existence-uniqueness",
+  "url": "sec-structure-two-stage.html#listing-seedbank-model-generate",
+  "type": "Listing",
+  "number": "3.1.2",
+  "title": "",
+  "body": "  # Parameters for the model plant_death <- 1 # mu_p: Fraction of plants that die after a season seed_death <- 0.9 # mu_s: Fraction of seeds in seedbank that do not survive plant_to_seed <- 0.2 # f: Fraction of plants that survive to seed seeds_per_plant <- 25 # sigma: Average number of seeds per plant seed_germinate <- 0.2 # alpha: Fraction of seeds that germinate # Calculated parameters a <- (1-seed_germinate) * (1-seed_death) b <- (1-seed_germinate) * seeds_per_plant c <- seed_germinate * (1-seed_death) d <- seed_germinate * (seeds_per_plant + 1 - plant_death) * plant_to_seed # Initial values and length of calculation S0 <- 0 P0 <- 20 N <- 15 # Create space for the data t_vec <- 0:N S_vec <- double(N+1) P_vec <- double(N+1) # Generate the sequences S_vec[1] <- S0 P_vec[1] <- P0 for (n in 1:N) { S_vec[n+1] <- a * S_vec[n] + b * P_vec[n] P_vec[n+1] <- c * S_vec[n] + d * P_vec[n] } my_plot <- ggplot() + geom_point(mapping = aes(x = t_vec, y = S_vec, color=\"S\")) + geom_path(mapping = aes(x = t_vec, y = S_vec, color=\"S\"), linetype=\"dashed\") + geom_point(mapping = aes(x = t_vec, y = P_vec, color=\"P\")) + geom_path(mapping = aes(x = t_vec, y = P_vec, color=\"P\"), linetype=\"dashed\") show(my_plot)   "
+},
+{
+  "id": "fig-seedbank-population-plots-01",
+  "level": "2",
+  "url": "sec-structure-two-stage.html#fig-seedbank-population-plots-01",
+  "type": "Figure",
+  "number": "3.1.3",
+  "title": "",
+  "body": " Plot of the seed and plant counts as a functions of time.   "
+},
+{
+  "id": "sec-structure-two-stage-18",
+  "level": "2",
+  "url": "sec-structure-two-stage.html#sec-structure-two-stage-18",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "linear projection model "
+},
+{
+  "id": "sec-structure-two-stage-19",
+  "level": "2",
+  "url": "sec-structure-two-stage.html#sec-structure-two-stage-19",
   "type": "Theorem",
-  "number": "2.8.3",
-  "title": "Existence and Uniqueness of Initial Value Problems.",
-  "body": " Existence and Uniqueness of Initial Value Problems   Suppose that represents a continuous function of both and such that exists and is bounded (i.e., small changes in should result in small changes in . Then the differential equation with initial value has a unique solution for some interval with .    The proof is outside the scope of this text but is based on the convergence of approximations.   "
-},
-{
-  "id": "numerical-solutions-diffeq-6",
-  "level": "2",
-  "url": "intro-differential-equations.html#numerical-solutions-diffeq-6",
-  "type": "Example",
-  "number": "2.8.4",
+  "number": "3.1.4",
   "title": "",
-  "body": " Find numerical approximations for the solution of the differential equation with various initial values . The Sage script below allows you to vary the initial value and create a table of approximating values as well as generate a graph of the approximation.   "
+  "body": "  A pair of sequences with a linear projection model will asymptotically behave like geometric sequencees. That is, the ratios of values and both converge to a comstant called the asymptotic geometric growth rate. Furthermore, suppose we calculate the total and look at the ratios and , which represent the fractions of the total count in seed and plant form. The ratios always converge to values and , called the stable stage distribution , that are independent of initial values.   "
 },
 {
-  "id": "slope-fields-2",
+  "id": "listing-seedbank-model-ratio-plots",
   "level": "2",
-  "url": "intro-differential-equations.html#slope-fields-2",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
+  "url": "sec-structure-two-stage.html#listing-seedbank-model-ratio-plots",
+  "type": "Listing",
+  "number": "3.1.5",
   "title": "",
-  "body": "slope field "
+  "body": "  # Create a tibble library(tidyr) library(dplyr) # Some new columns are easy to compute seedbank_data <- tibble(t = t_vec, S = S_vec, P = P_vec) |> mutate(total = S + P) |> mutate(rho_S = S\/total, rho_P = P\/total) # Some require comparing terms in different positions seedbank_data$lambda_S <- NA seedbank_data$lambda_P <- NA seedbank_data$lambda_S[2:(N+1)] <- S_vec[2:(N+1)] \/ S_vec[1:N] seedbank_data$lambda_P[2:(N+1)] <- P_vec[2:(N+1)] \/ P_vec[1:N] # Create plots for the growth ratio of each count growth_ratio_plot <- seedbank_data |> pivot_longer(cols = c(lambda_S, lambda_P), values_to = \"lambda\", names_to = \"category\") |> ggplot(mapping = aes(x = t, y = lambda, color = category)) + geom_point() + geom_line(linetype = \"dashed\") show(growth_ratio_plot) # Create plots for the stage distribution stage_distribution_plot <- seedbank_data |> pivot_longer(cols = c(rho_S, rho_P), values_to = \"rho\", names_to = \"category\") |> ggplot(mapping = aes(x = t, y = rho, color = category)) + geom_point() + geom_line(linetype = \"dashed\") show(stage_distribution_plot)   "
 },
 {
-  "id": "defn-slope-field",
+  "id": "fig-seedbank-growth-ratio-plot-01",
   "level": "2",
-  "url": "intro-differential-equations.html#defn-slope-field",
-  "type": "Definition",
-  "number": "2.8.5",
-  "title": "Slope Field.",
-  "body": " Slope Field   A slope field is a geometric representation of a differential equation wherein every point in the plane is represented by a line segment at that point having the slope . Because every point is impossible to visualize, in practice the graph only shows the slope field at points on a grid of equally spaced points.   "
-},
-{
-  "id": "slope-fields-6",
-  "level": "2",
-  "url": "intro-differential-equations.html#slope-fields-6",
-  "type": "Example",
-  "number": "2.8.6",
+  "url": "sec-structure-two-stage.html#fig-seedbank-growth-ratio-plot-01",
+  "type": "Figure",
+  "number": "3.1.6",
   "title": "",
-  "body": " The differential equation has a rate formula that is constant. This means that every point has the same slope. Solutions will follow straight lines.   Note that there are infinitely many different solutions corresponding to a family of parallel lines with slope 3. Given any particular point (initial value), there will only be one of those lines passing through the point. That is the uniqueness of solutions of differential equations.  "
+  "body": " Plot showing the ratio of growth giving and which converge to the asymptotic growth ratio.   "
 },
 {
-  "id": "slope-fields-7",
+  "id": "fig-seedbank-stage-distribution-plot-01",
   "level": "2",
-  "url": "intro-differential-equations.html#slope-fields-7",
-  "type": "Example",
-  "number": "2.8.7",
+  "url": "sec-structure-two-stage.html#fig-seedbank-stage-distribution-plot-01",
+  "type": "Figure",
+  "number": "3.1.7",
   "title": "",
-  "body": " The differential equation has a rate formula . The rate formula in this case depends only on the independent variable . You should notice that the slope is the same at points that are on the same vertical line, .   In calculus, we learned that can be solved for using antiderivatives, where we get , where is a constant of integration. This corresponds to a horizontal translation or shift, which is the appropriate analogue for the parallel lines in the first example. That is, we should think of the lines in the first example as vertical shifts of one another.  "
-},
-{
-  "id": "slope-fields-8",
-  "level": "2",
-  "url": "intro-differential-equations.html#slope-fields-8",
-  "type": "Example",
-  "number": "2.8.8",
-  "title": "",
-  "body": " The differential equation has a rate formula . The rate formula uses the same operations as the previous example but in terms of the dependent variable . You should notice that the slope is the same at points that are on the same horizontal line .   Notice that solutions are no longer vertical translations or shifts of one another. However, you should see that every solution will have corresponding solutions that are horizontal translations . Different curves correspond to different initial conditions. In this example, we can see that there are three basic classes of solutions. Above a certain point, the graphs grow without bound and head to infinity at some finite time. (This is an example of why the existence uniqueness theorem only guaranteed a solution for a limited interval.) Between two values that we will soon learn are equilibrium solutions, solutions form a transition from the upper equilibrium (unstable) to the lower equilibrium (stable). Solutions that begin below the lower equilibrium all rise and asymptotically approach the stable equilibrium.  "
-},
-{
-  "id": "slope-fields-9",
-  "level": "2",
-  "url": "intro-differential-equations.html#slope-fields-9",
-  "type": "Example",
-  "number": "2.8.9",
-  "title": "",
-  "body": " The differential equation has a rate formula . Because this rate formula depends on both and , solutions do not share either horizontal or vertical translations.    "
-},
-{
-  "id": "differential-equation-analysis",
-  "level": "1",
-  "url": "differential-equation-analysis.html",
-  "type": "Section",
-  "number": "2.9",
-  "title": "Analysis of Differential Equations",
-  "body": " Analysis of Differential Equations   Differential equation models and sequence projection models have many similarities as well as differences. Just as we looked for equilibrium solutions for projection models in discrete time, we will look for equilibrium solutions for differential equation models in continuous time. Those equilibria can be stable or unstable. However, unlike sequence models, a differential equation model can not pass across an equilibrium solution. The graphical analysis of sequences using a cobweb diagram for discrete jumps is replaced for differential equations by the idea of a phase line.    Equilibria for Differential Equations  The concept of an equilibrium is that the state of the system is not changing. For variables, this means that the dynamic variables are constant functions with respect to time. Constant functions have a zero rate of change. We find equilibria solutions to a differential equation by solving the equation and look for solutions of the form for some constant . Other solutions that involve the variable are not equilibrium solution but instead describe other points where the instantaneous rate of change is zero but for which the function changes at other times.    Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives The solution is of the form is a constant and is therefore an equilibrium solution.      Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives either or , which give two equilibrium solutions and .    When we wanted to understand the stability of equilibria resulting from projection function models, we started by considering linear projection functions. For differential equations, we do similar analysis. We start with proportional rates of change models and then apply that to linear rates of change models.   Exponential Growth\/Decay Models   A differential equation of the form where is a constant, so that the rate of change of is proportional to the value of , has solutions that are exponential with rate . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as while as .  (exponential decay): as while as .     A differential equation of the form can be transformed into an exponential growth\/decay model by rewriting the model in terms of the equilibrium, found by . The equilibrium is so that the growth rate model can be rewritten as Because is a constant, . The rules of calculus allow us to define and find the differential equation Thus, is an exponential model and is shifted to be centered around the equilibrium.   Shifted Exponential Growth\/Decay Models   A differential equation of the form where and are constant has solutions that are exponential functions with rate shifted by the equilibrium . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as (unstable).  (exponential decay): as (stable).     Nonlinear growth rates that depend only on the dependent variable, , have equilibria at all of the values so that . Consider an equilibrium at . We can approximate the differential equation by the tangent line approximation at to determine stability of the equilibrium as long as . Then approximation suggests for values of sufficiently near . This is a linear rate function that leads to a shifted exponential model.   Local Stability of Equilibria   Suppose a differential equation of the form has an equilibrium at so that . Then if , the local stability of the equilibrium can be determined by the sign of .  (exponential growth): increases, at least initially.  (exponential decay): decreases.      The discrete logistic model in discrete time has a growth term defined by . This is saying that the total increment of change in the population over the course of the time increment is given by the formula . If we interpret that formula as a rate of change instead of the total increment of change, we arrive at the continuous-time logistic growth model where and are positive constants.  The equilibria for this model are found by solving to give and . The growth rate formula has a derivative . Computing the derivative at each equilibrium informs us of the stability of that solution.  so is an unstable equilibrium.  so is a stable equilibrium.  The following Sage script generates a typical slope field and several solutions coming from different initial values that illustrate the stability of these equilbria. Notice how solutions move away from the unstable equilibrium solution but towards the stable equilibrium solution.      Phase Lines  A differential equation with a rate that depends only on the dependent variable is called autonomous , such as . This is analogous to a sequence that can be defined recursively with a projection function. For a recursive sequence, we could study it geometrically using a cobweb diagram. When the projection function is above the line , the sequence increases; when the projection function is below the line, the sequence decreases.  For an autonomous differential equation, , we can use the graph of the rate function to understand the behavior of the solution function. When the rate function is positive (above the axis), the solution will be an increasing function. When the rate function is negative (below the axis), the solution will be a decreasing function. Equilibrium solutions correspond to values of where . We can summarize this behavior by drawing a number line with arrows pointing in the direction of increasing or decreasing between equilibrium values. Such a number line is called a phase line .   Consider the autonomous differential equation . We will generate a phase line summary of possible solution behaviors.  The graph of the rate function is a concave up parabola with roots at , shown below.       The roots of the rate function are the equilibrium solutions, and . Between the equilibria, the rate function is negative, so any solutions with initial values between the equilibria will be decreasing functions going away from the upper equilibrium and toward the lower equilibrium. If the initial value is above the equilibria, , then the solution will be an increasing function that grows without bound. If the initial value is below the equilibra, , then the solution will also be an increasing function but will grow at a slower rate as it approaches the lower equilibrium. The equilibria and the three intervals for initial values are summarized in the phase line below.       This phase line might be easier visualized in relation to the graph of different solutions if we drew it vertically on an axis so that arrows pointing to the right (increasing) represent solutions that rise (increasing) and arrows point to the left (decreasing) represent solutions that fall (decreasing). The equilibrium solutions correspond to solutions that remain constant. We see that is an unstable equilibrium while is a stable equilibrium.         "
-},
-{
-  "id": "diffeq-equilibria-3",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-equilibria-3",
-  "type": "Example",
-  "number": "2.9.1",
-  "title": "",
-  "body": "  Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives The solution is of the form is a constant and is therefore an equilibrium solution.   "
-},
-{
-  "id": "diffeq-equilibria-4",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-equilibria-4",
-  "type": "Example",
-  "number": "2.9.2",
-  "title": "",
-  "body": "  Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives either or , which give two equilibrium solutions and .   "
-},
-{
-  "id": "diffeq-exponential-models",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-exponential-models",
-  "type": "Theorem",
-  "number": "2.9.3",
-  "title": "Exponential Growth\/Decay Models.",
-  "body": " Exponential Growth\/Decay Models   A differential equation of the form where is a constant, so that the rate of change of is proportional to the value of , has solutions that are exponential with rate . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as while as .  (exponential decay): as while as .    "
-},
-{
-  "id": "diffeq-shifted-exponential-models",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-shifted-exponential-models",
-  "type": "Theorem",
-  "number": "2.9.4",
-  "title": "Shifted Exponential Growth\/Decay Models.",
-  "body": " Shifted Exponential Growth\/Decay Models   A differential equation of the form where and are constant has solutions that are exponential functions with rate shifted by the equilibrium . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as (unstable).  (exponential decay): as (stable).    "
-},
-{
-  "id": "diffeq-nonlinear-equilibria-stability",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-nonlinear-equilibria-stability",
-  "type": "Theorem",
-  "number": "2.9.5",
-  "title": "Local Stability of Equilibria.",
-  "body": " Local Stability of Equilibria   Suppose a differential equation of the form has an equilibrium at so that . Then if , the local stability of the equilibrium can be determined by the sign of .  (exponential growth): increases, at least initially.  (exponential decay): decreases.    "
-},
-{
-  "id": "diffeq-equilibria-11",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-equilibria-11",
-  "type": "Example",
-  "number": "2.9.6",
-  "title": "",
-  "body": " The discrete logistic model in discrete time has a growth term defined by . This is saying that the total increment of change in the population over the course of the time increment is given by the formula . If we interpret that formula as a rate of change instead of the total increment of change, we arrive at the continuous-time logistic growth model where and are positive constants.  The equilibria for this model are found by solving to give and . The growth rate formula has a derivative . Computing the derivative at each equilibrium informs us of the stability of that solution.  so is an unstable equilibrium.  so is a stable equilibrium.  The following Sage script generates a typical slope field and several solutions coming from different initial values that illustrate the stability of these equilbria. Notice how solutions move away from the unstable equilibrium solution but towards the stable equilibrium solution.   "
-},
-{
-  "id": "diffeq-phase-line-2",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-phase-line-2",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "autonomous "
-},
-{
-  "id": "diffeq-phase-line-3",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-phase-line-3",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "phase line "
-},
-{
-  "id": "diffeq-phase-line-4",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-phase-line-4",
-  "type": "Example",
-  "number": "2.9.7",
-  "title": "",
-  "body": " Consider the autonomous differential equation . We will generate a phase line summary of possible solution behaviors.  The graph of the rate function is a concave up parabola with roots at , shown below.       The roots of the rate function are the equilibrium solutions, and . Between the equilibria, the rate function is negative, so any solutions with initial values between the equilibria will be decreasing functions going away from the upper equilibrium and toward the lower equilibrium. If the initial value is above the equilibria, , then the solution will be an increasing function that grows without bound. If the initial value is below the equilibra, , then the solution will also be an increasing function but will grow at a slower rate as it approaches the lower equilibrium. The equilibria and the three intervals for initial values are summarized in the phase line below.       This phase line might be easier visualized in relation to the graph of different solutions if we drew it vertically on an axis so that arrows pointing to the right (increasing) represent solutions that rise (increasing) and arrows point to the left (decreasing) represent solutions that fall (decreasing). The equilibrium solutions correspond to solutions that remain constant. We see that is an unstable equilibrium while is a stable equilibrium.       "
+  "body": " Plot showing the fraction of the total count as seeds and plants and which converge to the the stable stage distribution.   "
 },
 {
   "id": "system-examples",
   "level": "1",
   "url": "system-examples.html",
   "type": "Section",
-  "number": "3.1",
+  "number": "4.1",
   "title": "Examples of Interacting Systems",
   "body": " Examples of Interacting Systems   In systems modeling, we have multiple dynamic variables, each of which has an equation governing its dynamic progression in time. We often think of these state variables using a flow diagram . A flow diagram treats each state variable as a reservoir (or a bucket). Arrows pointing into the reservoir represent source terms that correspond to positive rates of change. Arrows pointing out of the reservoir represent loss terms that correspond to negative rates of change. In modeling, each rate of change (arrow on the diagram) has a mathematical formula involving potentially any of the state variables. There may also be graphical representation of which state variables influence the rates in a positive or negative way.  In each example of interacting systems, we identify the state variables and draw a potential flow diagram. Different assumptions on the model might correspond to changes in the flow diagram itself or in the formulas for the rates represented by the arrows in the diagram.    Epidemic Models  In an epidemic model, we consider a single population but consider every individual in the population as being classified according to their status with respect to a disease. In the classic model of a disease involving immunity, there are three categories in the population: individuals who are healthy but susceptible to become sick, those who are sick and therefore infectious, and those who once were sick but have recovered and retain immunity. These three variables are traditionally assigned the variables (susceptible), (infected), and (recovered or removed).  The standard flow diagram for the SIR model tells the story of how an infection spreads through a population. Susceptible individuals become sick after interactions with infected individuals. When there are more infected individuals, it becomes more likely that a person will become infected. Once infected, individuals stay sick for some duration after which they recover. After they recover, they have developed an immunity for the illness and will not become sick again. In addition to this progression of the disease, individuals may die from any stage with some probability. New births in the population generally will be healthy unless our illness has vertical transmission of the disease.  A possible flow diagram for the SIR model is illustrated in the figure below. The three classes are represented by rectangles labeled by the appropriate state variable. Each rate (flow arrow) is labeled according to the process that it represents. A rate will generally always depend on the class that it leaves. To emphasize that the infection rate also depends on the number of infected individuals, we draw a link (dashed line) between the infected class and the infection flow arrow.      SIR Model. Individuals are classified into susceptible, infected and recovered classes. Infections rely on interactions between the susceptible and infected individuals.   Simplifications of the model might come from eliminating some of the flow rates. For example, when studying a disease that progresses quickly relative to the population (such as influenza), we might ignore slow scale processes like birth and death. For a disease that instills permanent immunity, we might eliminate the loss of immunity rate. If a disease never gives immunity, then we might eliminate the recovered class altogether and have recovery send individuals directly back to the susceptible class. Some diseases require additional classes.    Interacting Populations  Ecosystems involve many different interacting species. Interactions might include competition, mutualism, parasitism and predation. In competition, two or more species rely on common resources such that the presence of one species reduces the availability of those resources for the other species. In mutualism, the presence of two interacting species together benefits each species relative to the populations living in isolation. In parasitism, one species takes resources from an individual of another species and may or may not lead to the death of the host but likely reduces the host's fitness. In predation, the predator kills and consumes individuals of the prey species.  The flow diagram for interactions between two species generally look the same, with the difference being whether interactions are beneficial or inhibitory. One way that the diagram can represent this is by using a different type of arrow for inhibitory effects. In the diagrams below, a regular arrow represents a beneficial interaction while a segment ending in a perpendicular cap represents an inhibitory interaction.      Predator-Prey model. A predator species (e.g., lynx) and a prey species (e.g., hare) interact. The predator influences the death rate of the prey and the prey influences the birth rate of the predator.       Competition model. Two species and have an inhibitory effect on the growth of the other species.       Mutualism model. Two species and have an mutually beneficial effect on the growth of the other species.       Parasite-Host model. A parasite species benefits from the presence of the host species while the host fitness is reduced.   From a modeling perspective, we should note that the illustrated competition, mutualism and parasitism model diagrams are structurally equivalent. Only the nature of the interactions (beneficial or inhibitory) are different. Consequently, it may be possible to analyze related models for all three systems by considering different model parameters that might capture these differences.    Age or Stage-Based Models  Even within a single population, we might model the dynamics by a system that accounts for the number of individuals that are of different ages or stages of development. In the simplest cases, individuals steadily progress through a sequence of classifications (such as ages). The only way to leave the progression is to die. Often, only certain categories of individuals will be capable of reproduction (e.g., mature adults). The flow rates between classes generally reflect how long an individual stays in a class. Fast rates correspond to short dwell times. In some models, we may wish to allow individuals to revert to an earlier stage or to alternate between different mature states (e.g., fertile vs infertile).      Age-Based Population model. An illustrative age-based model for a species that becomes fertile in the third and fourth years of life.       Stage-Based Population model. An illustrative stage-based model for a species that lays eggs ( ) that hatch into larvae ( ) which grow into infertile juveniles ( ) and eventually mature adults ( ).    "
 },
@@ -1580,7 +1481,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-examples.html#SIR-system-diagram",
   "type": "Figure",
-  "number": "3.1.1",
+  "number": "4.1.1",
   "title": "",
   "body": "    SIR Model. Individuals are classified into susceptible, infected and recovered classes. Infections rely on interactions between the susceptible and infected individuals.  "
 },
@@ -1589,7 +1490,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-examples.html#predator-prey-system-diagram",
   "type": "Figure",
-  "number": "3.1.2",
+  "number": "4.1.2",
   "title": "",
   "body": "    Predator-Prey model. A predator species (e.g., lynx) and a prey species (e.g., hare) interact. The predator influences the death rate of the prey and the prey influences the birth rate of the predator.  "
 },
@@ -1598,7 +1499,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-examples.html#competition-system-diagram",
   "type": "Figure",
-  "number": "3.1.3",
+  "number": "4.1.3",
   "title": "",
   "body": "    Competition model. Two species and have an inhibitory effect on the growth of the other species.  "
 },
@@ -1607,7 +1508,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-examples.html#mutualism-system-diagram",
   "type": "Figure",
-  "number": "3.1.4",
+  "number": "4.1.4",
   "title": "",
   "body": "    Mutualism model. Two species and have an mutually beneficial effect on the growth of the other species.  "
 },
@@ -1616,7 +1517,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-examples.html#parasite-host-system-diagram",
   "type": "Figure",
-  "number": "3.1.5",
+  "number": "4.1.5",
   "title": "",
   "body": "    Parasite-Host model. A parasite species benefits from the presence of the host species while the host fitness is reduced.  "
 },
@@ -1625,7 +1526,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-examples.html#age-based-system-diagram",
   "type": "Figure",
-  "number": "3.1.6",
+  "number": "4.1.6",
   "title": "",
   "body": "    Age-Based Population model. An illustrative age-based model for a species that becomes fertile in the third and fourth years of life.  "
 },
@@ -1634,7 +1535,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-examples.html#egg-larva-juvenile-adult-system-diagram",
   "type": "Figure",
-  "number": "3.1.7",
+  "number": "4.1.7",
   "title": "",
   "body": "    Stage-Based Population model. An illustrative stage-based model for a species that lays eggs ( ) that hatch into larvae ( ) which grow into infertile juveniles ( ) and eventually mature adults ( ).  "
 },
@@ -1643,7 +1544,7 @@ var ptx_lunr_docs = [
   "level": "1",
   "url": "interaction-rate-models.html",
   "type": "Section",
-  "number": "3.2",
+  "number": "4.2",
   "title": "Modeling Interaction Rates",
   "body": " Modeling Interaction Rates   Once we have formulated a flow diagram for our system, we need to establish a mathematical model by determining how to compute each of the rates. In unusual cases, we might have plentiful data with which we can estimate actual quantitative relationships between the state variables and the relevant rates. More commonly, we have qualitative assumptions about the nature of the relationship defining the rates. We use these qualitative assumptions to establish a general form of the relationship involving parameters. Often, we can then apply analysis on the model to understand possible behaviors as they relate to parameter values.  In this section, we explore some of common qualitative relationships between state variables and rates associated with those variables. Qualitative descriptions include mathematical descriptions of relationships including traits of increasing and decreasing as well as concavity and asymptotic behavior. By identifying likely traits associated with a system of interest, we can identify possible model equations to use for the rates.    Linear Rates and Linear Combinations  The simplest rate of all is a constant rate. We use a constant rate when the rate at which a particular event does not depend on the state variables. Usually, these rates are related to an external environment. For example, we might use a constant rate for immigration to describe the rate at which individuals arrive from an external population that we are not modeling. Or we might use a constant rate to describe how fast doctors can treat sick patients.  The next simplest model for a rate of change is one that is proportional to a single state variable. We can usually think of these rates as saying that each individual (or other relevant unit being measured) represented by that variable contributes a specific amount per unit time and that amount does not depend on the total number of individuals. By multiplying by the total number of individuals (or total quantity), we have a rate that is the sum of the contributions of the individuals.   Suppose a population of size has a growth term that comes from a constant immigration rate of 100 individuals per year and a constant per capita growth rate of 2\\% per year. The immigration will be modeled using a constant rate and the population growth will be represented as begin proportional to the population size. The total growth rate would then be modeled by Note that this model only describes the rate of a single flow that would be part of a bigger differential equation.   Sometimes, a rate is represented as the sum of multiple contributions, each of which is defined by a constant per capita. For example, suppose in an age-based model that three-year old plants produce a different number of seeds than a four-year old plant. If we let and represent the number of plants of age three and four, respectively, and and are the average number of seeds produced by three- and four-year old plants, respectively, then the total number of seeds produced would be given by  We call such a sum of proportional terms a linear combination , in this case a linear combination of and , or even of if we realized that all missing terms had proportionality constants of zero. To be a linear combination, all of the proportionality constants must really be constants, not other variables, although we might represent them as parameters. We will later learn that rates that are linear combinations of the state variables are one of the most important representations in order to do analysis.    Logistic Growth with Functional Dependence  One strategy for modeling systems is to repurpose models that were used for single populations in a way that informs the system. For example, when considering a single population , one way to model the growth of that population so that it had a carrying capacity was to use the logistic growth model, The motivation behind this formula is that the per capita growth rate starts at when is small and linearly decreases until it is zero at the carrying capacity . If starts above , then the per capita growth is negative and the population decreases. Thus, this model can be considered to include both births and deaths in a combined formula.  We can repurpose this model for use in a system. One way is to use the model for the rate without change to account for that growth and death rates of the system that only depend on the population. We would then add additional rate terms to account for growth or loss that depended on other variables.  Alternatively, we might modify the logistic growth rate formula to account for the presence of other variables. For example, we might consider the carrying capacity to depend on another population . That is, we can think of the carrying capacity as a decreasing function of , such as with a linear function so that the per capita growth rate for now has the form . The new effective growth rate that would be used in the differential equation is the per capita rate times the population , given by  We can illustrate the effect of the population by graphing the effective per capita growth rate as a function of using different values of . This is illustrated in the figure below. Notice that for small populations , the per capita growth is not changing much. It is only when starts to be larger that the effect of is observed. This model formula seems to require an assumption that competition only occurs when both populations are large.      Per capita growth rate for a population where the carrying capacity depends on another population .   It might be a better modeling assumption to suppose that the per capita growth rate is affected at both high and low populations in the presence of another population . Consider an alternate modeling strategy where we think of as representing total population capacity units in the environment. We can then think of the term in the per capita growth formula as representing the fraction of growth capacity remaining.  The presence of a population uses up some of that capacity so that we want to reduce the fraction of growth capacity due to as well as . However, one individual of may not occupy the same number of capacity units as an individual from . We use a per capita growth rate for modeled by the expression The graph of the per capita growth rate corresponding to increasing values of is given below. The figure illustrates a more uniform reduction on the growth rate due to for both low and high values for .      Per capita growth rate for a population where the another population occupies part of the carrying capacity available for .   Similar strategies can be adopted for any model that incorporates density dependence. For example, if a growth rate for an isolated population includes an exponential decay term to incorporate a decreasing rate due to population density like , then the presence of a second population that adds to the crowding could be incorporated with a term like . In the same way as for the logistic growth term, this consider the crowding factor as having individuals impact the growth rate in an equivalent manner as having an extra individuals in the population.    Law of Mass Action for Interactions  In simple chemical reactions, the principle of mass action states that the rate of a reaction is proportional to the product of the concentrations of the reactants. The premise behind this principle is that the chemical reaction occurs in a well-mixed solution and that the number of molecular interactions of the reactants that occur per unit time will be proportional to the product of the concentrations. Of those interactions, some fraction will result in the reaction proceeding.  Many interactions in settings other than chemical reactions can also be modeled in a similar way. Suppose that there are two populations and that are interacting to create certain events (e.g., causing infections, predators killing prey, competition reducing a birth rate). The law of mass action can arise any time we can think of the events being counted as being the sum of contributions from each individual in population such that the average number of events per individual is itself proportional to the size of the population . In other words, the assumption is that the number of events per individual in population will double if the population doubles, will triple if the population triples, and so on.   The logistic growth model with total capacity can be interpreted as a law of mass action interaction.  Suppose a population grows according to a logistic growth law, in the absence of population . Suppose that individuals from populations and compete in such a way that effectively has an additional death rate resulting from competitive interactions with . For the interactions to obey a law of mass action, we would require that the per capita death rate due to competition is proportional to the population size , say an average of deaths per individual per unit time. Then the total death rate due to competition would be . The modified model that includes the deaths due to competition would then be given by  This model is mathematically equivalent to the differential equation introduced earlier where we thought of as occupying some of the carrying capacity units for . In particular, we can rewrite this as Thus, the two models are equivalent where . This equivalence is another reason that this model for competition is preferred.     Saturating Functional Response  The law of mass action often makes good sense when the values of the state variables are not too big. However, there are often cases where we expect the proportional relation assumed for mass action to fail. Consider the example of a population that is consuming a resource (e.g., predators consuming prey, bacteria consuming a sugar substrate, or herbivores consuming vegetation). When the resource is limited, it makes sense that each individual in the population could double the amount of resource it consumes if the resource itself were to double. However, when the resource is abundant, doubling the resource likely has little effect on consumption rate.  The rate of consumption is not something that can increase indefinitely. The rate is limited due to the ability of the individual to complete a consumption event. A predator must spend the time to catch its prey, eat the prey, and perhaps even digest the prey before undertaking another predation event. A bacteria uses active transport to bring glucose from the environment into the cell for metabolism and the bacteria has a limited number of sites to perform this operation. An herbivore takes time to eat vegetation and doubling the amount of vegetation does not increase the rate of consumption if the herbivore is already eating full-time.  We need to adapt our model to account for saturation . Saturation corresponds to the mathematical idea of a horizontal asymptote , where a function effectively behaves like a constant when a variable becomes sufficiently large. Any function that has a horizontal asymptote might conceivably be used as a model for saturation. One of the most commonly used models is a simple rational function.  Recall from our discussion of mass action that we could think of as counting the number of interaction events per individual in the population. We modify this term to incorporate a horizontal asymptote using a modified form . The figure below illustrates the graphs of the specific mass action rate and the saturating specific rate.      Specific rate of interactions per unit of resulting from individuals showing mass action and saturating .   For small values of , the saturating model behaves almost identically to the law of mass action. However, for larger values of , the specific rate of events saturates at a value of . The value , which is measured in the same units as , corresponds to that value of for which the specific rate is exactly half way to saturation. Thus, is called the half-saturation level for .  In ecology, these interaction curves describe consumption rates and are called the functional response to the food density. An ecologist named C. S. Holling proposed a classification of the functional response curves as falling under three general categories. A Type I functional response corresponds to the law of mass action, although it may also be piecewise linear, switching to a constant saturating rate. The example above is consider a Type II functional response because it is an increasing and concave down function. A Type III functional response would be concave up at low food densities and then switch to concave down as consumption approached its saturating level. The figure below illustrates typical examples.      Illustration of Type I (red), Type II (blue), and Type III (orange) functional response curves.     Switching Functional Response  The Type III functional response captures a new idea. Both Type I and Type II functional responses have the characteristic that at low food densities, consumption essentially follows a law of mass action. That is, each organism is consuming the food at a rate that is proportional to the density of that food. This might reflect the idea that the organism is eating the food as it is encountered. However, a Type III functional response that is concave up for low food densities does not follow this pattern. Instead, it is as if the organism is rejecting opportunities to consume the food at low densities and only begins to consume in proportion to encounters if the food density exceeds some threshold. This is an example of switching behavior.  Switching occurs when the dynamic relationships change according to different conditions. Typically, we consider switching in relationship to individual state variables. When a state variable is below a threshold, one dynamic relationship exists; when the state variable is above a threshold, another dynamic relationship exists. The cross-over is often continuous so that near the threshold, the dynamics is an intermediate combination of the two relationships.  Functions that have two different horizontal asymptotes and a smooth connection between them are often used for switching functions. Combinations of exponential functions provide one example.   Consider the function If , then the horizontal asymptotes are given by limits If , then the direction of the switching is reversed with horizontal asymptotes given by The steepness of the transition between the asymptotes is determined by the magnitude of the larger the magnitude of , the steeper the transition will be. The figure below illustrates several examples with .      Graph of with values (red), (blue) and (orange).   The graph of this switching function is symmetric around the point . At this point, the function is exactly half-way between the two limiting values. We consider this point to be the location of the switch. Mathematically, this point is also an inflection point, a consequence of the symmetry of this particular function. We can create a switching function at any desire location by applying a horizontal shift. It helps if we rewrite our original formula Then we can get the same switching behavior around a switching point using   Another common example of a function used for switching between two values involves the arctangent function. Recall that the arctangent function is the inverse of the trigonometric tangent function, restricted to a domain . Because the tangent function has all values in , the inverse function will be defined with a domain and a range of . The vertical asymptotes of the tangent become horizontal asymptotes of the arctangent. This is precisely the behavior we desire from a switching function.   The arctangent function can be used as a switching function. The left and right horizontal asymptotes are given by and the function is symmetric around the point at . We can construct a function that goes between values 0 and 1 by dividing by and then adding : (Sometimes we want to go between values and ; we do this by just multiplying by .)  We can change the steepness of the transition by a horizontal compression with factor and the location around by a horizontal shift to get The figure below illustrates several examples.      Graph of with values (red), (blue) and (orange).     "
 },
@@ -1652,7 +1553,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "interaction-rate-models.html#interaction-rate-models-3-4",
   "type": "Example",
-  "number": "3.2.1",
+  "number": "4.2.1",
   "title": "",
   "body": " Suppose a population of size has a growth term that comes from a constant immigration rate of 100 individuals per year and a constant per capita growth rate of 2\\% per year. The immigration will be modeled using a constant rate and the population growth will be represented as begin proportional to the population size. The total growth rate would then be modeled by Note that this model only describes the rate of a single flow that would be part of a bigger differential equation.  "
 },
@@ -1670,7 +1571,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "interaction-rate-models.html#interaction-rate-models-4-6",
   "type": "Figure",
-  "number": "3.2.2",
+  "number": "4.2.2",
   "title": "",
   "body": "    Per capita growth rate for a population where the carrying capacity depends on another population .  "
 },
@@ -1679,7 +1580,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "interaction-rate-models.html#interaction-rate-models-4-9",
   "type": "Figure",
-  "number": "3.2.3",
+  "number": "4.2.3",
   "title": "",
   "body": "    Per capita growth rate for a population where the another population occupies part of the carrying capacity available for .  "
 },
@@ -1688,7 +1589,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "interaction-rate-models.html#interaction-rate-models-5-4",
   "type": "Example",
-  "number": "3.2.4",
+  "number": "4.2.4",
   "title": "",
   "body": " The logistic growth model with total capacity can be interpreted as a law of mass action interaction.  Suppose a population grows according to a logistic growth law, in the absence of population . Suppose that individuals from populations and compete in such a way that effectively has an additional death rate resulting from competitive interactions with . For the interactions to obey a law of mass action, we would require that the per capita death rate due to competition is proportional to the population size , say an average of deaths per individual per unit time. Then the total death rate due to competition would be . The modified model that includes the deaths due to competition would then be given by  This model is mathematically equivalent to the differential equation introduced earlier where we thought of as occupying some of the carrying capacity units for . In particular, we can rewrite this as Thus, the two models are equivalent where . This equivalence is another reason that this model for competition is preferred.  "
 },
@@ -1706,7 +1607,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "interaction-rate-models.html#interaction-rate-models-6-6",
   "type": "Figure",
-  "number": "3.2.5",
+  "number": "4.2.5",
   "title": "",
   "body": "    Specific rate of interactions per unit of resulting from individuals showing mass action and saturating .  "
 },
@@ -1733,7 +1634,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "interaction-rate-models.html#interaction-rate-models-6-9",
   "type": "Figure",
-  "number": "3.2.6",
+  "number": "4.2.6",
   "title": "",
   "body": "    Illustration of Type I (red), Type II (blue), and Type III (orange) functional response curves.  "
 },
@@ -1751,7 +1652,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "interaction-rate-models.html#interaction-rate-models-7-5",
   "type": "Example",
-  "number": "3.2.7",
+  "number": "4.2.7",
   "title": "",
   "body": " Consider the function If , then the horizontal asymptotes are given by limits If , then the direction of the switching is reversed with horizontal asymptotes given by The steepness of the transition between the asymptotes is determined by the magnitude of the larger the magnitude of , the steeper the transition will be. The figure below illustrates several examples with .      Graph of with values (red), (blue) and (orange).   The graph of this switching function is symmetric around the point . At this point, the function is exactly half-way between the two limiting values. We consider this point to be the location of the switch. Mathematically, this point is also an inflection point, a consequence of the symmetry of this particular function. We can create a switching function at any desire location by applying a horizontal shift. It helps if we rewrite our original formula Then we can get the same switching behavior around a switching point using  "
 },
@@ -1760,7 +1661,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "interaction-rate-models.html#interaction-rate-models-7-7",
   "type": "Example",
-  "number": "3.2.9",
+  "number": "4.2.9",
   "title": "",
   "body": " The arctangent function can be used as a switching function. The left and right horizontal asymptotes are given by and the function is symmetric around the point at . We can construct a function that goes between values 0 and 1 by dividing by and then adding : (Sometimes we want to go between values and ; we do this by just multiplying by .)  We can change the steepness of the transition by a horizontal compression with factor and the location around by a horizontal shift to get The figure below illustrates several examples.      Graph of with values (red), (blue) and (orange).   "
 },
@@ -1769,7 +1670,7 @@ var ptx_lunr_docs = [
   "level": "1",
   "url": "system-phase-space.html",
   "type": "Section",
-  "number": "3.3",
+  "number": "4.3",
   "title": "Dynamical Systems and Phase Space",
   "body": " Dynamical Systems and Phase Space   We are interested in studying what happens in an interacting system. For these systems, our system must have more than one dynamic variable. We call the system a dynamical system . In this section, we introduce some terminology for how we think about dynamical systems. We will be able to visualize these concepts graphically when there are two or three dynamic variables. When there are more than three variables, we will work by analogy even though we aren't able to visualize the result.    Vector Fields  A continuous dynamical system is defined in terms of a system of differential equations. Each state variable has a rate of change (the derivative). In a dynamical system, there exists a function of the state variables and the independent variable that equals this rate of change at all times. In an abstract system with state variables, labeled , where the time dependence is explicitly stated, there are functions of the state variables such that The collection of functions defines a vector field .   Existence and Uniqueness of Initial Value Problem   If each of the component rate functions are continuous and all of the partial derivatives are continuous in a neighborhood of the initial value , then the initial value problem defined by the vector field and initial values for has a unique solution for some interval .    The existence and uniqueness theorem guarantees that if we specify the state of the system at a time in which the vector field changes smoothly relative to time and also relative to the values of the state variables (this is what continuity of the partial derivatives guarantees), then the state will follow a flow defined by the vector field. In many cases, the vector field does not depend on time and we have an autonomous system of differential equations. In these cases, we can often visualize solutions to the differential equations by create a plot of the vector field.  A vector is a mathematical object that consists of both a direction and a magnitude. Graphically, we usually represent a vector as an arrow. The length of the arrow represents its magnitude and the direction is the direction of the arrow from its root (the straight segment) to its tip (the arrow). A vector can also be determined from its components.  Standard components correspond to perpendicular directions, with one direction for each state variable. A system with two state variables has a vector field defined in the plane with two directions. The direction of the -axis corresponds to the first state variable and the -axis corresponds to the second state variable. A vector is specified by giving a value for each coordinate direction, say (similar to a point). The vector, drawn at a location in the plane corresponds to an arrow with a root at and the tip at . That is, the vector gives a displacement from the root to the tip.  The vector field functions define at every moment and state a rate vector A solution can be visualized as a point moving through the state space such that its velocity is at each instant defined by . For an autonomous system, the velocity depends only on the current state and we call the state space the phase space. When the vector field depends explicitly on time, we must add the time variable as a new state variable and the phase space is one dimension larger than the state space.  We illustrate the ideas with some two-dimensional examples and use Sage to generate illustrative figures.   An example from physics is the harmonic oscillator (mass on a spring). In the absence of friction, the only force is from the spring, proportional to and opposing the displacement. The state variables are the displacement and the velocity . The system of differential equations is given by The rate for is just the definition of velocity. The rate for is acceleration and is a consequence of Newton's law where is the force of the spring.  The vector field is identified by considering an order for our state variables, and , with corresponding rate functions and . The phase plane is the -plane. The vector field corresponds to placing at each point a vector . Computer generated plots of vector fields usually rescale the vectors but preserve the correct directions and relative lengths.  The following Sage script generates a vector field for this system.   When you execute the Sage script and see the results, you should observe arrows that look like they generate a circular pattern (an ellipse, actually). The closer to the origin, , the smaller the arrows appear.  The vector field allows us to tell the story of what happens to the oscillator. Imagine stretching the string for a positive displacement by 1 unit of distance. Right when we let go, we are at a state of and , which appears on the -axis of the phase space. The vector field points down, , which means that we start to gain a little negative velocity. Immediately, the negative velocity starts to cause the displacement to decrease. This corresponds to following the ellipse in the fourth quadrant.  Eventually, the state of the system reaches with some maximum negative velocity . This corresponds to a point on the lower -axis. The vector field is horizontal and directed left, . The velocity causes the displacement to become negative and immediately, the acceleration begins to be positive and the velocity gradually slows down to zero, at which time we have returned to the -axis on the left side. It is not yet obvious, but conservation of energy guarantees that we have reached a negative displacement exactly equal to our original positive displacement. The state of the system continues through the second and first quadrant, ultimately returning to its initial point, whereon the cycle is repeated.  The path the state follows through phase space is called the orbit . If we include the time variable to extend the phase space, the path is called the trajectory . If we solve the initial value problem numerically, we can add an orbit to the plot of the vector field. In addition, we often wish to see the graphs of the individual state variables as functions of time. This is accomplished by plotting and .     In the early 1900s, two scientists, Alfred Lotka and Vito Volterra, independently developed a system of differential equations to describe the dynamics of two populations a producer or prey and a consumer or predator. The system of equations, now called the Lotka Volterra predator prey model, has two state variables. Let represent the size of the consumer (or carnivore) population and let represent the size of the producer (or prey) population. The basic model assumes that the producer would grow in direct proportion to its current population and that the consumer would die in direct proportion to its population. Each consumer kills and eats the producer at a rate proportional to the producer population, and births of the consumer are proportional to the consumption rate. The flow diagram for the model is shown below.       The resulting system of differential equations defines our vector field. The following Sage script generates a vector field and plots a sample orbit in the phase plane. A graph of the corresponding state variables as functions of time is also generated.      Nullclines and Equilibria  A nullcline is a subset of the phase space of points where one of the rate functions in the vector field equals zero. In a two-dimensional system, a nullcline is typically a curve. In a three-dimensional system, a nullcline is typically a surface. In higher dimensions, a nullcline defines what is called a hypersurface, which is the generalization of a surface in three dimensions. Nullclines divide the phase space into disjoint regions in which the state variable is exclusively either increasing or decreasing.  An equilibrium is a point in phase space such that all of the state variables are constant. This requires that the point is on every variable's nullcline. So we can find equilibrium points by finding where the nullclines intersect.  We can create a graph that shows the nullclines using something called an implicit plot. The way that an implicit plot works is that a formula is computed at every point on a grid in the plane. We could think of these values as defining the height of a surface above or below each point in the plane. The implicit plot uses this surface to draw a contour in the plane where the height equals zero. Because the surface is not known exactly but is only measured at a grid of points, the contour is only approximate.   The Lotka Volterra predator prey model given by is a two-dimensional system. The -nullcline is the set of all points in the phase plane where , Similarly, the -nullcline is the set of all points where ,  To illustrate where an implicit plot comes from, the following Sage script plots the surface defined by the -rate formula with a contour showing the curve where the rate is zero. This approximate contour is the graphed as an implicit plot.   The -nullcline divides the phase plane into regions of -directionality. The intersection points are equilibria, which for the given model parameters occur at and . Within each region, the state variable either exclusively increases ( ) or exclusively decreases ( ). We can add arrows to visualize the result. The values used to define the ends of arrows was determined manually after looking at the phase plane with the nullcline shown to make the arrow centered.   Ultimately, we want to know the direction for both and . We plot the nullclines together, using different colors to distinguish them. We test the sign of the rate functions at points in the regions and draw arrows showing the direction. Conveniently, we could have Sage do the work once we identify the points by automating the drawing of arrows. The following script generates the nullclines, after some experimentation to get the legend looking appropriate.   Looking at the phase plane, we see nine distinct regions separated by the nullclines. The Sage script below tests the sign of the vector field rates at nine points, one from each region and draws horizontal and vertical arrows rooted at that point.    Higher dimensions obey the same ideas in principle but are harder to visualize. Even three dimensions can be a little challenging to interpret.   The SIR model for infectious diseases considers a single population where each individual can be categorized as susceptible to the disease, infected, and recovered and immune from the disease. The state variables , , and count the number of individuals in each category. Assuming that only healthy individuals give birth subject to a carrying capacity and infected individuals die at a higher rate than other individuals, a simple model is given by the system of differential equations The phase space is three-dimensional.  The Sage script below uses three-dimensional implicit plots to create approximate nullclines (these will be surfaces) for the three state variables. It is hard to see the intersection of all three surfaces. The script includes a step to solve for the equilibrium points.     "
 },
@@ -1796,7 +1697,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-phase-space.html#thm-existence-uniqueness-system",
   "type": "Theorem",
-  "number": "3.3.1",
+  "number": "4.3.1",
   "title": "Existence and Uniqueness of Initial Value Problem.",
   "body": " Existence and Uniqueness of Initial Value Problem   If each of the component rate functions are continuous and all of the partial derivatives are continuous in a neighborhood of the initial value , then the initial value problem defined by the vector field and initial values for has a unique solution for some interval .   "
 },
@@ -1814,7 +1715,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-phase-space.html#vector-fields-9",
   "type": "Example",
-  "number": "3.3.2",
+  "number": "4.3.2",
   "title": "",
   "body": " An example from physics is the harmonic oscillator (mass on a spring). In the absence of friction, the only force is from the spring, proportional to and opposing the displacement. The state variables are the displacement and the velocity . The system of differential equations is given by The rate for is just the definition of velocity. The rate for is acceleration and is a consequence of Newton's law where is the force of the spring.  The vector field is identified by considering an order for our state variables, and , with corresponding rate functions and . The phase plane is the -plane. The vector field corresponds to placing at each point a vector . Computer generated plots of vector fields usually rescale the vectors but preserve the correct directions and relative lengths.  The following Sage script generates a vector field for this system.   When you execute the Sage script and see the results, you should observe arrows that look like they generate a circular pattern (an ellipse, actually). The closer to the origin, , the smaller the arrows appear.  The vector field allows us to tell the story of what happens to the oscillator. Imagine stretching the string for a positive displacement by 1 unit of distance. Right when we let go, we are at a state of and , which appears on the -axis of the phase space. The vector field points down, , which means that we start to gain a little negative velocity. Immediately, the negative velocity starts to cause the displacement to decrease. This corresponds to following the ellipse in the fourth quadrant.  Eventually, the state of the system reaches with some maximum negative velocity . This corresponds to a point on the lower -axis. The vector field is horizontal and directed left, . The velocity causes the displacement to become negative and immediately, the acceleration begins to be positive and the velocity gradually slows down to zero, at which time we have returned to the -axis on the left side. It is not yet obvious, but conservation of energy guarantees that we have reached a negative displacement exactly equal to our original positive displacement. The state of the system continues through the second and first quadrant, ultimately returning to its initial point, whereon the cycle is repeated.  The path the state follows through phase space is called the orbit . If we include the time variable to extend the phase space, the path is called the trajectory . If we solve the initial value problem numerically, we can add an orbit to the plot of the vector field. In addition, we often wish to see the graphs of the individual state variables as functions of time. This is accomplished by plotting and .   "
 },
@@ -1823,7 +1724,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-phase-space.html#vector-fields-10",
   "type": "Example",
-  "number": "3.3.3",
+  "number": "4.3.3",
   "title": "",
   "body": " In the early 1900s, two scientists, Alfred Lotka and Vito Volterra, independently developed a system of differential equations to describe the dynamics of two populations a producer or prey and a consumer or predator. The system of equations, now called the Lotka Volterra predator prey model, has two state variables. Let represent the size of the consumer (or carnivore) population and let represent the size of the producer (or prey) population. The basic model assumes that the producer would grow in direct proportion to its current population and that the consumer would die in direct proportion to its population. Each consumer kills and eats the producer at a rate proportional to the producer population, and births of the consumer are proportional to the consumption rate. The flow diagram for the model is shown below.       The resulting system of differential equations defines our vector field. The following Sage script generates a vector field and plots a sample orbit in the phase plane. A graph of the corresponding state variables as functions of time is also generated.   "
 },
@@ -1850,7 +1751,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-phase-space.html#system-phase-space-4-5",
   "type": "Example",
-  "number": "3.3.5",
+  "number": "4.3.5",
   "title": "",
   "body": " The Lotka Volterra predator prey model given by is a two-dimensional system. The -nullcline is the set of all points in the phase plane where , Similarly, the -nullcline is the set of all points where ,  To illustrate where an implicit plot comes from, the following Sage script plots the surface defined by the -rate formula with a contour showing the curve where the rate is zero. This approximate contour is the graphed as an implicit plot.   The -nullcline divides the phase plane into regions of -directionality. The intersection points are equilibria, which for the given model parameters occur at and . Within each region, the state variable either exclusively increases ( ) or exclusively decreases ( ). We can add arrows to visualize the result. The values used to define the ends of arrows was determined manually after looking at the phase plane with the nullcline shown to make the arrow centered.   Ultimately, we want to know the direction for both and . We plot the nullclines together, using different colors to distinguish them. We test the sign of the rate functions at points in the regions and draw arrows showing the direction. Conveniently, we could have Sage do the work once we identify the points by automating the drawing of arrows. The following script generates the nullclines, after some experimentation to get the legend looking appropriate.   Looking at the phase plane, we see nine distinct regions separated by the nullclines. The Sage script below tests the sign of the vector field rates at nine points, one from each region and draws horizontal and vertical arrows rooted at that point.   "
 },
@@ -1859,9 +1760,216 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "system-phase-space.html#system-phase-space-4-7",
   "type": "Example",
-  "number": "3.3.6",
+  "number": "4.3.6",
   "title": "",
   "body": " The SIR model for infectious diseases considers a single population where each individual can be categorized as susceptible to the disease, infected, and recovered and immune from the disease. The state variables , , and count the number of individuals in each category. Assuming that only healthy individuals give birth subject to a carrying capacity and infected individuals die at a higher rate than other individuals, a simple model is given by the system of differential equations The phase space is three-dimensional.  The Sage script below uses three-dimensional implicit plots to create approximate nullclines (these will be surfaces) for the three state variables. It is hard to see the intersection of all three surfaces. The script includes a step to solve for the equilibrium points.   "
+},
+{
+  "id": "intro-differential-equations",
+  "level": "1",
+  "url": "intro-differential-equations.html",
+  "type": "Section",
+  "number": "5.1",
+  "title": "Introduction to Differential Equations",
+  "body": " Introduction to Differential Equations   Sequences are useful for modeling quantities that change according to a regular cycle and we only need to predict or measure the quantity at the same moment in a cycle. For a population that has an annual reproductive cycle, we may only need to model the population size at a particular time each year. Even for populations that change continuously, we might only wish to model the value at regular intervals. We call these models discrete time models . However, we often desire models that give us functions describing a quantity of interest at arbitrary times and not just at discrete moments. Models that accomplish this are called continuous time models . Differential equation models are examples of continuous time models.    Rates of Change  In order to motivate differential equations, let us think back to population models where the population changed according to births and deaths. For discrete time models, we established functions that described how many births or deaths to add over the course of a cycle. Such a function represented the total accumulated births or deaths, regardless of exactly when those events occurred. For a continuous time model, we instead think in terms of the rate at which births and deaths are occurring.  A rate of change represents the ratio between the changes of two covarying variables. One of the simplest examples is velocity which is the rate of change of distance traveled with respect to time, for which you probably have heard the saying, distance equals rate times time. Mathematically, this is saying that the distance traveled is proportional to the time spent travelling and the rate (velocity) is the proportionality constant. However, this is technically only true for constant rates of change. Calculus introduced the derivative as the mathematical quantity that measures the instantaneous rate of change . This rate of change results from the idea of computing the limit of an average rate of change.  Consider a quantity that is a function of time . The instantaneous rate of change of with respect to at a particular moment is defined as the derivative Thinking of this in reverse, this is telling us that the value can approximately be found as That is, the increment of change in is approximately just the derivative times the increment of time. The approximation improves as the increment of time decreases and is exact in the limit.    Differential Equations  A differential equation is an equation that defines the rate of change (a derivative) for a quantity. Calculus classes often compute derivatives and write them with formulas involving the independent variable. These are technically differential equations, but they are not especially useful in modeling.   Given , we can find the derivative . This equation is a differential equation involving the independent variable . The original function is a solution to the differential equation because the differential equation is true for that function. However, is also a solution to the same differential equation. In general, the solution must be of the form for some constant . Solutions are not unique unless additional restrictions are provided. That is the purpose of the integration constant .   Differential equations in modeling occur when the formula that defines the rate of change is a function involving the dependent variable and not just the independent variable. To identify a unique solution, we also need an initial value.   The differential equation defines the rate of change using a formula involving the dependent variable . Recall that the exponential function has this behavior since . That is, since , we have just discovered that and are the same, which is precisely what the equation means.  In fact, will be a solution for any value of . The derivative, for this formula will be The value of depends on the initial value for the function.     Solutions to Differential Equations  There are many strategies for trying to solve differential equations. These strategies are taught in courses exclusively about differential equations. Our emphasis will be on creating models using differential equations and understanding the behavior of the solutions without requiring formulas as solutions. The following theorem guarantees that a differential equation with an initial value has a unique solution under reasonable conditions.   Existence and Uniqueness of Initial Value Problems   Suppose that represents a continuous function of both and such that exists and is bounded (i.e., small changes in should result in small changes in . Then the differential equation with initial value has a unique solution for some interval with .    The proof is outside the scope of this text but is based on the convergence of approximations.    Note that the existence-uniqueness theorem only guarantees that a solution will exist on an interval near the initial value. Sometimes, solutions exist on very short intervals. If the value of the function is very large, then the solution might run away to infinity. Other times, solutions might exist for all real numbers. The uniqueness property indicates that for any initial value, there can only be one solution.  Knowing that solutions exist, even if we can't find their formulas, we can turn to computers to help us approximate their values using numerical algorithms. One common numerical method will be to approximate the value of the solution at specific values. (Asking for the entire function is usually too much.) The following Sage examples illustrate how we might find such approximations.   Find numerical approximations for the solution of the differential equation with various initial values . The Sage script below allows you to vary the initial value and create a table of approximating values as well as generate a graph of the approximation.      Slope Fields  In addition to solving the differential equation numerically, we can explore a differential equation graphically through a plot called a slope field . Although a differential equation could be any equation that involves the derivative, in modeling we usually think of a differential equation in the form presented in the existence uniqueness theorem where the derivative is equal to an expression that depends on the independent and dependent variables, such as Because the value of the derivative represents a slope, this equation allows us to define what the slope would be at every point in the -plane.   Slope Field   A slope field is a geometric representation of a differential equation wherein every point in the plane is represented by a line segment at that point having the slope . Because every point is impossible to visualize, in practice the graph only shows the slope field at points on a grid of equally spaced points.    The solution to a differential equation with an initial value will be a function whose graph includes the point and then at every point has a tangent line that has the same slope as the slope field at that point. This means that the curve follows the direction of the arrows.  Computer packages allow us to easily generate slope fields. Evaluate the following Sage scripts to see a variety of different examples.   The differential equation has a rate formula that is constant. This means that every point has the same slope. Solutions will follow straight lines.   Note that there are infinitely many different solutions corresponding to a family of parallel lines with slope 3. Given any particular point (initial value), there will only be one of those lines passing through the point. That is the uniqueness of solutions of differential equations.    The differential equation has a rate formula . The rate formula in this case depends only on the independent variable . You should notice that the slope is the same at points that are on the same vertical line, .   In calculus, we learned that can be solved for using antiderivatives, where we get , where is a constant of integration. This corresponds to a horizontal translation or shift, which is the appropriate analogue for the parallel lines in the first example. That is, we should think of the lines in the first example as vertical shifts of one another.    The differential equation has a rate formula . The rate formula uses the same operations as the previous example but in terms of the dependent variable . You should notice that the slope is the same at points that are on the same horizontal line .   Notice that solutions are no longer vertical translations or shifts of one another. However, you should see that every solution will have corresponding solutions that are horizontal translations . Different curves correspond to different initial conditions. In this example, we can see that there are three basic classes of solutions. Above a certain point, the graphs grow without bound and head to infinity at some finite time. (This is an example of why the existence uniqueness theorem only guaranteed a solution for a limited interval.) Between two values that we will soon learn are equilibrium solutions, solutions form a transition from the upper equilibrium (unstable) to the lower equilibrium (stable). Solutions that begin below the lower equilibrium all rise and asymptotically approach the stable equilibrium.    The differential equation has a rate formula . Because this rate formula depends on both and , solutions do not share either horizontal or vertical translations.      "
+},
+{
+  "id": "intro-differential-equations-2-1",
+  "level": "2",
+  "url": "intro-differential-equations.html#intro-differential-equations-2-1",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "discrete time models continuous time models "
+},
+{
+  "id": "rate-of-change-3",
+  "level": "2",
+  "url": "intro-differential-equations.html#rate-of-change-3",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "rate of change derivative instantaneous rate of change "
+},
+{
+  "id": "differential-equations-3",
+  "level": "2",
+  "url": "intro-differential-equations.html#differential-equations-3",
+  "type": "Example",
+  "number": "5.1.1",
+  "title": "",
+  "body": " Given , we can find the derivative . This equation is a differential equation involving the independent variable . The original function is a solution to the differential equation because the differential equation is true for that function. However, is also a solution to the same differential equation. In general, the solution must be of the form for some constant . Solutions are not unique unless additional restrictions are provided. That is the purpose of the integration constant .  "
+},
+{
+  "id": "differential-equations-5",
+  "level": "2",
+  "url": "intro-differential-equations.html#differential-equations-5",
+  "type": "Example",
+  "number": "5.1.2",
+  "title": "",
+  "body": " The differential equation defines the rate of change using a formula involving the dependent variable . Recall that the exponential function has this behavior since . That is, since , we have just discovered that and are the same, which is precisely what the equation means.  In fact, will be a solution for any value of . The derivative, for this formula will be The value of depends on the initial value for the function.  "
+},
+{
+  "id": "thm-diffeq-existence-uniqueness",
+  "level": "2",
+  "url": "intro-differential-equations.html#thm-diffeq-existence-uniqueness",
+  "type": "Theorem",
+  "number": "5.1.3",
+  "title": "Existence and Uniqueness of Initial Value Problems.",
+  "body": " Existence and Uniqueness of Initial Value Problems   Suppose that represents a continuous function of both and such that exists and is bounded (i.e., small changes in should result in small changes in . Then the differential equation with initial value has a unique solution for some interval with .    The proof is outside the scope of this text but is based on the convergence of approximations.   "
+},
+{
+  "id": "numerical-solutions-diffeq-6",
+  "level": "2",
+  "url": "intro-differential-equations.html#numerical-solutions-diffeq-6",
+  "type": "Example",
+  "number": "5.1.4",
+  "title": "",
+  "body": " Find numerical approximations for the solution of the differential equation with various initial values . The Sage script below allows you to vary the initial value and create a table of approximating values as well as generate a graph of the approximation.   "
+},
+{
+  "id": "slope-fields-2",
+  "level": "2",
+  "url": "intro-differential-equations.html#slope-fields-2",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "slope field "
+},
+{
+  "id": "defn-slope-field",
+  "level": "2",
+  "url": "intro-differential-equations.html#defn-slope-field",
+  "type": "Definition",
+  "number": "5.1.5",
+  "title": "Slope Field.",
+  "body": " Slope Field   A slope field is a geometric representation of a differential equation wherein every point in the plane is represented by a line segment at that point having the slope . Because every point is impossible to visualize, in practice the graph only shows the slope field at points on a grid of equally spaced points.   "
+},
+{
+  "id": "slope-fields-6",
+  "level": "2",
+  "url": "intro-differential-equations.html#slope-fields-6",
+  "type": "Example",
+  "number": "5.1.6",
+  "title": "",
+  "body": " The differential equation has a rate formula that is constant. This means that every point has the same slope. Solutions will follow straight lines.   Note that there are infinitely many different solutions corresponding to a family of parallel lines with slope 3. Given any particular point (initial value), there will only be one of those lines passing through the point. That is the uniqueness of solutions of differential equations.  "
+},
+{
+  "id": "slope-fields-7",
+  "level": "2",
+  "url": "intro-differential-equations.html#slope-fields-7",
+  "type": "Example",
+  "number": "5.1.7",
+  "title": "",
+  "body": " The differential equation has a rate formula . The rate formula in this case depends only on the independent variable . You should notice that the slope is the same at points that are on the same vertical line, .   In calculus, we learned that can be solved for using antiderivatives, where we get , where is a constant of integration. This corresponds to a horizontal translation or shift, which is the appropriate analogue for the parallel lines in the first example. That is, we should think of the lines in the first example as vertical shifts of one another.  "
+},
+{
+  "id": "slope-fields-8",
+  "level": "2",
+  "url": "intro-differential-equations.html#slope-fields-8",
+  "type": "Example",
+  "number": "5.1.8",
+  "title": "",
+  "body": " The differential equation has a rate formula . The rate formula uses the same operations as the previous example but in terms of the dependent variable . You should notice that the slope is the same at points that are on the same horizontal line .   Notice that solutions are no longer vertical translations or shifts of one another. However, you should see that every solution will have corresponding solutions that are horizontal translations . Different curves correspond to different initial conditions. In this example, we can see that there are three basic classes of solutions. Above a certain point, the graphs grow without bound and head to infinity at some finite time. (This is an example of why the existence uniqueness theorem only guaranteed a solution for a limited interval.) Between two values that we will soon learn are equilibrium solutions, solutions form a transition from the upper equilibrium (unstable) to the lower equilibrium (stable). Solutions that begin below the lower equilibrium all rise and asymptotically approach the stable equilibrium.  "
+},
+{
+  "id": "slope-fields-9",
+  "level": "2",
+  "url": "intro-differential-equations.html#slope-fields-9",
+  "type": "Example",
+  "number": "5.1.9",
+  "title": "",
+  "body": " The differential equation has a rate formula . Because this rate formula depends on both and , solutions do not share either horizontal or vertical translations.    "
+},
+{
+  "id": "differential-equation-analysis",
+  "level": "1",
+  "url": "differential-equation-analysis.html",
+  "type": "Section",
+  "number": "5.2",
+  "title": "Analysis of Differential Equations",
+  "body": " Analysis of Differential Equations   Differential equation models and sequence projection models have many similarities as well as differences. Just as we looked for equilibrium solutions for projection models in discrete time, we will look for equilibrium solutions for differential equation models in continuous time. Those equilibria can be stable or unstable. However, unlike sequence models, a differential equation model can not pass across an equilibrium solution. The graphical analysis of sequences using a cobweb diagram for discrete jumps is replaced for differential equations by the idea of a phase line.    Equilibria for Differential Equations  The concept of an equilibrium is that the state of the system is not changing. For variables, this means that the dynamic variables are constant functions with respect to time. Constant functions have a zero rate of change. We find equilibria solutions to a differential equation by solving the equation and look for solutions of the form for some constant . Other solutions that involve the variable are not equilibrium solution but instead describe other points where the instantaneous rate of change is zero but for which the function changes at other times.    Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives The solution is of the form is a constant and is therefore an equilibrium solution.      Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives either or , which give two equilibrium solutions and .    When we wanted to understand the stability of equilibria resulting from projection function models, we started by considering linear projection functions. For differential equations, we do similar analysis. We start with proportional rates of change models and then apply that to linear rates of change models.   Exponential Growth\/Decay Models   A differential equation of the form where is a constant, so that the rate of change of is proportional to the value of , has solutions that are exponential with rate . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as while as .  (exponential decay): as while as .     A differential equation of the form can be transformed into an exponential growth\/decay model by rewriting the model in terms of the equilibrium, found by . The equilibrium is so that the growth rate model can be rewritten as Because is a constant, . The rules of calculus allow us to define and find the differential equation Thus, is an exponential model and is shifted to be centered around the equilibrium.   Shifted Exponential Growth\/Decay Models   A differential equation of the form where and are constant has solutions that are exponential functions with rate shifted by the equilibrium . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as (unstable).  (exponential decay): as (stable).     Nonlinear growth rates that depend only on the dependent variable, , have equilibria at all of the values so that . Consider an equilibrium at . We can approximate the differential equation by the tangent line approximation at to determine stability of the equilibrium as long as . Then approximation suggests for values of sufficiently near . This is a linear rate function that leads to a shifted exponential model.   Local Stability of Equilibria   Suppose a differential equation of the form has an equilibrium at so that . Then if , the local stability of the equilibrium can be determined by the sign of .  (exponential growth): increases, at least initially.  (exponential decay): decreases.      The discrete logistic model in discrete time has a growth term defined by . This is saying that the total increment of change in the population over the course of the time increment is given by the formula . If we interpret that formula as a rate of change instead of the total increment of change, we arrive at the continuous-time logistic growth model where and are positive constants.  The equilibria for this model are found by solving to give and . The growth rate formula has a derivative . Computing the derivative at each equilibrium informs us of the stability of that solution.  so is an unstable equilibrium.  so is a stable equilibrium.  The following Sage script generates a typical slope field and several solutions coming from different initial values that illustrate the stability of these equilbria. Notice how solutions move away from the unstable equilibrium solution but towards the stable equilibrium solution.      Phase Lines  A differential equation with a rate that depends only on the dependent variable is called autonomous , such as . This is analogous to a sequence that can be defined recursively with a projection function. For a recursive sequence, we could study it geometrically using a cobweb diagram. When the projection function is above the line , the sequence increases; when the projection function is below the line, the sequence decreases.  For an autonomous differential equation, , we can use the graph of the rate function to understand the behavior of the solution function. When the rate function is positive (above the axis), the solution will be an increasing function. When the rate function is negative (below the axis), the solution will be a decreasing function. Equilibrium solutions correspond to values of where . We can summarize this behavior by drawing a number line with arrows pointing in the direction of increasing or decreasing between equilibrium values. Such a number line is called a phase line .   Consider the autonomous differential equation . We will generate a phase line summary of possible solution behaviors.  The graph of the rate function is a concave up parabola with roots at , shown below.       The roots of the rate function are the equilibrium solutions, and . Between the equilibria, the rate function is negative, so any solutions with initial values between the equilibria will be decreasing functions going away from the upper equilibrium and toward the lower equilibrium. If the initial value is above the equilibria, , then the solution will be an increasing function that grows without bound. If the initial value is below the equilibra, , then the solution will also be an increasing function but will grow at a slower rate as it approaches the lower equilibrium. The equilibria and the three intervals for initial values are summarized in the phase line below.       This phase line might be easier visualized in relation to the graph of different solutions if we drew it vertically on an axis so that arrows pointing to the right (increasing) represent solutions that rise (increasing) and arrows point to the left (decreasing) represent solutions that fall (decreasing). The equilibrium solutions correspond to solutions that remain constant. We see that is an unstable equilibrium while is a stable equilibrium.         "
+},
+{
+  "id": "diffeq-equilibria-3",
+  "level": "2",
+  "url": "differential-equation-analysis.html#diffeq-equilibria-3",
+  "type": "Example",
+  "number": "5.2.1",
+  "title": "",
+  "body": "  Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives The solution is of the form is a constant and is therefore an equilibrium solution.   "
+},
+{
+  "id": "diffeq-equilibria-4",
+  "level": "2",
+  "url": "differential-equation-analysis.html#diffeq-equilibria-4",
+  "type": "Example",
+  "number": "5.2.2",
+  "title": "",
+  "body": "  Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives either or , which give two equilibrium solutions and .   "
+},
+{
+  "id": "diffeq-exponential-models",
+  "level": "2",
+  "url": "differential-equation-analysis.html#diffeq-exponential-models",
+  "type": "Theorem",
+  "number": "5.2.3",
+  "title": "Exponential Growth\/Decay Models.",
+  "body": " Exponential Growth\/Decay Models   A differential equation of the form where is a constant, so that the rate of change of is proportional to the value of , has solutions that are exponential with rate . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as while as .  (exponential decay): as while as .    "
+},
+{
+  "id": "diffeq-shifted-exponential-models",
+  "level": "2",
+  "url": "differential-equation-analysis.html#diffeq-shifted-exponential-models",
+  "type": "Theorem",
+  "number": "5.2.4",
+  "title": "Shifted Exponential Growth\/Decay Models.",
+  "body": " Shifted Exponential Growth\/Decay Models   A differential equation of the form where and are constant has solutions that are exponential functions with rate shifted by the equilibrium . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as (unstable).  (exponential decay): as (stable).    "
+},
+{
+  "id": "diffeq-nonlinear-equilibria-stability",
+  "level": "2",
+  "url": "differential-equation-analysis.html#diffeq-nonlinear-equilibria-stability",
+  "type": "Theorem",
+  "number": "5.2.5",
+  "title": "Local Stability of Equilibria.",
+  "body": " Local Stability of Equilibria   Suppose a differential equation of the form has an equilibrium at so that . Then if , the local stability of the equilibrium can be determined by the sign of .  (exponential growth): increases, at least initially.  (exponential decay): decreases.    "
+},
+{
+  "id": "diffeq-equilibria-11",
+  "level": "2",
+  "url": "differential-equation-analysis.html#diffeq-equilibria-11",
+  "type": "Example",
+  "number": "5.2.6",
+  "title": "",
+  "body": " The discrete logistic model in discrete time has a growth term defined by . This is saying that the total increment of change in the population over the course of the time increment is given by the formula . If we interpret that formula as a rate of change instead of the total increment of change, we arrive at the continuous-time logistic growth model where and are positive constants.  The equilibria for this model are found by solving to give and . The growth rate formula has a derivative . Computing the derivative at each equilibrium informs us of the stability of that solution.  so is an unstable equilibrium.  so is a stable equilibrium.  The following Sage script generates a typical slope field and several solutions coming from different initial values that illustrate the stability of these equilbria. Notice how solutions move away from the unstable equilibrium solution but towards the stable equilibrium solution.   "
+},
+{
+  "id": "diffeq-phase-line-2",
+  "level": "2",
+  "url": "differential-equation-analysis.html#diffeq-phase-line-2",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "autonomous "
+},
+{
+  "id": "diffeq-phase-line-3",
+  "level": "2",
+  "url": "differential-equation-analysis.html#diffeq-phase-line-3",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "phase line "
+},
+{
+  "id": "diffeq-phase-line-4",
+  "level": "2",
+  "url": "differential-equation-analysis.html#diffeq-phase-line-4",
+  "type": "Example",
+  "number": "5.2.7",
+  "title": "",
+  "body": " Consider the autonomous differential equation . We will generate a phase line summary of possible solution behaviors.  The graph of the rate function is a concave up parabola with roots at , shown below.       The roots of the rate function are the equilibrium solutions, and . Between the equilibria, the rate function is negative, so any solutions with initial values between the equilibria will be decreasing functions going away from the upper equilibrium and toward the lower equilibrium. If the initial value is above the equilibria, , then the solution will be an increasing function that grows without bound. If the initial value is below the equilibra, , then the solution will also be an increasing function but will grow at a slower rate as it approaches the lower equilibrium. The equilibria and the three intervals for initial values are summarized in the phase line below.       This phase line might be easier visualized in relation to the graph of different solutions if we drew it vertically on an axis so that arrows pointing to the right (increasing) represent solutions that rise (increasing) and arrows point to the left (decreasing) represent solutions that fall (decreasing). The equilibrium solutions correspond to solutions that remain constant. We see that is an unstable equilibrium while is a stable equilibrium.       "
 },
 {
   "id": "backmatter-2",
