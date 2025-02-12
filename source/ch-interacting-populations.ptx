@@ -7,8 +7,8 @@
 <!-- Copyright (C) 2017  D. Brian Walton          -->
 <!-- See the file COPYING for copying conditions. -->
    
-<chapter xml:id="populations" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <title>Population Dynamics</title>
+<chapter xml:id="ch-interacting-populations" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Interactions between Populations</title>
 
     <introduction>
         <p>
@@ -17,7 +17,6 @@
             In the simplest sense, a population consists of individuals and the principal state variable will be the number of individuals in the population.
             Throughout our discussion, we will use <m>P</m> to represent the population size and <m>t</m> to represent the time.
         </p>
-        
         <p>
             When we think about a dynamical system, we need to identify how we will measure the state of our system with respect to time.
             For example, we sometimes are interested in the state of the system at uniformly spaced time increments.
@@ -26,33 +25,19 @@
             In these cases, we will think of our state as only being measurable at these times.
             Models using this perspective are called <term>discrete time models</term>.
         </p>
-        
         <p>
             On the other hand, we might measure the state of the system frequently enough that only gradual changes are occurring between measurements.
             In these cases, we might consider thinking about time continuously and consider the possibility that the state existed at all times.
             We could then use <term>continuous time models</term> which give us a mathematical representation of the state of the system for all times, at least over some interval of interest.
         </p>
-        
         <p>
             Other variables in the system allow us to understand how the population is changing.
             The most common variables relating to a population characterize the rates for births and deaths and migration.
             The change in the population size can be characterized as adding in new individuals (births and immigrants) and subtracting the loss of individuals (deaths and emigrants), as illustrated in <xref ref="fig-abstract-population-model"/>.
             The art of a mathematical model is to describe these terms using mathematical equations that allow us to make predictions about the population.
         </p>
-        
-        <figure xml:id="fig-abstract-population-model">
-            <caption>An abstract representation of a population model showing arrows representing processes that either increase (pointing in) or decrease (pointing out) the population size.</caption>
-            <image width="50%" source="images/population-visual-model-full">
-                <shortdescription>Simplified diagram representation of a population model</shortdescription>
-            </image>
-        </figure>
     </introduction>
-        
-    <xi:include href="./sec-population-agent-based.ptx" />
-    <xi:include href="./sec-population-discrete.ptx" />
-    <xi:include href="./sec-population-density-dependent.ptx" />
-    <xi:include href="./sec-population-projection.ptx" />
-    <xi:include href="./sec-population-projection-analysis.ptx" />
-    <xi:include href="./sec-population-projection-cobweb.ptx" />
-    <xi:include href="./sec-population-interventions.ptx" />
+
+    <xi:include href="./sec-competition.ptx" />
+
 </chapter>

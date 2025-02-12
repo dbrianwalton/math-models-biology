@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="sec-structure-two-stage">
+<title>Two Stage Populations</title>
+
+    <p>
+        To begin the study of populations with different stages, we first think of a population that has exactly two stages.
+        A particular example is of a population of plants that mature in a single growing season to release seeds at the end of the growing season.
+        Because some seeds might not germinate immediately, we will want to keep track of how many seeds remain viable but still in the ground.
+        We call these seeds the <term>seed bank</term>
+    </p>
+    <p>
+        With this context in mind, let us consider a population of plants that has two state variables for each growing season.
+        The first state variable is the number of viable but ungerminated seeds in the ground, <m>S</m>.
+        The second state variable is the number of plants, <m>P</m>.
+        For precision, we need to specify a specific time in the season when the measurements are made.
+        Plants and seeds present at the start of the season may not survive to the end of the season.
+        For this discussion, we will focus on the start of the growing season.
+    </p>
+    <p>
+        What will happen to the seeds over the course of a season?
+        Some seeds will be eaten; others will be damaged or wash away.
+        By the end of the season, only a fraction of those seeds will remain.
+        At that time, the plants that matured will release a new batch of seeds adding to the seed bank.
+        Then, at the start of the next growing season, some fraction of the seeds will germinate and become plants while the rest remain in the seed bank subject to additional losses during the season.
+    </p>
+    <p>
+        What will happen to the plants?
+        Many species of plants are <term>annual</term> plants, meaning that at the end of one growing season the plant dies.
+        Others are <term>perrenial</term>, meaning that a plant has a probability of surviving to the next year and repeat its reproductive cycle.
+        Perrenial plants have the potential of more complicated life cycles, where reproduction does not necessarily happen every year.
+        Additionally, a plant's ability to reproduce generally increases with the size of the plant so that surviving plants are able to produce more seeds.
+        We will consider here only a simplified case where plants are either annual or there is no observable difference between plants of different ages.
+    </p>
+    <p>
+        We represent the dynamics for the population graphically by including a box for each state variable.
+        We let <m>S</m> represent the number of seeds in the seed bank that are viable but are not germinating,
+        and we let <m>P</m> represent the number of plants at the start of the growing season.
+        Our <term>state vector</term> consists of the <em>pair</em> of values,
+        <me>\vec{X} = (S, P)</me>.
+        We include arrows between the state variables to represent transitions of existing individuals.
+        Arrows into each state not coming from other states represent new individuals, either new seeds that did not germinate or new plants that germinated in their first season.
+        However, we include dotted arrows to indicate the source of those new seeds or plants.
+        An arrow leaving and re-entering the same variable may optionally be present to indicate an explicit representation of survival within a state to the next season.
+        Arrows leaving a state but not entering another state represent removal from the system, whether by consumption, death or decay.
+    </p>
+    <figure xml:id="fig-simple-seedbank-visual-model">
+        <caption>Model for a simple seedbank showing possible sources of change to the number of seeds and germinated plants.</caption>
+        <image width="75%" source="images/simple-seedbank-visual-model"/>
+    </figure>
+    <p>
+        The visual model helps us think through the different contributions that our model will need.
+        The seedbank will need to account for new seeds from the previous season, survival of seeds that remain in the seedbank for the next year, and the reduction to the seedbank due to germination (transition to plants) or other losses.
+        Similarly, the number of plants will need to account for newly germinated plants that from new seeds coming from the previous season as well as from seeds that were in the seedbank, survival of plants from the previous season, and losses of plants.
+    </p>
+    <p>
+        Many quantities can be calculated using values observed in the population.
+        Given the number of plants that start a season, we might be able to observe the fraction that survive to the end of the season and release.
+        Returning at the start of the next season, we could similarly count the fraction of plants that survive into the next season.
+        For those plants that do release seeds, we might perform an observational experiment to count the average number of seeds that are released.
+        An experiment might also be able to measure what fraction of seeds that are released germinate each year following their original planting.
+    </p>
+    <p>
+        A fraction <m>f</m> of the plants at the start of the season make it to the end of the growing season
+        Consequently, the number of plants that release seeds at the end of the <m>n</m>th growing season is given by <m>f \cdot P_n</m>.
+        Next suppose that a typical plant releases an average of <m>\sigma</m> (Greek letter <q>sigma</q> for <q>seeds</q>) seeds.
+        The total number of released seeds is therefore calculated by <m>\sigma \cdot f \cdot P_n</m>.
+        A fraction <m>\alpha</m> of those seeds will germinate immediately while the other fraction <m>1-\alpha</m> are added to the seed bank.
+        Consequently, the number of new seeds added to the seed bank for <m>S_{n+1}</m> will be <m>(1-\alpha)\sigma f P_n</m>.
+        The number of new plants counted as part of <m>P_{n+1}</m> sprouting immediately from seeds will be <m>\alpha \sigma f P_n</m>.
+        In addition, some fraction <m>\mu_p</m> of plants in season <m>n</m> will die at the end of the season; the fraction <m>(1-\mu_p)</m> survive to the start of the next season.
+    </p>
+    <p>
+        For the seedbank, only a fraction of the seeds at the start of one growing season will survive to the start of the next growing season.
+        If we let <m>\mu_s</m> be the fraction that does not survive the season, then <m>1-\mu_s</m> is the fraction that does survive.
+        Then there will be a fraction of surviving seeds that germinate.
+        This fraction could depend on the age of the seed, but the simplest model might use the same fraction <m>\alpha</m> as mentioned earlier.
+        Consequently, the number of new plants resulting from germination of seeds in the seedbank will be calculated as <m>\alpha (1-\mu_s)S_{n}</m>.
+        The number of seeds that survive but remain in the seedbank will be <m>(1-\alpha)(1-\mu_s) S_n</m>.
+    </p>
+    <p>
+        Based on our reasoning, if we had all of those parameters calculated experimentally, we could create a mathematical model for our seedbank model using the equations
+        <mdn>
+            <mrow xml:id="eqn-seedbank-seed-projection">
+                S_{n+1} \amp = (1-\alpha)(1-\mu_s) S_n + (1-\alpha) \sigma f P_n
+            </mrow>
+            <mrow xml:id="eqn-seedbank-plant-projection">
+                P_{n+1} \amp = \alpha (1-\mu_s) S_n + \alpha \sigma f P_n + (1-\mu_p) f P_n
+            </mrow>
+        </mdn>
+        The first term in <xref ref="eqn-seedbank-seed-projection"/> represents survival of seeds in the seedbank that do not germinate;
+        the second term represents the new seeds added to the seedbank from plants in the previous season.
+        The first term in <xref ref="eqn-seedbank-plant-projection"/> represents germination of seeds that were previously in the seedbank;
+        the second term represents the germination of seeds that were released the previous season;
+        and the third term represents the survival of plants from the previous season.
+        For annual plants, all plants die at the end of the season so that <m>\mu_p = 1</m>.
+    </p>
+    <p>
+        When we do not know the detailed parameter values, we might rewrite the model with single parameters, such as follows:
+        <mdn>
+            <mrow xml:id="eqn-seedbank-seed-projection-bulk">
+                S_{n+1} \amp = a S_n + b P_n
+            </mrow>,
+            <mrow xml:id="eqn-seedbank-plant-projection-bulk">
+                P_{n+1} \amp = c S_n + d P_n
+            </mrow>.
+        </mdn>
+        Some of the parameters can then be inferred.
+        Comparing the two models, we see that <m>a+c = 1-\mu_s</m> so that <m>\mu_s = 1 - (a+c)</m>.
+        Then we could calculate <m>\alpha = \frac{c}{1-\mu_s} = \frac{c}{a+c}</m>.
+        In the case that <m>\mu_p = 1</m> (annual plants), we can find <m>\sigma f = \frac{d}{\alpha}</m>.
+    </p>
+    <p>
+        We can now explore the dynamics of this model using recursive sequences.
+        Because there are two different state variables, each state variable gets its own projection function.
+        Each of those functions depends on both state variables.
+        Our initial state will also need a value for each of <m>S_0</m> and <m>P_0</m>.
+        We will need to update <em>both</em> sequences within the same loop.
+        When writing code, it is often better to use variable names for our parameters that reflect the meaning rather than the short symbol used within a mathematical equation.
+        For example, instead of a short symbol for <m>\mu_p</m>, we might use a variable named <c>plant_death</c> since the symbol represents the fraction of plants that die.
+    </p>
+    <p>
+        To visualize the dynamics of the population, we will start by looking at the values of <m>S_n</m> and <m>P_n</m> versus <m>n</m>.
+        The scales for these values are very different, so we will configure our plot to have scales for the two values on different sides of the graph.
+    </p>
+    <listing xml:id="listing-seedbank-model-generate"> 
+        <program language="r">
+            <code>
+            <![CDATA[# Parameters for the model
+            plant_death <- 1      # mu_p: Fraction of plants that die after a season
+            seed_death <- 0.9     # mu_s: Fraction of seeds in seedbank that do not survive
+            plant_to_seed <- 0.2  # f: Fraction of plants that survive to seed
+            seeds_per_plant <- 25    # sigma: Average number of seeds per plant
+            seed_germinate <- 0.2    # alpha: Fraction of seeds that germinate
+
+            # Calculated parameters
+            a <- (1-seed_germinate) * (1-seed_death)
+            b <- (1-seed_germinate) * seeds_per_plant
+            c <- seed_germinate * (1-seed_death)
+            d <- seed_germinate * (seeds_per_plant + 1 - plant_death) * plant_to_seed
+
+            # Initial values and length of calculation
+            S0 <- 0
+            P0 <- 20
+            N <- 15
+
+            # Create space for the data
+            t_vec <- 0:N
+            S_vec <- double(N+1)
+            P_vec <- double(N+1)
+
+            # Generate the sequences
+            S_vec[1] <- S0
+            P_vec[1] <- P0
+            for (n in 1:N) {
+                S_vec[n+1] <- a * S_vec[n] + b * P_vec[n]
+                P_vec[n+1] <- c * S_vec[n] + d * P_vec[n]
+            }
+
+            my_plot <- ggplot() +
+              geom_point(mapping = aes(x = t_vec, y = S_vec, color="S")) +
+              geom_path(mapping = aes(x = t_vec, y = S_vec, color="S"), linetype="dashed") +  
+              geom_point(mapping = aes(x = t_vec, y = P_vec, color="P")) +
+              geom_path(mapping = aes(x = t_vec, y = P_vec, color="P"), linetype="dashed")
+            show(my_plot)
+            ]]>
+            </code>
+        </program>
+    </listing>
+    <figure xml:id="fig-seedbank-population-plots-01">
+        <caption>Plot of the seed and plant counts as a functions of time.</caption>
+        <image width="80%" source="images/seedbank-population-plot-01.png"/>
+    </figure>
+    <p>
+        When we look at the resulting graph, we notice that the the graph for each of the subpopulations almost look like exponential growth.
+        This is a consequence of linear algebra.
+        A pair of related sequences <m>x_n</m> and <m>y_n</m> that has a recursive projection model with the form
+        <md>
+            <mrow>x_{n+1} \amp = a x_n + b y_n </mrow>
+            <mrow>y_{n+1} \amp = c x_n + d y_n </mrow>
+        </md>
+        is said to have a <term>linear projection model</term>.
+    </p>
+    <theorem>
+        <statement>
+            <p>
+                A pair of sequences <m>(x_n, y_n)</m> with a linear projection model will asymptotically behave like geometric sequencees.
+                That is, the ratios of values <m>\frac{x_{n+1}}{x_n}</m> and <m>\frac{y_{n+1}}{y_n}</m> both converge to a comstant <m>\lambda</m> called the asymptotic geometric growth rate.
+                Furthermore, suppose we calculate the total <m>T_n = x_n + y_n</m> and look at the ratios <m>\frac{x_n}{T_n}</m> and <m>\frac{y_n}{T_n}</m>, which represent the fractions of the total count in seed and plant form.
+                The ratios always converge to values <m>\rho_x</m> and <m>\rho_y</m>, called the <term>stable stage distribution</term>, that are independent of initial values.
+            </p>
+        </statement>
+    </theorem>
+    <p>
+        Let us add some additional calculations to the previous to calculate the ratios and the stage distribution.
+        We will see the convergence directly.
+        It will be more convenient to create a tibble in this circumstance and add the ratios as additional columns.
+    </p>
+    <listing xml:id="listing-seedbank-model-ratio-plots"> 
+        <program language="r">
+            <code>
+            <![CDATA[# Create a tibble
+            library(tidyr)
+            library(dplyr)
+            # Some new columns are easy to compute
+            seedbank_data <- tibble(t = t_vec, S = S_vec, P = P_vec) |>
+                mutate(total = S + P) |>
+                mutate(rho_S = S/total, rho_P = P/total)
+
+            # Some require comparing terms in different positions
+            seedbank_data$lambda_S <- NA
+            seedbank_data$lambda_P <- NA
+            seedbank_data$lambda_S[2:(N+1)] <- S_vec[2:(N+1)] / S_vec[1:N]
+            seedbank_data$lambda_P[2:(N+1)] <- P_vec[2:(N+1)] / P_vec[1:N]
+
+            # Create plots for the growth ratio of each count
+            growth_ratio_plot <- seedbank_data |>
+                pivot_longer(cols = c(lambda_S, lambda_P),
+                             values_to = "lambda", names_to = "category") |>
+                ggplot(mapping = aes(x = t, y = lambda, color = category)) +
+                    geom_point() + geom_line(linetype = "dashed")
+            show(growth_ratio_plot)
+
+            # Create plots for the stage distribution
+            stage_distribution_plot <- seedbank_data |>
+                pivot_longer(cols = c(rho_S, rho_P),
+                             values_to = "rho", names_to = "category") |>
+                ggplot(mapping = aes(x = t, y = rho, color = category)) +
+                    geom_point() + geom_line(linetype = "dashed")
+            show(stage_distribution_plot)
+            ]]>
+            </code>
+        </program>
+    </listing>
+    <figure xml:id="fig-seedbank-growth-ratio-plot-01">
+        <caption>Plot showing the ratio of growth giving <m>S_{n+1}/S_n</m> and <m>P_{n+1}/P_n</m> which converge to the asymptotic growth ratio.</caption>
+        <image width="80%" source="images/seedbank-growth-ratio-plot-01.png"/>
+    </figure>
+    <figure xml:id="fig-seedbank-stage-distribution-plot-01">
+        <caption>Plot showing the fraction of the total count as seeds and plants <m>\rho_S[n] = S_{n}/(S_n+P_n)</m> and <m>\rho_P[n] = P_{n}/(S_n+P_n)</m> which converge to the the stable stage distribution.</caption>
+        <image width="80%" source="images/seedbank-stage-distribution-plot-01.png"/>
+    </figure>
+</section>

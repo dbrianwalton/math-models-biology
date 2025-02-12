@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<chapter xml:id="ch-structured-populations" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Structured Populations</title>
+
+    <introduction>
+        <p>
+            Our introduction to population modeling was simplistic.
+            We tracked the increase or decrease of the population due to births, deaths, and migration.
+            When we modeled our rates as being proportional to the population, we were implicitly assuming that every individual in the population had the same potential to impact changes as any other.
+            This is an invalid assumption.
+        </p>
+        <p>
+            Most organisms progress through different stages of life, and the potential for reproduction and for death changes based on which stage an individual is in.
+            An organism may have different stages of development.
+            Insects, as an example, typically include individuals that progress through a developing age, one or more larval stage, and an adult stage.
+            Survival at the different stages have different probabilities, and only mature adults are able to reproduce.
+            Plants go through a similar process, with an overall population that can be considered to include ungerminated seeds, seedlings, various stages of growth, and mature reproductive plants.
+        </p>
+        <p>
+            In this chapter, we consider how we could model a population that has individuals in different ages or stages of development.
+            A population will no longer be capable of representation by a single number.
+            Instead, we will need to have values representing the population size of each different category, each of which is its own state variable.
+            The collection of all of the state variables forms a <term>state vector</term>.
+        </p>
+        <p>
+            We will develop discrete-time models for the state vector in a similar way to our development of population models.
+            These models will require that we think about <term>transitions</term> between different categories.
+            A transition will account for individuals maturing out of one category and entering a new category.
+            It will be important that we think about conservation, so there is a book-keeping balance between numbers of individuals leaving one category and entering other categories.
+        </p>
+    </introduction>
+
+    <xi:include href="./sec-structure-two-stage.ptx" />
+
+</chapter>
