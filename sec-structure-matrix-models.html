@@ -8,7 +8,7 @@
 <html lang="en-US" dir="ltr">
 <head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Front Matter</title>
+<title>Matrix Models for Structured Populations</title>
 <meta name="Keywords" content="Authored in PreTeXt">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:type" content="book">
@@ -149,7 +149,7 @@ eBookConfig.enable_chatcodes =  false;
 <ol id="searchresults" class="searchresults"></ol>
 </div>
 </div>
-<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="my-great-book.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="my-great-book.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="front-colophon.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="sec-structure-two-stage.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-structured-populations.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="interactions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
 </div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
 \newcommand{\gt}{&gt;}
@@ -159,7 +159,7 @@ eBookConfig.enable_chatcodes =  false;
 \)</span></div>
 <div class="ptx-page">
 <div id="ptx-sidebar" class="ptx-sidebar"><nav id="ptx-toc" class="ptx-toc depth2 focused" data-preexpanded-levels="0" data-max-levels="2"><ul class="structural toc-item-list contains-active">
-<li class="toc-item toc-frontmatter active"><div class="toc-title-box"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div></li>
+<li class="toc-item toc-frontmatter"><div class="toc-title-box"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div></li>
 <li class="toc-item toc-chapter">
 <div class="toc-title-box"><a href="mathematical-modeling.html" class="internal"><span class="codenumber">1</span> <span class="title">Mathematical Modeling</span></a></div>
 <ul class="structural toc-item-list">
@@ -219,11 +219,11 @@ eBookConfig.enable_chatcodes =  false;
 </li>
 </ul>
 </li>
-<li class="toc-item toc-chapter">
+<li class="toc-item toc-chapter contains-active">
 <div class="toc-title-box"><a href="ch-structured-populations.html" class="internal"><span class="codenumber">3</span> <span class="title">Structured Populations</span></a></div>
-<ul class="structural toc-item-list">
+<ul class="structural toc-item-list contains-active">
 <li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-two-stage.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Two Stage Populations</span></a></div></li>
-<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-matrix-models.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Matrix Models for Structured Populations</span></a></div></li>
+<li class="toc-item toc-section active"><div class="toc-title-box"><a href="sec-structure-matrix-models.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Matrix Models for Structured Populations</span></a></div></li>
 </ul>
 </li>
 <li class="toc-item toc-chapter">
@@ -279,15 +279,186 @@ eBookConfig.enable_chatcodes =  false;
 </li>
 <li class="toc-item toc-backmatter"><div class="toc-title-box"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
 </ul></nav></div>
-<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="frontmatter" id="frontmatter"><h2 class="heading"><span class="title">Dynamic Models for Biology</span></h2>
-<div class="author">
-<div class="author-name">D. Brian Walton</div>
-<div class="author-info">Department of Mathematics and Statistics<br>James Madison University</div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="sec-structure-matrix-models"><h2 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">3.2</span><span class="space"> </span><span class="title">Matrix Models for Structured Populations</span>
+</h2>
+<div class="para" id="sec-structure-matrix-models-2">Our two-stage model had a very specific structure that we need to explore. The projection formulas were written as a sum of terms proportional to our state variables. Such a formula is called a <dfn class="terminology">linear combination</dfn>.</div>
+<article class="definition definition-like" id="def-linear-combination"><h3 class="heading">
+<span class="type">Definition</span><span class="space"> </span><span class="codenumber">3.2.1</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="def-linear-combination-1-1">
+<div class="para">Given any mathematical objects that can be multiplied by constants and added together, say <span class="process-math">\(x_1, x_2, \ldots, x_k\text{,}\)</span> and a corresponding number of constants, <span class="process-math">\(c_1, c_2, \ldots, c_k\text{,}\)</span> the sum</div>
+<div class="displaymath process-math">
+\begin{equation*}
+c_1 x_1 + c_2 x_2 + \cdots + c_k x_k
+\end{equation*}
 </div>
-<div class="date">February 12, 2025</div>
-<nav class="summary-links"><ul><li><a href="front-colophon.html" class="internal"><span class="title">Colophon</span></a></li></ul></nav></section></div>
+<div class="para">is called a <dfn class="terminology">linear combination</dfn> of <span class="process-math">\(x_1, x_2, \ldots, x_k\text{.}\)</span>
+</div>
+</div></article><div class="para logical" id="sec-structure-matrix-models-4">
+<div class="para">When we have state variables <span class="process-math">\(x_1, x_2, \ldots, x_k\text{,}\)</span> a recursive model requires that we define <span class="process-math">\(k\)</span> projection formulas, one for each variable. If every projection formula is a linear combination of the state variables, then the entire system is specified by knowing the constants.</div>
+<div class="displaymath process-math" id="sec-structure-matrix-models-4-3">
+\begin{align*}
+x_{1,n+1} \amp = c_{11} x_{1,n} + c_{12} x_{2,n} + \cdots + c_{1k} x_{k,n} \\
+x_{2,n+1} \amp = c_{21} x_{1,n} + c_{22} x_{2,n} + \cdots + c_{2k} x_{k,n} \\
+\amp \vdots \\
+x_{k,n+1} \amp = c_{k1} x_{1,n} + c_{k2} x_{2,n} + \cdots + c_{kk} x_{k,n} 
+\end{align*}
+</div>
+<div class="para">The constants have two subscripts, where the first subscript refers to which row or equation the constant appears in and the second subscript refers to which variable is being multiplied. So <span class="process-math">\(c_{35}\)</span> would appear in the 3rd equation/row and be multiplied by the 5th variable. Knowing these coefficients is equivalent to knowing the full system of equations.</div>
+</div>
+<div class="para logical" id="sec-structure-matrix-models-5">
+<div class="para">A <dfn class="terminology">matrix</dfn> is a rectangular array of numbers. We can represent the system of projection equations with a matrix called a <dfn class="terminology">projection matrix</dfn>,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+M = \begin{bmatrix}
+c_{11} &amp; c_{12} &amp; c_{13} &amp; \cdots &amp; c_{1k} \\
+c_{21} &amp; c_{22} &amp; c_{23} &amp; \cdots &amp; c_{2k} \\
+c_{31} &amp; c_{32} &amp; c_{33} &amp; \cdots &amp; c_{3k} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+c_{k1} &amp; c_{k2} &amp; c_{k3} &amp; \cdots &amp; c_{kk}
+\end{bmatrix}\text{.}
+\end{equation*}
+</div>
+<div class="para">If we represent the state values in vector form</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\vec{x}_{n} = (x_{1,n}, x_{2,n}, x_{3,n}, \ldots, x_{k,n})\text{,}
+\end{equation*}
+</div>
+<div class="para">then the system of projection formulas can be summarized more concisely with a matrix-vector equation,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\vec{x}_{n+1} = M \vec x_{n}\text{.}
+\end{equation*}
+</div>
+<div class="para">The mathematical study of these objects and the formal meaning of matrix-vector equations are taught in a subject called <dfn class="terminology">linear algebra</dfn>.</div>
+</div>
+<article class="example example-like" id="sec-structure-matrix-models-6"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.2.2</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="sec-structure-matrix-models-6-1-1">
+<div class="para">Consider a population of annual plants with a seedbank such that a seed in the seedbank has a probability 0.6 of germinating each year and a probability 0.2 of surviving in the seedbank to the next season, and where half of plants survive the growing season and subsequently produce an average of 10 seeds. Following the model development in <a href="sec-structure-two-stage.html" class="internal" title="Section 3.1: Two Stage Populations">Section 3.1</a>, our projection model can be written</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/sec-structure-two-stage.html" id="sec-structure-matrix-models-6-1-1-2">
+\begin{align*}
+S_{n+1} \amp = 0.08 S_{n} + 2 P_{n} \\
+P_{n+1} \amp = 0.12 S_{n} + 3 P_{n} \text{.}
+\end{align*}
+</div>
+<div class="para">Our projection matrix becomes</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/sec-structure-two-stage.html">
+\begin{equation*}
+M = \begin{bmatrix} 0.08 \amp 2 \\ 0.12 \amp 3 \end{bmatrix}\text{.}
+\end{equation*}
+</div>
+<div class="para">If we define our state vector as <span class="process-math">\(\vec X = (S, P)\text{,}\)</span> then the model can be written</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/sec-structure-two-stage.html">
+\begin{equation*}
+\vec{X}_{n+1} = M \cdot \vec X_{n}\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="sec-structure-matrix-models-6-1-2">In R, we can create a matrix using the <code class="code-inline tex2jax_ignore">matrix</code> command. This command expects data which will fill columns by default, and a specification of the number of rows and columns. The matrix above would be computed in R as <code class="code-inline tex2jax_ignore">matrix(c(0.08, 0.12, 2, 3), nrow=2, ncol=2)</code>. Matrix-vector multiplication is performed using <code class="code-inline tex2jax_ignore">%*%</code>. The following script illustrates how we would calculate sequence values with initial values <span class="process-math">\(\vec{X}_0 = (S_0, P_0) = (20, 0)\text{.}\)</span>
+</div> <figure class="listing figure-like" id="sec-structure-matrix-models-6-1-3"><div class="code-box"><pre class="program"><code class="language-r"># Define the projection matrix.
+M &lt;- matrix(c(0.08, 0.12, 2, 3), nrow=2, ncol=2)
+
+# Initial values
+S0 &lt;- 20
+P0 &lt;- 0
+
+# Create space for the state vectors to be stored (as a matrix with 2 columns)
+N &lt;- 30
+X &lt;- matrix(0, nrow=N+1, ncol=2)
+
+# Put initial value in 1st row
+# To refer to a row, leave column blank
+X[1, ] &lt;- c(S0, P0)
+for (n in 1:N) {
+  # Fill n+1 row of state values with project from n row of state values
+  X[n+1, ] &lt;- M %*% X[n, ]
+}
+
+library(tidyr)
+library(dplyr)
+
+# Generate a data-frame, calculate totals and stage distribution
+# S is in column 1 of X, P is in column 2
+seedbank_data &lt;- tibble(t = 0:N, S = X[ ,1], P = X[ ,2]) |&gt;
+    mutate(total = S + P) |&gt;
+    mutate(rho_S = S/total, rho_P = P/total)
+
+# Calculate growth ratio
+seedbank_data$lambda_S &lt;- NA
+seedbank_data$lambda_P &lt;- NA
+seedbank_data$lambda_S[2:(N+1)] &lt;- S_vec[2:(N+1)] / S_vec[1:N]
+seedbank_data$lambda_P[2:(N+1)] &lt;- P_vec[2:(N+1)] / P_vec[1:N]
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.2.3<span class="period">.</span></span><span class="space"> </span></figcaption></figure> <div class="para" id="sec-structure-matrix-models-6-1-4">After running this code, we discover that this population has an asymptotic growth ratio <span class="process-math">\(\lambda = 3.08\)</span> and a stable stage distribution with <span class="process-math">\(\rho_S = 0.4\)</span> and <span class="process-math">\(\rho_P = 0.6\text{.}\)</span>
+</div></article><div class="para logical" id="sec-structure-matrix-models-7">
+<div class="para">Every matrix <span class="process-math">\(M\)</span> that has the same number of rows as columns is called a <dfn class="terminology">square matrix</dfn>. From linear algebra, we learn that every square matrix has a collection of <dfn class="terminology">characteristic values</dfn> or <dfn class="terminology">eigenvalues</dfn>, up the number of rows/columns. Associated with each eigenvalue <span class="process-math">\(\lambda\)</span> is one or more vector, called an <dfn class="terminology">eigenvector</dfn> <span class="process-math">\(\vec{x}\text{.}\)</span> The key feature of an eigenvector/eigenvalue pair <span class="process-math">\(\{\vec x, \lambda\}\)</span> is that the matrix-vector multiplication <span class="process-math">\(M \cdot \vec x\)</span> just rescales <span class="process-math">\(\vec x\)</span> by the eigenvalue,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+M \cdot \vec x = \lambda \cdot \vec x\text{.}
+\end{equation*}
+</div>
+<div class="para">Repeated multiplication by <span class="process-math">\(M\)</span> therefore results in exponential growth or decay in the direction of that vector, <span class="process-math">\(M^{n} \cdot \vec x = \lambda^n \cdot \vec x\text{.}\)</span> The asymptotic growth ratio corresponds to the largest eigenvalue of <span class="process-math">\(M\text{.}\)</span> Furthermore, the stable stage distribution will be an associated eigenvector to that eigenvalue.</div>
+</div>
+<article class="theorem theorem-like" id="thm-dominant-eigenvalue-asymptotic-rate"><h3 class="heading">
+<span class="type">Theorem</span><span class="space"> </span><span class="codenumber">3.2.4</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="thm-dominant-eigenvalue-asymptotic-rate-1-1">
+<div class="para">Let <span class="process-math">\(M\)</span> be a square matrix. The <dfn class="terminology">dominant eigenvalue</dfn> of <span class="process-math">\(M\)</span> is the eigenvalue <span class="process-math">\(\lambda\)</span> whose absolute value is the largest of all eigenvalues. Under typical conditions for population projection matrices (irreducible, aperiodic, and non-negative; see the <a class="external" href="https://en.wikipedia.org/wiki/Perron%E2%80%93Frobenius_theorem" target="_blank">Perron-Frobenius theorem</a><details class="ptx-footnote" aria-live="polite" id="thm-dominant-eigenvalue-asymptotic-rate-1-1-6"><summary class="ptx-footnote__number" title="Footnote 3.2.1"><sup> 1 </sup></summary><div class="ptx-footnote__contents" id="thm-dominant-eigenvalue-asymptotic-rate-1-1-6"><code class="code-inline tex2jax_ignore">en.wikipedia.org/wiki/Perron%E2%80%93Frobenius_theorem</code></div></details>), using any non-zero and non-negative initial vector <span class="process-math">\(\vec{x}_0\)</span> to compute <span class="process-math">\(\vec{x}_n = M^n \vec{x}_0\)</span> (repeated multiplication by <span class="process-math">\(M\)</span>), then for any state variable <span class="process-math">\(x_i\)</span> (<span class="process-math">\(i\)</span>th value of <span class="process-math">\(\vec{x})\text{,}\)</span> we have an asymptotic growth rate matching <span class="process-math">\(\lambda\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\lim_{n \to \infty} \frac{x_{i,n+1}}{x_{i,n}} = \lambda\text{.}
+\end{equation*}
+</div>
+<div class="para">Furthermore, if we find the sum of the state vectors,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+T_n = x_{1,n} + x_{2,n} + x_{3,n} + \cdots + x_{k,n}\text{,}
+\end{equation*}
+</div>
+<div class="para">and the calculate the stage distribution</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\vec{\rho}_n = \vec{x}_n / T_n\text{,}
+\end{equation*}
+</div>
+<div class="para">then <span class="process-math">\(\lim_{n \to \infty} \vec{\rho}_n = \vec{v}\text{,}\)</span> an eigenvector whose terms add to 1 and <span class="process-math">\(M \cdot \vec{v} = \lambda \cdot \vec{v}\text{.}\)</span>
+</div>
+</div></article><div class="para" id="sec-structure-matrix-models-9">A linear algebra course would teach us strategies to find eigenvalues and eigenvectors. We will let R calculate the values for us directly using the <code class="code-inline tex2jax_ignore">eigen</code> command. Given a matrix <code class="code-inline tex2jax_ignore">M</code>, the call <code class="code-inline tex2jax_ignore">eigen(M)</code> will result in a list with two entries. The entry named <code class="code-inline tex2jax_ignore">values</code> will contain numerical approximations of the eigenvalues (which might be complex numbers) and the entry named <code class="code-inline tex2jax_ignore">vectors</code> will contain the eigenvectors in an order that matches the eigenvalues, stored as a matrix. The columns of that matrix will be the actual eigenvectors.</div>
+<div class="para" id="sec-structure-matrix-models-10">The following listing gives the code that will determine the eigenvalues and eigenvectors of the matrix we introduced in this section.</div>
+<figure class="listing figure-like" id="sec-structure-matrix-models-11"><div class="code-box"><pre class="program"><code class="language-r"># Define the matrix
+M &lt;- matrix(c(0.08, 0.12, 2, 3), nrow=2, ncol=2)
+my_eig &lt;- eigen(M)
+print(my_eig$values)
+print(my_eig$vectors)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.2.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="code-box"><pre class="console">&gt; print(my_eig$values)
+[1] 3.08 0.00
+&gt; print(my_eig$vectors)
+            [,1]        [,2]
+[1,] -0.5547002 -0.99920096
+[2,] -0.8320503  0.03996804
+</pre></div>
+<div class="para" id="sec-structure-matrix-models-13">We learn from this code that our matrix <span class="process-math">\(M\)</span> has two eigenvalues, <span class="process-math">\(\lambda_1 = 3.08\)</span> and <span class="process-math">\(\lambda_2 = 0\text{.}\)</span> The largest eigenvalue corresponds to <span class="process-math">\(\lambda_1 = 3.08\)</span> which will be our <dfn class="terminology">dominant eigenvalue</dfn> and precisely what we discovered earlier using the recursive sequence calculations. Because the dominant eigenvalue was the first value in the eigenvalue list, the corresponding 1st column of the eigenvector matrix will be <em class="emphasis">one</em> of the corresponding eigenvectors, <span class="process-math">\(\vec{v} = (-0.5547002, -0.8320503)\text{.}\)</span> To find the stable stage distribution, we need to rescale this by finding the sum of entries and dividing that vector by the result.</div>
+<figure class="listing figure-like" id="sec-structure-matrix-models-14"><div class="code-box"><pre class="program"><code class="language-r"># Extract the first column
+v &lt;- my_eig$vectors[ ,1]
+# The total of the values is sum(v)
+# Rescale the vector
+stage_dist &lt;- v / sum(v)
+print(stage_dist)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.2.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="code-box"><pre class="console">&gt; print(stage_dist)
+[1] 0.4 0.6
+</pre></div>
+<article class="note remark-like" id="sec-structure-matrix-models-16"><h3 class="heading">
+<span class="type">Note</span><span class="space"> </span><span class="codenumber">3.2.7</span><span class="period">.</span>
+</h3>
+<div class="para" id="sec-structure-matrix-models-16-1">You should not assume the first eigenvalue is automatically the dominant eigenvalue. Always check the sizes of all the eigenvalues before selecting the vector that will generate the stable stage distribution.</div></article><div class="para" id="sec-structure-matrix-models-17">Because the state variables eventually start to act like they just multiply by the asymptotic growth rate <span class="process-math">\(\lambda\text{,}\)</span> we can immediately deduce from the dominant eigenvalue of a projection matrix whether the population will grow (<span class="process-math">\(|\lambda| \gt 1\)</span>) or decay (<span class="process-math">\(|\lambda| \lt 1\)</span>).</div></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="my-great-book.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="front-colophon.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+<a class="previous-button button" href="sec-structure-two-stage.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="interactions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
 </div>
 <div id="ptx-page-footer" class="ptx-page-footer">
