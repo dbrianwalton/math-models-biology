@@ -14,7 +14,7 @@
         To begin the study of populations with different stages, we first think of a population that has exactly two stages.
         A particular example is of a population of plants that mature in a single growing season to release seeds at the end of the growing season.
         Because some seeds might not germinate immediately, we will want to keep track of how many seeds remain viable but still in the ground.
-        We call these seeds the <term>seed bank</term>
+        We call these seeds the <term>seed bank</term>.
     </p>
     <p>
         With this context in mind, let us consider a population of plants that has two state variables for each growing season.
@@ -142,7 +142,7 @@
 
             # Calculated parameters
             a <- (1-seed_germinate) * (1-seed_death)
-            b <- (1-seed_germinate) * seeds_per_plant
+            b <- (1-seed_germinate) * seeds_per_plant * plant_to_seed
             c <- seed_germinate * (1-seed_death)
             d <- seed_germinate * (seeds_per_plant + 1 - plant_death) * plant_to_seed
 
@@ -192,8 +192,8 @@
         <statement>
             <p>
                 A pair of sequences <m>(x_n, y_n)</m> with a linear projection model will asymptotically behave like geometric sequencees.
-                That is, the ratios of values <m>\frac{x_{n+1}}{x_n}</m> and <m>\frac{y_{n+1}}{y_n}</m> both converge to a comstant <m>\lambda</m> called the asymptotic geometric growth rate.
-                Furthermore, suppose we calculate the total <m>T_n = x_n + y_n</m> and look at the ratios <m>\frac{x_n}{T_n}</m> and <m>\frac{y_n}{T_n}</m>, which represent the fractions of the total count in seed and plant form.
+                That is, the ratios of values <m>x_{n+1}/x_n</m> and <m>y_{n+1}/y_n</m> both converge to a constant <m>\lambda</m> called the asymptotic geometric growth rate.
+                Furthermore, suppose we calculate the total <m>T_n = x_n + y_n</m> and look at the ratios <m>x_n/T_n</m> and <m>y_n/T_n</m>, which represent the fractions of the total count in seed and plant form.
                 The ratios always converge to values <m>\rho_x</m> and <m>\rho_y</m>, called the <term>stable stage distribution</term>, that are independent of initial values.
             </p>
         </statement>
@@ -201,7 +201,9 @@
     <p>
         Let us add some additional calculations to the previous to calculate the ratios and the stage distribution.
         We will see the convergence directly.
-        It will be more convenient to create a tibble in this circumstance and add the ratios as additional columns.
+        It will be more convenient to create a tibble data-frame in this circumstance and add the ratios as additional columns.
+        When we calculate the ratios <m>\lambda</m>, there will be one fewer value than calculated sequence values.
+        The data-frame needs a value for each column, so for the missing value we use <c>NA</c>.
     </p>
     <listing xml:id="listing-seedbank-model-ratio-plots"> 
         <program language="r">
@@ -247,4 +249,13 @@
         <caption>Plot showing the fraction of the total count as seeds and plants <m>\rho_S[n] = S_{n}/(S_n+P_n)</m> and <m>\rho_P[n] = P_{n}/(S_n+P_n)</m> which converge to the the stable stage distribution.</caption>
         <image width="80%" source="images/seedbank-stage-distribution-plot-01.png"/>
     </figure>
+    <p>
+        As we can see in <xref ref="fig-seedbank-growth-ratio-plot-01"/>, both ratios <m>\lambda_P</m> and <m>\lambda_S</m> start with different values but quickly converge to the same value close to <m>\lambda = 1.08</m>,
+        as discovered by inspecting the values of the data-frame.
+        Looking at the values of <m>\rho_S</m> and <m>\rho_P</m>, we discover that the stable stage distribution has fractions <m>\rho_S = 0.8</m> and <m>\rho_P = 0.2</m>.
+        In other words, after a few seasons, if we were to count the total number of seeds and plants, about 80<percent/> of that count would be from seeds and about 20<percent/> would be plants.
+    </p>
+    <p>
+        In the next section, we will learn the mathematical objects that find these values, introducing the ideas of matrix models, eigenvalues and eigenvectors.
+    </p>
 </section>
