@@ -224,7 +224,14 @@ eBookConfig.enable_chatcodes =  false;
 <ul class="structural toc-item-list contains-active">
 <li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-two-stage.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Two Stage Populations</span></a></div></li>
 <li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-matrix-models.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Matrix Models for Structured Populations</span></a></div></li>
-<li class="toc-item toc-section active"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Example: Mosquito Growth</span></a></div></li>
+<li class="toc-item toc-section contains-active">
+<div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Example: Mosquito Growth</span></a></div>
+<ul class="structural toc-item-list active">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3" class="internal"><span class="codenumber">3.3.1</span> <span class="title">Model Equations and Parameters</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-4" class="internal"><span class="codenumber">3.3.2</span> <span class="title">Simulation, Asymptotic Growth, and Stable Distributions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-5" class="internal"><span class="codenumber">3.3.3</span> <span class="title">Exploring the Impact of Additional Mortality</span></a></div></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-item toc-chapter">
@@ -283,41 +290,46 @@ eBookConfig.enable_chatcodes =  false;
 <main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="sec-structure-example-mosquitoes"><h2 class="heading hide-type">
 <span class="type">Section</span><span class="space"> </span><span class="codenumber">3.3</span><span class="space"> </span><span class="title">Example: Mosquito Growth</span>
 </h2>
-<div class="para" id="sec-structure-example-mosquitoes-2">Let us look at some examples of populations that might make sense to explore in a structured way.</div>
-<div class="para" id="sec-structure-example-mosquitoes-3">Many insects exhibit distinct stages of development that are well modeled using structured populations. Females lay fertilized eggs which then take time to develop. When the eggs hatch, larvae emerge and often go through various larval stages of development. There is often a pupal stage in which a final metamorphosis takes place to an emerging adult. In addition, insects reproduce sexually, so it is often useful to distinguish male and female counts separately, at least at the adult stage.</div>
-<div class="para" id="sec-structure-example-mosquitoes-4">For our illustrative example, we will consider the <span class="taxon">Aedes aegyptii</span> mosquito (see <a class="external" href="https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm" target="_blank"><code class="code-inline tex2jax_ignore">https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm</code></a>) that is most responsible for the spread of dengue fever, yellow fever, and chikungunya. Like other <span class="taxon">Aedes</span> mosquito species, adult female mosquitoes find open still water and lay their eggs on a damp surface that is likely to be submerged by water. Once submerged, the egg will hatch after a few days and a larva will emerge in the water. These larvae swim in the water, eating algae and other smaller organisms in the water. As they develop and grow, the larvae transition between four different instar stages. After the fourth instar stage, the larva enters a pupal stage during which the individual metamorophoses to an adult. Each stage depends on the the presence of water and growth is accelerated with warmer temperatures.</div>
+<section class="introduction" id="sec-structure-example-mosquitoes-2"><div class="para" id="sec-structure-example-mosquitoes-2-1">Let us look at some examples of populations that might make sense to explore in a structured way.</div>
+<div class="para" id="sec-structure-example-mosquitoes-2-2">Many insects exhibit distinct stages of development that are well modeled using structured populations. Females lay fertilized eggs which then take time to develop. When the eggs hatch, larvae emerge and often go through various larval stages of development. There is often a pupal stage in which a final metamorphosis takes place to an emerging adult. In addition, insects reproduce sexually, so it is often useful to distinguish male and female counts separately, at least at the adult stage.</div>
+<div class="para" id="sec-structure-example-mosquitoes-2-3">For our illustrative example, we will consider the <span class="taxon">Aedes aegyptii</span> mosquito (see <a class="external" href="https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm" target="_blank"><code class="code-inline tex2jax_ignore">https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm</code></a>) that is most responsible for the spread of dengue fever, yellow fever, and chikungunya. Like other <span class="taxon">Aedes</span> mosquito species, adult female mosquitoes find open still water and lay their eggs on a damp surface that is likely to be submerged by water. Once submerged, the egg will hatch after a few days and a larva will emerge in the water. These larvae swim in the water, eating algae and other smaller organisms in the water. As they develop and grow, the larvae transition between four different instar stages. After the fourth instar stage, the larva enters a pupal stage during which the individual metamorophoses to an adult. Each stage depends on the the presence of water and growth is accelerated with warmer temperatures.</div>
 <figure class="figure figure-like" id="fig-Aedes-lifecycle"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/Aedes-lifecycle-20204_lores.jpg" class="contained" alt="Image of Aedes aegypti mosquito showing egg, larva, pupa, adult stages"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">3.3.1<span class="period">.</span></span><span class="space"> </span>Illustration of the life cycle of <span class="taxon">Aedes aegyptii</span> mosquito. Image courtesy CDC, USA, <a class="external" href="https://phil.cdc.gov/Details.aspx?pid=20204" target="_blank"><code class="code-inline tex2jax_ignore">https://phil.cdc.gov/Details.aspx?pid=20204</code></a>.</figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-6">In order to create a model for the mosquito population, let us identify some key assumptions. Because the mosquitos rely on water for their life cycle and temperatures control the rate of development, the population will naturally fluctuate based on the weather. Adult mosquitos are also able to fly, so their range could be impacted by migration from nearby areas. We will consider a simplified population with constantly available water supplies and steady temperatures. That is, we might suppose we are looking at optimal growth by the population under ideal conditions.</div>
-<div class="para" id="sec-structure-example-mosquitoes-7">For a simplified model, we will consider only four stages—eggs, larvae, pupae, and adults. In addition, at the adult stage for this model, we will only consider female adults since they are the only subpopulation that will actually produce eggs. If we wanted our model to include mating interactions in some way, then we would separately consider the male and female subpopulations. Development is measured in terms of days, so our model will use a time step of 1 day.</div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">3.3.1<span class="period">.</span></span><span class="space"> </span>Illustration of the life cycle of <span class="taxon">Aedes aegyptii</span> mosquito. Image courtesy CDC, USA, <a class="external" href="https://phil.cdc.gov/Details.aspx?pid=20204" target="_blank"><code class="code-inline tex2jax_ignore">https://phil.cdc.gov/Details.aspx?pid=20204</code></a>.</figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-2-5">In order to create a model for the mosquito population, let us identify some key assumptions. Because the mosquitos rely on water for their life cycle and temperatures control the rate of development, the population will naturally fluctuate based on the weather. Adult mosquitos are also able to fly, so their range could be impacted by migration from nearby areas. We will consider a simplified population with constantly available water supplies and steady temperatures. That is, we might suppose we are looking at optimal growth by the population under ideal conditions.</div>
+<div class="para" id="sec-structure-example-mosquitoes-2-6">For a simplified model, we will consider only four stages—eggs, larvae, pupae, and adults. In addition, at the adult stage for this model, we will only consider female adults since they are the only subpopulation that will actually produce eggs. If we wanted our model to include mating interactions in some way, then we would separately consider the male and female subpopulations. Development is measured in terms of days, so our model will use a time step of 1 day.</div>
 <figure class="figure figure-like" id="fig-ELPA-mosquito-model"><div class="image-box" style="width: 75%; margin-left: 12.5%; margin-right: 12.5%;"><img src="external/images/ELPA-mosquito-model.svg" role="img" class="contained"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">3.3.2<span class="period">.</span></span><span class="space"> </span>Model for a four-stage model of mosquito development.</figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-9">We now work to develop model parameters based on our reference material (<a class="external" href="https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm" target="_blank"><code class="code-inline tex2jax_ignore">https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm</code></a>). Under ideal conditions, we see that an egg should hatch in about two days. Larvae go through four instar stages, where the last stage is longest at about three days. We will assume that the average length of the larval stage is four days. The pupal stage takes about two days. The adults survive between two weeks to a month and are able to reproduce up to five times. Each batch of eggs is typically between 100 and 200 eggs. We do not have specific figures for mortality rates, which will depend on the local conditions.</div>
-<div class="para" id="sec-structure-example-mosquitoes-10">How do we go from durations of stages to model transition rates? One approach would be to have a different stage for each age in a given stage. This would have two different egg stages. New eggs would all go in the first stage. All eggs that survived one day would transition to the second age stage. All eggs that survived the second day would transition to the first larval stage. This would be repeated until we reached the adult stage, requiring a total of 8 different developmental stages. Such an age-based model works well if timing is very clearly synchronized.</div>
-<div class="para" id="sec-structure-example-mosquitoes-11">A second approach is to think of transitions happening randomly so that the <em class="emphasis">average</em> time of transition matches the reported values. We build from a mathematical property of a <dfn class="terminology">geometric random variable</dfn>, which counts how many times we repeat a random test (like a coin flip) before an event occurs. If the probability of the event happening on a given trial is <span class="process-math">\(p\text{,}\)</span> then the average number of attempts before the first success occurs is given by <span class="process-math">\(1/p\text{.}\)</span> Consequently, if we to perform a daily test on whether to transition or not such that the average number of days spent prior to the transition is given by <span class="process-math">\(\tau\text{,}\)</span> then we want that daily test to occur with probability <span class="process-math">\(p=1/\tau\text{.}\)</span> This probability will then be the <em class="emphasis">fraction</em> of the number of individuals that experience the transition. This random approach using average times is the least-possibly synchronized model because each individual is effectively starting over every day with a fresh chance to transition.</div>
-<div class="para" id="sec-structure-example-mosquitoes-12">We will introduce model parameters in the abstract and then assign specific values based on the given data. Suppose that eggs have an equal chance of dying each day, with a probability <span class="process-math">\(\mu_{E}\text{.}\)</span> The fraction of eggs that survive the day is therefore <span class="process-math">\(1-\mu_{E}\text{.}\)</span> Of these eggs, some transition to the larval stage with a probability <span class="process-math">\(p_{E}\)</span> while the remainder <span class="process-math">\(1-p_{E}\)</span> stay in the egg state another day. Based on the properties of a geometric random variable, we want <span class="process-math">\(p_{E} = 1/\tau_{E}\)</span> where <span class="process-math">\(\tau_{E}\)</span> is the average duration of the egg state. In a similar way, larvae will have a probability <span class="process-math">\(\mu_{L}\)</span> of dying each day and a probability <span class="process-math">\(p_{L}\)</span> of transitioning to the pupal stage. For the same reason, pupae will have probabilities <span class="process-math">\(\mu_{P}\)</span> and <span class="process-math">\(p_{P}\)</span> for dying and transitioning, respectively. As noted, the mortality probabilities are specific to the environment and will not be found in the general literature.</div>
-<div class="para" id="sec-structure-example-mosquitoes-13">Adults require a little extra thought. Only half of emerging adults will be female. (This might not even be the correct fraction—an experimentally observed sex ratio would allow us to be more precise.) An adult can live between two weeks and a month but only reproduce up to five times. How can we deal with this? One approach is to spread out the total number of eggs across the entire lifespan of the adult, <span class="process-math">\(\tau_{A}\text{.}\)</span> That is, if <span class="process-math">\(N_{egg}\)</span> is the number of eggs in a single laying and there are 5 reproductive episodes, then we have a daily average number of eggs per female given by <span class="process-math">\(5 N_{egg} / \tau_A\text{.}\)</span> Adults will have a probability of dying given by <span class="process-math">\(\mu_{A} = 1/\tau_A\)</span> in order for adults to survive an average of <span class="process-math">\(\tau_{A}\)</span> days. Alternatively, we could introduce an extra adult stage <span class="process-math">\(A_2\)</span> during which all reproduction occurs and we contrive transition rates so that this stage is visited an average of 5 times and also so that the average number of days lived equals <span class="process-math">\(\tau_{A}\text{.}\)</span> This would require adults spend at least one day without reproducing before entering the state of laying eggs. A mathematical subject called <dfn class="terminology">recurrence theory</dfn> allows us to calculate transition rates. For both adult states, we still want a probability of dying given by <span class="process-math">\(\mu_{A} = 1/\tau_{A}\text{.}\)</span> However, we need nonreproducing adults to have a probability <span class="process-math">\(p_{A}\)</span> of transitioning to the reproductive state given by <span class="process-math">\(p_{A} = \frac{5}{\tau_{A}-5}\text{.}\)</span> Otherwise, adults will be in the non-reproductive state the next day.</div>
-<div class="para logical" id="sec-structure-example-mosquitoes-14">
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">3.3.2<span class="period">.</span></span><span class="space"> </span>Model for a four-stage model of mosquito development.</figcaption></figure></section><section class="subsection" id="sec-structure-example-mosquitoes-3"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">3.3.1</span><span class="space"> </span><span class="title">Model Equations and Parameters</span>
+</h3>
+<div class="para" id="sec-structure-example-mosquitoes-3-2">We now work to develop model parameters based on our reference material (<a class="external" href="https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm" target="_blank"><code class="code-inline tex2jax_ignore">https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm</code></a>). Under ideal conditions, we see that an egg should hatch in about two days. Larvae go through four instar stages, where the last stage is longest at about three days. We will assume that the average length of the larval stage is four days. The pupal stage takes about two days. The adults survive between two weeks to a month and are able to reproduce up to five times. Each batch of eggs is typically between 100 and 200 eggs. We do not have specific figures for mortality rates, which will depend on the local conditions.</div>
+<div class="para" id="sec-structure-example-mosquitoes-3-3">How do we go from durations of stages to model transition rates? One approach would be to have a different stage for each age in a given stage. This would have two different egg stages. New eggs would all go in the first stage. All eggs that survived one day would transition to the second age stage. All eggs that survived the second day would transition to the first larval stage. This would be repeated until we reached the adult stage, requiring a total of 8 different developmental stages. Such an age-based model works well if timing is very clearly synchronized.</div>
+<div class="para" id="sec-structure-example-mosquitoes-3-4">A second approach is to think of transitions happening randomly so that the <em class="emphasis">average</em> time of transition matches the reported values. We build from a mathematical property of a <dfn class="terminology">geometric random variable</dfn>, which counts how many times we repeat a random test (like a coin flip) before an event occurs. If the probability of the event happening on a given trial is <span class="process-math">\(p\text{,}\)</span> then the average number of attempts before the first success occurs is given by <span class="process-math">\(1/p\text{.}\)</span> Consequently, if we to perform a daily test on whether to transition or not such that the average number of days spent prior to the transition is given by <span class="process-math">\(\tau\text{,}\)</span> then we want that daily test to occur with probability <span class="process-math">\(p=1/\tau\text{.}\)</span> This probability will then be the <em class="emphasis">fraction</em> of the number of individuals that experience the transition. This random approach using average times is the least-possibly synchronized model because each individual is effectively starting over every day with a fresh chance to transition.</div>
+<div class="para" id="sec-structure-example-mosquitoes-3-5">We will introduce model parameters in the abstract and then assign specific values based on the given data. Suppose that eggs have an equal chance of dying each day, with a probability <span class="process-math">\(\mu_{E}\text{.}\)</span> The fraction of eggs that survive the day is therefore <span class="process-math">\(1-\mu_{E}\text{.}\)</span> Of these eggs, some transition to the larval stage with a probability <span class="process-math">\(p_{E}\)</span> while the remainder <span class="process-math">\(1-p_{E}\)</span> stay in the egg state another day. Based on the properties of a geometric random variable, we want <span class="process-math">\(p_{E} = 1/\tau_{E}\)</span> where <span class="process-math">\(\tau_{E}\)</span> is the average duration of the egg state. In a similar way, larvae will have a probability <span class="process-math">\(\mu_{L}\)</span> of dying each day and a probability <span class="process-math">\(p_{L}\)</span> of transitioning to the pupal stage. For the same reason, pupae will have probabilities <span class="process-math">\(\mu_{P}\)</span> and <span class="process-math">\(p_{P}\)</span> for dying and transitioning, respectively. As noted, the mortality probabilities are specific to the environment and will not be found in the general literature.</div>
+<div class="para" id="sec-structure-example-mosquitoes-3-6">Adults require a little extra thought. Only half of emerging adults will be female. (This might not even be the correct fraction—an experimentally observed sex ratio would allow us to be more precise.) An adult can live between two weeks and a month but only reproduce up to five times. How can we deal with this? One approach is to spread out the total number of eggs across the entire lifespan of the adult, <span class="process-math">\(\tau_{A}\text{.}\)</span> That is, if <span class="process-math">\(N_{egg}\)</span> is the number of eggs in a single laying and there are 5 reproductive episodes, then we have a daily average number of eggs per female given by <span class="process-math">\(5 N_{egg} / \tau_A\text{.}\)</span> Adults will have a probability of expiring given by <span class="process-math">\(\eta_{A} = 1/\tau_A\)</span> in order for adults to survive an average of <span class="process-math">\(\tau_{A}\)</span> days. Alternatively, we could introduce an extra adult stage <span class="process-math">\(A_2\)</span> during which all reproduction occurs and we contrive transition rates so that this stage is visited an average of 5 times and also so that the average number of days lived equals <span class="process-math">\(\tau_{A}\text{.}\)</span> This would require adults spend at least one day without reproducing before entering the state of laying eggs. A mathematical subject called <dfn class="terminology">recurrence theory</dfn> allows us to calculate transition rates. For both adult states, we still want a probability of dying given by <span class="process-math">\(\eta_{A} = 1/\tau_{A}\text{.}\)</span> However, we need nonreproducing adults to have a probability <span class="process-math">\(p_{A}\)</span> of transitioning to the reproductive state given by <span class="process-math">\(p_{A} = \frac{5}{\tau_{A}-5}\text{.}\)</span> Otherwise, adults will be in the non-reproductive state the next day.</div>
+<div class="para logical" id="sec-structure-example-mosquitoes-3-7">
 <div class="para">Based on our analysis, we are ready to write down our model for the mosquito population. If we spread the reproduction over every day of an adult’s life, the state variables will follow the recursive equations</div>
-<div class="displaymath process-math" id="sec-structure-example-mosquitoes-14-1">
+<div class="displaymath process-math" id="sec-structure-example-mosquitoes-3-7-1">
 \begin{align}
 E_{t+1} \amp = (1-\mu_{E})(1-p_{E}) E_{t} +  {\textstyle \frac{5 N_{egg}}{\tau_{A}}} A_{t}\tag{3.3.1}\\
 L_{t+1} \amp = (1-\mu_{E}) p_{E} E_{t} + (1-\mu_{L})(1-p_{L}) L_{t}\tag{3.3.2}\\
 P_{t+1} \amp = (1-\mu_{L}) p_{L} L_{t} + (1-\mu_{P})(1-p_{P}) P_{t}\tag{3.3.3}\\
-A_{t+1} \amp = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\mu_{A}) A_{t}\tag{3.3.4}
+A_{t+1} \amp = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\eta_{A}) A_{t}\tag{3.3.4}
 \end{align}
 </div>
 <div class="para">If instead we have two adult stages with reproduction only coming from <span class="process-math">\(A_2\text{,}\)</span> the recursive equations become</div>
-<div class="displaymath process-math" id="sec-structure-example-mosquitoes-14-3">
+<div class="displaymath process-math" id="sec-structure-example-mosquitoes-3-7-3">
 \begin{align}
 E_{t+1} \amp = (1-\mu_{E})(1-p_{E}) E_{t} +  N_{egg} A_{2,t}\tag{3.3.5}\\
 L_{t+1} \amp = (1-\mu_{E}) p_{E} E_{t} + (1-\mu_{L})(1-p_L) L_{t}\tag{3.3.6}\\
 P_{t+1} \amp = (1-\mu_{L}) p_L L_{t} + (1-\mu_{P})(1-p_{P}) P_{t}\tag{3.3.7}\\
 A_{1,t+1} \amp = \textstyle \frac{1}{2} (1-\mu_{P}) p_{P} P_{t} 
-+ (1- \mu_{A} - p_{A}) A_{1,t} + (1-\mu_{A}) A_{2,t}\tag{3.3.8}\\
++ (1- \eta_{A} - p_{A}) A_{1,t} + (1-\eta_{A}) A_{2,t}\tag{3.3.8}\\
 A_{2,t+1} \amp = p_{A} A_{1,t}\tag{3.3.9}
 \end{align}
 </div>
-<div class="para">The two models are implemented in R in the following listings, initially using an adult lifespan of 28 days and an average number of 100 eggs per reproductive cycle. We start each model with 100 eggs and no mosquitoes in any other stage and follow the model for 90 days. We will graph the number of individuals in each stage and also calculate the daily growth factor <span class="process-math">\(T_{t}/T_{t-1}\)</span> where <span class="process-math">\(T_t\)</span> is the total population on day <span class="process-math">\(t\text{.}\)</span>
-</div>
+</div></section><section class="subsection" id="sec-structure-example-mosquitoes-4"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">3.3.2</span><span class="space"> </span><span class="title">Simulation, Asymptotic Growth, and Stable Distributions</span>
+</h3>
+<div class="para" id="sec-structure-example-mosquitoes-4-2">The two models are implemented in R in the following listings, initially using an adult lifespan of 28 days and an average number of 100 eggs per reproductive cycle. We start each model with 100 eggs and no mosquitoes in any other stage and follow the model for 90 days. We will graph the number of individuals in each stage and also calculate the daily growth factor <span class="process-math">\(T_{t}/T_{t-1}\)</span> where <span class="process-math">\(T_t\)</span> is the total population on day <span class="process-math">\(t\text{.}\)</span>
 </div>
 <figure class="listing figure-like" id="listing-ELPA-uniform-reproduction"><div class="code-box"><pre class="program"><code class="language-r"># Life cycle parameters
 T_egg &lt;- 2
@@ -331,10 +343,10 @@ N_egg &lt;- 100
 m_E &lt;- 0.05
 m_L &lt;- 0.05
 m_P &lt;- 0.05
-m_A &lt;- 1/T_adult
 p_E &lt;- 1/T_egg
 p_L &lt;- 1/T_larva
 p_P &lt;- 1/T_pupa
+e_A &lt;- 1/T_adult
 
 # Create space for data and fill with 0
 maxT &lt;- 90
@@ -351,7 +363,7 @@ for (t in 1:maxT) {
     E_seq[t+1] &lt;- (1-m_E) * (1-p_E) * E_seq[t] +  (5 * N_egg)/T_adult * A_seq[t]
     L_seq[t+1] &lt;- (1-m_E) * p_E * E_seq[t] + (1-m_L) * (1-p_L) * L_seq[t]
     P_seq[t+1] &lt;- (1-m_L) * p_L * L_seq[t] + (1-m_P) * (1-p_P) * P_seq[t]
-    A_seq[t+1] &lt;- 0.5 * (1-m_P) * p_P * P_seq[t] + (1-m_A) * A_seq[t]
+    A_seq[t+1] &lt;- 0.5 * (1-m_P) * p_P * P_seq[t] + (1-e_A) * A_seq[t]
 }
 
 # Visualize dynamics --- expect exponential growth so use log-scale
@@ -394,7 +406,7 @@ N_egg &lt;- 100
 m_E &lt;- 0.05
 m_L &lt;- 0.05
 m_P &lt;- 0.05
-m_A &lt;- 1/T_adult
+e_A &lt;- 1/T_adult
 p_E &lt;- 1/T_egg
 p_L &lt;- 1/T_larva
 p_P &lt;- 1/T_pupa
@@ -416,7 +428,7 @@ for (t in 1:maxT) {
     E_seq[t+1] &lt;- (1-m_E) * (1-p_E) * E_seq[t] + N_egg * A_seq[t]
     L_seq[t+1] &lt;- (1-m_E) * p_E * E_seq[t] + (1-m_L) * (1-p_L) * L_seq[t]
     P_seq[t+1] &lt;- (1-m_L) * p_L * L_seq[t] + (1-m_P) * (1-p_P) * P_seq[t]
-    A1_seq[t+1] &lt;- 0.5 * (1-m_P) * p_P * P_seq[t] + (1- m_A - p_A) * A1_seq[t] + (1-m_A) * A2_seq[t]
+    A1_seq[t+1] &lt;- 0.5 * (1-m_P) * p_P * P_seq[t] + (1- e_A - p_A) * A1_seq[t] + (1-e_A) * A2_seq[t]
     A2_seq[t+1] &lt;- p_A * A1_seq[t]
 }
 
@@ -448,8 +460,8 @@ show(ratio_plot)
 </code></pre></div>
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.3.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-ELPA-reproductive-adults"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ELPA-reproductive-adults.png" class="contained" alt="Plot of the different stages as functions of time"></div>
 <figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">3.3.7<span class="period">.</span></span><span class="space"> </span>Growth of ELPA model using uniform birth rates</figcaption></figure><figure class="figure figure-like" id="fig-ELPA-reproductive-adults-lambda"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="external/images/ELPA-reproductive-adults-lambda.png" class="contained" alt="Growth ratio values"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">3.3.8<span class="period">.</span></span><span class="space"> </span>Growth ratio <span class="process-math">\(\lambda\)</span> of ELPA model using a reproductive adult subgroup</figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-21">We should notice that the limiting value of <span class="process-math">\(\lambda\text{,}\)</span> which is the asymptotic growth rate for the population, are slightly different between the two models. The model that distributed reproduciton over all time periods had a slightly higher value (<span class="process-math">\(\lambda\)</span> just above 1.5) compared to the model with a designated class of reproductive adults (<span class="process-math">\(\lambda\)</span> just below 1.5). This is comparable to compound interest where dividing growth into more frequent contributions results in larger overall exponential growth because the earlier and more frequent small deposits have a greater potential to grow over time.</div>
-<div class="para logical" id="sec-structure-example-mosquitoes-22">
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">3.3.8<span class="period">.</span></span><span class="space"> </span>Growth ratio <span class="process-math">\(\lambda\)</span> of ELPA model using a reproductive adult subgroup</figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-4-9">We should notice that the limiting value of <span class="process-math">\(\lambda\text{,}\)</span> which is the asymptotic growth rate for the population, are slightly different between the two models. The model that distributed reproduciton over all time periods had a slightly higher value (<span class="process-math">\(\lambda\)</span> just above 1.5) compared to the model with a designated class of reproductive adults (<span class="process-math">\(\lambda\)</span> just below 1.5). This is comparable to compound interest where dividing growth into more frequent contributions results in larger overall exponential growth because the earlier and more frequent small deposits have a greater potential to grow over time.</div>
+<div class="para logical" id="sec-structure-example-mosquitoes-4-10">
 <div class="para">We can recover these values theoretically by creating the corresponding matrix models for our recursive equations. In order to do this, we must be careful that we use the same ordering for coefficients in the columns as we use for the recursive models in the rows. That is, if our state variables follow the order <span class="process-math">\(E, L, P, A\text{,}\)</span> then our coefficients for each row must be put in the matrix for the variables in that same order. The matrix for the first model is given by</div>
 <div class="displaymath process-math">
 \begin{equation*}
@@ -457,7 +469,7 @@ M_1 = \begin{bmatrix}
 (1-\mu_{E})(1-p_{E}) &amp; 0 &amp; 0 &amp; \frac{5}{\tau_A} N_{egg} \\
 (1-\mu_{E}) p_{E} &amp; (1-\mu_{L})(1-p_{L}) &amp; 0 &amp; 0 \\
 0 &amp; (1-\mu_{L}) p_{L} &amp; (1-\mu_{P})(1-p_{P}) &amp; 0 \\
-0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\mu_{A})
+0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\eta_{A})
 \end{bmatrix}\text{.}
 \end{equation*}
 </div>
@@ -468,26 +480,26 @@ M_2 = \begin{bmatrix}
 (1-\mu_{E})(1-p_{E}) &amp; 0 &amp; 0 &amp; 0 &amp; N_{egg} \\
 (1-\mu_{E}) p_{E} &amp; (1-\mu_{L})(1-p_{L}) &amp; 0 &amp; 0 &amp; 0 \\
 0 &amp; (1-\mu_{L}) p_{L} &amp; (1-\mu_{P})(1-p_{P}) &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\mu_{A}-p_A) &amp; (1-\mu_A) \\
+0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\eta_{A}-p_A) &amp; (1-\eta_A) \\
 0 &amp; 0 &amp; 0 &amp; p_A &amp; 0 \\
 \end{bmatrix}\text{.}
 \end{equation*}
 </div>
 </div>
-<figure class="listing figure-like" id="sec-structure-example-mosquitoes-23"><div class="code-box"><pre class="program"><code class="language-r"># Create a projection matrix for each model
+<figure class="listing figure-like" id="sec-structure-example-mosquitoes-4-11"><div class="code-box"><pre class="program"><code class="language-r"># Create a projection matrix for each model
 # Include the parameters defined earlier
 M1 &lt;- matrix(data = c(
     (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0,      # column 1
     0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0,      # column 2
     0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P,  # column 3
-    5/T_adult * N_egg, 0, 0, 1-m_A           # column 4
+    5/T_adult * N_egg, 0, 0, 1-e_A           # column 4
     ), nrow = 4, ncol = 4)
 M2 &lt;- matrix(data = c(
     (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0, 0,      # column 1
     0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0, 0,      # column 2
     0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P, 0,  # column 3
-    0, 0, 0, 1 - m_A - p_A, p_A,                # column 4
-    N_egg, 0, 0, 1-m_A, 0                       # column 5
+    0, 0, 0, 1 - e_A - p_A, p_A,                # column 4
+    N_egg, 0, 0, 1-e_A, 0                       # column 5
     ), nrow = 5, ncol = 5)
 print(M1)
 print(M2)
@@ -519,9 +531,9 @@ print(eig_sys2$values)
 [1]  1.4542159+0.0000000i  0.7936544+0.7849968i  0.7936544-0.7849968i -0.3160652+0.4504780i
 [5] -0.3160652-0.4504780i
 </pre></div>
-<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.3.9<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-24">When we look at the eigenvalues that are displayed, we can see that they are displayed as complex numbers. For each of the matrices, the largest eigenvalue is the first one in the list. This is often the case but never guaranteed, so we always need to check before proceeding to the next step. For the first matrix, <span class="process-math">\(M_1\text{,}\)</span> the dominant eigenvalue is <span class="process-math">\(\lambda = 1.5151824 + 0.00000 i\text{.}\)</span> Since the imaginary part of the number is 0, we can just write <span class="process-math">\(\lambda = 1.5151824\text{,}\)</span> which exactly corresponds to the asymptotic growth rate that we observed in the simulation. Similarly, the second matrix, <span class="process-math">\(M_2\text{,}\)</span> has a dominant eigenvalue <span class="process-math">\(\lambda = 1.4542159\)</span> which corresponds to the asymptotic growth of the second model.</div>
-<div class="para" id="sec-structure-example-mosquitoes-25">Once we know which eigenvalue is dominant, we can extract the corresponding eigenvector to find the stable stage distributions.</div>
-<figure class="listing figure-like" id="sec-structure-example-mosquitoes-26"><div class="code-box"><pre class="program"><code class="language-r"># After the previous calculations, use the eigenvectors
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.3.9<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-4-12">When we look at the eigenvalues that are displayed, we can see that they are displayed as complex numbers. For each of the matrices, the largest eigenvalue is the first one in the list. This is often the case but never guaranteed, so we always need to check before proceeding to the next step. For the first matrix, <span class="process-math">\(M_1\text{,}\)</span> the dominant eigenvalue is <span class="process-math">\(\lambda = 1.5151824 + 0.00000 i\text{.}\)</span> Since the imaginary part of the number is 0, we can just write <span class="process-math">\(\lambda = 1.5151824\text{,}\)</span> which exactly corresponds to the asymptotic growth rate that we observed in the simulation. Similarly, the second matrix, <span class="process-math">\(M_2\text{,}\)</span> has a dominant eigenvalue <span class="process-math">\(\lambda = 1.4542159\)</span> which corresponds to the asymptotic growth of the second model.</div>
+<div class="para" id="sec-structure-example-mosquitoes-4-13">Once we know which eigenvalue is dominant, we can extract the corresponding eigenvector to find the stable stage distributions.</div>
+<figure class="listing figure-like" id="sec-structure-example-mosquitoes-4-14"><div class="code-box"><pre class="program"><code class="language-r"># After the previous calculations, use the eigenvectors
 v1 &lt;- eig_sys1$vectors[ ,1]     # Take column 1
 print(v1 / sum(v1))
 
@@ -535,8 +547,8 @@ print(v2 / sum(v2))
 &gt; print(v2 / sum(v2))
 [1] 0.534465662+0i 0.342275500+0i 0.083015838+0i 0.035009427+0i 0.005233573+0i
 </pre></div>
-<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.3.10<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-27">Because some of the eigenvalues and eigenvectors had imaginary parts, they are represented as <em class="emphasis">all</em> having imaginary parts even though the imaginary part is 0. We can reformat the numbers as real values using the <code class="code-inline tex2jax_ignore">Re</code> command.</div>
-<figure class="listing figure-like" id="sec-structure-example-mosquitoes-28"><div class="code-box"><pre class="program"><code class="language-r"># After the previous calculations, use the eigenvectors
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.3.10<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-4-15">Because some of the eigenvalues and eigenvectors had imaginary parts, they are represented as <em class="emphasis">all</em> having imaginary parts even though the imaginary part is 0. We can reformat the numbers as real values using the <code class="code-inline tex2jax_ignore">Re</code> command.</div>
+<figure class="listing figure-like" id="sec-structure-example-mosquitoes-4-16"><div class="code-box"><pre class="program"><code class="language-r"># After the previous calculations, use the eigenvectors
 v1 &lt;- Re(eig_sys1$vectors[ ,1])  # Take column 1; force as real
 print(v1 / sum(v1))
 
@@ -548,7 +560,107 @@ print(v2 / sum(v2))
 &gt; print(v2 / sum(v2))
 [1] 0.534465662 0.342275500 0.083015838 0.035009427 0.005233573
 </pre></div>
-<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.3.11<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-29">Based on the calculated distributions, we see that the first model has a stable distribution with approximately 56.0% as eggs, 33.1% as larvae, 7.6% as pupae, and 3.3% as adult females. Note that our model was developed to ignore adult male mosquitoes. If we wanted a full count, we would need to double the adult population. In a similar way, the second model has a stable distribution with approximately 53.4% as eggs, 34.2% as larvae, 8.3% as pupae, and 3.5% as adult females that are <em class="emphasis">not</em> reproducing and 0.5% as adult females that are reproducing.</div></section></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.3.11<span class="period">.</span></span><span class="space"> </span></figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-4-17">Based on the calculated distributions, we see that the first model has a stable distribution with approximately 56.0% as eggs, 33.1% as larvae, 7.6% as pupae, and 3.3% as adult females. Note that our model was developed to ignore adult male mosquitoes. If we wanted a full count, we would need to double the adult population. In a similar way, the second model has a stable distribution with approximately 53.4% as eggs, 34.2% as larvae, 8.3% as pupae, and 3.5% as adult females that are <em class="emphasis">not</em> reproducing and 0.5% as adult females that are reproducing.</div></section><section class="subsection" id="sec-structure-example-mosquitoes-5"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">3.3.3</span><span class="space"> </span><span class="title">Exploring the Impact of Additional Mortality</span>
+</h3>
+<div class="para" id="sec-structure-example-mosquitoes-5-2">When we implemented our basic model, we took laboratory lifespan of adults to find a probability of expiration <span class="process-math">\(\eta_{A}\text{.}\)</span> This was fundamentally different from our mortality and survival probabilities that we imposed on the egg, larva, and pupa stages. In those cases, we considered unknown environmental rates that impacted survival. For adults, we considered expiration (natural death) as one of three possible states to which an adult could transition.</div>
+<div class="para logical" id="sec-structure-example-mosquitoes-5-3">
+<div class="para">Let us rethink adult dynamics by also including environmental mortality on adults by introducing a new mortality probability <span class="process-math">\(\mu_{A}\)</span> that represents a fraction of adults that die due to external environmental causes, which might include control efforts. Prior to making a transition, an adult must survive the day with probability <span class="process-math">\(1-\mu_{A}\text{.}\)</span> Consequently, for our first model involving uniform adult reproduction, <a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3-7-1" class="xref" data-knowl="./knowl/xref/eqn-ELPA-adult-uniform-reproduction.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 3.3.4">(3.3.4)</a> will need to be replaced by</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/eqn-ELPA-adult-uniform-reproduction.html ./knowl/xref/eqn-ELPA-adult1-reproductive-adults.html ./knowl/xref/eqn-ELPA-adult1-reproductive-adults.html ./knowl/xref/eqn-ELPA-egg-uniform-reproduction.html ./knowl/xref/eqn-ELPA-egg-reproductive-adults.html" id="eqn-ELPA-adult-uniform-reproduction-mortality">
+\begin{equation}
+A_{t+1} \amp = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\eta_{A}) (1-\mu_{A}) A_{t}\text{.}\tag{3.3.10}
+\end{equation}
+</div>
+<div class="para">In a similar way, our second model involving a reproducing class would require changing <a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3-7-3" class="xref" data-knowl="./knowl/xref/eqn-ELPA-adult1-reproductive-adults.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 3.3.8">(3.3.8)</a> and <a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3-7-3" class="xref" data-knowl="./knowl/xref/eqn-ELPA-adult1-reproductive-adults.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 3.3.8">(3.3.8)</a> be rewritten as</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/eqn-ELPA-adult-uniform-reproduction.html ./knowl/xref/eqn-ELPA-adult1-reproductive-adults.html ./knowl/xref/eqn-ELPA-adult1-reproductive-adults.html ./knowl/xref/eqn-ELPA-egg-uniform-reproduction.html ./knowl/xref/eqn-ELPA-egg-reproductive-adults.html" id="sec-structure-example-mosquitoes-5-3-7">
+\begin{align}
+A_{1,t+1} \amp = \textstyle \frac{1}{2} (1-\mu_{P}) p_{P} P_{t} 
++ (1- \eta_{A} - p_{A}) (1-\mu_{A}) A_{1,t} + (1-\eta_{A}) (1-\mu_{A}) A_{2,t}\tag{3.3.11}\\
+A_{2,t+1} \amp = p_{A} (1-\mu_{A}) A_{1,t}\tag{3.3.12}
+\end{align}
+</div>
+<div class="para">We may also need to adjust the fecundity term in <a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3-7-1" class="xref" data-knowl="./knowl/xref/eqn-ELPA-egg-uniform-reproduction.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 3.3.1">(3.3.1)</a> or <a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3-7-3" class="xref" data-knowl="./knowl/xref/eqn-ELPA-egg-reproductive-adults.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 3.3.5">(3.3.5)</a>, depending on whether eggs are deposited before (no change required) or after survival of the day (<span class="process-math">\(A_{t}\)</span> should be replaced by <span class="process-math">\((1-\mu_{A}) A_t\)</span>). Eliminating the external environmental mortality by setting <span class="process-math">\(\mu_{A} = 0\)</span> reverts the models to their original form.</div>
+</div>
+<div class="para" id="sec-structure-example-mosquitoes-5-4">Now that we have a proposed change to the model, how can we explore the impact of this change? Because there is no density dependence, the only fixed point for this system is with no mosquitoes. We can instead look at how changing the mortality impacts the asymptotic growth rate, which is calculated as the dominant eigenvalue to the projection matrix. Computationally, we would do this with a loop that goes through an array of possible values for <span class="process-math">\(\mu_{A}\text{.}\)</span> For each such value, we will construct a new matrix, calculate its eigenvalue, and identify the largest of the values. In order to track these results, we will record the asymptotic growth rate in a new array. Notice that we do not need to run simulations since the eigenvalue is a more direct method of finding this value. The code listed below implements this for the modified first model with uniform reproduction among all adults. In addition, we calculate the results for putting mortality both before and after egg deposition.</div>
+<figure class="listing figure-like" id="sec-structure-example-mosquitoes-5-5"><div class="code-box"><pre class="program"><code class="language-r"># Create the basic model parameters
+T_egg &lt;- 2
+T_larva &lt;- 4
+T_pupa &lt;- 2
+T_adult &lt;- 28
+N_egg &lt;- 100
+
+# Model parameters
+# E,L,P mortality probabilities are arbitrarily set -- not based on life cycle
+m_E &lt;- 0.05
+m_L &lt;- 0.05
+m_P &lt;- 0.05
+p_E &lt;- 1/T_egg
+p_L &lt;- 1/T_larva
+p_P &lt;- 1/T_pupa
+e_A &lt;- 1/T_adult
+
+# Create the array of possible value for m_A
+mortality_array &lt;- seq(from=0, to=1, by=0.025)
+
+# Create an array to store our growth rate that is same length
+N_pts &lt;- length(mortality_array)
+growth_rate_array1 &lt;- double(N_pts)
+growth_rate_array2 &lt;- double(N_pts)
+
+# Run through the values and make the calculations
+for (i in 1:N_pts) {
+    # Get the current value
+    m_A &lt;- mortality_array[i]
+
+    # 1st method: deposit eggs then survive
+    # Create the projection matrix
+    M &lt;- matrix(data = c(
+        (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0,      # column 1
+        0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0,      # column 2
+        0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P,  # column 3
+        5/T_adult * N_egg, 0, 0, (1-e_A)*(1-m_A) # column 4
+        ), nrow = 4, ncol = 4)
+    
+    # Compute eigenvalues and eigenvectors
+    eig_sys &lt;- eigen(M)
+
+    # Identify the maximum eigenvalue (real part)
+    max_location &lt;- which.max(abs(eig_sys$values))
+    growth_rate_array1[i] &lt;- Re(eig_sys$values[max_location])
+
+    # 2nd method: survive then deposit eggs
+    # Create the projection matrix
+    M &lt;- matrix(data = c(
+        (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0,      # column 1
+        0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0,      # column 2
+        0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P,  # column 3
+        5/T_adult * N_egg * (1-m_A), 0, 0, (1-e_A)*(1-m_A) # column 4
+        ), nrow = 4, ncol = 4)
+    
+    # Compute eigenvalues and eigenvectors
+    eig_sys &lt;- eigen(M)
+
+    # Identify the maximum eigenvalue (real part)
+    max_location &lt;- which.max(abs(eig_sys$values))
+    growth_rate_array2[i] &lt;- Re(eig_sys$values[max_location])
+}
+
+# Visualize the results
+library(ggplot2)
+ggplot() +
+    geom_line(mapping = aes(x = mortality_array, 
+                            y = growth_rate_array1, 
+                            color = "1")) +
+    geom_line(mapping = aes(x = mortality_array, 
+                            y = growth_rate_array2, 
+                            color = "2")) +
+    scale_color_discrete(breaks=c("1", "2"),
+                        labels = c("eggs first","survive first"),
+                        name="ordering") +
+    labs(x = "mu_A (adult mortality)", y = "lambda (asymptotic growth rate)")
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">3.3.12<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-ELPA-adult-mortality-exploration"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/ELPA-adult-mortality-exploration.png" class="contained" alt="Plot showing asymptotic growth rate as it depends on adult mortality"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">3.3.13<span class="period">.</span></span><span class="space"> </span>Asymptotic growth rate as a function of adult mortality <span class="process-math">\(\mu_A\text{.}\)</span></figcaption></figure><div class="para" id="sec-structure-example-mosquitoes-5-7">The results in <a href="sec-structure-example-mosquitoes.html#fig-ELPA-adult-mortality-exploration" class="xref" data-knowl="./knowl/xref/fig-ELPA-adult-mortality-exploration.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 3.3.13">Figure 3.3.13</a> show a fundamental difference between having mortality before or after eggs are deposited. For this model, if all adults have the ability to deposit the designated fraction of eggs before needing to survive the day, the asymptotic growth rate remains above <span class="process-math">\(\lambda &gt; 1\)</span> for all values of <span class="process-math">\(\mu_{A}\text{.}\)</span> There would always be enough eggs deposited to see the mosquito population grow even if all adults died after the first day (<span class="process-math">\(\mu_A = 1\)</span>). On the other hand, if adults need to survive before they can deposit eggs, high values of <span class="process-math">\(\mu_{A}\)</span> result in <span class="process-math">\(\lambda &lt; 1\)</span> and the population would decline.</div></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="sec-structure-matrix-models.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="interactions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
