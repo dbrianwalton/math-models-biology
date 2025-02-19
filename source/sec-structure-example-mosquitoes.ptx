@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="sec-structure-example-mosquitoes">
+<title>Example: Mosquito Growth</title>
+
+    <p>
+        Let us look at some examples of populations that might make sense to explore in a structured way.
+    </p>
+    <p>
+        Many insects exhibit distinct stages of development that are well modeled using structured populations.
+        Females lay fertilized eggs which then take time to develop.
+        When the eggs hatch, larvae emerge and often go through various larval stages of development.
+        There is often a pupal stage in which a final metamorphosis takes place to an emerging adult.
+        In addition, insects reproduce sexually, so it is often useful to distinguish male and female counts separately, at least at the adult stage.
+    </p>
+    <p>
+        For our illustrative example, we will consider the <taxon>Aedes aegyptii</taxon> mosquito (see <url href="https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm"/>) that is most responsible for the spread of dengue fever, yellow fever, and chikungunya.
+        Like other <taxon>Aedes</taxon> mosquito species, adult female mosquitoes find open still water and lay their eggs on a damp surface that is likely to be submerged by water.
+        Once submerged, the egg will hatch after a few days and a larva will emerge in the water.
+        These larvae swim in the water, eating algae and other smaller organisms in the water.
+        As they develop and grow, the larvae transition between four different instar stages.
+        After the fourth instar stage, the larva enters a pupal stage during which the individual metamorophoses to an adult.
+        Each stage depends on the the presence of water and growth is accelerated with warmer temperatures.
+    </p>
+    <figure xml:id="fig-Aedes-lifecycle">
+      <caption>Illustration of the life cycle of <taxon>Aedes aegyptii</taxon> mosquito. Image courtesy CDC, USA, <url href="https://phil.cdc.gov/Details.aspx?pid=20204"/>.</caption>
+      <image source="images/Aedes-lifecycle-20204_lores.jpg">
+        <shortdescription>Image of Aedes aegypti mosquito showing egg, larva, pupa, adult stages</shortdescription>
+      </image>
+    </figure>
+    <p>
+        In order to create a model for the mosquito population, let us identify some key assumptions.
+        Because the mosquitos rely on water for their life cycle and temperatures control the rate of development, the population will naturally fluctuate based on the weather.
+        Adult mosquitos are also able to fly, so their range could be impacted by migration from nearby areas.
+        We will consider a simplified population with constantly available water supplies and steady temperatures.
+        That is, we might suppose we are looking at optimal growth by the population under ideal conditions.
+    </p>
+    <p>
+        For a simplified model, we will consider only four stages<mdash/>eggs, larvae, pupae, and adults.
+        In addition, at the adult stage for this model, we will only consider female adults since they are the only subpopulation that will actually produce eggs.
+        If we wanted our model to include mating interactions in some way, then we would separately consider the male and female subpopulations.
+        Development is measured in terms of days, so our model will use a time step of 1 day.
+    </p>
+    <figure xml:id="fig-ELPA-mosquito-model">
+        <caption>Model for a four-stage model of mosquito development.</caption>
+        <image width="75%" source="images/ELPA-mosquito-model"/>
+    </figure>
+    <p>
+        We now work to develop model parameters based on our reference material (<url href="https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm"/>).
+        Under ideal conditions, we see that an egg should hatch in about two days.
+        Larvae go through four instar stages, where the last stage is longest at about three days.
+        We will assume that the average length of the larval stage is four days.
+        The pupal stage takes about two days.
+        The adults survive between two weeks to a month and are able to reproduce up to five times.
+        Each batch of eggs is typically between 100 and 200 eggs.
+        We do not have specific figures for mortality rates, which will depend on the local conditions.
+    </p>
+    <p>
+        How do we go from durations of stages to model transition rates?
+        One approach would be to have a different stage for each age in a given stage.
+        This would have two different egg stages.
+        New eggs would all go in the first stage.
+        All eggs that survived one day would transition to the second age stage.
+        All eggs that survived the second day would transition to the first larval stage.
+        This would be repeated until we reached the adult stage, requiring a total of 8 different developmental stages.
+        Such an age-based model works well if timing is very clearly synchronized.
+    </p>
+    <p>
+        A second approach is to think of transitions happening randomly so that the <em>average</em> time of transition matches the reported values.
+        We build from a mathematical property of a <term>geometric random variable</term>, which counts how many times we repeat a random test (like a coin flip) before an event occurs.
+        If the probability of the event happening on a given trial is <m>p</m>, then the average number of attempts before the first success occurs is given by <m>1/p</m>.
+        Consequently, if we to perform a daily test on whether to transition or not such that the average number of days spent prior to the transition is given by <m>\tau</m>, then we want that daily test to occur with probability <m>p=1/\tau</m>.
+        This probability will then be the <em>fraction</em> of the number of individuals that experience the transition.
+        This random approach using average times is the least-possibly synchronized model because each individual is effectively starting over every day with a fresh chance to transition.
+    </p>
+    <p>
+        We will introduce model parameters in the abstract and then assign specific values based on the given data.
+        Suppose that eggs have an equal chance of dying each day, with a probability <m>\mu_{E}</m>.
+        The fraction of eggs that survive the day is therefore <m>1-\mu_{E}</m>.
+        Of these eggs, some transition to the larval stage with a probability <m>p_{E}</m> while the remainder <m>1-p_{E}</m> stay in the egg state another day.
+        Based on the properties of a geometric random variable, we want <m>p_{E} = 1/\tau_{E}</m> where <m>\tau_{E}</m> is the average duration of the egg state.
+        In a similar way, larvae will have a probability <m>\mu_{L}</m> of dying each day and a probability <m>p_{L}</m> of transitioning to the pupal stage.
+        For the same reason, pupae will have probabilities <m>\mu_{P}</m> and <m>p_{P}</m> for dying and transitioning, respectively.
+        As noted, the mortality probabilities are specific to the environment and will not be found in the general literature.
+    </p>
+    <p>
+        Adults require a little extra thought.
+        Only half of emerging adults will be female.
+        (This might not even be the correct fraction<mdash/>an experimentally observed sex ratio would allow us to be more precise.)
+        An adult can live between two weeks and a month but only reproduce up to five times.
+        How can we deal with this?
+        One approach is to spread out the total number of eggs across the entire lifespan of the adult, <m>\tau_{A}</m>.
+        That is, if <m>N_{egg}</m> is the number of eggs in a single laying and there are 5 reproductive episodes, then we have a daily average number of eggs per female given by <m>5 N_{egg} / \tau_A</m>.
+        Adults will have a probability of dying given by <m>\mu_{A} = 1/\tau_A</m> in order for adults to survive an average of <m>\tau_{A}</m> days.
+        Alternatively, we could introduce an extra adult stage <m>A_2</m> during which all reproduction occurs and we contrive transition rates so that this stage is visited an average of 5 times and also so that the average number of days lived equals <m>\tau_{A}</m>.
+        This would require adults spend at least one day without reproducing before entering the state of laying eggs.
+        A mathematical subject called <term>recurrence theory</term> allows us to calculate transition rates.
+        For both adult states, we still want a probability of dying given by <m>\mu_{A} = 1/\tau_{A}</m>.
+        However, we need nonreproducing adults to have a probability <m>p_{A}</m> of transitioning to the reproductive state given by <m>p_{A} = \frac{5}{\tau_{A}-5}</m>.
+        Otherwise, adults will be in the non-reproductive state the next day.
+    </p>
+    <p>
+        Based on our analysis, we are ready to write down our model for the mosquito population.
+        If we spread the reproduction over every day of an adult's life,
+        the state variables will follow the recursive equations
+        <mdn>
+            <mrow xml:id="eqn-ELPA-egg-uniform-reproduction">
+                E_{t+1} \amp = (1-\mu_{E})(1-p_{E}) E_{t} +  {\textstyle \frac{5 N_{egg}}{\tau_{A}}} A_{t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-larva-uniform-reproduction">
+                L_{t+1} \amp = (1-\mu_{E}) p_{E} E_{t} + (1-\mu_{L})(1-p_{L}) L_{t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-pupa-uniform-reproduction">
+                P_{t+1} \amp = (1-\mu_{L}) p_{L} L_{t} + (1-\mu_{P})(1-p_{P}) P_{t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-adult-uniform-reproduction">
+                A_{t+1} \amp = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\mu_{A}) A_{t}
+            </mrow>.
+        </mdn>
+        If instead we have two adult stages with reproduction only coming from <m>A_2</m>, the recursive equations become
+        <mdn>
+            <mrow xml:id="eqn-ELPA-egg-reproductive-adults">
+                E_{t+1} \amp = (1-\mu_{E})(1-p_{E}) E_{t} +  N_{egg} A_{2,t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-larva-reproductive-adults">
+                L_{t+1} \amp = (1-\mu_{E}) p_{E} E_{t} + (1-\mu_{L})(1-p_L) L_{t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-pupa-reproductive-adults">
+                P_{t+1} \amp = (1-\mu_{L}) p_L L_{t} + (1-\mu_{P})(1-p_{P}) P_{t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-adult1-reproductive-adults">
+                A_{1,t+1} \amp = \textstyle \frac{1}{2} (1-\mu_{P}) p_{P} P_{t} 
+                + (1- \mu_{A} - p_{A}) A_{1,t} + (1-\mu_{A}) A_{2,t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-adult2-reproductive-adults">
+                A_{2,t+1} \amp = p_{A} A_{1,t}
+            </mrow>.
+        </mdn>
+        The two models are implemented in R in the following listings, initially using an adult lifespan of 28 days and an average number of 100 eggs per reproductive cycle.
+        We start each model with 100 eggs and no mosquitoes in any other stage and follow the model for 90 days.
+        We will graph the number of individuals in each stage and also calculate the daily growth factor <m>T_{t}/T_{t-1}</m> where <m>T_t</m> is the total population on day <m>t</m>.
+    </p>
+    <listing xml:id="listing-ELPA-uniform-reproduction">
+        <program language="r">
+            <code>
+            <![CDATA[# Life cycle parameters
+            T_egg <- 2
+            T_larva <- 4
+            T_pupa <- 2
+            T_adult <- 28
+            N_egg <- 100
+
+            # Model parameters
+            # E,L,P mortality probabilities are arbitrarily set -- not based on life cycle
+            m_E <- 0.05
+            m_L <- 0.05
+            m_P <- 0.05
+            m_A <- 1/T_adult
+            p_E <- 1/T_egg
+            p_L <- 1/T_larva
+            p_P <- 1/T_pupa
+
+            # Create space for data and fill with 0
+            maxT <- 90
+            t_seq <- 0:maxT
+            E_seq <- double(maxT+1)
+            L_seq <- double(maxT+1)
+            P_seq <- double(maxT+1)
+            A_seq <- double(maxT+1)
+
+            # Initial values -- only eggs nonzero
+            E_seq[1] <- N_egg
+            # Now perform the projections
+            for (t in 1:maxT) {
+                E_seq[t+1] <- (1-m_E) * (1-p_E) * E_seq[t] +  (5 * N_egg)/T_adult * A_seq[t]
+                L_seq[t+1] <- (1-m_E) * p_E * E_seq[t] + (1-m_L) * (1-p_L) * L_seq[t]
+                P_seq[t+1] <- (1-m_L) * p_L * L_seq[t] + (1-m_P) * (1-p_P) * P_seq[t]
+                A_seq[t+1] <- 0.5 * (1-m_P) * p_P * P_seq[t] + (1-m_A) * A_seq[t]
+            }
+
+            # Visualize dynamics --- expect exponential growth so use log-scale
+            pop_growth <- ggplot() +
+                # Add data; use color to label the different stages
+                geom_point(mapping = aes(x = t_seq, y = E_seq, color = "S1")) +
+                geom_point(mapping = aes(x = t_seq, y = L_seq, color = "S2")) +
+                geom_point(mapping = aes(x = t_seq, y = P_seq, color = "S3")) +
+                geom_point(mapping = aes(x = t_seq, y = A_seq, color = "S4")) +
+                # Add legend information
+                scale_color_discrete(breaks=c("S1", "S2", "S3", "S4"),
+                                    labels = c("eggs","larvae","pupae","adult (F)"),
+                                    name="stage") +
+                # Add logarithimc scale
+                scale_y_continuous(trans = "log10") +
+                # Add labels
+                labs(x = "time", y = "population")
+            show(pop_growth)
+
+            # Visualize the growth ratio
+            T_seq <- E_seq + L_seq + P_seq + A_seq
+            ratio_plot <- ggplot() +
+                # Add data
+                geom_point(mapping = aes(x = 1:maxT, T_seq[2:(maxT+1)] / T_seq[1:maxT])) +
+                # Add labels
+                labs(x = "time", y = "lambda = T(t)/T(t-1)")
+            show(ratio_plot)
+            ]]>
+            </code>
+        </program>
+    </listing>
+    <figure xml:id="fig-ELPA-uniform-population">
+        <caption>Population values predicted by ELPA model using uniform birth rates</caption>
+        <image width="90%"  source="images/ELPA-uniform-population.png">
+            <shortdescription>Plot of the different stages as functions of time</shortdescription>
+        </image>
+    </figure>
+    <figure xml:id="fig-ELPA-uniform-population-lambda">
+        <caption>Growth ratio <m>\lambda</m> of ELPA model using uniform birth rates</caption>
+        <image width="60%" source="images/ELPA-uniform-population-lambda.png">
+            <shortdescription>Growth ratio values</shortdescription>
+        </image>
+    </figure>
+    <listing xml:id="listing-ELPA-reproductive-adults">
+        <program language="r">
+            <code>
+            <![CDATA[# Life cycle parameters
+            T_egg <- 2
+            T_larva <- 4
+            T_pupa <- 2
+            T_adult <- 28
+            N_egg <- 100
+
+            # Model parameters
+            # E,L,P mortality probabilities are arbitrarily set -- not based on life cycle
+            m_E <- 0.05
+            m_L <- 0.05
+            m_P <- 0.05
+            m_A <- 1/T_adult
+            p_E <- 1/T_egg
+            p_L <- 1/T_larva
+            p_P <- 1/T_pupa
+            p_A <- 5/(T_adult - 5)   # probability of entering reproductive cycle
+
+            # Create space for data and fill with 0
+            maxT <- 90
+            t_seq <- 0:maxT
+            E_seq <- double(maxT+1)
+            L_seq <- double(maxT+1)
+            P_seq <- double(maxT+1)
+            A1_seq <- double(maxT+1)
+            A2_seq <- double(maxT+1)
+
+            # Initial values -- only eggs nonzero
+            E_seq[1] <- N_egg
+            # Now perform the projections
+            for (t in 1:maxT) {
+                E_seq[t+1] <- (1-m_E) * (1-p_E) * E_seq[t] + N_egg * A_seq[t]
+                L_seq[t+1] <- (1-m_E) * p_E * E_seq[t] + (1-m_L) * (1-p_L) * L_seq[t]
+                P_seq[t+1] <- (1-m_L) * p_L * L_seq[t] + (1-m_P) * (1-p_P) * P_seq[t]
+                A1_seq[t+1] <- 0.5 * (1-m_P) * p_P * P_seq[t] + (1- m_A - p_A) * A1_seq[t] + (1-m_A) * A2_seq[t]
+                A2_seq[t+1] <- p_A * A1_seq[t]
+            }
+
+            # Visualize dynamics --- expect exponential growth so use log-scale
+            pop_growth <- ggplot() +
+                # Add data; use color to label the different stages
+                geom_point(mapping = aes(x = t_seq, y = E_seq, color = "S1")) +
+                geom_point(mapping = aes(x = t_seq, y = L_seq, color = "S2")) +
+                geom_point(mapping = aes(x = t_seq, y = P_seq, color = "S3")) +
+                geom_point(mapping = aes(x = t_seq, y = A1_seq+A2_seq, color = "S4")) +
+                # Add legend information
+                scale_color_discrete(breaks=c("S1", "S2", "S3", "S4"),
+                                    labels = c("eggs","larvae","pupae","adult (F)"),
+                                    name="stage") +
+                # Add logarithimc scale
+                scale_y_continuous(trans = "log10") +
+                # Add labels
+                labs(x = "time", y = "population")
+            show(pop_growth)
+
+            # Visualize the growth ratio
+            T_seq <- E_seq + L_seq + P_seq + A1_seq + A2_seq
+            ratio_plot <- ggplot() +
+                # Add data
+                geom_point(mapping = aes(x = 1:maxT, T_seq[2:(maxT+1)] / T_seq[1:maxT])) +
+                # Add labels
+                labs(x = "time", y = "lambda = T(t)/T(t-1)")
+            show(ratio_plot)
+            ]]>
+            </code>
+        </program>
+    </listing>
+    <figure xml:id="fig-ELPA-reproductive-adults">
+        <caption>Growth of ELPA model using uniform birth rates</caption>
+        <image source="images/ELPA-reproductive-adults.png">
+            <shortdescription>Plot of the different stages as functions of time</shortdescription>
+        </image>
+    </figure>
+    <figure xml:id="fig-ELPA-reproductive-adults-lambda">
+        <caption>Growth ratio <m>\lambda</m> of ELPA model using a reproductive adult subgroup</caption>
+        <image width="60%" source="images/ELPA-reproductive-adults-lambda.png">
+            <shortdescription>Growth ratio values</shortdescription>
+        </image>
+    </figure>
+    <p>
+        We should notice that the limiting value of <m>\lambda</m>, which is the asymptotic growth rate for the population, are slightly different between the two models.
+        The model that distributed reproduciton over all time periods had a slightly higher value (<m>\lambda</m> just above 1.5) compared to the model with a designated class of reproductive adults (<m>\lambda</m> just below 1.5).
+        This is comparable to compound interest where dividing growth into more frequent contributions results in larger overall exponential growth because the earlier and more frequent small deposits have a greater potential to grow over time.
+    </p>
+    <p>
+        We can recover these values theoretically by creating the corresponding matrix models for our recursive equations.
+        In order to do this, we must be careful that we use the same ordering for coefficients in the columns as we use for the recursive models in the rows.
+        That is, if our state variables follow the order <m>E, L, P, A</m>, then our coefficients for each row must be put in the matrix for the variables in that same order.
+        The matrix for the first model is given by
+        <me>
+            M_1 = \begin{bmatrix}
+                (1-\mu_{E})(1-p_{E}) &amp; 0 &amp; 0 &amp; \frac{5}{\tau_A} N_{egg} \\
+                (1-\mu_{E}) p_{E} &amp; (1-\mu_{L})(1-p_{L}) &amp; 0 &amp; 0 \\
+                0 &amp; (1-\mu_{L}) p_{L} &amp; (1-\mu_{P})(1-p_{P}) &amp; 0 \\
+                0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\mu_{A})
+            \end{bmatrix}
+        </me>.
+        The second model has more state variables, <m>E, L, P, A_1, A_2</m> and so has a larger matrix,
+        <me>
+            M_2 = \begin{bmatrix}
+                (1-\mu_{E})(1-p_{E}) &amp; 0 &amp; 0 &amp; 0 &amp; N_{egg} \\
+                (1-\mu_{E}) p_{E} &amp; (1-\mu_{L})(1-p_{L}) &amp; 0 &amp; 0 &amp; 0 \\
+                0 &amp; (1-\mu_{L}) p_{L} &amp; (1-\mu_{P})(1-p_{P}) &amp; 0 &amp; 0 \\
+                0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\mu_{A}-p_A) &amp; (1-\mu_A) \\
+                0 &amp; 0 &amp; 0 &amp; p_A &amp; 0 \\
+            \end{bmatrix}
+        </me>.
+    </p>
+    <listing>
+        <program language="r">
+            <code>
+            <![CDATA[# Create a projection matrix for each model
+            # Include the parameters defined earlier
+            M1 <- matrix(data = c(
+                (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0,      # column 1
+                0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0,      # column 2
+                0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P,  # column 3
+                5/T_adult * N_egg, 0, 0, 1-m_A           # column 4
+                ), nrow = 4, ncol = 4)
+            M2 <- matrix(data = c(
+                (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0, 0,      # column 1
+                0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0, 0,      # column 2
+                0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P, 0,  # column 3
+                0, 0, 0, 1 - m_A - p_A, p_A,                # column 4
+                N_egg, 0, 0, 1-m_A, 0                       # column 5
+                ), nrow = 5, ncol = 5)
+            print(M1)
+            print(M2)
+            
+            # Find eigenvalues and eigenvectors
+            eig_sys1 <- eigen(M1)
+            eig_sys2 <- eigen(M2)
+
+            # Display the eigenvalues
+            print(eig_sys1$values)
+            print(eig_sys2$values)
+            ]]>
+            </code>
+        </program>
+        <console>
+            <output>
+            <![CDATA[
+            > print(M1)
+                  [,1]   [,2]   [,3]       [,4]
+            [1,] 0.475 0.0000 0.0000 17.8571429
+            [2,] 0.475 0.7125 0.0000  0.0000000
+            [3,] 0.000 0.2375 0.4750  0.0000000
+            [4,] 0.000 0.0000 0.2375  0.9642857
+            > print(M2)
+                  [,1]   [,2]   [,3]      [,4]        [,5]
+            [1,] 0.475 0.0000 0.0000 0.0000000 100.0000000
+            [2,] 0.475 0.7125 0.0000 0.0000000   0.0000000
+            [3,] 0.000 0.2375 0.4750 0.0000000   0.0000000
+            [4,] 0.000 0.0000 0.2375 0.7468944   0.9642857
+            [5,] 0.000 0.0000 0.0000 0.2173913   0.0000000
+            > print(eig_sys1$values)
+            [1]  1.5151824+0.0000000i  0.6546172+0.8071957i  0.6546172-0.8071957i -0.1976311+0.0000000i
+            > print(eig_sys2$values)
+            [1]  1.4542159+0.0000000i  0.7936544+0.7849968i  0.7936544-0.7849968i -0.3160652+0.4504780i
+            [5] -0.3160652-0.4504780i
+            ]]>
+            </output>
+        </console>
+    </listing>
+    <p>
+        When we look at the eigenvalues that are displayed, we can see that they are displayed as complex numbers.
+        For each of the matrices, the largest eigenvalue is the first one in the list.
+        This is often the case but never guaranteed, so we always need to check before proceeding to the next step.
+        For the first matrix, <m>M_1</m>, the dominant eigenvalue is <m>\lambda = 1.5151824 + 0.00000 i</m>.
+        Since the imaginary part of the number is 0, we can just write <m>\lambda = 1.5151824</m>, which exactly corresponds to the asymptotic growth rate that we observed in the simulation.
+        Similarly, the second matrix, <m>M_2</m>, has a dominant eigenvalue <m>\lambda = 1.4542159</m> which corresponds to the asymptotic growth of the second model.
+    </p>
+    <p>
+        Once we know which eigenvalue is dominant, we can extract the corresponding eigenvector to find the stable stage distributions.
+    </p>
+    <listing>
+        <program language="r">
+            <code>
+            <![CDATA[# After the previous calculations, use the eigenvectors
+            v1 <- eig_sys1$vectors[ ,1]     # Take column 1
+            print(v1 / sum(v1))
+
+            v2 <- eig_sys2$vectors[ ,1]     # Take column 1
+            print(v2 / sum(v2))
+            ]]>
+            </code>
+        </program>
+        <console>
+            <output>
+            <![CDATA[
+            > print(v1 / sum(v1))
+            [1] 0.56018292+0i 0.33149711+0i 0.07568919+0i 0.03263077+0i
+            > 
+            > v2 <- eig_sys2$vectors[ ,1]     # Take column 1
+            > print(v2 / sum(v2))
+            [1] 0.534465662+0i 0.342275500+0i 0.083015838+0i 0.035009427+0i 0.005233573+0i
+            ]]>
+            </output>
+        </console>
+    </listing>
+    <p>
+        Because some of the eigenvalues and eigenvectors had imaginary parts, they are represented as <em>all</em> having imaginary parts even though the imaginary part is 0.
+        We can reformat the numbers as real values using the <c>Re</c> command.
+    </p>
+    <listing>
+        <program language="r">
+            <code>
+            <![CDATA[# After the previous calculations, use the eigenvectors
+            v1 <- Re(eig_sys1$vectors[ ,1])  # Take column 1; force as real
+            print(v1 / sum(v1))
+
+            v2 <- Re(eig_sys2$vectors[ ,1])  # Take column 1; force as real
+            print(v2 / sum(v2))
+            ]]>
+            </code>
+        </program>
+        <console>
+            <output>
+            <![CDATA[
+            > print(v1 / sum(v1))
+            [1] 0.56018292 0.33149711 0.07568919 0.03263077
+            > print(v2 / sum(v2))
+            [1] 0.534465662 0.342275500 0.083015838 0.035009427 0.005233573
+            ]]>
+            </output>
+        </console>
+    </listing>
+    <p>
+        Based on the calculated distributions, we see that the first model has a stable distribution with approximately 56.0<percent/> as eggs, 33.1<percent/> as larvae, 7.6<percent/> as pupae, and 3.3<percent/> as adult females.
+        Note that our model was developed to ignore adult male mosquitoes.
+        If we wanted a full count, we would need to double the adult population.
+        In a similar way, the second model has a stable distribution with approximately 53.4<percent/> as eggs, 34.2<percent/> as larvae, 8.3<percent/> as pupae, and 3.5<percent/> as adult females that are <em>not</em> reproducing and 0.5<percent/> as adult females that are reproducing.
+    </p>
+</section>

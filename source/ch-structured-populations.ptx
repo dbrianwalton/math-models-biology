@@ -40,5 +40,6 @@
 
     <xi:include href="./sec-structure-two-stage.ptx" />
     <xi:include href="./sec-structure-matrix-models.ptx" />
+    <xi:include href="./sec-structure-example-mosquitoes.ptx" />
 
 </chapter>
