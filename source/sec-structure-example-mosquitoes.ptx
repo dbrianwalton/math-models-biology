@@ -9,7 +9,7 @@
    
 <section xml:id="sec-structure-example-mosquitoes">
 <title>Example: Mosquito Growth</title>
-
+<introduction>
     <p>
         Let us look at some examples of populations that might make sense to explore in a structured way.
     </p>
@@ -52,6 +52,10 @@
         <caption>Model for a four-stage model of mosquito development.</caption>
         <image width="75%" source="images/ELPA-mosquito-model"/>
     </figure>
+</introduction>
+<subsection>
+    <title>Model Equations and Parameters</title>
+    
     <p>
         We now work to develop model parameters based on our reference material (<url href="https://entnemdept.ufl.edu/creatures/aquatic/aedes_aegypti.htm"/>).
         Under ideal conditions, we see that an egg should hatch in about two days.
@@ -98,11 +102,11 @@
         How can we deal with this?
         One approach is to spread out the total number of eggs across the entire lifespan of the adult, <m>\tau_{A}</m>.
         That is, if <m>N_{egg}</m> is the number of eggs in a single laying and there are 5 reproductive episodes, then we have a daily average number of eggs per female given by <m>5 N_{egg} / \tau_A</m>.
-        Adults will have a probability of dying given by <m>\mu_{A} = 1/\tau_A</m> in order for adults to survive an average of <m>\tau_{A}</m> days.
+        Adults will have a probability of expiring given by <m>\eta_{A} = 1/\tau_A</m> in order for adults to survive an average of <m>\tau_{A}</m> days.
         Alternatively, we could introduce an extra adult stage <m>A_2</m> during which all reproduction occurs and we contrive transition rates so that this stage is visited an average of 5 times and also so that the average number of days lived equals <m>\tau_{A}</m>.
         This would require adults spend at least one day without reproducing before entering the state of laying eggs.
         A mathematical subject called <term>recurrence theory</term> allows us to calculate transition rates.
-        For both adult states, we still want a probability of dying given by <m>\mu_{A} = 1/\tau_{A}</m>.
+        For both adult states, we still want a probability of dying given by <m>\eta_{A} = 1/\tau_{A}</m>.
         However, we need nonreproducing adults to have a probability <m>p_{A}</m> of transitioning to the reproductive state given by <m>p_{A} = \frac{5}{\tau_{A}-5}</m>.
         Otherwise, adults will be in the non-reproductive state the next day.
     </p>
@@ -121,7 +125,7 @@
                 P_{t+1} \amp = (1-\mu_{L}) p_{L} L_{t} + (1-\mu_{P})(1-p_{P}) P_{t}
             </mrow>,
             <mrow xml:id="eqn-ELPA-adult-uniform-reproduction">
-                A_{t+1} \amp = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\mu_{A}) A_{t}
+                A_{t+1} \amp = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\eta_{A}) A_{t}
             </mrow>.
         </mdn>
         If instead we have two adult stages with reproduction only coming from <m>A_2</m>, the recursive equations become
@@ -137,12 +141,18 @@
             </mrow>,
             <mrow xml:id="eqn-ELPA-adult1-reproductive-adults">
                 A_{1,t+1} \amp = \textstyle \frac{1}{2} (1-\mu_{P}) p_{P} P_{t} 
-                + (1- \mu_{A} - p_{A}) A_{1,t} + (1-\mu_{A}) A_{2,t}
+                + (1- \eta_{A} - p_{A}) A_{1,t} + (1-\eta_{A}) A_{2,t}
             </mrow>,
             <mrow xml:id="eqn-ELPA-adult2-reproductive-adults">
                 A_{2,t+1} \amp = p_{A} A_{1,t}
             </mrow>.
         </mdn>
+    </p>
+</subsection>
+<subsection>
+    <title>Simulation, Asymptotic Growth, and Stable Distributions</title>
+    
+    <p>
         The two models are implemented in R in the following listings, initially using an adult lifespan of 28 days and an average number of 100 eggs per reproductive cycle.
         We start each model with 100 eggs and no mosquitoes in any other stage and follow the model for 90 days.
         We will graph the number of individuals in each stage and also calculate the daily growth factor <m>T_{t}/T_{t-1}</m> where <m>T_t</m> is the total population on day <m>t</m>.
@@ -162,10 +172,10 @@
             m_E <- 0.05
             m_L <- 0.05
             m_P <- 0.05
-            m_A <- 1/T_adult
             p_E <- 1/T_egg
             p_L <- 1/T_larva
             p_P <- 1/T_pupa
+            e_A <- 1/T_adult
 
             # Create space for data and fill with 0
             maxT <- 90
@@ -182,7 +192,7 @@
                 E_seq[t+1] <- (1-m_E) * (1-p_E) * E_seq[t] +  (5 * N_egg)/T_adult * A_seq[t]
                 L_seq[t+1] <- (1-m_E) * p_E * E_seq[t] + (1-m_L) * (1-p_L) * L_seq[t]
                 P_seq[t+1] <- (1-m_L) * p_L * L_seq[t] + (1-m_P) * (1-p_P) * P_seq[t]
-                A_seq[t+1] <- 0.5 * (1-m_P) * p_P * P_seq[t] + (1-m_A) * A_seq[t]
+                A_seq[t+1] <- 0.5 * (1-m_P) * p_P * P_seq[t] + (1-e_A) * A_seq[t]
             }
 
             # Visualize dynamics --- expect exponential growth so use log-scale
@@ -241,7 +251,7 @@
             m_E <- 0.05
             m_L <- 0.05
             m_P <- 0.05
-            m_A <- 1/T_adult
+            e_A <- 1/T_adult
             p_E <- 1/T_egg
             p_L <- 1/T_larva
             p_P <- 1/T_pupa
@@ -263,7 +273,7 @@
                 E_seq[t+1] <- (1-m_E) * (1-p_E) * E_seq[t] + N_egg * A_seq[t]
                 L_seq[t+1] <- (1-m_E) * p_E * E_seq[t] + (1-m_L) * (1-p_L) * L_seq[t]
                 P_seq[t+1] <- (1-m_L) * p_L * L_seq[t] + (1-m_P) * (1-p_P) * P_seq[t]
-                A1_seq[t+1] <- 0.5 * (1-m_P) * p_P * P_seq[t] + (1- m_A - p_A) * A1_seq[t] + (1-m_A) * A2_seq[t]
+                A1_seq[t+1] <- 0.5 * (1-m_P) * p_P * P_seq[t] + (1- e_A - p_A) * A1_seq[t] + (1-e_A) * A2_seq[t]
                 A2_seq[t+1] <- p_A * A1_seq[t]
             }
 
@@ -323,7 +333,7 @@
                 (1-\mu_{E})(1-p_{E}) &amp; 0 &amp; 0 &amp; \frac{5}{\tau_A} N_{egg} \\
                 (1-\mu_{E}) p_{E} &amp; (1-\mu_{L})(1-p_{L}) &amp; 0 &amp; 0 \\
                 0 &amp; (1-\mu_{L}) p_{L} &amp; (1-\mu_{P})(1-p_{P}) &amp; 0 \\
-                0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\mu_{A})
+                0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\eta_{A})
             \end{bmatrix}
         </me>.
         The second model has more state variables, <m>E, L, P, A_1, A_2</m> and so has a larger matrix,
@@ -332,7 +342,7 @@
                 (1-\mu_{E})(1-p_{E}) &amp; 0 &amp; 0 &amp; 0 &amp; N_{egg} \\
                 (1-\mu_{E}) p_{E} &amp; (1-\mu_{L})(1-p_{L}) &amp; 0 &amp; 0 &amp; 0 \\
                 0 &amp; (1-\mu_{L}) p_{L} &amp; (1-\mu_{P})(1-p_{P}) &amp; 0 &amp; 0 \\
-                0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\mu_{A}-p_A) &amp; (1-\mu_A) \\
+                0 &amp; 0 &amp; \frac{1}{2} (1-\mu_{P}) p_{P} &amp; (1-\eta_{A}-p_A) &amp; (1-\eta_A) \\
                 0 &amp; 0 &amp; 0 &amp; p_A &amp; 0 \\
             \end{bmatrix}
         </me>.
@@ -346,14 +356,14 @@
                 (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0,      # column 1
                 0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0,      # column 2
                 0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P,  # column 3
-                5/T_adult * N_egg, 0, 0, 1-m_A           # column 4
+                5/T_adult * N_egg, 0, 0, 1-e_A           # column 4
                 ), nrow = 4, ncol = 4)
             M2 <- matrix(data = c(
                 (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0, 0,      # column 1
                 0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0, 0,      # column 2
                 0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P, 0,  # column 3
-                0, 0, 0, 1 - m_A - p_A, p_A,                # column 4
-                N_egg, 0, 0, 1-m_A, 0                       # column 5
+                0, 0, 0, 1 - e_A - p_A, p_A,                # column 4
+                N_egg, 0, 0, 1-e_A, 0                       # column 5
                 ), nrow = 5, ncol = 5)
             print(M1)
             print(M2)
@@ -462,4 +472,142 @@
         If we wanted a full count, we would need to double the adult population.
         In a similar way, the second model has a stable distribution with approximately 53.4<percent/> as eggs, 34.2<percent/> as larvae, 8.3<percent/> as pupae, and 3.5<percent/> as adult females that are <em>not</em> reproducing and 0.5<percent/> as adult females that are reproducing.
     </p>
+</subsection>
+<subsection>
+    <title>Exploring the Impact of Additional Mortality</title>
+    
+    <p>
+        When we implemented our basic model, we took laboratory lifespan of adults to find a probability of expiration <m>\eta_{A}</m>.
+        This was fundamentally different from our mortality and survival probabilities that we imposed on the egg, larva, and pupa stages.
+        In those cases, we considered unknown environmental rates that impacted survival.
+        For adults, we considered expiration (natural death) as one of three possible states to which an adult could transition.
+    </p>
+    <p>
+        Let us rethink adult dynamics by also including environmental mortality on adults by introducing a new mortality probability <m>\mu_{A}</m> that represents a fraction of adults that die due to external environmental causes, which might include control efforts.
+        Prior to making a transition, an adult must survive the day with probability <m>1-\mu_{A}</m>.
+        Consequently, for our first model involving uniform adult reproduction, <xref ref="eqn-ELPA-adult-uniform-reproduction"/> will need to be replaced by
+        <men xml:id="eqn-ELPA-adult-uniform-reproduction-mortality">
+            A_{t+1} \amp = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\eta_{A}) (1-\mu_{A}) A_{t}
+        </men>.
+        In a similar way, our second model involving a reproducing class would require changing <xref ref="eqn-ELPA-adult1-reproductive-adults"/> and <xref ref="eqn-ELPA-adult1-reproductive-adults"/> be rewritten as
+        <mdn>
+            <mrow xml:id="eqn-ELPA-adult1-reproductive-adults-mortality">
+                A_{1,t+1} \amp = \textstyle \frac{1}{2} (1-\mu_{P}) p_{P} P_{t} 
+                + (1- \eta_{A} - p_{A}) (1-\mu_{A}) A_{1,t} + (1-\eta_{A}) (1-\mu_{A}) A_{2,t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-adult2-reproductive-adults-mortality">
+                A_{2,t+1} \amp = p_{A} (1-\mu_{A}) A_{1,t}
+            </mrow>.
+        </mdn>
+        We may also need to adjust the fecundity term in <xref ref="eqn-ELPA-egg-uniform-reproduction"/> or <xref ref="eqn-ELPA-egg-reproductive-adults"/>, depending on whether eggs are deposited before (no change required) or after survival of the day (<m>A_{t}</m> should be replaced by <m>(1-\mu_{A}) A_t</m>).
+        Eliminating the external environmental mortality by setting <m>\mu_{A} = 0</m> reverts the models to their original form.
+    </p>
+    <p>
+        Now that we have a proposed change to the model, how can we explore the impact of this change?
+        Because there is no density dependence, the only fixed point for this system is with no mosquitoes.
+        We can instead look at how changing the mortality impacts the asymptotic growth rate,
+        which is calculated as the dominant eigenvalue to the projection matrix.
+        Computationally, we would do this with a loop that goes through an array of possible values for <m>\mu_{A}</m>.
+        For each such value, we will construct a new matrix, calculate its eigenvalue, and identify the largest of the values.
+        In order to track these results, we will record the asymptotic growth rate in a new array.
+        Notice that we do not need to run simulations since the eigenvalue is a more direct method of finding this value.
+        The code listed below implements this for the modified first model with uniform reproduction among all adults.
+        In addition, we calculate the results for putting mortality both before and after egg deposition.
+    </p>
+    <listing>
+        <program language="r">
+            <code>
+            <![CDATA[# Create the basic model parameters
+            T_egg <- 2
+            T_larva <- 4
+            T_pupa <- 2
+            T_adult <- 28
+            N_egg <- 100
+
+            # Model parameters
+            # E,L,P mortality probabilities are arbitrarily set -- not based on life cycle
+            m_E <- 0.05
+            m_L <- 0.05
+            m_P <- 0.05
+            p_E <- 1/T_egg
+            p_L <- 1/T_larva
+            p_P <- 1/T_pupa
+            e_A <- 1/T_adult
+
+            # Create the array of possible value for m_A
+            mortality_array <- seq(from=0, to=1, by=0.025)
+
+            # Create an array to store our growth rate that is same length
+            N_pts <- length(mortality_array)
+            growth_rate_array1 <- double(N_pts)
+            growth_rate_array2 <- double(N_pts)
+
+            # Run through the values and make the calculations
+            for (i in 1:N_pts) {
+                # Get the current value
+                m_A <- mortality_array[i]
+
+                # 1st method: deposit eggs then survive
+                # Create the projection matrix
+                M <- matrix(data = c(
+                    (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0,      # column 1
+                    0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0,      # column 2
+                    0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P,  # column 3
+                    5/T_adult * N_egg, 0, 0, (1-e_A)*(1-m_A) # column 4
+                    ), nrow = 4, ncol = 4)
+                
+                # Compute eigenvalues and eigenvectors
+                eig_sys <- eigen(M)
+
+                # Identify the maximum eigenvalue (real part)
+                max_location <- which.max(abs(eig_sys$values))
+                growth_rate_array1[i] <- Re(eig_sys$values[max_location])
+
+                # 2nd method: survive then deposit eggs
+                # Create the projection matrix
+                M <- matrix(data = c(
+                    (1-m_E)*(1-p_E), (1-m_E)*p_E, 0, 0,      # column 1
+                    0, (1-m_L)*(1-p_L), (1-m_L)*p_L, 0,      # column 2
+                    0, 0, (1-m_P)*(1-p_P), 0.5*(1-m_P)*p_P,  # column 3
+                    5/T_adult * N_egg * (1-m_A), 0, 0, (1-e_A)*(1-m_A) # column 4
+                    ), nrow = 4, ncol = 4)
+                
+                # Compute eigenvalues and eigenvectors
+                eig_sys <- eigen(M)
+
+                # Identify the maximum eigenvalue (real part)
+                max_location <- which.max(abs(eig_sys$values))
+                growth_rate_array2[i] <- Re(eig_sys$values[max_location])
+            }
+
+            # Visualize the results
+            library(ggplot2)
+            ggplot() +
+                geom_line(mapping = aes(x = mortality_array, 
+                                        y = growth_rate_array1, 
+                                        color = "1")) +
+                geom_line(mapping = aes(x = mortality_array, 
+                                        y = growth_rate_array2, 
+                                        color = "2")) +
+                scale_color_discrete(breaks=c("1", "2"),
+                                    labels = c("eggs first","survive first"),
+                                    name="ordering") +
+                labs(x = "mu_A (adult mortality)", y = "lambda (asymptotic growth rate)")
+            ]]>
+            </code>
+        </program>
+    </listing>
+    <figure xml:id="fig-ELPA-adult-mortality-exploration">
+        <caption>Asymptotic growth rate as a function of adult mortality <m>\mu_A</m>.</caption>
+        <image source="images/ELPA-adult-mortality-exploration.png">
+            <shortdescription>Plot showing asymptotic growth rate as it depends on adult mortality</shortdescription>
+        </image>
+    </figure>
+    <p>
+        The results in <xref ref="fig-ELPA-adult-mortality-exploration"/> show a fundamental difference between having mortality before or after eggs are deposited.
+        For this model, if all adults have the ability to deposit the designated fraction of eggs before needing to survive the day, the asymptotic growth rate remains above <m>\lambda &gt; 1</m> for all values of <m>\mu_{A}</m>.
+        There would always be enough eggs deposited to see the mosquito population grow even if all adults died after the first day (<m>\mu_A = 1</m>).
+        On the other hand, if adults need to survive before they can deposit eggs, high values of <m>\mu_{A}</m> result in <m>\lambda &lt; 1</m> and the population would decline.
+    </p>
+</subsection>
 </section>
