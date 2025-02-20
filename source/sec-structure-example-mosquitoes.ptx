@@ -11,9 +11,6 @@
 <title>Example: Mosquito Growth</title>
 <introduction>
     <p>
-        Let us look at some examples of populations that might make sense to explore in a structured way.
-    </p>
-    <p>
         Many insects exhibit distinct stages of development that are well modeled using structured populations.
         Females lay fertilized eggs which then take time to develop.
         When the eggs hatch, larvae emerge and often go through various larval stages of development.

@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="sec-structure-density-dependent">
+<title>Density Dependence in Structured Populations</title>
+<introduction>
+    <p>
+        In our analysis of the mosquito population using a structured model, like all linear projection models, the dynamics eventually resulted in either exponential growth or exponential decay.
+        Just as with simple populations, exponential growth is not a valid model for structured populations when the population becomes larger than the environment is capable of supporting.
+        There must be a change to the model when the population starts to become sufficiently large.
+    </p>
+    <p>
+        For the mosquito population, one possible bottleneck is the water where larvae develop.
+        As more larvae grow in the fixed number of open water sources, they will compete for food and space.
+        There may also be limited space for female mosquitoes to deposit their eggs.
+        Even beyond these considerations, a high mosquito population might also attract predators that might put additional pressure on the population.
+    </p>
+  </introduction>
+  <subsection xml:id="subsec-structure-density-model">
+    <title>Model Development</title>
+    <p>
+        We will choose just one pressure point on the population and add density-dependence in the model at the larva stage.
+        Specifically, we could consider the mortality rate for larvae to be an increasing function of the number of larvae present.
+        A mortality rate in this context is a probability and so is constrained to be between 0 and 1.
+        We will introduce a mortality function <m>\mu_L</m> that is an increasing function of <m>L</m> with a horizontal asymptote <m>\mu_L \to 1</m> as <m>L \to \infty</m>.
+        Graphically, we want a function that looks something like the graph in <xref ref="fig-density-dependent-mortality"/>.
+    </p>
+    <figure xml:id="fig-density-dependent-mortality">
+      <caption>Graph of a prototypical density-dependent mortality probability.</caption>
+      <image source="images/density-dependent-mortality-prototype">
+        <shortdescription>density-dependent mortality probability function</shortdescription>
+      </image>
+    </figure>
+    <p>
+        From calculus, we know that a function of the form
+        <me>f(x) = \frac{bx+a}{bx+1}</me>
+        will have a horizontal asymptote <m>f(x) \to 1</m> as <m>x \to \infty</m>.
+        We also know that <m>f(0) = a</m>.
+        Calculating <m>f'(x)</m>, we find
+        <me>f'(x) = \frac{b(1-a)}{(bx+1)^2}</me>
+        so that <m>f'(0) = b(1-a)</m>.
+        By choosing appropriate values for <m>a</m> and <m>b</m>, we can therefore make our graph match an initial mortality rate <m>\mu_0</m> and for small values of <m>L</m> have additional mortality that is proportional to <m>L</m> (density-dependence) with proportionality constant <m>k</m> (slope) by choosing <m>a = \mu_0</m> and <m>b = \frac{k}{1-\mu_0}</m>.
+    </p>
+    <p>
+        Using this mortality rate for larvae, and the uniform reproductive rate for adults, we obtain a modified density-dependent mosquito model.
+        Because the larvae mortality rate always appeared as <m>1-\mu_L</m>, we will rewrite this first,
+        <md>
+            <mrow>1-\mu_L \amp = 1 - \frac{bx+a}{bx+1} </mrow>
+            <mrow>\amp = \frac{1-a}{bx+1}</mrow>
+            <mrow>\amp = \frac{1-\mu_0}{\frac{k}{1-\mu_0} x+1}</mrow>
+            <mrow>\amp = \frac{(1-\mu_0)^2}{kx + 1-\mu_0}</mrow>.
+        </md>
+        Our model equations for the population stages then become
+        <mdn>
+            <mrow xml:id="eqn-ELPA-egg-density">
+                E_{t+1} \amp = (1-\mu_{E})(1-p_{E}) E_{t} +  {\textstyle \frac{5 N_{egg}}{\tau_{A}}} A_{t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-larva-density">
+                L_{t+1} \amp = (1-\mu_{E}) p_{E} E_{t} + \frac{(1-\mu_{0})^2(1-p_{L}) L_{t}}{k L_t + 1 - \mu_{0}}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-pupa-density">
+                P_{t+1} \amp = \frac{(1-\mu_{0})^2 p_{L} L_{t}}{k L_t + 1 - \mu_{0}} + (1-\mu_{P})(1-p_{P}) P_{t}
+            </mrow>,
+            <mrow xml:id="eqn-ELPA-adult-density">
+                A_{t+1} \amp = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\eta_{A}) A_{t}
+            </mrow>.
+        </mdn>
+    </p>
+  </subsection>
+
+<subsection>
+    <title>Simulation</title>
+    
+    <p>
+        Because we have introduced density dependence, the model is no longer a linear model.
+        That is, there is at least one projection equation that is not just a linear combination of the state variables.
+        The analysis that we did previously works well for small mosquito populations when <m>\mu_L \approx \mu_0</m>, but as the population gets larger, the density dependence slows the exponential growth and we might approach an equilibrium.
+    </p>
+    <p>
+        We can explore this initially using simulation.
+        We will use the same parameters as in the previous section, with the exception that we need to introduce our density dependent parameter <m>k</m>, representing the increase in larvae mortality per individual in the population.
+        In our earlier simulation, we used <m>\mu_L = 0.05</m> as an arbitrarily chosen value to reflect some environmental daily loss of larvae.
+        Suppose we want our model to increase mortality to <m>\mu_L = 0.10</m> if the larvae population in the water reaches <m>L=100</m>.
+        This represents and increase of <m>\Delta \mu_L = 0.05</m> for a change <m>\Delta L = 100</m>, so our parameter <m>k = \frac{\Delta \mu_L}{\Delta L} = \frac{0.05}{100} = 0.0005</m>.
+    </p>
+    <listing xml:id="listing-ELPA-density-dependent">
+        <program language="r">
+            <code>
+            <![CDATA[# Life cycle parameters
+            T_egg <- 2
+            T_larva <- 4
+            T_pupa <- 2
+            T_adult <- 28
+            N_egg <- 100
+
+            # Model parameters
+            # E,L,P mortality probabilities are arbitrarily set -- not based on life cycle
+            m_E <- 0.05
+            m_L0 <- 0.05
+            k <- 0.0005    # density dependent increase in mortality
+            m_P <- 0.05
+            p_E <- 1/T_egg
+            p_L <- 1/T_larva
+            p_P <- 1/T_pupa
+            e_A <- 1/T_adult
+
+            # Create space for data and fill with 0
+            maxT <- 90
+            t_seq <- 0:maxT
+            E_seq <- double(maxT+1)
+            L_seq <- double(maxT+1)
+            P_seq <- double(maxT+1)
+            A_seq <- double(maxT+1)
+
+            # Initial values -- only eggs nonzero
+            E_seq[1] <- N_egg
+            # Now perform the projections
+            for (t in 1:maxT) {
+                E_seq[t+1] <- (1-m_E) * (1-p_E) * E_seq[t] +  (5 * N_egg)/T_adult * A_seq[t]
+                L_seq[t+1] <- (1-m_E) * p_E * E_seq[t] + 
+                              (1-m_L0)^2 * (1-p_L) * L_seq[t] / (k * L_seq[t] + 1 - m_L0)
+                P_seq[t+1] <- (1-m_L0)^2 * p_L * L_seq[t] / (k * L_seq[t] + 1 - m_L0) +
+                              (1-m_P) * (1-p_P) * P_seq[t]
+                A_seq[t+1] <- 0.5 * (1-m_P) * p_P * P_seq[t] + (1-e_A) * A_seq[t]
+            }
+
+            # Visualize dynamics --- expect exponential growth so use log-scale
+            pop_growth <- ggplot() +
+                # Add data; use color to label the different stages
+                geom_point(mapping = aes(x = t_seq, y = E_seq, color = "S1")) +
+                geom_point(mapping = aes(x = t_seq, y = L_seq, color = "S2")) +
+                geom_point(mapping = aes(x = t_seq, y = P_seq, color = "S3")) +
+                geom_point(mapping = aes(x = t_seq, y = A_seq, color = "S4")) +
+                # Add legend information
+                scale_color_discrete(breaks=c("S1", "S2", "S3", "S4"),
+                                    labels = c("eggs","larvae","pupae","adult (F)"),
+                                    name="stage") +
+                # Add logarithimc scale
+                scale_y_continuous(trans = "log10") +
+                # Add labels
+                labs(x = "time", y = "population")
+            show(pop_growth)
+            ]]>
+            </code>
+        </program>
+    </listing>
+    <figure xml:id="fig-ELPA-density-dependent-population">
+        <caption>Population values predicted by the density-dependent ELPA model</caption>
+        <image width="90%"  source="images/ELPA-density-dependent-population.png">
+            <shortdescription>Plot of the different stages as functions of time</shortdescription>
+        </image>
+    </figure>
+    <p>
+        We can see that the mosquito population starts out like it will grow exponentially,
+        but after only a few days the population values start to level out.
+        Our population is converging toward an equilibrium.
+        By inspecting the final recorded values for each of the state variables,
+        we can see that our simulation has not quite reached equilibrium for <m>t=90</m>.
+        Increasing our final time value to <m>t=100</m>, we still have not reached equilibrium (values are still changing), but we can see we are close with values
+        <m>(E,L,P,A) = (190157, 91646, 842, 5591)</m>.
+        To find actual equilibrium values, we need to do some analysis.
+    </p>
+</subsection>
+<subsection xml:id="subsec-structure-density-equilibria">
+    <title>Finding Fixed Points for Structured Populations</title>
+    <p>
+        Recall that for a single sequence with projection function <m>P_{n+1} = f(P_n)</m>, we find a fixed point by solving the equation <m>x = f(x)</m>.
+        When working with structured populations, we need <em>all</em> of the projection equations to be at an equilibrium.
+        That is, we need to find values <m>(E,L,P,A)</m> so that <m>E_{t+1} = E_t = E</m>, <m>L_{t+1}=L_{t} = L</m>, <m>P_{t+1} = P_t = P</m> and <m>A_{t+1} = A_{t} = A</m>.
+    </p>
+    <p>
+        We will need to solve <em>four</em> equations involving <em>four</em> variables at the same time.
+        In an abstract sense, if we thought of our four projection formulas as four different projection functions that depend on the full state of the population,
+        <md>
+            <mrow>E_{t+1} \amp = f_E(E_t, L_t, P_t, A_t) </mrow>
+            <mrow>L_{t+1} \amp = f_L(E_t, L_t, P_t, A_t) </mrow>
+            <mrow>P_{t+1} \amp = f_P(E_t, L_t, P_t, A_t) </mrow>
+            <mrow>A_{t+1} \amp = f_A(E_t, L_t, P_t, A_t) </mrow>,
+        </md>
+        then we are trying to solve the following four equations simultaneously,
+        <md>
+            <mrow>E \amp = f_E(E, L, P, A) </mrow>
+            <mrow>L \amp = f_L(E, L, P, A) </mrow>
+            <mrow>P \amp = f_P(E, L, P, A) </mrow>
+            <mrow>A \amp = f_A(E, L, P, A) </mrow>.
+        </md>
+    </p>
+    <p>
+        Rather than work through the mathematical theory for how to do this solving of equations by hand, we will let a computer algebra system do the work for us (if possible).
+        An example of how we would try to do this using Sage is illustrated below.
+        If we want symbolic solutions, we need to declare every parameter as a symbol.
+        This often slows the computation down or might even make it so the algebra system can't find the answer.
+        Instead, we can declare the values directly and then solve.
+        Only the second method is illustrated here.
+    </p>
+
+    <sage language="sage">
+        <input>
+        <![CDATA[# State variables
+        var("E,L,P,A")
+        
+        # Declare parameter values (=)
+        mE = 0.05
+        mL0 = 0.05
+        k = 0.0005
+        mP = 0.05
+        pE = 1/2
+        pL = 1/4
+        pP = 1/2
+        eA = 1/28
+        Regg = 500/28
+
+        # Solve the *system* (list) of equations
+        fix_pts = solve(
+            # List of equations (double ==)
+            [ E == (1-mE) * (1-pE) * E +  Regg * A,
+              L == (1-mE)*pE * E + (1-mL0)^2*(1-pL) * L / (k*L+1-mL0),
+              P == (1-mL0)^2*pL * L / (k*L+1-mL0) + (1-mP)*(1-pP) * P,
+              A == 1/2*(1-mP)*pP * P + (1-eA) * A
+            ],
+            # List of variables we solve for
+            [E, L, P, A]
+        )
+
+        # Show the results
+        # - N() converts formulas to decimal values
+        # - subs(fp) applies the solution from the fp solution
+        for fp in fix_pts:
+            show(E == N(E.subs(fp)))
+            show(L == N(L.subs(fp)))
+            show(P == N(P.subs(fp)))
+            show(A == N(A.subs(fp)))
+            show("-")   # To break up results
+        ]]>
+        </input>
+    </sage>
+    <p>
+        There are two equilibria or fixed point states.
+        A total absence of mosquitoes is one of the solutions, <m>(E,L,P,A)=(0,0,0,0)</m>.
+        The second equilbrium state is what our simulation was approaching,
+        <me>(E,L,P,A) \approx (190473.89, 91801.40, 842.10, 5599.93)</me>.
+        Our simulation gives us strong reason to believe that the second fixed point is stable while the fixed point with no mosquitoes is unstable.
+    </p>
+</subsection>
+<subsection xml:id="subsec-structure-partial-derivatives">
+    <title>Partial Derivatives</title>
+    <p>
+        Recall that for simple projection models, <m>P_{n+1} = f(P_n)</m>, where <m>P=P^*</m> is a fixed point,
+        we tested the local stability of the fixed point by looking at the value of the slope <m>\lambda = f'(P^*)</m>.
+        For structured populations, we will do a similar thing.
+        However, in this case, there are more functions and more variables.
+        We will be creating a matrix full of derivatives of each of the functions with respect to each of the variables.
+        In place of the single slope to determine stability, we will be looking at the dominant eigenvalue of this matrix.
+    </p>
+    <p>
+        We first need to introduce the idea of a <term>partial derivative</term>.
+        When a function is defined involving multiple variables, such as <m>f(x,y)</m>, a partial derivative gives us the rate of change of this function when only one of the variables is changed.
+        We can not use the prime notation, as in <m>f'</m> because that doesn't tell us which variable was changed.
+        Instead, we use a subscript indicating the variable, so that <m>f_x(x,y)</m> represents the rate of change when <m>x</m> is changing and <m>f_y(x,y)</m> represents the rate of change when <m>y</m> is changing.
+        The derivative operator in calculus <m>\frac{d}{dx}</m> is also updated to use curly <q>d</q> to indicate we are holding other variables constant so that we have <m>\frac{\partial}{\partial x}</m> and <m>\frac{\partial}{\partial y}</m>.
+        These are also sometimes abbreviated as operators to also involve subscripts <m>\partial_x</m> and <m>\partial_y</m>.
+    </p>
+    <example>
+        <statement>
+            <p>
+                If <m>f(x,y) = 2x^2 - 3xy + 4y^2 +3y</m>, find <m>f_x(x,y)</m> and <m>f_y(x,y)</m>.
+            </p>
+        </statement>
+        <solution>
+            <p>
+                The partial derivative <m>\frac{\partial}{\partial x}</m> finds the derivative treating <m>x</m> as the variable and <m>y</m> as if it were constant.
+                Whenever a term has just <m>y</m>, that entire term is treated as if it were constant.
+                And if a term has a formula involving <m>y</m> as a factor, that entire factor is treated like a constant multiple.
+                Consequently,
+                <md>
+                    <mrow> f_x(x,y) \amp = \frac{\partial}{\partial x}\Big[2x^2 - 3xy + 4y^2 + 3y\Big]</mrow>
+                    <mrow> \amp = \frac{\partial}{\partial x}\Big[2 \cdot x^2 - (3y) \cdot x + (4y^2 + 3y)\Big]</mrow>
+                    <mrow> \amp = 2 \cdot (2x) - (3y) \cdot 1 + 0</mrow>
+                    <mrow> \amp = 4x - 3y</mrow>.
+                </md>
+            </p>
+            <p>
+                The partial derivative <m>\frac{\partial}{\partial y}</m> does the reverse<mdash/>we treat <m>y</m> as the variable and any term involving <m>x</m> as if that were a constant.
+                Thus,
+                <md>
+                    <mrow> f_y(x,y) \amp = \frac{\partial}{\partial y}\Big[2x^2 - 3xy + 4y^2 + 3y\Big]</mrow>
+                    <mrow> \amp = \frac{\partial}{\partial x}\Big[(2x^2) - (3x) \cdot y + 4 \cdot y^2 + 3 \cdot y\Big]</mrow>
+                    <mrow> \amp = 0 - (3x) \cdot 1 + 4 \cdot (2y) + 3 \cdot 1</mrow>
+                    <mrow> \amp = -3x + 8y + 3</mrow>.
+                </md>
+            </p>
+            <p>
+                We can use a computer algebra system to perform the derivatives by specifying the variable of differentiation.
+            </p>
+            <sage>
+                <input>
+                    var("x,y")
+                    f(x,y) = 2*x^2 - 3*x*y +4*y^2 + 3*y
+
+                    f_x = f(x,y).derivative(x)
+                    f_y = f(x,y).derivative(y)
+                    show(f_x)
+                    show(f_y)
+                </input>
+            </sage>
+        </solution>
+    </example>
+    <p>
+        Our abstract setup for the matrix of derivatives presumes that have state variables ordered <m>(x_1,x_2,\ldots,x_n)</m>.
+        Each state variable has its own projection function involving potentially any of the state variables,
+        <me>x_{i,t+1} = f_i(x_1, x_2, \ldots, x_n)</me>.
+        For each function <m>f_i</m>, we will compute all of the partial derivatives with respect to <m>x_1</m>, <m>x_2</m>, etc., one at a time, and put them in the <m>i</m>th row of a matrix.
+        This matrix full of partial derivatives is named the <term>Jacobian</term> matrix, or more simply the derivative matrix.
+        The order is critical in that the first column will have all of the partial derivatives with respect to <m>x_1</m>,
+        the second column will have all of the partial derivatives with respect to <m>x_2</m>, and so on.
+        I prefer the notation <m>Df</m> for the derivative matrix.
+    </p>
+    <example>
+        <statement>
+            <p>
+                Suppose we started with a projection model for <m>(S,P)</m> given by recursive formulas
+                <md>
+                    <mrow>S_{t+1} \amp = \rho (1-\alpha) S_t + \frac{f P_t}{\beta P_t + 1}</mrow>
+                    <mrow>P_{t+1} \amp = \alpha S_t</mrow>.
+                </md>
+                This model could represent a simplified density-dependent seed-bank annual plant model.
+                The parameter <m>\alpha</m> represents the fraction of seeds from the seed bank that germinate while <m>\rho</m> represents the fraction of non-germinating seeds that will survive to the next year.
+                Plants are modeled with density dependence so that the number of seeds per plant starts at <m>f</m> but decreases with increasing population sizes using the per plant seed model <m>\frac{f}{\beta P_t + 1}</m>.
+            </p>
+            <p>
+                Having specified an order for the state variables of <m>(S,P)</m>, we can define the two projection functions
+                <md>
+                    <mrow>f_{1}(S,P) \amp = \rho (1-\alpha) S + \frac{f P}{\beta P + 1} </mrow>
+                    <mrow>f_{2}(S,P) \amp = \alpha S </mrow>
+                </md>.
+                We can compute the partial derivatives, following the same order of first <m>S</m> and then <m>P</m>:
+                <md>
+                    <mrow>f_{1,S}(S,P) \amp = \frac{\partial}{\partial S}\Big[ \rho (1-\alpha) S + \frac{f P}{\beta P + 1}\Big] </mrow>
+                    <mrow> \amp = \rho(1-\alpha) + 0</mrow>
+                    <mrow>f_{1,P}(S,P) \amp = \frac{\partial}{\partial P}\Big[ \rho (1-\alpha) S + \frac{f P}{\beta P + 1}\Big] </mrow>
+                    <mrow> \amp = 0 + \frac{f}{(\beta P + 1)^2} </mrow>
+                    <mrow>f_{2,S}(S,P) \amp = \frac{\partial}{\partial S}\Big[ \alpha S \Big] </mrow>
+                    <mrow> \amp = \alpha </mrow>
+                    <mrow>f_{2,P}(S,P) \amp = \frac{\partial}{\partial P}\Big[ \alpha S \Big] </mrow>
+                    <mrow> \amp = 0 </mrow>
+                </md>.
+            </p>
+            <p>
+                The Jacobian or derivative matrix is found by putting the partial derivatives of <m>f_1</m> in the first row and the partial derivatives of <m>f_2</m> in the second row.
+                <me>Df = \begin{bmatrix}
+                (1-\alpha)\rho \amp \frac{f}{(\beta P + 1)^2} \\
+                \alpha \amp 0
+                \end{bmatrix}</me>
+                Notice that this formula still depends on the value of <m>P</m>.
+                This is because our original function <m>f_1(S,P)</m> was nonlinear with respect to <m>P</m>.
+            </p>
+            <p>
+                This example focused only on finding the Jacobian matrix.
+                We would need to calculate fixed points and then evaluate this matrix using the fixed point state values before proceeding further.
+            </p>
+        </statement>
+    </example>
+    <p>
+        A computer algebra system can automate this process for us.
+        To do this, we must have a way to inform the system of the ordering for the variables as well as for the projection functions.
+        A possible approach using Sage is provided below, using the previous example involving <m>(S,P)</m>.
+        To modify this, you only need to update the names of the state variables and paramters, define your projection functions, and then update the <c>state_vars</c> and <c>projections</c> lists to match order.
+    </p>
+    <sage>
+        <input>
+        # Declare state variables and parameters as symbols
+        var("S,P,alpha,rho,f,beta")
+
+        # Define our two functions
+        f1(S,P) = rho*(1-alpha)*S + f*P/(beta*P+1)
+        f2(S,P) = alpha*S
+
+        # Create an association between variables and projections
+        state_vars = [S, P]
+        projections = [f1(S,P), f2(S,P)]
+
+        # ==== Edit ABOVE this line =====
+        # Caution: lengths must be the same or an error
+        assert len(state_vars) == len(projections)
+
+        # Create a matrix using partial derivatives
+        # This uses a Python trick called "list comprehension"
+        Df = matrix([ # create a list of rows based on projections
+            [ # create a list of factored derivatives
+                curF.derivative(curX).factor()
+                    for curX in state_vars
+            ] for curF in projections
+        ])
+        show(Df)
+        </input>
+    </sage>
+</subsection>
+<subsection xml:id="subsec-structure-fixed-point-stability">
+    <title>Testing the Stability of a Fixed Point</title>
+    <p>
+        To test the local stability of a fixed point in a structured population,
+        we take advantage of the following theorem.
+    </p>
+    <theorem xml:id="thm-discrete-dynamics-local-stability">
+        <statement>
+            <p>
+                Suppose a discrete-time system has a state vector <m>\vec x = (x_1, x_2, \ldots, x_n)</m> governed by <m>n</m> projection functions
+                <md>
+                    <mrow>x_{1,t+1} \amp = f_1(\vec x_t) </mrow>
+                    <mrow>x_{2,t+1} \amp = f_2(\vec x_t) </mrow>
+                    <mrow>\amp \vdots </mrow>
+                    <mrow>x_{n,t+1} \amp = f_n(\vec x_t) </mrow>
+                </md>
+                has a <term>fixed point</term> <m>\vec x^*</m> satisfying
+                <md>
+                    <mrow>x^*_{1} \amp = f_1(\vec x^*) </mrow>
+                    <mrow>x^*_{2} \amp = f_2(\vec x^*) </mrow>
+                    <mrow>\amp \vdots </mrow>
+                    <mrow>x^*_{n} \amp = f_n(\vec x^*) </mrow>
+                </md>.
+                Calculate the Jacobian matrix <m>Df</m> evaluated at <m>\vec x^*</m> and then find the dominant eigenvalue of that matrix <m>\lambda</m>.
+                <ul>
+                    <li>
+                        <p>
+                            If <m>|\lambda| \gt 1</m>, then <m>\vec x=\vec x^*</m> is <term>locally unstable</term>.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            If <m>|\lambda| \lt 1</m>, then <m>\vec x=\vec x^*</m> is <term>locally stable</term>.
+                        </p>
+                    </li>
+                </ul>
+                If <m>|\lambda| = 1</m>, the test is inconclusive.
+            </p>
+        </statement>
+    </theorem>
+    <p>
+        Since we are already using the computer algebra system Sage to generate our matrix and find our fixed points, we might as well also ask this system to calculate our eigenvalues.
+        Because Sage is designed to accommodate many mathematical subtleties, the command is slightly more complex than the <c>eigen</c> command in R.
+        We will illustrate the analysis for our simple seed model introduced above.
+    </p>
+    <example>
+        <statement>
+            <p>
+                For the density-dependent seed bank model
+                <md>
+                    <mrow>S_{t+1} \amp = \rho (1-\alpha) S_t + \frac{f P_t}{\beta P_t + 1}</mrow>
+                    <mrow>P_{t+1} \amp = \alpha S_t</mrow>,
+                </md>
+                we will use Sage to find the fixed points and calculate the Jacobian matrix using the fixed point solutions.
+                Suppose that we are working with parameter values <m>\rho = 0.5</m> (50<percent/> survival of seeds to next year), <m>\alpha = 0.6</m> (60<percent/> germination rate each year), <m>f = 10</m> (100 seeds per plant in ideal conditions), and <m>\beta = 0.01</m> (controls how fast density dependence impacts the seed production).
+                We borrow the derivative code from the earlier Sage calculation and add in the calculation of the fixed points.
+            </p>
+            <sage>
+                <input>
+                # Declare state variables
+                var("S,P")
+
+                # Parameters as values
+                rho = 0.5
+                alpha = 0.6
+                f = 10
+                beta = 0.01
+
+                # Define our two functions
+                f1(S,P) = rho*(1-alpha)*S + f*P/(beta*P+1)
+                f2(S,P) = alpha*S
+
+                # Create an association between variables and projections
+                state_vars = [S, P]
+                projections = [f1(S,P), f2(S,P)]
+
+                # ==== Edit ABOVE this line =====
+                # Caution: lengths must be the same or an error
+                assert len(state_vars) == len(projections)
+
+                # Create a matrix using partial derivatives
+                # This uses a Python trick called "list comprehension"
+                Df = matrix([ # create a list of rows based on projections
+                    [ # create a list of factored derivatives
+                        curF.derivative(curX).factor()
+                            for curX in state_vars
+                    ] for curF in projections
+                ])
+                show("General Jacobian")
+                show(Df)
+
+                # Find the fixed points
+                N = len(state_vars)
+                
+                # Again use list comprehension so this works for other models
+                fp_list = solve([ state_vars[i] == projections[i] for i in range(N)],
+                          state_vars)
+
+                # Show the fixed point solutions and also the Jacobian evaluated there.
+                for fp in fp_list:
+                    show("-")
+                    show("Fixed point solution")
+                    for my_var in state_vars:
+                        show(my_var == my_var.subs(fp).factor().simplify())
+
+                    show("Jacobian")
+                    myJ = Df.subs(fp)
+                    show(myJ)
+                    
+                    show("Eigenvalues")
+                    myJM = Matrix(RDF, myJ)
+                    myEigSpace = myJM.right_eigenvectors()
+                    show([myEig[0] for myEig in myEigSpace])
+                </input>
+            </sage>
+            <p>
+                When evaluating the Sage code, we discover that there are two fixed point solutions.
+                The first fixed point listed is <m>(S,P) = (\frac{3250}{3}, 650)</m>.
+                The Jacobian matrix at this fixed point is given by
+                <me>Df = \begin{bmatrix} 0.2 & 0.17777777778 \\ 0.6 & 0 \end{bmatrix}</me>.
+                Finally, Sage reports the eigenvalues as <m>\lambda_1 = 0.441565</m> and <m>\lambda_2 = -0.241565</m>.
+                The dominant eigenvalue is the eigenvalue with largest magnitude <m>\lambda = 0.441565</m>.
+                Since this eigenvalue has magnitude smaller than 1, the fixed point is stable.
+            </p>
+            <p>
+                The second fixed point is <m>(S,P) = (0,0)</m>.
+                The Jacobian matrix at this fixed point is given by
+                <me>Df = \begin{bmatrix} 0.2 & 10 \\ 0.6 & 0 \end{bmatrix}</me>
+                and Sage reports the eigenvalues as <m>\lambda_1 = 2.55153</m> and <m>\lambda_2 = -2.35153</m>.
+                Because the dominant eigenvalue, <m>\lambda = 2.55153</m>, has magnitude greater than 1, the fixed point is unstable.
+            </p>
+        </statement>
+    </example>
+</subsection>
+</section>
