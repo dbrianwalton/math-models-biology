@@ -520,7 +520,7 @@
                 When evaluating the Sage code, we discover that there are two fixed point solutions.
                 The first fixed point listed is <m>(S,P) = (\frac{3250}{3}, 650)</m>.
                 The Jacobian matrix at this fixed point is given by
-                <me>Df = \begin{bmatrix} 0.2 & 0.17777777778 \\ 0.6 & 0 \end{bmatrix}</me>.
+                <me>Df = \begin{bmatrix} 0.2 \amp 0.17777777778 \\ 0.6 \amp 0 \end{bmatrix}</me>.
                 Finally, Sage reports the eigenvalues as <m>\lambda_1 = 0.441565</m> and <m>\lambda_2 = -0.241565</m>.
                 The dominant eigenvalue is the eigenvalue with largest magnitude <m>\lambda = 0.441565</m>.
                 Since this eigenvalue has magnitude smaller than 1, the fixed point is stable.
@@ -528,7 +528,7 @@
             <p>
                 The second fixed point is <m>(S,P) = (0,0)</m>.
                 The Jacobian matrix at this fixed point is given by
-                <me>Df = \begin{bmatrix} 0.2 & 10 \\ 0.6 & 0 \end{bmatrix}</me>
+                <me>Df = \begin{bmatrix} 0.2 \amp 10 \\ 0.6 \amp 0 \end{bmatrix}</me>
                 and Sage reports the eigenvalues as <m>\lambda_1 = 2.55153</m> and <m>\lambda_2 = -2.35153</m>.
                 Because the dominant eigenvalue, <m>\lambda = 2.55153</m>, has magnitude greater than 1, the fixed point is unstable.
             </p>
