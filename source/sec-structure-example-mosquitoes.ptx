@@ -484,7 +484,7 @@
         Prior to making a transition, an adult must survive the day with probability <m>1-\mu_{A}</m>.
         Consequently, for our first model involving uniform adult reproduction, <xref ref="eqn-ELPA-adult-uniform-reproduction"/> will need to be replaced by
         <men xml:id="eqn-ELPA-adult-uniform-reproduction-mortality">
-            A_{t+1} \amp = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\eta_{A}) (1-\mu_{A}) A_{t}
+            A_{t+1} = {\textstyle \frac{1}{2}} (1-\mu_{P}) p_{P} P_{t} + (1-\eta_{A}) (1-\mu_{A}) A_{t}
         </men>.
         In a similar way, our second model involving a reproducing class would require changing <xref ref="eqn-ELPA-adult1-reproductive-adults"/> and <xref ref="eqn-ELPA-adult1-reproductive-adults"/> be rewritten as
         <mdn>
