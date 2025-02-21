@@ -37,6 +37,11 @@
       So <m>c_{35}</m> would appear in the 3rd equation/row and be multiplied by the 5th variable.
       Knowing these coefficients is equivalent to knowing the full system of equations.
   </p>
+  <note>
+    <p>
+      If a particular state variable does not appear in the linear combination, its corresponding coefficient should be 0.
+    </p>
+  </note>
   <p>
       A <term>matrix</term> is a rectangular array of numbers.
       We can represent the system of projection equations with a matrix called a <term>projection matrix</term>,
@@ -110,8 +115,8 @@
           # Calculate growth ratio
           seedbank_data$lambda_S <- NA
           seedbank_data$lambda_P <- NA
-          seedbank_data$lambda_S[2:(N+1)] <- S_vec[2:(N+1)] / S_vec[1:N]
-          seedbank_data$lambda_P[2:(N+1)] <- P_vec[2:(N+1)] / P_vec[1:N]
+          seedbank_data$lambda_S[2:(N+1)] <- seedbank_data$S[2:(N+1)] / seedbank_data$S[1:N]
+          seedbank_data$lambda_P[2:(N+1)] <- seedbank_data$P[2:(N+1)] / seedbank_data$P[1:N]
           ]]>
           </code>
         </program>
