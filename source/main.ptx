@@ -14,13 +14,8 @@
     <xi:include href="./ch-mathematical-modeling.ptx" />
     <xi:include href="./ch-populations.ptx" />
     <xi:include href="./ch-structured-populations.ptx" />
+    <xi:include href="./ch-continuous-dynamics.ptx" />
     <xi:include href="./ch-interactions.ptx" />
-
-  <chapter xml:id="ch-">
-    <title>Continuous Dynamics</title>
-    <xi:include href="./intro-differential-equations.xml" />
-    <xi:include href="./differential-equation-analysis.xml" />
-  </chapter>
 
     <!-- Include backmatter -->
     <xi:include href="./backmatter.ptx" />

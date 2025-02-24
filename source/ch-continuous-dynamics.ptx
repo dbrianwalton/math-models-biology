@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<chapter xml:id="ch-continuous-dynamics" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Continuous Dynamics</title>
+
+  <introduction>
+    <p>
+      Our exploration of population models have thus far considered discrete time.
+      This is particularly useful for populations that have distinct cycles of development.
+      For example, many plants and animals reproduce in annual cycles.
+      In these cases, it makes sense to consider how the state of the system changes from a specific point in one season to the same point in the next season.
+      Alternatively, we may want to model how a population changes over fixed increments of time between measurements.
+    </p>
+    <p>
+      In this chapter, we explore the possibility of modeling populations or other biologically relevant systems where change occurs continuously in time.
+      The motivation for these models is that changes to a population or other relevant state variables can occur at essentially any time.
+      As these variables change, the conditions that influence the underlying rate of change has now updated and additional future change is actually occurring at a new rate.
+      Discrete time models are most appropriate where we can visualize all change occuring at once (or at least can be precisely predicted from the initial state).
+      A continuous time model will be most appropriate when our understanding of the rate of change needs to update immediately as the conditions change.
+    </p>
+    <p>
+      Where discrete time models were developed using the framework of <term>projection models</term>, continuous time models will be developed using <term>differential equation models</term>.
+      The basic idea that we will be developing is that the rate of change of a state variable, which is defined mathematically as a <term>derivative</term> of that state variable, can be modeled to be related to the state of the system.
+      When each state variable has a well-defined equation for its rate of change, we have a system of differential equations.
+      For well formed systems of equations, a computational tool can give us estimates for continuous functions for each state variable that would satisfy all of these equations.
+    </p>
+    <p>
+      This chapter will focus on the process of developing the systems of equations.
+      These equations will share remarkable similarity to the models we developed for discrete time models, differing primarily in terms of interpretation.
+      We will develop skills in implementing numerical computation for the models.
+      Where projection models had fixed points, our differential equations can have equilibria solutions.
+      We will then develop an understanding of stability for these equilibria.
+    </p>
+  </introduction>
+    
+  <xi:include href="./sec-diffeq-introduction.xml" />
+  <xi:include href="./differential-equation-analysis.xml" />
+</chapter>

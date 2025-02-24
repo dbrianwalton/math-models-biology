@@ -33,7 +33,7 @@
     </p>
     <figure xml:id="fig-density-dependent-mortality">
       <caption>Graph of a prototypical density-dependent mortality probability.</caption>
-      <image source="images/density-dependent-mortality-prototype">
+      <image width="60%" source="images/density-dependent-mortality-prototype">
         <shortdescription>density-dependent mortality probability function</shortdescription>
       </image>
     </figure>

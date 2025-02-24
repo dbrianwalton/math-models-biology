@@ -11,24 +11,80 @@
 <title>Introduction to Differential Equations</title>
 
 <introduction>
-    <p>Sequences are useful for modeling quantities that change according to a regular cycle and we only need to predict or measure the quantity at the same moment in a cycle. For a population that has an annual reproductive cycle, we may only need to model the population size at a particular time each year. Even for populations that change continuously, we might only wish to model the value at regular intervals. We call these models <term>discrete time models</term>. However, we often desire models that give us functions describing a quantity of interest at arbitrary times and not just at discrete moments. Models that accomplish this are called <term>continuous time models</term>. Differential equation models are examples of continuous time models.</p>
+    <p>
+        Sequences give us a way to model values at specific evenly spaced times.
+        However, they do not provide a method to model values between those times.
+        Furthermore, discrete time projeciton models are based on using the values of the state variables at one instant in time to predict a future value one time interval later.
+        That is, the increment of change is considered to be a single bulk change in values.
+    </p>
+    <p>
+        We often want to consider models that allow us to predict values for a state at <em>any</em> time.
+        We want to have the model describe how the state is changing continuously throughout time, rather than one bulk increment of change.
+        The most basic mathematical tool to model continuous functions is a <term>differential equation</term>.
+    </p>
 </introduction>
     
-    <subsection xml:id='rate-of-change'>
+    <subsection xml:id='subsec-diffeq-rates-of-change'>
     <title>Rates of Change</title>
 
-    <p>In order to motivate differential equations, let us think back to population models where the population changed according to births and deaths. For discrete time models, we established functions that described <em>how many</em> births or deaths to add over the course of a cycle. Such a function represented the total accumulated births or deaths, regardless of exactly when those events occurred. For a continuous time model, we instead think in terms of the rate at which births and deaths are occurring.</p>
-    <p>A <term>rate of change</term> represents the ratio between the changes of two covarying variables. One of the simplest examples is velocity which is the rate of change of distance traveled with respect to time, for which you probably have heard the saying, <dq>distance equals rate times time.</dq> Mathematically, this is saying that the distance traveled is <em>proportional</em> to the time spent travelling and the rate (velocity) is the proportionality constant. However, this is technically only true for constant rates of change. Calculus introduced the <term>derivative</term> as the mathematical quantity that measures the <term>instantaneous rate of change</term>. This rate of change results from the idea of computing the limit of an average rate of change.</p>
-    <p>Consider a quantity <m>Q</m> that is a function of time <m>t</m>. The instantaneous rate of change of <m>Q</m> with respect to <m>t</m> at a particular moment <m>t=a</m> is defined as the derivative <me> \left. \frac{dQ}{dt} \right|_a = \lim_{\Delta t \to 0} \frac{Q(a+\Delta t) - Q(a)}{\Delta t}.</me> Thinking of this in reverse, this is telling us that the value <m>Q(a + \Delta t)</m> can approximately be found as <me> Q(a + \Delta t) \approx Q(a) + \left.\frac{dQ}{dt}\right|_a \cdot \Delta t.</me> That is, the increment of change in <m>Q</m> is approximately just the derivative times the increment of time. The approximation improves as the increment of time decreases and is exact in the limit.</p>
+    <p>
+        In order to motivate differential equations, let us think back to population models where the population changed according to births and deaths.
+        For discrete time models, we established functions that described <em>how many</em> births or deaths to add over the course of a cycle.
+        Such a function represented the total accumulated births or deaths, regardless of exactly when those events occurred.
+        For a continuous time model, we instead think in terms of the rate at which births and deaths are occurring.
+    </p>
+    <p>
+        A <term>rate of change</term> represents the ratio between the changes of two covarying variables.
+        One of the simplest examples is velocity which is the rate of change of distance traveled with respect to time, for which you probably have heard the saying, <dq>distance equals rate times time.</dq>
+        Mathematically, this is saying that the distance traveled is <em>proportional</em> to the time spent travelling and the rate (velocity) is the proportionality constant.
+        However, this is technically only true for constant rates of change.
+        Calculus introduced the <term>derivative</term> as the mathematical quantity that measures the <term>instantaneous rate of change</term>.
+        This rate of change results from the idea of computing the limit of an average rate of change.
+    </p>
+    <p>
+        Consider a quantity <m>Q</m> that is a function of time <m>t</m>.
+        The instantaneous rate of change of <m>Q</m> with respect to <m>t</m> at a particular moment <m>t=a</m> is defined as the derivative
+        <me> \left. \frac{dQ}{dt} \right|_a = \lim_{\Delta t \to 0} \frac{Q(a+\Delta t) - Q(a)}{\Delta t}</me>.
+        Thinking of this in reverse, this is telling us that the value <m>Q(a + \Delta t)</m> can approximately be found as
+        <me> Q(a + \Delta t) \approx Q(a) + \left.\frac{dQ}{dt}\right|_a \cdot \Delta t</me>.
+        That is, the increment of change in <m>Q</m> is approximately just the derivative times the increment of time.
+        The approximation improves as the increment of time decreases and is exact in the limit.
+    </p>
+    <p>
+        Returning to our ideas of births and deaths, this suggests that instead of thinking of the total number of births and deaths in a given time period (e.g., per year), we will think of a <em>rate</em> of births or deaths <em>per unit time</em> so that in a <em>short</em> interval of time, the <em>number</em> of births or deaths is approximately that corresponding rate times the length of the time interval.
+    </p>
     </subsection>
     
     <subsection xml:id='differential-equations'>
         <title>Differential Equations</title>
         
-        <p>A differential equation is an equation that defines the rate of change (a derivative) for a quantity. Calculus classes often compute derivatives and write them with formulas involving the independent variable. These are technically differential equations, but they are not especially useful in modeling.</p>
+        <p>
+            A differential equation is an equation that defines the rate of change (a derivative) for a quantity.
+            Unlike calculus where we would start with a function's formula and use rules of calculus to find the derivative's formula, in modeling we are going to think of the rate of change as a state variable that can be part of an equation.
+        </p>
         <example>
-            <p>Given <m>y=x^3-4x^2+8x-2</m>, we can find the derivative <m>\frac{dy}{dx}=3x^2-8x+8</m>. This equation <me>\frac{dy}{dx} = 3x^2-8x+8 </me> is a differential equation involving the independent variable <m>x</m>. The original function <m>y=x^3-4x^2+8x-2</m> is a <term>solution</term> to the differential equation because the differential equation is true for that function. However, <m>y=x^3-4x^2+8x</m> is also a solution to the same differential equation. In general, the solution must be of the form <m>y = x^3-4x^2+8x+C</m> for some constant <m>C</m>. Solutions are not unique unless additional restrictions are provided. That is the purpose of the integration constant <m>C</m>.</p>
+            <statement>
+                <p>
+                    We know that a population that is not constrained by its environment tends to grow exponentially.
+                    That is, we can think of the population as a function of time <m>P(t)</m> as satisfying an exponential model,
+                    <me>P(t) = Ae^{rt}</me>,
+                    where <m>A</m> and <m>r</m> are appropriate constants.
+                    The rate of change with respect to time can be calculated using calculus rules to find
+                    <me>P'(t) = Are^{rt}</me>.
+                </p>
+                <p>
+                    We can identify a relation between the state variables of <m>P</m> and <m>P'</m> by calculating the ratio <m>P' / P</m> and simplifying.
+                    Since <m>P'</m> is the overall rate of change and <m>P</m> is the population, the ratio refers to the <term>per capita rate of change</term>.
+                    Using the exponential formula and its derivative, we discover that an exponentially growing (or decaying) population satisfies the equation
+                    <me>\frac{P'}{P} = \frac{Are^{rt}}{Ae^{rt}} = r</me>.
+                    Exponential growth exactly corresponds to having a constant per capita rate of change.
+                    That is, we have a differential equation
+                    <me>P' = r P</me>
+                    that corresponds to a population model <m>P(t) = Ae^{rt}</m>.
+                </p>
+            </statement>
         </example>
+
         <p>Differential equations in modeling occur when the formula that defines the rate of change is a function involving the dependent variable and not just the independent variable. To identify a unique solution, we also need an initial value.</p>
         <example>
             <p>The differential equation <m>\frac{dP}{dt} = 3 P</m> defines the rate of change <m>\frac{dP}{dt}</m> using a formula involving the <em>dependent</em> variable <m>P</m>. Recall that the exponential function <m>P = e^{3t}</m> has this behavior since <m>\frac{dP}{dt} = 3e^{3t}</m>. That is, since <m>P=e^{3t}</m>, we have just discovered that <m>3P</m> and <m>\frac{dP}{dt}</m> are the same, which is precisely what the equation <m>\frac{dP}{dt} = 3P</m> means.</p>
