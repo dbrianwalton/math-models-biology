@@ -8,51 +8,51 @@
 <!-- See the file COPYING for copying conditions. -->
    
 <section xml:id="intro-differential-equations">
-<title>Introduction to Differential Equations</title>
+    <title>Introduction to Differential Equations</title>
 
-<introduction>
-    <p>
-        Sequences give us a way to model values at specific evenly spaced times.
-        However, they do not provide a method to model values between those times.
-        Furthermore, discrete time projeciton models are based on using the values of the state variables at one instant in time to predict a future value one time interval later.
-        That is, the increment of change is considered to be a single bulk change in values.
-    </p>
-    <p>
-        We often want to consider models that allow us to predict values for a state at <em>any</em> time.
-        We want to have the model describe how the state is changing continuously throughout time, rather than one bulk increment of change.
-        The most basic mathematical tool to model continuous functions is a <term>differential equation</term>.
-    </p>
-</introduction>
+    <introduction>
+        <p>
+            Sequences give us a way to model values at specific evenly spaced times.
+            However, they do not provide a method to model values between those times.
+            Furthermore, discrete time projeciton models are based on using the values of the state variables at one instant in time to predict a future value one time interval later.
+            That is, the increment of change is considered to be a single bulk change in values.
+        </p>
+        <p>
+            We often want to consider models that allow us to predict values for a state at <em>any</em> time.
+            We want to have the model describe how the state is changing continuously throughout time, rather than one bulk increment of change.
+            The most basic mathematical tool to model continuous functions is a <term>differential equation</term>.
+        </p>
+    </introduction>
     
     <subsection xml:id='subsec-diffeq-rates-of-change'>
-    <title>Rates of Change</title>
+        <title>Rates of Change</title>
 
-    <p>
-        In order to motivate differential equations, let us think back to population models where the population changed according to births and deaths.
-        For discrete time models, we established functions that described <em>how many</em> births or deaths to add over the course of a cycle.
-        Such a function represented the total accumulated births or deaths, regardless of exactly when those events occurred.
-        For a continuous time model, we instead think in terms of the rate at which births and deaths are occurring.
-    </p>
-    <p>
-        A <term>rate of change</term> represents the ratio between the changes of two covarying variables.
-        One of the simplest examples is velocity which is the rate of change of distance traveled with respect to time, for which you probably have heard the saying, <dq>distance equals rate times time.</dq>
-        Mathematically, this is saying that the distance traveled is <em>proportional</em> to the time spent travelling and the rate (velocity) is the proportionality constant.
-        However, this is technically only true for constant rates of change.
-        Calculus introduced the <term>derivative</term> as the mathematical quantity that measures the <term>instantaneous rate of change</term>.
-        This rate of change results from the idea of computing the limit of an average rate of change.
-    </p>
-    <p>
-        Consider a quantity <m>Q</m> that is a function of time <m>t</m>.
-        The instantaneous rate of change of <m>Q</m> with respect to <m>t</m> at a particular moment <m>t=a</m> is defined as the derivative
-        <me> \left. \frac{dQ}{dt} \right|_a = \lim_{\Delta t \to 0} \frac{Q(a+\Delta t) - Q(a)}{\Delta t}</me>.
-        Thinking of this in reverse, this is telling us that the value <m>Q(a + \Delta t)</m> can approximately be found as
-        <me> Q(a + \Delta t) \approx Q(a) + \left.\frac{dQ}{dt}\right|_a \cdot \Delta t</me>.
-        That is, the increment of change in <m>Q</m> is approximately just the derivative times the increment of time.
-        The approximation improves as the increment of time decreases and is exact in the limit.
-    </p>
-    <p>
-        Returning to our ideas of births and deaths, this suggests that instead of thinking of the total number of births and deaths in a given time period (e.g., per year), we will think of a <em>rate</em> of births or deaths <em>per unit time</em> so that in a <em>short</em> interval of time, the <em>number</em> of births or deaths is approximately that corresponding rate times the length of the time interval.
-    </p>
+        <p>
+            In order to motivate differential equations, let us think back to population models where the population changed according to births and deaths.
+            For discrete time models, we established functions that described <em>how many</em> births or deaths to add over the course of a cycle.
+            Such a function represented the total accumulated births or deaths, regardless of exactly when those events occurred.
+            For a continuous time model, we instead think in terms of the rate at which births and deaths are occurring.
+        </p>
+        <p>
+            A <term>rate of change</term> represents the ratio between the changes of two covarying variables.
+            One of the simplest examples is velocity which is the rate of change of distance traveled with respect to time, for which you probably have heard the saying, <dq>distance equals rate times time.</dq>
+            Mathematically, this is saying that the distance traveled is <em>proportional</em> to the time spent travelling and the rate (velocity) is the proportionality constant.
+            However, this is technically only true for constant rates of change.
+            Calculus introduced the <term>derivative</term> as the mathematical quantity that measures the <term>instantaneous rate of change</term>.
+            This rate of change results from the idea of computing the limit of an average rate of change.
+        </p>
+        <p>
+            Consider a quantity <m>Q</m> that is a function of time <m>t</m>.
+            The instantaneous rate of change of <m>Q</m> with respect to <m>t</m> at a particular moment <m>t=a</m> is defined as the derivative
+            <me> \left. \frac{dQ}{dt} \right|_a = \lim_{\Delta t \to 0} \frac{Q(a+\Delta t) - Q(a)}{\Delta t}</me>.
+            Thinking of this in reverse, this is telling us that the value <m>Q(a + \Delta t)</m> can approximately be found as
+            <me> Q(a + \Delta t) \approx Q(a) + \left.\frac{dQ}{dt}\right|_a \cdot \Delta t</me>.
+            That is, the increment of change in <m>Q</m> is approximately just the derivative times the increment of time.
+            The approximation improves as the increment of time decreases and is exact in the limit.
+        </p>
+        <p>
+            Returning to our ideas of births and deaths, this suggests that instead of thinking of the total number of births and deaths in a given time period (e.g., per year), we will think of a <em>rate</em> of births or deaths <em>per unit time</em> so that in a <em>short</em> interval of time, the <em>number</em> of births or deaths is approximately that corresponding rate times the length of the time interval.
+        </p>
     </subsection>
     
     <subsection xml:id='differential-equations'>
@@ -119,17 +119,193 @@
         </example>
         <p>
             Mathematics courses focusing on solving differential equations introduce strategies for finding formulas for solutions to differential equations.
-            Because many applications of differential equations don't actually have formula solutions, we will focus on numerical solutions.
+            Because many applications of differential equations don't actually have formula solutions, we will focus on the behavior of solutions and use computational methods to approximate those solutions.
         </p>
     </subsection>
-    
+
+    <subsection xml:id='subsec-diffeq-slope-fields'>
+        <title>Slope Fields</title>
+        
+        <p>
+            To help us understand what a differential equation does, we start by learning about a <term>slope field</term>.
+            In the context of differential equations and in many scientific contexts, a field refers to a measurement that can vary as you move to different points in space.
+            An electric field represents the potential force that would be applied to a charged particle based on its relative position to other charges in space.
+            A gravitational field represents the potential force that would be applied to a mass based on the presence of other masses in space.
+            A <term>slope field</term> indicates that at every point in space, we have an associated slope.
+        </p>
+        <p>
+            For differential equations, we think of our space as consisting of the time and the state.
+            For a single state variable, say a measure of population <m>P</m> as in our earlier example, our space will be characterized by time <m>t</m> and the population <m>P</m>.
+            Consider the differential equation <m>P' = 3P</m>.
+            The right hand side is a formula that declares a value for the slope as it depends on the current value of <m>P</m>.
+            Consequently, at every point <m>(t,P)</m> in our space, we can calculate a slope given by <m>3P</m>.
+            This is a slope field, and we would typically represent it as a function
+            <me>f(t,P) = 3P</me>.
+        </p>
+        <example>
+            <statement>
+                <p>
+                    Given the slope field <m>f(t,P) = 3P</m>, find the slope at each of the following points.
+                    <ol>
+                        <li><p><m>(t,P) = (0,1)</m></p></li>
+                        <li><p><m>(t,P) = (1,-2)</m></p></li>
+                        <li><p><m>(t,P) = (0,3)</m></p></li>
+                        <li><p><m>(t,P) = (1,3)</m></p></li>
+                    </ol>
+                </p>
+            </statement>
+            <solution>
+                <p>
+                    This is not much more than evaluating the formula.
+                    <ol>
+                        <li><p>At <m>(t,P) = (0,1)</m>, the slope will be <m>f(0,1) = 3(1) = 3</m>.</p></li>
+                        <li><p>At <m>(t,P) = (1,-2)</m>, the slope will be <m>f(1,-2) = 3(-2) = -6</m>.</p></li>
+                        <li><p>At <m>(t,P) = (0,3)</m>, the slope will be <m>f(0,3) = 3(3) = 9</m>.</p></li>
+                        <li><p>At <m>(t,P) = (1,3)</m>, the slope will be <m>f(1,3) = 3(3) = 9</m>.</p></li>
+                    </ol>
+                </p>
+            </solution>
+        </example>
+        <p>
+            We visualize a slope field by drawing short line segments or arrows at specially chosen points, often using a grid, so that those segments have slopes matching the value of the slope field.
+            In R using <c>ggplot</c>, this is accomplished with a geometry layer called <c>geom_quiver</c>.
+            This requires an additional library <c>ggquiver</c> be installed before it can be used.
+        </p>
+        <p>
+            Our plot will be treated almost like a scatter plot using <c>geom_point</c> that specifies variables for <c>x</c> and <c>y</c>, except that our mapping must also include to additional variables <c>u</c> and <c>v</c> that will represent a displacement or rate associated with the <m>x</m>- and <m>y</m>-directions.
+            Because slope graphically represents a rise over run, we will think of <c>u</c> as dictating a <q>run</q> while we think of <c>v</c> is dictating a <q>rise</q>.
+            Using <c>u=1</c> allows us to let <c>v</c> be the value of the slope field.
+        </p>
+        <p>
+            Below is a simple implementation of a slope field for the four points in the previous example.
+            We start with a simple data frame containing the <m>t</m>- and <m>P</m>-values where our slopes were calculated.
+            We will let a function perform the calculations for us.
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[# Load the libraries
+                library(ggplot2)
+                library(ggquiver)
+                library(dplyr)
+
+                # Create the initial data frame
+                my_pts <- tibble(t = c(0, 1, 0, 1), P = c(1, -2, 3, 3))
+
+                # Define the slope field function
+                slope <- function(t, P) { 3*P }
+
+                # Start with the location of points
+                slope_field <- my_pts |>
+                    # Then add columns for the dt and dP using slope field
+                    mutate(delta_t = 1,
+                           delta_P = slope(t, P)) |>
+                    # Then feed this into ggplot
+                    ggplot(mapping = aes(x = t, y = P,              # Location
+                                         u = delta_t, v = delta_P)  # Directions
+                           ) +
+                    # And create the quiver graphics layer
+                    geom_quiver(color = "blue")
+                show(slope_field)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <figure xml:id="fig-diffeq-first-slopefield">
+            <caption>Illustration of the four calculated slopes for the slope field <m>f(t,P) = 3P</m></caption>
+            <image width="50%" source="images/diffeq-first-slopefield.png">
+                <shortdescription>quiver plot showing line segments with slopes matching the slope field</shortdescription>
+            </image>
+        </figure>
+        <p>
+            It is much more informative if the slope field is visualized at a collection of points that form a regular grid in space.
+            We will first define a grid by identifying specific <m>t</m> and <m>P</m> values and then construct the collection of all points from this grid.
+            The rest of the calculations are essentially unchanged.
+            It often takes some experimentation on the spacing chosen for the grid (see the <c>by</c> argument to <c>seq</c>) and the scale for the arrows (see the <c>vecsize</c> argument to <c>geom_quiver</c>) to get arrows that have nice spacing and length.
+            Steeper arrows always have longer lengths.
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[# Load the libraries
+                library(ggplot2)
+                library(ggquiver)
+                library(dplyr)
+
+                # Create the initial grid of points
+                my_pts <- expand.grid(t = seq(0, 2, by = 0.1),
+                                      P = seq(-3.2, 3.2, by = 0.4))
+
+                # Define the slope field function
+                slope <- function(t, P) { 3*P }
+
+                # Start with the location of points
+                slope_field_data <- my_pts |>
+                    # Then add columns for the dt and dP using slope field
+                    mutate(delta_t = 1,
+                           delta_P = slope(t, P))
+
+                # Then feed this into ggplot
+                ggplot(data = slope_field_data,
+                       mapping = aes(x = t, y = P,              # Location
+                                     u = delta_t, v = delta_P)  # Directions
+                    ) +
+                    # And create the quiver graphics layer
+                    geom_quiver(color = "blue", vecsize = 4)
+                show(slope_field)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <figure xml:id="fig-diffeq-slopefield-grid">
+            <caption>Illustration of the four calculated slopes for the slope field <m>f(t,P) = 3P</m></caption>
+            <image width="80%" source="images/diffeq-slopefield-grid.png">
+                <shortdescription>quiver plot showing line segments with slopes matching the slope field</shortdescription>
+            </image>
+        </figure>
+        <p>
+            A slope field is related to a solution of a differential equation.
+            If the graph of the solution, which is a function of time <m>t</m>, is superimposed on top of a slope field, then at <em>every point</em> along the curve of the function, the tangent line must <em>match</em> the slope of the slope field.
+            In other words, a solution <em>follows</em> the directions provided by the slope field, always smoothly staying parallel to the nearest segments.
+        </p>
+        <p>
+            The previous code listing defined <c>slope_field</c> as the plot showing the slope field.
+            We can build on top of that graph additional layers that represent different solutions.
+            We know that solutions to <m>P' = 3P</m> all have the form <m>P(t) = Ae^{3t}</m>, so we will include several choices of functions with different values of <m>A</m>.
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[# Start adding solutions as additional layers
+                soln_curves <- slope_field +
+                    geom_function(fun = function(t) { 0.5*exp(3*t) }, linewidth=1) +
+                    geom_function(fun = function(t) { 0.01*exp(3*t) }, linewidth=1) +
+                    geom_function(fun = function(t) { -0.04*exp(3*t) }, linewidth=1) +
+                    geom_function(fun = function(t) { -1*exp(3*t) }, linewidth=1) +
+                    ylim(-4, 4)  # Required to keep the same viewing window
+                show(soln_curves)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <figure xml:id="fig-diffeq-slopefield-solutions">
+            <caption>Graph showing solutions of the form <m>P = Ae^{3t}</m> superimposed on the corresponding slope field <m>f(t,P)=3P</m>.</caption>
+            <image width="80%" source="images/diffeq-slopefield-solutions.png">
+                <shortdescription>slope field with four solutions included</shortdescription>
+            </image>
+        </figure>
+    </subsection>
+
     <subsection xml:id='subsec-diffeq-numerical-solutions'>
         <title>Numerical Solutions to Differential Equations</title>
         <p>
             A general differential equation for a single time-dependent state variable <m>Q</m> will take the form
             <me>Q'(t) = F(t, Q(t))</me>.
-            The function <m>F</m> is not the derivative itself.
-            Rather, the differential equation says that the value of the rate of change, <m>Q'(t)</m>, will exactly match some formula involving <m>t</m> and <m>Q(t)</m>.
+            The function <m>F</m> is not the derivative itself but represents the formula for the slope field.
+            The differential equation says that the value of the rate of change, <m>Q'(t)</m>, will exactly the slope of the slope field at each point <m>(t, Q(t))</m> along its curve.
+            To select a single solution, we also need to provide a starting point, called an <term>initial condition</term>.
+        </p>
+        <p>
             The following theorem guarantees that a differential equation with an initial value has a unique solution under reasonable conditions.
         </p>
         <theorem xml:id='thm-diffeq-existence-uniqueness'>
@@ -138,38 +314,40 @@
                 <p>
                     Suppose that <m>F(t,y)</m> represents a continuous function of both <m>t</m> and <m>y</m> such that <m>\frac{\partial F}{\partial y}</m> exists and is bounded (i.e., small changes in <m>y</m> should result in small changes in <m>F(t,y)</m>. Then the differential equation <me>\frac{dQ}{dt} = F(t,Q)</me> with initial value <m>Q(a) = b</m> has a unique solution for some interval <m>t \in (a-\epsilon, a+\epsilon)</m> with <m>\epsilon \gt 0</m>.</p>
             </statement>
-            <proof>
-                <p>
-                    The proof is outside the scope of this text but is based on the convergence of approximations.
-                </p>
-            </proof>
         </theorem>
         <p>
-            An existence property guarantees that a solution will exist on some small interval near the initial value.
+            The existence property guarantees that a solution will exist on some small interval near the initial value.
             This gives us a justification for trying to find what that solution looks like.
             When we look for solutions, we do need to be mindful that we might try to use an interval that is larger than the solution can actually use.
             So if our method fails, we might need to try a smaller interval of time.
-            The uniqueness property indicates that for any initial value, there can only be one solution.
+            The uniqueness property indicates that for any initial value, there can only be one solution that includes that point.
         </p>
         <p>
-            In R, we can use the <c>deSolve</c> library to find numerical solutions.
-            This library defines a function <c>ode</c> (stands for <em>ordinary differential equation</em>) that creates the these approximations.
+            To find numerical approximations of solutions in R, we will use the <c>deSolve</c> library.
+            This library defines a command <c>ode</c> (the letters stand for <em>ordinary differential equation</em>) that will calculate data points to represent these approximate solutions.
             To solve our equation, we will need to define a function that calculates the function on the right-hand side of the equation.
-            We also need to provide the initial condition and an array of times where we will evaluate the solution.
+            This will be very similar to the functions we used to calculate slope fields, but with some more technical requirements to deal with the variety of problems <c>ode</c> might encounter.
+            The <c>ode</c> command also requires that we provide the initial condition and an array of times at which we will evaluate the solution.
+        </p>
+        <p>
+            The R function calculating the rate of change or slope required for <c>ode</c> is always expected to have three arguments<mdash/>one for the time <c>t</c>, one for the state <c>state</c>, and one for model parameters <c>params</c>.
+            Both <c>state</c> and <c>params</c> are intended to allow for more than one variable, so entries are named.
+            So that our calculations for the rate of change at the current time and state are allowed to use those internal names, we put our calculations inside of a <c>with</c> command.
+            The first argument for <c>with</c> is a list of named values (we join <c>state</c> and <c>params</c> into a single list) that we might use in our formulas, and the second argument is a command or command block inside curly braces that does the calculation.
+            Finally, when a state has multiple variables, we will need to report a rate of change for each variable.
+            Consequently, <c>ode</c> expects that our function returns a <c>list</c> of rates rather than just a number.
+            Unfortunately, I have not yet found a way to use the same function for the slope field and for <c>ode</c> because of these different requirements.
         </p>
         
         <example>
             <statement>
                 <p>
-                    Find a numerical approximation for the solution of the differential equation <me>\frac{dQ}{dt} = 3Q</me> with the intial value <m>Q(0) = 5</m> and compare it to the exact solution we found earlier <m>Q(t) = 5e^{3t}</m>.
+                    We will find a numerical approximation for the solution of the differential equation <me>\frac{dQ}{dt} = 3Q</me> with the intial value <m>Q(1) = 0.25</m> and include it with the slope field generated earlier.
                 </p>
-            </statement>
-            <solution>
                 <p>
                     Our R script will need to first call <c>library(deSolve)</c>.
-                    Then we will define our rate function to represent the formula <m>3Q</m>.
-                    This function is required to have three input arguments<mdash/>time, the state, and parameters for the model.
-                    The state will eventually include all of our state variables, but for now will only consist of the single variable <m>Q</m>.
+                    Then we will define our rate function to represent the formula <m>3Q</m> as described.
+                    The state will only consist of the single variable <m>Q</m>.
                     Our model does not have any additional parameters, so the parameters will not actually be used in this example.
                     Once the differential equation is defined, we provide the initial value and times we wish to evaluate.
                 </p>
@@ -182,40 +360,45 @@
 
                         # Define the rate function in this form
                         rateFcn <- function(t, state, params) {
-                            with(as.list(c(state, params)), {  # This lets us use a simple formula
-                                dQ <- 3*Q
-                                list(dQ)    # Return the rate
-                            })
-                        }
+                            with(as.list(c(state, params)), {  
+                                Q_rate <- 3*Q   # Calculate the rate
+                                list(Q_rate)    # Return the rate in list
+                            })  # Close the block and end the with command
+                        } # End the function
 
                         # Define the initial condition
-                        init_state <- c(Q = 5)
-                        params <- c()  # empty
+                        init_state <- c(Q = 0.25)   # (named array of values)
+                        params <- c()               # empty = no parameters
 
                         # Create an array of times where we evaluate
-                        times <- seq(from = 0, to = 2, by = 0.1)
+                        # We choose the interval of calculation
+                        times <- seq(from = 1, to = 2, by = 0.1)
 
                         # Find the solution
-                        # Will have column for time and each state variable
                         solution <- ode(init_state, times, rateFcn, params)
+                        # Result has column for time and each state variable
 
-                        # Make a graph to compare
-                        library(ggplot2)
-                        soln_graph <- ggplot() +
-                            geom_point(data = solution,
-                                     mapping = aes(x = time, y = Q, color = "1")) +
-                            geom_function(fun = function(t) { 5*exp(3*t) },
-                                          mapping = aes(color = "2")) +
-                            scale_color_discrete(name = "solution",
-                                                 breaks = c("1", "2"),
-                                                 labels = c("numerical", "exact")
-                                                )
-                        show(soln_graph)
+                        # Create a graph with both the slope field and the solution
+                        numsoln_graph <- ggplot() +
+                            geom_quiver(data = slope_field_data,
+                                        mapping = aes(x = t, y = P,
+                                        u = delta_t, v = delta_P),
+                                        color = "blue", vecsize = 4) +
+                            geom_line(data = solution,
+                                     mapping = aes(x = time, y = Q),
+                                     color="purple", linewidth = 1)
+                        show(numsoln_graph)
                         ]]>
                         </code>
                     </program>
                 </listing>
-            </solution>
+                <figure xml:id="fig-diffeq-slopefield-numerical-solution">
+                    <caption>Graph showing a numerical solution superimposed on the corresponding slope field <m>f(t,P)=3P</m>.</caption>
+                    <image width="80%" source="images/diffeq-slopefield-numerical-solution.png">
+                        <shortdescription>slope field with a numerical solution</shortdescription>
+                    </image>
+                </figure>
+            </statement>
         </example>
     </subsection>
 </section>
