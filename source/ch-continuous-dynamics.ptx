@@ -41,5 +41,6 @@
   </introduction>
     
   <xi:include href="./sec-diffeq-introduction.ptx" />
+  <xi:include href="./sec-diffeq-population-models.ptx" />
   <xi:include href="./differential-equation-analysis.xml" />
 </chapter>

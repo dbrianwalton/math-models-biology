@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="diffeq-population-models">
+    <title>Continuous Time Population Models</title>
+
+    <introduction>
+        <p>
+            All of our models for single populations naturally can be framed in the context of a continuous time differential equation model.
+            Recall that it is our task as a modeler to determine whether a discrete time model (using projections) or a continuous time model (using differential equations) is more appropriate.
+            A discrete time model is appropriate if the change in a population value occurs in a single increment, such as when all reproduction occurs at a certain point in an annual cycle.
+            A continuous time model will be appropriate if change occurs gradually through time.
+        </p>
+        <p>
+            The other major distinction between the models is that we need to think in terms of rates of change instead of quantities.
+            For projection models, we often find ourselves thinking specifically about <em>how many</em> individuals enter or leave the population.
+            For differential equations, we need to think instead in terms of how many are entering or leaving <em>per unit time</em> in order to get a rate.
+            Otherwise, our reasoning will be essentially the same.
+        </p>
+        <p>
+            The simplest form of growth for a population is when the growth rate is proportional to the population size.
+            This is the case of constant per capita growth.
+            If we let <m>P</m> represent the size of the population as a function of time (not a sequence), then the differential equation for constant per capita growth is that the rate of change of the population is equal to a constant times the population size,
+            <me>P' = r P</me>,
+            where <m>r</m> is the per capita growth constant.
+        </p>
+        <p>
+            Be very mindful that our equation does not show that we are adding the change to the population like we did for discrete time projection models.
+        </p>
+        <p>
+            From our introduction to differential equation in <xref ref="ex-diffeq-intro-proportional-growth"/>, we already know that solutions to this differential equation correspond to exponential growth when <m>r \gt 0</m> and exponential decay when <m>r \lt 0</m>.
+            Discrete time models with constant per capita growth result in geometric sequences that similarly either grow or decay exponentially.
+            Consequently, other than thinking in terms of continuous functions or discrete sequences, the models behave in very similar ways.
+        </p>
+        <p>
+            One major difference that we encounter with continuous time models is that our constants no longer represent just proportions.
+            For example, in a discrete time model, the per capita death rate <m>d</m> represents the fraction of the current population that will have died by this same time in the next cycle. This means that we always have <m>0 \le d \le 1</m>.
+            In a continuous time model, the per capita death rate refers to the number of deaths per individual per unit of time.
+            Because we can have a large number of deaths in a short period of time, and a rate of change divides by the time, the <em>rate</em> can be quite large.
+            The value of a per capita death rate has no constraint other than <m>d \ge 0</m>.
+        </p>
+    </introduction>
+    
+    <subsection xml:id='subsec-diffeq-popn-density-dependent'>
+        <title>Continuous Logistic Growth</title>
+
+        <p>
+            We turn our focus to populations that are pressured by constrained resources.
+            In exactly the same manner as we developed our discrete time models, we can think in terms of either the per capita birth rate or the per capita death rate as being dependent on the population size.
+            We can even use the same formulas to model this relationship.
+        </p>
+        <p>
+            We expect that a population experience a reduced per capita birth rate and an increased per capita death rate when the size of the population is large.
+            Together, this implies that the per capita growth rate <m>r = b - d</m> should be a decreasing function.
+            The simplest choice for a decreasing function is a linear model
+            <me>r = r_0 - a P</me>.
+            This is exactly the same equation as we found in <xref ref="eq-per-capita-growth-discrete-logistic"/>;
+            we are just interpreting the equation in terms of rates of change instead of numbers of individuals.
+        </p>
+        <p>
+            Using the general relationship <m>P' = r P</m>, but with <m>r</m> no longer constant, we have just created our first density-dependent differential equation model for population growth,
+            <me>P' = (r_0-aP) \cdot P</me>,
+            which can be rewritten as
+            <men xml:id="eq-continuous-logistic-model">P' = r_0 P - a P^2</men>.
+            This model is called the <term>continuous logistic model</term> for population growth, which is the differential equation analogue of <xref ref="eq-discrete-logistic-model"/>.
+        </p>
+    </subsection>
+</section>

@@ -62,7 +62,7 @@
             A differential equation is an equation that defines the rate of change (a derivative) for a quantity.
             Unlike calculus where we would start with a function's formula and use rules of calculus to find the derivative's formula, in modeling we are going to think of the rate of change as a state variable that can be part of an equation.
         </p>
-        <example>
+        <example xml:id="ex-diffeq-intro-proportional-growth">
             <statement>
                 <p>
                     We know that a population that is not constrained by its environment tends to grow exponentially.

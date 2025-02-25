@@ -106,7 +106,7 @@
         With these formulas, we can no calculate the per capita growth rate,
         <me>r = b - d = b - (d_0 + a P) = (b-d_0) - a P</me>.
         If we defined <m>r_0 = b - d_0</m> as the per capita growth rate in the absence of individuals, then we see that <m>r</m> is a decreasing linear function of <m>P</m>,
-        <me>r = r_0 - a P</me>.
+        <men xml:id="eq-per-capita-growth-discrete-logistic">r = r_0 - a P</men>.
         Specifically for our simulation, our estimates for the parameters are <m>b = 0.047877</m>
         and <m>d = 0.032492 + 3.7966 \times 10^{-6} P</m>, so that <m>r_0 = 0.015385</m> and <m>a = 3.7966 \times 10^{-6}</m>.
     </p>
@@ -118,7 +118,7 @@
         We now use the model formula for <m>r</m>, which itself depends on <m>P_n</m> (in place of <m>P</m>), to give
         <me>P_{n+1} = P_n + (r_0 - a P_n) P_n</me>.
         Distributing out the <m>P_n</m> on the right, we arrive at a model equation,
-        <me>P_{n+1} = P_n + r_0 P_n - a P_n^2</me>,
+        <men xml:id="eq-discrete-logistic-model">P_{n+1} = P_n + r_0 P_n - a P_n^2</men>,
         where <m>r_0 \ge -1</m> and <m>a &gt; 0</m> are the model parameters.
     </p>
     <p>
