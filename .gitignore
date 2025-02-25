@@ -20,6 +20,7 @@ node_modules
 
 # don't track error logs
 .error_schema.log
+.cache
 logs
 
 # don't track OS related files (windows/macos/linux)

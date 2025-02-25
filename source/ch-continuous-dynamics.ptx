@@ -40,6 +40,6 @@
     </p>
   </introduction>
     
-  <xi:include href="./sec-diffeq-introduction.xml" />
+  <xi:include href="./sec-diffeq-introduction.ptx" />
   <xi:include href="./differential-equation-analysis.xml" />
 </chapter>

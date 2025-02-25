@@ -1,0 +1,144 @@
+    
+    <subsection xml:id='slope-fields'>
+        <title>Slope Fields</title>
+        
+        <p>In addition to solving the differential equation numerically, we can explore a differential equation graphically through a plot called a <term>slope field</term>. Although a differential equation could be any equation that involves the derivative, in modeling we usually think of a differential equation in the form presented in the existence<ndash/>uniqueness theorem where the derivative is equal to an expression that depends on the independent and dependent variables, such as <me>\frac{dy}{dt} = F(t,y).</me> Because the value of the derivative represents a slope, this equation allows us to define what the slope would be at every point in the <m>(t,y)</m>-plane.</p>
+        
+        <definition xml:id='defn-slope-field'>
+            <title>Slope Field</title>
+            <statement>
+                <p>A slope field is a geometric representation of a differential equation wherein every point <m>(t,y)</m> in the plane is represented by a line segment at that point having the slope <m>\frac{dy}{dt}=F(t,y)</m>. Because every point is impossible to visualize, in practice the graph only shows the slope field at points on a grid of equally spaced points.</p>
+            </statement>
+        </definition>
+        
+        <p>The solution to a differential equation <m>\frac{dy}{dt}=F(t,y)</m> with an initial value <m>y(t_0)=y_0)</m> will be a function whose graph includes the point <m>(t_0,y_0)</m> and then at every point has a tangent line that has the same slope as the slope field at that point. This means that the curve follows the direction of the arrows.</p>
+        <p>Computer packages allow us to easily generate slope fields. Evaluate the following Sage scripts to see a variety of different examples.</p>
+        
+        <example>
+            <p>The differential equation <m>\frac{dy}{dt} = 3</m> has a rate formula <m>F(t,y)=3</m> that is constant. This means that every point has the same slope. Solutions will follow straight lines.</p>
+            <sage>
+                <input>
+                var('t,y')  # Declare the mathematical variables
+                F(t,y) = 3  # Define the rate formula
+                (tmin,tmax) = (-2,4)
+                (ymin, ymax) = (-4,4)
+                slopefield = plot_slope_field(F(t,y),   # give the rate
+                    (t,tmin,tmax), (y,ymin,ymax),       # specify the axes
+                    headlength=4, headaxislength=4)     # extra format options
+                show(slopefield, figsize=[4,3])
+                </input>
+            </sage>
+            <p>Note that there are infinitely many different solutions corresponding to a family of parallel lines with slope 3. Given any particular point (initial value), there will only be one of those lines passing through the point. That is the uniqueness of solutions of differential equations.</p>
+        </example>
+
+        <example>
+            <p>The differential equation <m>\frac{dy}{dt} = 3t^2-4</m> has a rate formula <m>F(t,y)=3t^2-4</m>. The rate formula in this case depends only on the independent variable <m>t</m>. You should notice that the slope is the same at points that are on the same vertical line, <m>t=a</m>.</p>
+            <sage>
+                <input>
+                var('t,y')  # Declare the mathematical variables
+                F(t,y) = 3*t^2-4  # Define the rate formula
+                (tmin,tmax) = (-4,4)
+                (ymin, ymax) = (-4,4)
+                slopefield = plot_slope_field(F(t,y),   # give the rate
+                    (t,tmin,tmax), (y,ymin,ymax),       # specify the axes
+                    headlength=4, headaxislength=4)     # extra format options
+                
+                initialValues = [ [0,1], [0,0], [0,-1] ]
+                colors = rainbow(len(initialValues))
+                trajectoryPlot = Graphics()
+                for i in range(len(initialValues)):
+                    # Find the solution
+                    point = initialValues[i]
+                    solution = desolve_rk4(
+                                F(t,y),
+                                y,
+                                ics=point,  # Use the selected point
+                                ivar=t,
+                                end_points=[tmin,tmax],
+                                step=0.05,
+                              )
+                    # Add the trajectory to the plot
+                    trajectoryPlot += list_plot(solution, 
+                        color=colors[i], plotjoined=True)
+                    trajectoryPlot += list_plot([point], color=colors[i])
+                show(slopefield+trajectoryPlot,
+                    ymin=ymin, ymax=ymax, figsize=[4,3])
+                </input>
+            </sage>
+            <p>In calculus, we learned that <m>\frac{dy}{dt}=3t^2-4</m> can be solved for <m>y</m> using antiderivatives, where we get <m>y=t^3-4t+C</m>, where <m>C</m> is a constant of integration. This corresponds to a horizontal translation or shift, which is the appropriate analogue for the parallel lines in the first example. That is, we should think of the lines in the first example as vertical shifts of one another.</p>
+        </example>
+
+        <example>
+            <p>The differential equation <m>\frac{dy}{dt} = 3y^2-4</m> has a rate formula <m>F(t,y)=3y^2-4</m>. The rate formula uses the same operations as the previous example but in terms of the dependent variable <m>y</m>. You should notice that the slope is the same at points that are on the same horizontal line <m>y=b</m>.</p>
+            <sage>
+                <input>
+                var('t,y')  # Declare the mathematical variables
+                F(t,y) = 3*y^2-4  # Define the rate formula
+                (tmin,tmax) = (-2,2)
+                (ymin, ymax) = (-4,4)
+                slopefield = plot_slope_field(F(t,y),   # give the rate
+                    (t,tmin,tmax), (y,ymin,ymax),       # specify the axes
+                    headlength=4, headaxislength=4)     # extra format options
+                
+                initialValues = [ [0,1.5], [0,1], [0,0], [0,-1], [0,-2] ]
+                colors = rainbow(len(initialValues))
+                trajectoryPlot = Graphics()
+                for i in range(len(initialValues)):
+                    # Find the solution
+                    point = initialValues[i]
+                    solution = desolve_rk4(
+                                F(t,y),
+                                y,
+                                ics=point,  # Use the selected point
+                                ivar=t,
+                                end_points=[tmin,tmax],
+                                step=0.05,
+                              )
+                    # Add the trajectory to the plot
+                    trajectoryPlot += list_plot(solution, 
+                        color=colors[i], plotjoined=True)
+                    trajectoryPlot += list_plot([point], color=colors[i])
+                show(slopefield+trajectoryPlot,
+                    ymin=ymin, ymax=ymax, figsize=[4,3])
+                </input>
+            </sage>
+            <p>Notice that solutions are no longer vertical translations or shifts of one another. However, you should see that every solution will have corresponding solutions that are <em>horizontal translations</em>. Different curves correspond to different initial conditions. In this example, we can see that there are three basic classes of solutions. Above a certain point, the graphs grow without bound and head to infinity at some finite time. (This is an example of why the existence<ndash/>uniqueness theorem only guaranteed a solution for a limited interval.) Between two values that we will soon learn are equilibrium solutions, solutions form a transition from the upper equilibrium (unstable) to the lower equilibrium (stable). Solutions that begin below the lower equilibrium all rise and asymptotically approach the stable equilibrium.</p>
+        </example>
+
+        <example>
+            <p>The differential equation <m>\frac{dy}{dt} = 3y^2-4t</m> has a rate formula <m>F(t,y)=3y^2-4t</m>. Because this rate formula depends on both <m>t</m> and <m>y</m>, solutions do not share either horizontal or vertical translations.</p>
+            <sage>
+                <input>
+                var('t,y')  # Declare the mathematical variables
+                F(t,y) = 3*y^2-4*t  # Define the rate formula
+                (tmin,tmax) = (-2,2)
+                (ymin, ymax) = (-4,4)
+                slopefield = plot_slope_field(F(t,y),   # give the rate
+                    (t,tmin,tmax), (y,ymin,ymax),       # specify the axes
+                    headlength=4, headaxislength=4)     # extra format options
+
+                initialValues = [ [0,1], [0,0], [0,-1] ]
+                colors = rainbow(len(initialValues))
+                trajectoryPlot = Graphics()
+                for i in range(len(initialValues)):
+                    # Find the solution
+                    point = initialValues[i]
+                    solution = desolve_rk4(
+                                F(t,y),
+                                y,
+                                ics=point,  # Use the selected point
+                                ivar=t,
+                                end_points=[tmin,tmax],
+                                step=0.05,
+                              )
+                    # Add the trajectory to the plot
+                    trajectoryPlot += list_plot(solution, 
+                        color=colors[i], plotjoined=True)
+                    trajectoryPlot += list_plot([point], color=colors[i])
+                show(slopefield+trajectoryPlot,
+                    ymin=ymin, ymax=ymax, figsize=[4,3])
+                </input>
+            </sage>
+            <p></p>
+        </example>
+    </subsection>
