@@ -253,7 +253,7 @@
         As we can see in <xref ref="fig-seedbank-growth-ratio-plot-01"/>, both ratios <m>\lambda_P</m> and <m>\lambda_S</m> start with different values but quickly converge to the same value close to <m>\lambda = 1.08</m>,
         as discovered by inspecting the values of the data-frame.
         Looking at the values of <m>\rho_S</m> and <m>\rho_P</m>, we discover that the stable stage distribution has fractions <m>\rho_S = 0.8</m> and <m>\rho_P = 0.2</m>.
-        In other words, after a few seasons, if we were to count the total number of seeds and plants, about 80<percent/> of that count would be from seeds and about 20<percent/> would be plants.
+        In other words, after a few seasons, if we were to count the total number of seeds and plants, about 80% of that count would be from seeds and about 20% would be plants.
     </p>
     <p>
         In the next section, we will learn the mathematical objects that find these values, introducing the ideas of matrix models, eigenvalues and eigenvectors.

@@ -455,7 +455,7 @@
                     <mrow>P_{t+1} \amp = \alpha S_t</mrow>,
                 </md>
                 we will use Sage to find the fixed points and calculate the Jacobian matrix using the fixed point solutions.
-                Suppose that we are working with parameter values <m>\rho = 0.5</m> (50<percent/> survival of seeds to next year), <m>\alpha = 0.6</m> (60<percent/> germination rate each year), <m>f = 10</m> (100 seeds per plant in ideal conditions), and <m>\beta = 0.01</m> (controls how fast density dependence impacts the seed production).
+                Suppose that we are working with parameter values <m>\rho = 0.5</m> (50% survival of seeds to next year), <m>\alpha = 0.6</m> (60% germination rate each year), <m>f = 10</m> (100 seeds per plant in ideal conditions), and <m>\beta = 0.01</m> (controls how fast density dependence impacts the seed production).
                 We borrow the derivative code from the earlier Sage calculation and add in the calculation of the fixed points.
             </p>
             <sage>

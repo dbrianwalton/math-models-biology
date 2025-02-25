@@ -464,10 +464,10 @@
         </console>
     </listing>
     <p>
-        Based on the calculated distributions, we see that the first model has a stable distribution with approximately 56.0<percent/> as eggs, 33.1<percent/> as larvae, 7.6<percent/> as pupae, and 3.3<percent/> as adult females.
+        Based on the calculated distributions, we see that the first model has a stable distribution with approximately 56.0% as eggs, 33.1% as larvae, 7.6% as pupae, and 3.3% as adult females.
         Note that our model was developed to ignore adult male mosquitoes.
         If we wanted a full count, we would need to double the adult population.
-        In a similar way, the second model has a stable distribution with approximately 53.4<percent/> as eggs, 34.2<percent/> as larvae, 8.3<percent/> as pupae, and 3.5<percent/> as adult females that are <em>not</em> reproducing and 0.5<percent/> as adult females that are reproducing.
+        In a similar way, the second model has a stable distribution with approximately 53.4% as eggs, 34.2% as larvae, 8.3% as pupae, and 3.5% as adult females that are <em>not</em> reproducing and 0.5% as adult females that are reproducing.
     </p>
 </subsection>
 <subsection>
