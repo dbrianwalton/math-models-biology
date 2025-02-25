@@ -243,7 +243,8 @@ eBookConfig.enable_chatcodes =  false;
 <ul class="structural toc-item-list active">
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-rates-of-change" class="internal"><span class="codenumber">4.1.1</span> <span class="title">Rates of Change</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#differential-equations" class="internal"><span class="codenumber">4.1.2</span> <span class="title">Differential Equations</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-numerical-solutions" class="internal"><span class="codenumber">4.1.3</span> <span class="title">Numerical Solutions to Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-slope-fields" class="internal"><span class="codenumber">4.1.3</span> <span class="title">Slope Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-numerical-solutions" class="internal"><span class="codenumber">4.1.4</span> <span class="title">Numerical Solutions to Differential Equations</span></a></div></li>
 </ul>
 </li>
 <li class="toc-item toc-section">
@@ -392,8 +393,114 @@ P(0) = Ae^{3 \cdot 0} = Ae^0 = A\text{.}
 </div>
 <div class="para">Because we know <span class="process-math">\(P(0) = A\)</span> (from the model formula) and <span class="process-math">\(P(0) = 5\)</span> (from the initial condition), we must have <span class="process-math">\(A = 5\text{.}\)</span> That is, <span class="process-math">\(P(t) = 5e^{3t}\)</span> satisfies both the differential equation and the initial condition.</div>
 </div>
-</div></details></div></article><div class="para" id="differential-equations-6">Mathematics courses focusing on solving differential equations introduce strategies for finding formulas for solutions to differential equations. Because many applications of differential equations don’t actually have formula solutions, we will focus on numerical solutions.</div></section><section class="subsection" id="subsec-diffeq-numerical-solutions"><h3 class="heading hide-type">
-<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.1.3</span><span class="space"> </span><span class="title">Numerical Solutions to Differential Equations</span>
+</div></details></div></article><div class="para" id="differential-equations-6">Mathematics courses focusing on solving differential equations introduce strategies for finding formulas for solutions to differential equations. Because many applications of differential equations don’t actually have formula solutions, we will focus on the behavior of solutions and use computational methods to approximate those solutions.</div></section><section class="subsection" id="subsec-diffeq-slope-fields"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.1.3</span><span class="space"> </span><span class="title">Slope Fields</span>
+</h3>
+<div class="para" id="subsec-diffeq-slope-fields-2">To help us understand what a differential equation does, we start by learning about a <dfn class="terminology">slope field</dfn>. In the context of differential equations and in many scientific contexts, a field refers to a measurement that can vary as you move to different points in space. An electric field represents the potential force that would be applied to a charged particle based on its relative position to other charges in space. A gravitational field represents the potential force that would be applied to a mass based on the presence of other masses in space. A <dfn class="terminology">slope field</dfn> indicates that at every point in space, we have an associated slope.</div>
+<div class="para logical" id="subsec-diffeq-slope-fields-3">
+<div class="para">For differential equations, we think of our space as consisting of the time and the state. For a single state variable, say a measure of population <span class="process-math">\(P\)</span> as in our earlier example, our space will be characterized by time <span class="process-math">\(t\)</span> and the population <span class="process-math">\(P\text{.}\)</span> Consider the differential equation <span class="process-math">\(P' = 3P\text{.}\)</span> The right hand side is a formula that declares a value for the slope as it depends on the current value of <span class="process-math">\(P\text{.}\)</span> Consequently, at every point <span class="process-math">\((t,P)\)</span> in our space, we can calculate a slope given by <span class="process-math">\(3P\text{.}\)</span> This is a slope field, and we would typically represent it as a function</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f(t,P) = 3P\text{.}
+\end{equation*}
+</div>
+</div>
+<article class="example example-like" id="subsec-diffeq-slope-fields-4"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">4.1.3</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="subsec-diffeq-slope-fields-4-1-1">
+<div class="para">Given the slope field <span class="process-math">\(f(t,P) = 3P\text{,}\)</span> find the slope at each of the following points.</div>
+<ol class="decimal" id="subsec-diffeq-slope-fields-4-1-1-2">
+<li id="subsec-diffeq-slope-fields-4-1-1-2-1"><div class="para" id="subsec-diffeq-slope-fields-4-1-1-2-1-1"><span class="process-math">\(\displaystyle (t,P) = (0,1)\)</span></div></li>
+<li id="subsec-diffeq-slope-fields-4-1-1-2-2"><div class="para" id="subsec-diffeq-slope-fields-4-1-1-2-2-1"><span class="process-math">\(\displaystyle (t,P) = (1,-2)\)</span></div></li>
+<li id="subsec-diffeq-slope-fields-4-1-1-2-3"><div class="para" id="subsec-diffeq-slope-fields-4-1-1-2-3-1"><span class="process-math">\(\displaystyle (t,P) = (0,3)\)</span></div></li>
+<li id="subsec-diffeq-slope-fields-4-1-1-2-4"><div class="para" id="subsec-diffeq-slope-fields-4-1-1-2-4-1"><span class="process-math">\(\displaystyle (t,P) = (1,3)\)</span></div></li>
+</ol>
+</div>
+<div class="solutions"><details id="subsec-diffeq-slope-fields-4-2" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content"><div class="para logical" id="subsec-diffeq-slope-fields-4-2-1">
+<div class="para">This is not much more than evaluating the formula.</div>
+<ol class="decimal" id="subsec-diffeq-slope-fields-4-2-1-1">
+<li id="subsec-diffeq-slope-fields-4-2-1-1-1"><div class="para" id="subsec-diffeq-slope-fields-4-2-1-1-1-1">At <span class="process-math">\((t,P) = (0,1)\text{,}\)</span> the slope will be <span class="process-math">\(f(0,1) = 3(1) = 3\text{.}\)</span>
+</div></li>
+<li id="subsec-diffeq-slope-fields-4-2-1-1-2"><div class="para" id="subsec-diffeq-slope-fields-4-2-1-1-2-1">At <span class="process-math">\((t,P) = (1,-2)\text{,}\)</span> the slope will be <span class="process-math">\(f(1,-2) = 3(-2) = -6\text{.}\)</span>
+</div></li>
+<li id="subsec-diffeq-slope-fields-4-2-1-1-3"><div class="para" id="subsec-diffeq-slope-fields-4-2-1-1-3-1">At <span class="process-math">\((t,P) = (0,3)\text{,}\)</span> the slope will be <span class="process-math">\(f(0,3) = 3(3) = 9\text{.}\)</span>
+</div></li>
+<li id="subsec-diffeq-slope-fields-4-2-1-1-4"><div class="para" id="subsec-diffeq-slope-fields-4-2-1-1-4-1">At <span class="process-math">\((t,P) = (1,3)\text{,}\)</span> the slope will be <span class="process-math">\(f(1,3) = 3(3) = 9\text{.}\)</span>
+</div></li>
+</ol>
+</div></div></details></div></article><div class="para" id="subsec-diffeq-slope-fields-5">We visualize a slope field by drawing short line segments or arrows at specially chosen points, often using a grid, so that those segments have slopes matching the value of the slope field. In R using <code class="code-inline tex2jax_ignore">ggplot</code>, this is accomplished with a geometry layer called <code class="code-inline tex2jax_ignore">geom_quiver</code>. This requires an additional library <code class="code-inline tex2jax_ignore">ggquiver</code> be installed before it can be used.</div>
+<div class="para" id="subsec-diffeq-slope-fields-6">Our plot will be treated almost like a scatter plot using <code class="code-inline tex2jax_ignore">geom_point</code> that specifies variables for <code class="code-inline tex2jax_ignore">x</code> and <code class="code-inline tex2jax_ignore">y</code>, except that our mapping must also include to additional variables <code class="code-inline tex2jax_ignore">u</code> and <code class="code-inline tex2jax_ignore">v</code> that will represent a displacement or rate associated with the <span class="process-math">\(x\)</span>- and <span class="process-math">\(y\)</span>-directions. Because slope graphically represents a rise over run, we will think of <code class="code-inline tex2jax_ignore">u</code> as dictating a “run” while we think of <code class="code-inline tex2jax_ignore">v</code> is dictating a “rise”. Using <code class="code-inline tex2jax_ignore">u=1</code> allows us to let <code class="code-inline tex2jax_ignore">v</code> be the value of the slope field.</div>
+<div class="para" id="subsec-diffeq-slope-fields-7">Below is a simple implementation of a slope field for the four points in the previous example. We start with a simple data frame containing the <span class="process-math">\(t\)</span>- and <span class="process-math">\(P\)</span>-values where our slopes were calculated. We will let a function perform the calculations for us.</div>
+<figure class="listing figure-like" id="subsec-diffeq-slope-fields-8"><div class="code-box"><pre class="program"><code class="language-r"># Load the libraries
+library(ggplot2)
+library(ggquiver)
+library(dplyr)
+
+# Create the initial data frame
+my_pts &lt;- tibble(t = c(0, 1, 0, 1), P = c(1, -2, 3, 3))
+
+# Define the slope field function
+slope &lt;- function(t, P) { 3*P }
+
+# Start with the location of points
+slope_field &lt;- my_pts |&gt;
+    # Then add columns for the dt and dP using slope field
+    mutate(delta_t = 1,
+           delta_P = slope(t, P)) |&gt;
+    # Then feed this into ggplot
+    ggplot(mapping = aes(x = t, y = P,              # Location
+                         u = delta_t, v = delta_P)  # Directions
+           ) +
+    # And create the quiver graphics layer
+    geom_quiver(color = "blue")
+show(slope_field)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.1.4<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-diffeq-first-slopefield"><div class="image-box" style="width: 50%; margin-left: 25%; margin-right: 25%;"><img src="external/images/diffeq-first-slopefield.png" class="contained" alt="quiver plot showing line segments with slopes matching the slope field"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.1.5<span class="period">.</span></span><span class="space"> </span>Illustration of the four calculated slopes for the slope field <span class="process-math">\(f(t,P) = 3P\)</span></figcaption></figure><div class="para" id="subsec-diffeq-slope-fields-10">It is much more informative if the slope field is visualized at a collection of points that form a regular grid in space. We will first define a grid by identifying specific <span class="process-math">\(t\)</span> and <span class="process-math">\(P\)</span> values and then construct the collection of all points from this grid. The rest of the calculations are essentially unchanged. It often takes some experimentation on the spacing chosen for the grid (see the <code class="code-inline tex2jax_ignore">by</code> argument to <code class="code-inline tex2jax_ignore">seq</code>) and the scale for the arrows (see the <code class="code-inline tex2jax_ignore">vecsize</code> argument to <code class="code-inline tex2jax_ignore">geom_quiver</code>) to get arrows that have nice spacing and length. Steeper arrows always have longer lengths.</div>
+<figure class="listing figure-like" id="subsec-diffeq-slope-fields-11"><div class="code-box"><pre class="program"><code class="language-r"># Load the libraries
+library(ggplot2)
+library(ggquiver)
+library(dplyr)
+
+# Create the initial grid of points
+my_pts &lt;- expand.grid(t = seq(0, 2, by = 0.1),
+                      P = seq(-3.2, 3.2, by = 0.4))
+
+# Define the slope field function
+slope &lt;- function(t, P) { 3*P }
+
+# Start with the location of points
+slope_field_data &lt;- my_pts |&gt;
+    # Then add columns for the dt and dP using slope field
+    mutate(delta_t = 1,
+           delta_P = slope(t, P))
+
+# Then feed this into ggplot
+ggplot(data = slope_field_data,
+       mapping = aes(x = t, y = P,              # Location
+                     u = delta_t, v = delta_P)  # Directions
+    ) +
+    # And create the quiver graphics layer
+    geom_quiver(color = "blue", vecsize = 4)
+show(slope_field)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.1.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-diffeq-slopefield-grid"><div class="image-box" style="width: 80%; margin-left: 10%; margin-right: 10%;"><img src="external/images/diffeq-slopefield-grid.png" class="contained" alt="quiver plot showing line segments with slopes matching the slope field"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.1.7<span class="period">.</span></span><span class="space"> </span>Illustration of the four calculated slopes for the slope field <span class="process-math">\(f(t,P) = 3P\)</span></figcaption></figure><div class="para" id="subsec-diffeq-slope-fields-13">A slope field is related to a solution of a differential equation. If the graph of the solution, which is a function of time <span class="process-math">\(t\text{,}\)</span> is superimposed on top of a slope field, then at <em class="emphasis">every point</em> along the curve of the function, the tangent line must <em class="emphasis">match</em> the slope of the slope field. In other words, a solution <em class="emphasis">follows</em> the directions provided by the slope field, always smoothly staying parallel to the nearest segments.</div>
+<div class="para" id="subsec-diffeq-slope-fields-14">The previous code listing defined <code class="code-inline tex2jax_ignore">slope_field</code> as the plot showing the slope field. We can build on top of that graph additional layers that represent different solutions. We know that solutions to <span class="process-math">\(P' = 3P\)</span> all have the form <span class="process-math">\(P(t) = Ae^{3t}\text{,}\)</span> so we will include several choices of functions with different values of <span class="process-math">\(A\text{.}\)</span>
+</div>
+<figure class="listing figure-like" id="subsec-diffeq-slope-fields-15"><div class="code-box"><pre class="program"><code class="language-r"># Start adding solutions as additional layers
+soln_curves &lt;- slope_field +
+    geom_function(fun = function(t) { 0.5*exp(3*t) }, linewidth=1) +
+    geom_function(fun = function(t) { 0.01*exp(3*t) }, linewidth=1) +
+    geom_function(fun = function(t) { -0.04*exp(3*t) }, linewidth=1) +
+    geom_function(fun = function(t) { -1*exp(3*t) }, linewidth=1) +
+    ylim(-4, 4)  # Required to keep the same viewing window
+show(soln_curves)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.1.8<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-diffeq-slopefield-solutions"><div class="image-box" style="width: 80%; margin-left: 10%; margin-right: 10%;"><img src="external/images/diffeq-slopefield-solutions.png" class="contained" alt="slope field with four solutions included"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.1.9<span class="period">.</span></span><span class="space"> </span>Graph showing solutions of the form <span class="process-math">\(P = Ae^{3t}\)</span> superimposed on the corresponding slope field <span class="process-math">\(f(t,P)=3P\text{.}\)</span></figcaption></figure></section><section class="subsection" id="subsec-diffeq-numerical-solutions"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.1.4</span><span class="space"> </span><span class="title">Numerical Solutions to Differential Equations</span>
 </h3>
 <div class="para logical" id="subsec-diffeq-numerical-solutions-2">
 <div class="para">A general differential equation for a single time-dependent state variable <span class="process-math">\(Q\)</span> will take the form</div>
@@ -402,10 +509,11 @@ P(0) = Ae^{3 \cdot 0} = Ae^0 = A\text{.}
 Q'(t) = F(t, Q(t))\text{.}
 \end{equation*}
 </div>
-<div class="para">The function <span class="process-math">\(F\)</span> is not the derivative itself. Rather, the differential equation says that the value of the rate of change, <span class="process-math">\(Q'(t)\text{,}\)</span> will exactly match some formula involving <span class="process-math">\(t\)</span> and <span class="process-math">\(Q(t)\text{.}\)</span> The following theorem guarantees that a differential equation with an initial value has a unique solution under reasonable conditions.</div>
+<div class="para">The function <span class="process-math">\(F\)</span> is not the derivative itself but represents the formula for the slope field. The differential equation says that the value of the rate of change, <span class="process-math">\(Q'(t)\text{,}\)</span> will exactly the slope of the slope field at each point <span class="process-math">\((t, Q(t))\)</span> along its curve. To select a single solution, we also need to provide a starting point, called an <dfn class="terminology">initial condition</dfn>.</div>
 </div>
+<div class="para" id="subsec-diffeq-numerical-solutions-3">The following theorem guarantees that a differential equation with an initial value has a unique solution under reasonable conditions.</div>
 <article class="theorem theorem-like" id="thm-diffeq-existence-uniqueness"><h4 class="heading">
-<span class="type">Theorem</span><span class="space"> </span><span class="codenumber">4.1.3</span><span class="period">.</span><span class="space"> </span><span class="title">Existence and Uniqueness of Initial Value Problems.</span>
+<span class="type">Theorem</span><span class="space"> </span><span class="codenumber">4.1.10</span><span class="period">.</span><span class="space"> </span><span class="title">Existence and Uniqueness of Initial Value Problems.</span>
 </h4>
 <div class="para logical" id="thm-diffeq-existence-uniqueness-2-1">
 <div class="para">Suppose that <span class="process-math">\(F(t,y)\)</span> represents a continuous function of both <span class="process-math">\(t\)</span> and <span class="process-math">\(y\)</span> such that <span class="process-math">\(\frac{\partial F}{\partial y}\)</span> exists and is bounded (i.e., small changes in <span class="process-math">\(y\)</span> should result in small changes in <span class="process-math">\(F(t,y)\text{.}\)</span> Then the differential equation</div>
@@ -416,60 +524,56 @@ Q'(t) = F(t, Q(t))\text{.}
 </div>
 <div class="para">with initial value <span class="process-math">\(Q(a) = b\)</span> has a unique solution for some interval <span class="process-math">\(t \in (a-\epsilon, a+\epsilon)\)</span> with <span class="process-math">\(\epsilon \gt 0\text{.}\)</span>
 </div>
-</div></article><details id="thm-diffeq-existence-uniqueness-3" class="hiddenproof born-hidden-knowl"><summary class="knowl__link"><h4 class="heading"><span class="type">Proof<span class="period">.</span></span></h4></summary><article class="hiddenproof knowl__content"><div class="para" id="thm-diffeq-existence-uniqueness-3-1">The proof is outside the scope of this text but is based on the convergence of approximations.</div></article></details><div class="para" id="subsec-diffeq-numerical-solutions-4">An existence property guarantees that a solution will exist on some small interval near the initial value. This gives us a justification for trying to find what that solution looks like. When we look for solutions, we do need to be mindful that we might try to use an interval that is larger than the solution can actually use. So if our method fails, we might need to try a smaller interval of time. The uniqueness property indicates that for any initial value, there can only be one solution.</div>
-<div class="para" id="subsec-diffeq-numerical-solutions-5">In R, we can use the <code class="code-inline tex2jax_ignore">deSolve</code> library to find numerical solutions. This library defines a function <code class="code-inline tex2jax_ignore">ode</code> (stands for <em class="emphasis">ordinary differential equation</em>) that creates the these approximations. To solve our equation, we will need to define a function that calculates the function on the right-hand side of the equation. We also need to provide the initial condition and an array of times where we will evaluate the solution.</div>
-<article class="example example-like" id="subsec-diffeq-numerical-solutions-6"><h4 class="heading">
-<span class="type">Example</span><span class="space"> </span><span class="codenumber">4.1.4</span><span class="period">.</span>
+</div></article><div class="para" id="subsec-diffeq-numerical-solutions-5">The existence property guarantees that a solution will exist on some small interval near the initial value. This gives us a justification for trying to find what that solution looks like. When we look for solutions, we do need to be mindful that we might try to use an interval that is larger than the solution can actually use. So if our method fails, we might need to try a smaller interval of time. The uniqueness property indicates that for any initial value, there can only be one solution that includes that point.</div>
+<div class="para" id="subsec-diffeq-numerical-solutions-6">To find numerical approximations of solutions in R, we will use the <code class="code-inline tex2jax_ignore">deSolve</code> library. This library defines a command <code class="code-inline tex2jax_ignore">ode</code> (the letters stand for <em class="emphasis">ordinary differential equation</em>) that will calculate data points to represent these approximate solutions. To solve our equation, we will need to define a function that calculates the function on the right-hand side of the equation. This will be very similar to the functions we used to calculate slope fields, but with some more technical requirements to deal with the variety of problems <code class="code-inline tex2jax_ignore">ode</code> might encounter. The <code class="code-inline tex2jax_ignore">ode</code> command also requires that we provide the initial condition and an array of times at which we will evaluate the solution.</div>
+<div class="para" id="subsec-diffeq-numerical-solutions-7">The R function calculating the rate of change or slope required for <code class="code-inline tex2jax_ignore">ode</code> is always expected to have three arguments—one for the time <code class="code-inline tex2jax_ignore">t</code>, one for the state <code class="code-inline tex2jax_ignore">state</code>, and one for model parameters <code class="code-inline tex2jax_ignore">params</code>. Both <code class="code-inline tex2jax_ignore">state</code> and <code class="code-inline tex2jax_ignore">params</code> are intended to allow for more than one variable, so entries are named. So that our calculations for the rate of change at the current time and state are allowed to use those internal names, we put our calculations inside of a <code class="code-inline tex2jax_ignore">with</code> command. The first argument for <code class="code-inline tex2jax_ignore">with</code> is a list of named values (we join <code class="code-inline tex2jax_ignore">state</code> and <code class="code-inline tex2jax_ignore">params</code> into a single list) that we might use in our formulas, and the second argument is a command or command block inside curly braces that does the calculation. Finally, when a state has multiple variables, we will need to report a rate of change for each variable. Consequently, <code class="code-inline tex2jax_ignore">ode</code> expects that our function returns a <code class="code-inline tex2jax_ignore">list</code> of rates rather than just a number. Unfortunately, I have not yet found a way to use the same function for the slope field and for <code class="code-inline tex2jax_ignore">ode</code> because of these different requirements.</div>
+<article class="example example-like" id="subsec-diffeq-numerical-solutions-8"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">4.1.11</span><span class="period">.</span>
 </h4>
-<div class="para logical" id="subsec-diffeq-numerical-solutions-6-1-1">
-<div class="para">Find a numerical approximation for the solution of the differential equation</div>
+<div class="para logical" id="subsec-diffeq-numerical-solutions-8-1-1">
+<div class="para">We will find a numerical approximation for the solution of the differential equation</div>
 <div class="displaymath process-math">
 \begin{equation*}
 \frac{dQ}{dt} = 3Q
 \end{equation*}
 </div>
-<div class="para">with the intial value <span class="process-math">\(Q(0) = 5\)</span> and compare it to the exact solution we found earlier <span class="process-math">\(Q(t) = 5e^{3t}\text{.}\)</span>
-</div>
-</div>
-<div class="solutions"><details id="subsec-diffeq-numerical-solutions-6-2" class="solution solution-like born-hidden-knowl"><summary class="knowl__link"><span class="type">Solution</span><span class="period">.</span></summary><div class="solution solution-like knowl__content">
-<div class="para" id="subsec-diffeq-numerical-solutions-6-2-1">Our R script will need to first call <code class="code-inline tex2jax_ignore">library(deSolve)</code>. Then we will define our rate function to represent the formula <span class="process-math">\(3Q\text{.}\)</span> This function is required to have three input arguments—time, the state, and parameters for the model. The state will eventually include all of our state variables, but for now will only consist of the single variable <span class="process-math">\(Q\text{.}\)</span> Our model does not have any additional parameters, so the parameters will not actually be used in this example. Once the differential equation is defined, we provide the initial value and times we wish to evaluate.</div>
-<figure class="listing figure-like" id="subsec-diffeq-numerical-solutions-6-2-2"><div class="code-box"><pre class="program"><code class="language-r"># Load the library
+<div class="para">with the intial value <span class="process-math">\(Q(1) = 0.25\)</span> and include it with the slope field generated earlier.</div>
+</div> <div class="para" id="subsec-diffeq-numerical-solutions-8-1-2">Our R script will need to first call <code class="code-inline tex2jax_ignore">library(deSolve)</code>. Then we will define our rate function to represent the formula <span class="process-math">\(3Q\)</span> as described. The state will only consist of the single variable <span class="process-math">\(Q\text{.}\)</span> Our model does not have any additional parameters, so the parameters will not actually be used in this example. Once the differential equation is defined, we provide the initial value and times we wish to evaluate.</div> <figure class="listing figure-like" id="subsec-diffeq-numerical-solutions-8-1-3"><div class="code-box"><pre class="program"><code class="language-r"># Load the library
 library(deSolve)
 
 # Define the rate function in this form
 rateFcn &lt;- function(t, state, params) {
-    with(as.list(c(state, params)), {  # This lets us use a simple formula
-        dQ &lt;- 3*Q
-        list(dQ)    # Return the rate
-    })
-}
+    with(as.list(c(state, params)), {  
+        Q_rate &lt;- 3*Q   # Calculate the rate
+        list(Q_rate)    # Return the rate in list
+    })  # Close the block and end the with command
+} # End the function
 
 # Define the initial condition
-init_state &lt;- c(Q = 5)
-params &lt;- c()  # empty
+init_state &lt;- c(Q = 0.25)   # (named array of values)
+params &lt;- c()               # empty = no parameters
 
 # Create an array of times where we evaluate
-times &lt;- seq(from = 0, to = 2, by = 0.1)
+# We choose the interval of calculation
+times &lt;- seq(from = 1, to = 2, by = 0.1)
 
 # Find the solution
-# Will have column for time and each state variable
 solution &lt;- ode(init_state, times, rateFcn, params)
+# Result has column for time and each state variable
 
-# Make a graph to compare
-library(ggplot2)
-soln_graph &lt;- ggplot() +
-    geom_point(data = solution,
-             mapping = aes(x = time, y = Q, color = "1")) +
-    geom_function(fun = function(t) { 5*exp(3*t) },
-                  mapping = aes(color = "2")) +
-    scale_color_discrete(name = "solution",
-                         breaks = c("1", "2"),
-                         labels = c("numerical", "exact")
-                        )
-show(soln_graph)
+# Create a graph with both the slope field and the solution
+numsoln_graph &lt;- ggplot() +
+    geom_quiver(data = slope_field_data,
+                mapping = aes(x = t, y = P,
+                u = delta_t, v = delta_P),
+                color = "blue", vecsize = 4) +
+    geom_line(data = solution,
+             mapping = aes(x = time, y = Q),
+             color="purple", linewidth = 1)
+show(numsoln_graph)
 </code></pre></div>
-<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.1.5<span class="period">.</span></span><span class="space"> </span>R script to generate numerical solution to differential equation</figcaption></figure>
-</div></details></div></article></section></section></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.1.12<span class="period">.</span></span><span class="space"> </span>R script to generate numerical solution to differential equation</figcaption></figure> <figure class="figure figure-like" id="fig-diffeq-slopefield-numerical-solution"><div class="image-box" style="width: 80%; margin-left: 10%; margin-right: 10%;"><img src="external/images/diffeq-slopefield-numerical-solution.png" class="contained" alt="slope field with a numerical solution"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.1.13<span class="period">.</span></span><span class="space"> </span>Graph showing a numerical solution superimposed on the corresponding slope field <span class="process-math">\(f(t,P)=3P\text{.}\)</span></figcaption></figure></article></section></section></div>
 <div class="ptx-content-footer">
 <a class="previous-button button" href="ch-continuous-dynamics.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="differential-equation-analysis.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
