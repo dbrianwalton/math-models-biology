@@ -140,7 +140,7 @@ eBookConfig.enable_chatcodes =  false;
 <ol id="searchresults" class="searchresults"></ol>
 </div>
 </div>
-<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="ch-continuous-dynamics.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-continuous-dynamics.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="differential-equation-analysis.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="ch-continuous-dynamics.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-continuous-dynamics.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="diffeq-population-models.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
 </div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
 \newcommand{\gt}{&gt;}
@@ -248,10 +248,17 @@ eBookConfig.enable_chatcodes =  false;
 </ul>
 </li>
 <li class="toc-item toc-section">
-<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<div class="toc-title-box"><a href="diffeq-population-models.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Continuous Time Population Models</span></a></div>
 <ul class="structural toc-item-list">
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">4.2.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">4.2.2</span> <span class="title">Phase Lines</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-popn-density-dependent" class="internal"><span class="codenumber">4.2.1</span> <span class="title">Continuous Logistic Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-rescaling" class="internal"><span class="codenumber">4.2.2</span> <span class="title">Dimensional Analysis and Rescaling</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">4.3.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">4.3.2</span> <span class="title">Phase Lines</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -316,10 +323,10 @@ Q(a + \Delta t) \approx Q(a) + \left.\frac{dQ}{dt}\right|_a \cdot \Delta t\text{
 <span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.1.2</span><span class="space"> </span><span class="title">Differential Equations</span>
 </h3>
 <div class="para" id="differential-equations-2">A differential equation is an equation that defines the rate of change (a derivative) for a quantity. Unlike calculus where we would start with a function’s formula and use rules of calculus to find the derivative’s formula, in modeling we are going to think of the rate of change as a state variable that can be part of an equation.</div>
-<article class="example example-like" id="differential-equations-3"><h4 class="heading">
+<article class="example example-like" id="ex-diffeq-intro-proportional-growth"><h4 class="heading">
 <span class="type">Example</span><span class="space"> </span><span class="codenumber">4.1.1</span><span class="period">.</span>
 </h4>
-<div class="para logical" id="differential-equations-3-1-1">
+<div class="para logical" id="ex-diffeq-intro-proportional-growth-1-1">
 <div class="para">We know that a population that is not constrained by its environment tends to grow exponentially. That is, we can think of the population as a function of time <span class="process-math">\(P(t)\)</span> as satisfying an exponential model,</div>
 <div class="displaymath process-math">
 \begin{equation*}
@@ -332,7 +339,7 @@ P(t) = Ae^{rt}\text{,}
 P'(t) = Are^{rt}\text{.}
 \end{equation*}
 </div>
-</div> <div class="para logical" id="differential-equations-3-1-2">
+</div> <div class="para logical" id="ex-diffeq-intro-proportional-growth-1-2">
 <div class="para">We can identify a relation between the state variables of <span class="process-math">\(P\)</span> and <span class="process-math">\(P'\)</span> by calculating the ratio <span class="process-math">\(P' / P\)</span> and simplifying. Since <span class="process-math">\(P'\)</span> is the overall rate of change and <span class="process-math">\(P\)</span> is the population, the ratio refers to the <dfn class="terminology">per capita rate of change</dfn>. Using the exponential formula and its derivative, we discover that an exponentially growing (or decaying) population satisfies the equation</div>
 <div class="displaymath process-math">
 \begin{equation*}
@@ -575,7 +582,7 @@ show(numsoln_graph)
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.1.12<span class="period">.</span></span><span class="space"> </span>R script to generate numerical solution to differential equation</figcaption></figure> <figure class="figure figure-like" id="fig-diffeq-slopefield-numerical-solution"><div class="image-box" style="width: 80%; margin-left: 10%; margin-right: 10%;"><img src="external/images/diffeq-slopefield-numerical-solution.png" class="contained" alt="slope field with a numerical solution"></div>
 <figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.1.13<span class="period">.</span></span><span class="space"> </span>Graph showing a numerical solution superimposed on the corresponding slope field <span class="process-math">\(f(t,P)=3P\text{.}\)</span></figcaption></figure></article></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="ch-continuous-dynamics.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="differential-equation-analysis.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+<a class="previous-button button" href="ch-continuous-dynamics.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="diffeq-population-models.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
 </div>
 <div id="ptx-page-footer" class="ptx-page-footer">

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US" dir="ltr">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Continuous Time Population Models</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Dynamic Models for Biology">
+<meta property="book:author" content="D. Brian Walton">
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script><script>
+var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "tags": "none",
+    "tagSide": "right",
+    "tagIndent": ".8em",
+    "packages": {
+      "[+]": [
+        "base",
+        "extpfeil",
+        "ams",
+        "amscd",
+        "color",
+        "newcommand",
+        "knowl"
+      ]
+    }
+  },
+  "options": {
+    "ignoreHtmlClass": "tex2jax_ignore|ignore-math",
+    "processHtmlClass": "process-math",
+    "renderActions": {
+      "findScript": [
+        10,
+        function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        },
+        ""
+      ]
+    }
+  },
+  "chtml": {
+    "scale": 0.98,
+    "mtextInheritFont": true
+  },
+  "loader": {
+    "load": [
+      "input/asciimath",
+      "[tex]/extpfeil",
+      "[tex]/amscd",
+      "[tex]/color",
+      "[tex]/newcommand",
+      "[pretext]/mathjaxknowl3.js"
+    ],
+    "paths": {
+      "pretext": "_static/pretext/js/lib"
+    }
+  },
+  "startup": {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  }
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<link href="_static/pretext/css/theme.css" rel="stylesheet" type="text/css">
+<link href="_static/pretext/css/ol-markers.css" rel="stylesheet" type="text/css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '7.5.9';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script src="_static/prefix-runtime.d7db380f34a0a67e.bundle.js"></script><script src="_static/prefix-723.3e6434f80549315a.bundle.js"></script><script src="_static/prefix-runestone.f6bda0c0ccce4835.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-723.3bccd435914aa0ff.css">
+<link rel="stylesheet" type="text/css" href="_static/prefix-runestone.e0c6d4592e23c667.css">
+</head>
+<body id="dmb" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead" class="ptx-masthead"><div class="ptx-banner"><div class="title-container">
+<h1 class="heading"><a href="my-great-book.html"><span class="title">Dynamic Models for Biology</span></a></h1>
+<p class="byline">D. Brian Walton</p>
+</div></div></header><nav id="ptx-navbar" class="ptx-navbar navbar"><div class="ptx-navbar-contents">
+<button class="toc-toggle button" title="Contents"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d2;</span><span class="name">Contents</span></button><div class="searchbox">
+<div class="searchwidget"><button id="searchbutton" class="searchbutton button" type="button" title="Search book"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe8b6;</span><span class="name">Search Book</span></button></div>
+<div id="searchresultsplaceholder" class="searchresultsplaceholder" style="display: none">
+<div class="search-results-controls">
+<input aria-label="Search term" id="ptxsearch" class="ptxsearch" type="text" name="terms" placeholder="Search term"><button title="Close search" id="closesearchresults" class="closesearchresults"><span class="material-symbols-outlined">close</span></button>
+</div>
+<h2 class="search-results-heading">Search Results: </h2>
+<div id="searchempty" class="searchempty"><span>No results.</span></div>
+<ol id="searchresults" class="searchresults"></ol>
+</div>
+</div>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="intro-differential-equations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-continuous-dynamics.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="differential-equation-analysis.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+</div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar" class="ptx-sidebar"><nav id="ptx-toc" class="ptx-toc depth2 focused" data-preexpanded-levels="0" data-max-levels="2"><ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-frontmatter"><div class="toc-title-box"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="mathematical-modeling.html" class="internal"><span class="codenumber">1</span> <span class="title">Mathematical Modeling</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="scientific-method.html" class="internal"><span class="codenumber">1.1</span> <span class="title">The Scientific Method</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="role-of-models.html" class="internal"><span class="codenumber">1.2</span> <span class="title">The Role of Models</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="measurements.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Measurements</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-exercises"><div class="toc-title-box"><a href="measurements.html#exercises-measurements" class="internal"><span class="codenumber">1.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="system-state.html" class="internal"><span class="codenumber">1.4</span> <span class="title">The State of a System</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-mm-intro-ggplot.html" class="internal"><span class="codenumber">1.5</span> <span class="title">Introducing tidyverse and ggplot</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-mm-variable-relations.html" class="internal"><span class="codenumber">1.6</span> <span class="title">Relations between Variables</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="populations.html" class="internal"><span class="codenumber">2</span> <span class="title">Population Dynamics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-agent-based.html" class="internal"><span class="codenumber">2.1</span> <span class="title">An Agent Based Motivation for Dynamics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-based-3" class="internal"><span class="codenumber">2.1.1</span> <span class="title">NetLogo Overview</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-naive" class="internal"><span class="codenumber">2.1.2</span> <span class="title">Environmentally Naive Births and Deaths</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-density-dependent" class="internal"><span class="codenumber">2.1.3</span> <span class="title">Density-Dependent Births and Deaths</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-discrete.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Discrete Population Models</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-density-dependent.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Density Dependent Population Growth Models</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-projection.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Recursive Models Using Projection</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-functions" class="internal"><span class="codenumber">2.4.1</span> <span class="title">Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-fixed-points" class="internal"><span class="codenumber">2.4.2</span> <span class="title">Fixed Points and Equilibria</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="projection-analysis.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Analysis of Population Projections</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#linear-projection-analysis" class="internal"><span class="codenumber">2.5.1</span> <span class="title">Linear Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-4" class="internal"><span class="codenumber">2.5.2</span> <span class="title">Linearizing Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-5" class="internal"><span class="codenumber">2.5.3</span> <span class="title">Computer Assisted Analysis</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="projection-cobweb.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Graphical Analysis of Projection Functions</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-compare-replacement" class="internal"><span class="codenumber">2.6.1</span> <span class="title">Visualizing Potential for Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#cobweb-diagrams" class="internal"><span class="codenumber">2.6.2</span> <span class="title">Cobweb Diagrams</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-cobweb-5" class="internal"><span class="codenumber">2.6.3</span> <span class="title">Cobwebs and Stability</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-interventions.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Intervention and Bifurcations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-constant-harvesting" class="internal"><span class="codenumber">2.7.1</span> <span class="title">Constant Harvesting</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-interventions-4" class="internal"><span class="codenumber">2.7.2</span> <span class="title">Proportional Harvesting</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="ch-structured-populations.html" class="internal"><span class="codenumber">3</span> <span class="title">Structured Populations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-two-stage.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Two Stage Populations</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-matrix-models.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Matrix Models for Structured Populations</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Example: Mosquito Growth</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3" class="internal"><span class="codenumber">3.3.1</span> <span class="title">Model Equations and Parameters</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-4" class="internal"><span class="codenumber">3.3.2</span> <span class="title">Simulation, Asymptotic Growth, and Stable Distributions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-5" class="internal"><span class="codenumber">3.3.3</span> <span class="title">Exploring the Impact of Additional Mortality</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-structure-density-dependent.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Density Dependence in Structured Populations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-density-model" class="internal"><span class="codenumber">3.4.1</span> <span class="title">Model Development</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#sec-structure-density-dependent-4" class="internal"><span class="codenumber">3.4.2</span> <span class="title">Simulation</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-density-equilibria" class="internal"><span class="codenumber">3.4.3</span> <span class="title">Finding Fixed Points for Structured Populations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-partial-derivatives" class="internal"><span class="codenumber">3.4.4</span> <span class="title">Partial Derivatives</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-fixed-point-stability" class="internal"><span class="codenumber">3.4.5</span> <span class="title">Testing the Stability of a Fixed Point</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter contains-active">
+<div class="toc-title-box"><a href="ch-continuous-dynamics.html" class="internal"><span class="codenumber">4</span> <span class="title">Continuous Dynamics</span></a></div>
+<ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="intro-differential-equations.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Introduction to Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-rates-of-change" class="internal"><span class="codenumber">4.1.1</span> <span class="title">Rates of Change</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#differential-equations" class="internal"><span class="codenumber">4.1.2</span> <span class="title">Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-slope-fields" class="internal"><span class="codenumber">4.1.3</span> <span class="title">Slope Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-numerical-solutions" class="internal"><span class="codenumber">4.1.4</span> <span class="title">Numerical Solutions to Differential Equations</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section contains-active">
+<div class="toc-title-box"><a href="diffeq-population-models.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Continuous Time Population Models</span></a></div>
+<ul class="structural toc-item-list active">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-popn-density-dependent" class="internal"><span class="codenumber">4.2.1</span> <span class="title">Continuous Logistic Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-rescaling" class="internal"><span class="codenumber">4.2.2</span> <span class="title">Dimensional Analysis and Rescaling</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">4.3.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">4.3.2</span> <span class="title">Phase Lines</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="interactions.html" class="internal"><span class="codenumber">5</span> <span class="title">Modeling Interactions</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="system-examples.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Examples of Interacting Systems</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-3" class="internal"><span class="codenumber">5.1.1</span> <span class="title">Epidemic Models</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-4" class="internal"><span class="codenumber">5.1.2</span> <span class="title">Interacting Populations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-5" class="internal"><span class="codenumber">5.1.3</span> <span class="title">Age or Stage-Based Models</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="interaction-rate-models.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Modeling Interaction Rates</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-3" class="internal"><span class="codenumber">5.2.1</span> <span class="title">Linear Rates and Linear Combinations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-4" class="internal"><span class="codenumber">5.2.2</span> <span class="title">Logistic Growth with Functional Dependence</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-5" class="internal"><span class="codenumber">5.2.3</span> <span class="title">Law of Mass Action for Interactions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-6" class="internal"><span class="codenumber">5.2.4</span> <span class="title">Saturating Functional Response</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-7" class="internal"><span class="codenumber">5.2.5</span> <span class="title">Switching Functional Response</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="system-phase-space.html" class="internal"><span class="codenumber">5.3</span> <span class="title">Dynamical Systems and Phase Space</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#vector-fields" class="internal"><span class="codenumber">5.3.1</span> <span class="title">Vector Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#system-phase-space-4" class="internal"><span class="codenumber">5.3.2</span> <span class="title">Nullclines and Equilibria</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-backmatter"><div class="toc-title-box"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="diffeq-population-models"><h2 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">4.2</span><span class="space"> </span><span class="title">Continuous Time Population Models</span>
+</h2>
+<section class="introduction" id="diffeq-population-models-2"><div class="para" id="diffeq-population-models-2-1">All of our models for single populations naturally can be framed in the context of a continuous time differential equation model. Recall that it is our task as a modeler to determine whether a discrete time model (using projections) or a continuous time model (using differential equations) is more appropriate. A discrete time model is appropriate if the change in a population value occurs in a single increment, such as when all reproduction occurs at a certain point in an annual cycle. A continuous time model will be appropriate if change occurs gradually through time.</div>
+<div class="para" id="diffeq-population-models-2-2">The other major distinction between the models is that we need to think in terms of rates of change instead of quantities. For projection models, we often find ourselves thinking specifically about <em class="emphasis">how many</em> individuals enter or leave the population. For differential equations, we need to think instead in terms of how many are entering or leaving <em class="emphasis">per unit time</em> in order to get a rate. Otherwise, our reasoning will be essentially the same.</div>
+<div class="para logical" id="diffeq-population-models-2-3">
+<div class="para">The simplest form of growth for a population is when the growth rate is proportional to the population size. This is the case of constant per capita growth. If we let <span class="process-math">\(P\)</span> represent the size of the population as a function of time (not a sequence), then the differential equation for constant per capita growth is that the rate of change of the population is equal to a constant times the population size,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+P' = r P\text{,}
+\end{equation*}
+</div>
+<div class="para">where <span class="process-math">\(r\)</span> is the per capita growth constant.</div>
+</div>
+<div class="para" id="diffeq-population-models-2-4">Be very mindful that our equation does not show that we are adding the change to the population like we did for discrete time projection models.</div>
+<div class="para" id="diffeq-population-models-2-5">From our introduction to differential equation in <a href="intro-differential-equations.html#ex-diffeq-intro-proportional-growth" class="xref" data-knowl="./knowl/xref/ex-diffeq-intro-proportional-growth.html" data-reveal-label="Reveal" data-close-label="Close" title="Example 4.1.1">Example 4.1.1</a>, we already know that solutions to this differential equation correspond to exponential growth when <span class="process-math">\(r \gt 0\)</span> and exponential decay when <span class="process-math">\(r \lt 0\text{.}\)</span> Discrete time models with constant per capita growth result in geometric sequences that similarly either grow or decay exponentially. Consequently, other than thinking in terms of continuous functions or discrete sequences, the models behave in very similar ways.</div>
+<div class="para" id="diffeq-population-models-2-6">One major difference that we encounter with continuous time models is that our constants no longer represent just proportions. For example, in a discrete time model, the per capita death rate <span class="process-math">\(d\)</span> represents the fraction of the current population that will have died by this same time in the next cycle. This means that we always have <span class="process-math">\(0 \le d \le 1\text{.}\)</span> In a continuous time model, the per capita death rate refers to the number of deaths per individual per unit of time. Because we can have a large number of deaths in a short period of time, and a rate of change divides by the time, the <em class="emphasis">rate</em> can be quite large. The value of a per capita death rate has no constraint other than <span class="process-math">\(d \ge 0\text{.}\)</span>
+</div></section><section class="subsection" id="subsec-diffeq-popn-density-dependent"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.2.1</span><span class="space"> </span><span class="title">Continuous Logistic Growth</span>
+</h3>
+<div class="para" id="subsec-diffeq-popn-density-dependent-2">We turn our focus to populations that are pressured by constrained resources. In exactly the same manner as we developed our discrete time models, we can think in terms of either the per capita birth rate or the per capita death rate as being dependent on the population size. We can even use the same formulas to model this relationship.</div>
+<div class="para logical" id="subsec-diffeq-popn-density-dependent-3">
+<div class="para">We expect that a population experience a reduced per capita birth rate and an increased per capita death rate when the size of the population is large. Together, this implies that the per capita growth rate <span class="process-math">\(r = b - d\)</span> should be a decreasing function. The simplest choice for a decreasing function is a linear model</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/eq-per-capita-growth-discrete-logistic.html">
+\begin{equation*}
+r = r_0 - a P\text{.}
+\end{equation*}
+</div>
+<div class="para">This is exactly the same equation as we found in <a href="sec-population-density-dependent.html#eq-per-capita-growth-discrete-logistic" class="xref" data-knowl="./knowl/xref/eq-per-capita-growth-discrete-logistic.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 2.3.1">(2.3.1)</a>; we are just interpreting the equation in terms of rates of change instead of numbers of individuals.</div>
+</div>
+<div class="para logical" id="subsec-diffeq-popn-density-dependent-4">
+<div class="para">Using the general relationship <span class="process-math">\(P' = r P\text{,}\)</span> but with <span class="process-math">\(r\)</span> no longer constant, we have just created our first density-dependent differential equation model for population growth,</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/eq-discrete-logistic-model.html">
+\begin{equation*}
+P' = (r_0-aP) \cdot P\text{,}
+\end{equation*}
+</div>
+<div class="para">which can be rewritten as</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/eq-discrete-logistic-model.html" id="eq-continuous-logistic-model">
+\begin{equation}
+P' = r_0 P - a P^2\text{.}\tag{4.2.1}
+\end{equation}
+</div>
+<div class="para">This model is called the <dfn class="terminology">continuous logistic model</dfn> for population growth, which is the differential equation analogue of <a href="sec-population-density-dependent.html#eq-discrete-logistic-model" class="xref" data-knowl="./knowl/xref/eq-discrete-logistic-model.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 2.3.2">(2.3.2)</a>.</div>
+</div>
+<div class="para" id="subsec-diffeq-popn-density-dependent-5">When we worked with discrete models involving density dependence, we found equilibrium values by finding fixed points of the projection function. The idea of an equilibrium is a state where the state does not change. In the language of differential equations, an equilibrium is a constant state. Because the derivative of a constant is 0, an equilibrium solution for a differential equation is a constant that is a solution to the differential equation.</div>
+<article class="definition definition-like" id="def-diffeq-equilibrium"><h4 class="heading">
+<span class="type">Definition</span><span class="space"> </span><span class="codenumber">4.2.1</span><span class="period">.</span>
+</h4>
+<div class="para" id="def-diffeq-equilibrium-1-1">Given a differential equation <span class="process-math">\(Q' = f(t,Q)\text{,}\)</span> a constant <span class="process-math">\(Q^*\)</span> is an <dfn class="terminology">equilibrium solution</dfn> if <span class="process-math">\(f(t, Q^*) = 0\)</span> for all values of <span class="process-math">\(t\text{.}\)</span>
+</div></article><div class="para" id="subsec-diffeq-popn-density-dependent-7">The rate function for the logistic differential equation does not involve <span class="process-math">\(t\text{.}\)</span> We say that the differential equation is <dfn class="terminology">time-independent</dfn> or <dfn class="terminology">autonomous</dfn>. For an autonomous differential equation <span class="process-math">\(Q' = f(Q)\text{,}\)</span> equilbrium solutions correspond to the roots of <span class="process-math">\(f\text{,}\)</span> solving the equation <span class="process-math">\(f(Q) = 0\text{.}\)</span>
+</div>
+<article class="example example-like" id="subsec-diffeq-popn-density-dependent-8"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">4.2.2</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="subsec-diffeq-popn-density-dependent-8-1-1">
+<div class="para">We find the equilibrium solutions for the logistic differential equation by solving the equation</div>
+<div class="displaymath process-math">
+\begin{equation*}
+r_0 P - a P^2 = 0
+\end{equation*}
+</div>
+<div class="para">for values of <span class="process-math">\(P\text{.}\)</span> Because <span class="process-math">\(P\)</span> is a common factor, we first factor that out to find</div>
+<div class="displaymath process-math">
+\begin{equation*}
+P(r_0 - aP) = 0\text{.}
+\end{equation*}
+</div>
+<div class="para">One solution is <span class="process-math">\(P=0\text{,}\)</span> corresponding to an extinct population. A second solution is found by solving <span class="process-math">\(r_0 - aP = 0\)</span> to get <span class="process-math">\(P = \frac{r_0}{a}\text{.}\)</span> This second root is the carrying capacity <span class="process-math">\(K = \frac{r_0}{a}\text{.}\)</span>
+</div>
+</div></article><div class="para logical" id="subsec-diffeq-popn-density-dependent-9">
+<div class="para">The logistic differential equation is often rewritten in terms of the values <span class="process-math">\(r_0\)</span> and <span class="process-math">\(K\text{.}\)</span> The original formula for the per capita growth rate <span class="process-math">\(r=r_0 - a P\)</span> represents a line in terms of the <span class="process-math">\(y\)</span>-intercept and the slope. The same line can be written as <span class="process-math">\(r = r_0 (1 - \frac{P}{K}))\text{.}\)</span> Based on this representation, the differential equation becomes</div>
+<div class="displaymath process-math">
+\begin{equation*}
+P' = r_0 P (1 - \frac{P}{K})\text{.}
+\end{equation*}
+</div>
+<div class="para">This alternative representation makes it much easier to see the roots are <span class="process-math">\(P=0\)</span> and <span class="process-math">\(P=K\text{.}\)</span>
+</div>
+</div>
+<div class="para" id="subsec-diffeq-popn-density-dependent-10">We will now explore the dynamics of our differential equation. The listing below gives R code that generates a slope field and several solutions for model parameters <span class="process-math">\(r_0 = 1.25\)</span> and <span class="process-math">\(K=100\text{,}\)</span> including the equilibrium solutions <span class="process-math">\(P=0\)</span> and <span class="process-math">\(P=100\text{.}\)</span>
+</div>
+<figure class="listing figure-like" id="subsec-diffeq-popn-density-dependent-11"><div class="code-box"><pre class="program"><code class="language-r">library(dplyr)
+library(deSolve)
+library(ggplot2)
+library(ggquiver)
+
+# function for slope field
+slopeF &lt;- function(t, P, params) {
+with(as.list(params), r0*P*(1-P/K))
+}
+
+# Model parameters
+my_params &lt;- list(r0 = 1.25, K = 100)
+
+# Grid for slope field
+grid_pts &lt;- expand.grid(t = seq(0, 10, by = 0.25),
+                        P = seq(-20, 120, by = 5))
+slope_data &lt;- mutate(grid_pts,
+                    delta_t = 1,
+                    delta_P = slopeF(t, P, my_params)
+)
+
+# function for `ode`
+rateF &lt;- function(t, state, params) {
+with(as.list(c(state, params)), {
+    P_rate &lt;- r0*P*(1-P/K)
+    list(P_rate)
+})
+}
+
+# Create several solutions
+times &lt;- seq(0, 10, by = 0.25)
+soln1 &lt;- ode(c(P=0), times, rateF, my_params)
+soln2 &lt;- ode(c(P=5), times, rateF, my_params)
+soln3 &lt;- ode(c(P=100), times, rateF, my_params)
+soln4 &lt;- ode(c(P=140), times, rateF, my_params)
+
+# Create a graph
+soln_graph &lt;- ggplot() +
+geom_quiver(data = slope_data,
+            mapping = aes(x = t, y = P,
+                            u = delta_t, v = delta_P),
+            color = "blue", vecsize = 15) +
+geom_line(data = soln1,
+            mapping = aes(x = time, y = P),
+            color = "purple", linewidth=1) +
+geom_line(data = soln2,
+            mapping = aes(x = time, y = P),
+            color = "purple", linewidth=1) +
+geom_line(data = soln3,
+            mapping = aes(x = time, y = P),
+            color = "purple", linewidth=1) +
+geom_line(data = soln4,
+        mapping = aes(x = time, y = P),
+        color = "purple", linewidth=1) +
+ylim(-20,120)
+show(soln_graph)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.2.3<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-diffeq-logistic-solution"><div class="image-box" style="width: 80%; margin-left: 10%; margin-right: 10%;"><img src="external/images/diffeq-logistic-solutions.png" class="contained"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.2.4<span class="period">.</span></span><span class="space"> </span>Graphs of solutions to the logistic differential equation</figcaption></figure><div class="para" id="subsec-diffeq-popn-density-dependent-13">Because they are constant, the equilibrium solutions appear as horizontal lines. When an initial condition starts between <span class="process-math">\(P=0\)</span> and <span class="process-math">\(P=K\text{,}\)</span> the solution moves away from <span class="process-math">\(P=0\)</span> and toward <span class="process-math">\(P=K\text{.}\)</span> For an initial condition above <span class="process-math">\(P=K\text{,}\)</span> the solution decreases toward <span class="process-math">\(P=K\text{.}\)</span> Although we didn’t include a solution starting with <span class="process-math">\(P \lt 0\text{,}\)</span> the slope field suggests solutions would decrease away from <span class="process-math">\(P=0\text{.}\)</span> That is, we have evidence that <span class="process-math">\(P=0\)</span> is an <dfn class="terminology">unstable equilibrium</dfn> while <span class="process-math">\(P=K\)</span> is a <dfn class="terminology">stable equilibrium</dfn>.</div></section><section class="subsection" id="subsec-diffeq-rescaling"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.2.2</span><span class="space"> </span><span class="title">Dimensional Analysis and Rescaling</span>
+</h3>
+<div class="para" id="subsec-diffeq-rescaling-2">If you try different parameters for <span class="process-math">\(r_0\)</span> and <span class="process-math">\(K\text{,}\)</span> you will notice that the basic behavior of the logistic model always looks the same. This is a consequence of the dimensional properties of the equation. Recall that every measured quantity consists of a number and a unit. Changing the choice of units for a quantity results in a different number to represent that same value. <dfn class="terminology">Dimensional analysis</dfn> refers to the analysis of the choice of units in order to simplify the equation.</div>
+<div class="para" id="subsec-diffeq-rescaling-3">The two variables for our problem are time <span class="process-math">\(t\)</span> and population <span class="process-math">\(P\text{.}\)</span> This means that we can choose a unit time and a unit population. The derivative <span class="process-math">\(P'\)</span> will have units that match the population unit divided by the time unit. The carrying capacity <span class="process-math">\(K\)</span> also has the dimension of a population so that it can serve as a natural population unit. We would like to find an appropriate time unit <span class="process-math">\(T\)</span> in terms of our model parameters.</div>
+<div class="para logical" id="subsec-diffeq-rescaling-4">
+<div class="para">To analyze the dimensions of the equation, we will explicitly consider time <span class="process-math">\(t\)</span> as a unit time <span class="process-math">\(T\)</span> and the corresponding numerical value <span class="process-math">\(\tau\text{,}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+t = T \tau\text{.}
+\end{equation*}
+</div>
+<div class="para">Similarly, we will explicitly consider the population <span class="process-math">\(P\)</span> as the unit population <span class="process-math">\(K\)</span> and the corresponding numerical value <span class="process-math">\(p\text{,}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+P = K p\text{.}
+\end{equation*}
+</div>
+<div class="para">Furthermore, the derivative can be rewritten as</div>
+<div class="displaymath process-math">
+\begin{equation*}
+P' = \frac{dP}{dt} = \frac{K}{T} \frac{dp}{d\tau}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="subsec-diffeq-rescaling-5">
+<div class="para">When we substitute our dimensional replacements into the differential equation, we can find a dimensionless differential equation describing the numerical values <span class="process-math">\(p\)</span> with respect to <span class="process-math">\(\tau\text{.}\)</span>
+</div>
+<div class="displaymath process-math" id="subsec-diffeq-rescaling-5-3">
+\begin{align*}
+P' \amp = r_0 P (1-\frac{P}{K}) \\
+\frac{K}{T} \frac{dp}{d\tau} = r_0 Kp (1-\frac{Kp}{K}) \\
+\frac{1}{T} \frac{dp}{d\tau} = r_0 p (1-p) \\
+\frac{dp}{d\tau} = r_0 T p (1-p) 
+\end{align*}
+</div>
+<div class="para">Because <span class="process-math">\(p\)</span> and <span class="process-math">\(\tau\)</span> are dimensionless, every term in the equation must be dimensionless. This means that the product <span class="process-math">\(r_0 T\)</span> is dimensionless, which can only occur if <span class="process-math">\(r_0\)</span> has dimensions of inverse time. If we <em class="emphasis">choose</em> <span class="process-math">\(T = \frac{1}{r_0}\text{,}\)</span> then the dimensionless differential equation becomes</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{dp}{d\tau} = p(1-p)\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="subsec-diffeq-rescaling-6">
+<div class="para">Our dimensional analysis used both parameters <span class="process-math">\(r_0\)</span> and <span class="process-math">\(K\)</span> in order to set our time and population units. The resulting differential equation has no remaining parameters. Analyzing the differential equation</div>
+<div class="displaymath process-math">
+\begin{equation*}
+p' = p(1-p)
+\end{equation*}
+</div>
+<div class="para">captures all of the dynamics for our model, regardless of the choice of parameters that are used. This provides formal justification for our earlier statement that <em class="emphasis">all</em> logistic differential equations behave the same way. Different values of <span class="process-math">\(r_0\)</span> and <span class="process-math">\(K\)</span> do not change the shape of solution functions; they only change the scales for time and the population.</div>
+</div>
+<figure class="listing figure-like" id="subsec-diffeq-rescaling-7"><div class="code-box"><pre class="program"><code class="language-r">library(dplyr)
+library(deSolve)
+library(ggplot2)
+library(ggquiver)
+
+# function for slope field
+slopeF &lt;- function(t, p) {
+p*(1-p)
+}
+
+# Model parameters
+my_params &lt;- c()
+
+# Grid for slope field
+grid_pts &lt;- expand.grid(t = seq(0, 10, by = 0.5),
+                        p = seq(-0.2, 1.2, by = .05))
+slope_data &lt;- mutate(grid_pts,
+                    delta_t = 1,
+                    delta_p = slopeF(t, p)
+)
+
+# function for `ode`
+rateF &lt;- function(t, state, params) {
+with(as.list(c(state, params)), {
+    p_rate &lt;- p*(1-p)
+    list(p_rate)
+})
+}
+
+# Create several solutions
+times &lt;- seq(0, 10, by = 0.1)
+soln1 &lt;- ode(c(p=0), times, rateF, my_params)
+soln2 &lt;- ode(c(p=0.05), times, rateF, my_params)
+soln3 &lt;- ode(c(p=1), times, rateF, my_params)
+soln4 &lt;- ode(c(p=1.4), times, rateF, my_params)
+
+# Create a graph
+soln_graph &lt;- ggplot() +
+geom_quiver(data = slope_data,
+            mapping = aes(x = t, y = p,
+                            u = delta_t, v = delta_p),
+            color = "blue", vecsize = 3) +
+geom_line(data = soln1,
+            mapping = aes(x = time, y = p),
+            color = "purple", linewidth=1) +
+geom_line(data = soln2,
+            mapping = aes(x = time, y = p),
+            color = "purple", linewidth=1) +
+geom_line(data = soln3,
+            mapping = aes(x = time, y = p),
+            color = "purple", linewidth=1) +
+geom_line(data = soln4,
+            mapping = aes(x = time, y = p),
+            color = "purple", linewidth=1) +
+ylim(-0.20,1.20)
+show(soln_graph)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.2.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-diffeq-logistic-nondim-solution"><div class="image-box" style="width: 80%; margin-left: 10%; margin-right: 10%;"><img src="external/images/diffeq-logistic-nondim-solutions.png" class="contained" alt="slope field with several solution curves for the nondimensional logistic model"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.2.6<span class="period">.</span></span><span class="space"> </span>Graphs of solutions to the nondimensionalized logistic differential equation</figcaption></figure></section></section></div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="intro-differential-equations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="differential-equation-analysis.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+</div></main>
+</div>
+<div id="ptx-page-footer" class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="338 3000 8772 6866" role="img"><title>PreTeXt logo</title><g style="stroke-width:.025in; stroke:currentColor; fill:none"><polyline points="472,3590 472,9732 " style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" src="https://runestone.academy/runestone/static/images/RAIcon_cropped.png" alt="Runstone Academy logo"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" src="https://www.mathjax.org/badge/badge-square-2.png" alt="MathJax logo"></a>
+</div>
+</body>
+</html>

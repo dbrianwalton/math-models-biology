@@ -1828,9 +1828,9 @@ var ptx_lunr_docs = [
   "body": "rate of change derivative instantaneous rate of change "
 },
 {
-  "id": "differential-equations-3",
+  "id": "ex-diffeq-intro-proportional-growth",
   "level": "2",
-  "url": "intro-differential-equations.html#differential-equations-3",
+  "url": "intro-differential-equations.html#ex-diffeq-intro-proportional-growth",
   "type": "Example",
   "number": "4.1.1",
   "title": "",
@@ -1945,11 +1945,110 @@ var ptx_lunr_docs = [
   "body": "  We will find a numerical approximation for the solution of the differential equation with the intial value and include it with the slope field generated earlier.  Our R script will need to first call library(deSolve) . Then we will define our rate function to represent the formula as described. The state will only consist of the single variable . Our model does not have any additional parameters, so the parameters will not actually be used in this example. Once the differential equation is defined, we provide the initial value and times we wish to evaluate.   R script to generate numerical solution to differential equation   # Load the library library(deSolve) # Define the rate function in this form rateFcn <- function(t, state, params) { with(as.list(c(state, params)), { Q_rate <- 3*Q # Calculate the rate list(Q_rate) # Return the rate in list }) # Close the block and end the with command } # End the function # Define the initial condition init_state <- c(Q = 0.25) # (named array of values) params <- c() # empty = no parameters # Create an array of times where we evaluate # We choose the interval of calculation times <- seq(from = 1, to = 2, by = 0.1) # Find the solution solution <- ode(init_state, times, rateFcn, params) # Result has column for time and each state variable # Create a graph with both the slope field and the solution numsoln_graph <- ggplot() + geom_quiver(data = slope_field_data, mapping = aes(x = t, y = P, u = delta_t, v = delta_P), color = \"blue\", vecsize = 4) + geom_line(data = solution, mapping = aes(x = time, y = Q), color=\"purple\", linewidth = 1) show(numsoln_graph)     Graph showing a numerical solution superimposed on the corresponding slope field .   slope field with a numerical solution     "
 },
 {
+  "id": "diffeq-population-models",
+  "level": "1",
+  "url": "diffeq-population-models.html",
+  "type": "Section",
+  "number": "4.2",
+  "title": "Continuous Time Population Models",
+  "body": " Continuous Time Population Models   All of our models for single populations naturally can be framed in the context of a continuous time differential equation model. Recall that it is our task as a modeler to determine whether a discrete time model (using projections) or a continuous time model (using differential equations) is more appropriate. A discrete time model is appropriate if the change in a population value occurs in a single increment, such as when all reproduction occurs at a certain point in an annual cycle. A continuous time model will be appropriate if change occurs gradually through time.  The other major distinction between the models is that we need to think in terms of rates of change instead of quantities. For projection models, we often find ourselves thinking specifically about how many individuals enter or leave the population. For differential equations, we need to think instead in terms of how many are entering or leaving per unit time in order to get a rate. Otherwise, our reasoning will be essentially the same.  The simplest form of growth for a population is when the growth rate is proportional to the population size. This is the case of constant per capita growth. If we let represent the size of the population as a function of time (not a sequence), then the differential equation for constant per capita growth is that the rate of change of the population is equal to a constant times the population size, , where is the per capita growth constant.  Be very mindful that our equation does not show that we are adding the change to the population like we did for discrete time projection models.  From our introduction to differential equation in , we already know that solutions to this differential equation correspond to exponential growth when and exponential decay when . Discrete time models with constant per capita growth result in geometric sequences that similarly either grow or decay exponentially. Consequently, other than thinking in terms of continuous functions or discrete sequences, the models behave in very similar ways.  One major difference that we encounter with continuous time models is that our constants no longer represent just proportions. For example, in a discrete time model, the per capita death rate represents the fraction of the current population that will have died by this same time in the next cycle. This means that we always have . In a continuous time model, the per capita death rate refers to the number of deaths per individual per unit of time. Because we can have a large number of deaths in a short period of time, and a rate of change divides by the time, the rate can be quite large. The value of a per capita death rate has no constraint other than .    Continuous Logistic Growth  We turn our focus to populations that are pressured by constrained resources. In exactly the same manner as we developed our discrete time models, we can think in terms of either the per capita birth rate or the per capita death rate as being dependent on the population size. We can even use the same formulas to model this relationship.  We expect that a population experience a reduced per capita birth rate and an increased per capita death rate when the size of the population is large. Together, this implies that the per capita growth rate should be a decreasing function. The simplest choice for a decreasing function is a linear model . This is exactly the same equation as we found in ; we are just interpreting the equation in terms of rates of change instead of numbers of individuals.  Using the general relationship , but with no longer constant, we have just created our first density-dependent differential equation model for population growth, , which can be rewritten as . This model is called the continuous logistic model for population growth, which is the differential equation analogue of .  When we worked with discrete models involving density dependence, we found equilibrium values by finding fixed points of the projection function. The idea of an equilibrium is a state where the state does not change. In the language of differential equations, an equilibrium is a constant state. Because the derivative of a constant is 0, an equilibrium solution for a differential equation is a constant that is a solution to the differential equation.    Given a differential equation , a constant is an equilibrium solution if for all values of .    The rate function for the logistic differential equation does not involve . We say that the differential equation is time-independent or autonomous . For an autonomous differential equation , equilbrium solutions correspond to the roots of , solving the equation .    We find the equilibrium solutions for the logistic differential equation by solving the equation for values of . Because is a common factor, we first factor that out to find . One solution is , corresponding to an extinct population. A second solution is found by solving to get . This second root is the carrying capacity .    The logistic differential equation is often rewritten in terms of the values and . The original formula for the per capita growth rate represents a line in terms of the -intercept and the slope. The same line can be written as . Based on this representation, the differential equation becomes . This alternative representation makes it much easier to see the roots are and .  We will now explore the dynamics of our differential equation. The listing below gives R code that generates a slope field and several solutions for model parameters and , including the equilibrium solutions and .    library(dplyr) library(deSolve) library(ggplot2) library(ggquiver) # function for slope field slopeF <- function(t, P, params) { with(as.list(params), r0*P*(1-P\/K)) } # Model parameters my_params <- list(r0 = 1.25, K = 100) # Grid for slope field grid_pts <- expand.grid(t = seq(0, 10, by = 0.25), P = seq(-20, 120, by = 5)) slope_data <- mutate(grid_pts, delta_t = 1, delta_P = slopeF(t, P, my_params) ) # function for `ode` rateF <- function(t, state, params) { with(as.list(c(state, params)), { P_rate <- r0*P*(1-P\/K) list(P_rate) }) } # Create several solutions times <- seq(0, 10, by = 0.25) soln1 <- ode(c(P=0), times, rateF, my_params) soln2 <- ode(c(P=5), times, rateF, my_params) soln3 <- ode(c(P=100), times, rateF, my_params) soln4 <- ode(c(P=140), times, rateF, my_params) # Create a graph soln_graph <- ggplot() + geom_quiver(data = slope_data, mapping = aes(x = t, y = P, u = delta_t, v = delta_P), color = \"blue\", vecsize = 15) + geom_line(data = soln1, mapping = aes(x = time, y = P), color = \"purple\", linewidth=1) + geom_line(data = soln2, mapping = aes(x = time, y = P), color = \"purple\", linewidth=1) + geom_line(data = soln3, mapping = aes(x = time, y = P), color = \"purple\", linewidth=1) + geom_line(data = soln4, mapping = aes(x = time, y = P), color = \"purple\", linewidth=1) + ylim(-20,120) show(soln_graph)     Graphs of solutions to the logistic differential equation      Because they are constant, the equilibrium solutions appear as horizontal lines. When an initial condition starts between and , the solution moves away from and toward . For an initial condition above , the solution decreases toward . Although we didn't include a solution starting with , the slope field suggests solutions would decrease away from . That is, we have evidence that is an unstable equilibrium while is a stable equilibrium .    Dimensional Analysis and Rescaling  If you try different parameters for and , you will notice that the basic behavior of the logistic model always looks the same. This is a consequence of the dimensional properties of the equation. Recall that every measured quantity consists of a number and a unit. Changing the choice of units for a quantity results in a different number to represent that same value. Dimensional analysis refers to the analysis of the choice of units in order to simplify the equation.  The two variables for our problem are time and population . This means that we can choose a unit time and a unit population. The derivative will have units that match the population unit divided by the time unit. The carrying capacity also has the dimension of a population so that it can serve as a natural population unit. We would like to find an appropriate time unit in terms of our model parameters.  To analyze the dimensions of the equation, we will explicitly consider time as a unit time and the corresponding numerical value , . Similarly, we will explicitly consider the population as the unit population and the corresponding numerical value , . Furthermore, the derivative can be rewritten as .  When we substitute our dimensional replacements into the differential equation, we can find a dimensionless differential equation describing the numerical values with respect to . Because and are dimensionless, every term in the equation must be dimensionless. This means that the product is dimensionless, which can only occur if has dimensions of inverse time. If we choose  , then the dimensionless differential equation becomes .  Our dimensional analysis used both parameters and in order to set our time and population units. The resulting differential equation has no remaining parameters. Analyzing the differential equation captures all of the dynamics for our model, regardless of the choice of parameters that are used. This provides formal justification for our earlier statement that all logistic differential equations behave the same way. Different values of and do not change the shape of solution functions; they only change the scales for time and the population.    library(dplyr) library(deSolve) library(ggplot2) library(ggquiver) # function for slope field slopeF <- function(t, p) { p*(1-p) } # Model parameters my_params <- c() # Grid for slope field grid_pts <- expand.grid(t = seq(0, 10, by = 0.5), p = seq(-0.2, 1.2, by = .05)) slope_data <- mutate(grid_pts, delta_t = 1, delta_p = slopeF(t, p) ) # function for `ode` rateF <- function(t, state, params) { with(as.list(c(state, params)), { p_rate <- p*(1-p) list(p_rate) }) } # Create several solutions times <- seq(0, 10, by = 0.1) soln1 <- ode(c(p=0), times, rateF, my_params) soln2 <- ode(c(p=0.05), times, rateF, my_params) soln3 <- ode(c(p=1), times, rateF, my_params) soln4 <- ode(c(p=1.4), times, rateF, my_params) # Create a graph soln_graph <- ggplot() + geom_quiver(data = slope_data, mapping = aes(x = t, y = p, u = delta_t, v = delta_p), color = \"blue\", vecsize = 3) + geom_line(data = soln1, mapping = aes(x = time, y = p), color = \"purple\", linewidth=1) + geom_line(data = soln2, mapping = aes(x = time, y = p), color = \"purple\", linewidth=1) + geom_line(data = soln3, mapping = aes(x = time, y = p), color = \"purple\", linewidth=1) + geom_line(data = soln4, mapping = aes(x = time, y = p), color = \"purple\", linewidth=1) + ylim(-0.20,1.20) show(soln_graph)     Graphs of solutions to the nondimensionalized logistic differential equation   slope field with several solution curves for the nondimensional logistic model     "
+},
+{
+  "id": "subsec-diffeq-popn-density-dependent-4",
+  "level": "2",
+  "url": "diffeq-population-models.html#subsec-diffeq-popn-density-dependent-4",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "continuous logistic model "
+},
+{
+  "id": "def-diffeq-equilibrium",
+  "level": "2",
+  "url": "diffeq-population-models.html#def-diffeq-equilibrium",
+  "type": "Definition",
+  "number": "4.2.1",
+  "title": "",
+  "body": "  Given a differential equation , a constant is an equilibrium solution if for all values of .   "
+},
+{
+  "id": "subsec-diffeq-popn-density-dependent-7",
+  "level": "2",
+  "url": "diffeq-population-models.html#subsec-diffeq-popn-density-dependent-7",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "time-independent autonomous "
+},
+{
+  "id": "subsec-diffeq-popn-density-dependent-8",
+  "level": "2",
+  "url": "diffeq-population-models.html#subsec-diffeq-popn-density-dependent-8",
+  "type": "Example",
+  "number": "4.2.2",
+  "title": "",
+  "body": "  We find the equilibrium solutions for the logistic differential equation by solving the equation for values of . Because is a common factor, we first factor that out to find . One solution is , corresponding to an extinct population. A second solution is found by solving to get . This second root is the carrying capacity .   "
+},
+{
+  "id": "subsec-diffeq-popn-density-dependent-11",
+  "level": "2",
+  "url": "diffeq-population-models.html#subsec-diffeq-popn-density-dependent-11",
+  "type": "Listing",
+  "number": "4.2.3",
+  "title": "",
+  "body": "  library(dplyr) library(deSolve) library(ggplot2) library(ggquiver) # function for slope field slopeF <- function(t, P, params) { with(as.list(params), r0*P*(1-P\/K)) } # Model parameters my_params <- list(r0 = 1.25, K = 100) # Grid for slope field grid_pts <- expand.grid(t = seq(0, 10, by = 0.25), P = seq(-20, 120, by = 5)) slope_data <- mutate(grid_pts, delta_t = 1, delta_P = slopeF(t, P, my_params) ) # function for `ode` rateF <- function(t, state, params) { with(as.list(c(state, params)), { P_rate <- r0*P*(1-P\/K) list(P_rate) }) } # Create several solutions times <- seq(0, 10, by = 0.25) soln1 <- ode(c(P=0), times, rateF, my_params) soln2 <- ode(c(P=5), times, rateF, my_params) soln3 <- ode(c(P=100), times, rateF, my_params) soln4 <- ode(c(P=140), times, rateF, my_params) # Create a graph soln_graph <- ggplot() + geom_quiver(data = slope_data, mapping = aes(x = t, y = P, u = delta_t, v = delta_P), color = \"blue\", vecsize = 15) + geom_line(data = soln1, mapping = aes(x = time, y = P), color = \"purple\", linewidth=1) + geom_line(data = soln2, mapping = aes(x = time, y = P), color = \"purple\", linewidth=1) + geom_line(data = soln3, mapping = aes(x = time, y = P), color = \"purple\", linewidth=1) + geom_line(data = soln4, mapping = aes(x = time, y = P), color = \"purple\", linewidth=1) + ylim(-20,120) show(soln_graph)   "
+},
+{
+  "id": "fig-diffeq-logistic-solution",
+  "level": "2",
+  "url": "diffeq-population-models.html#fig-diffeq-logistic-solution",
+  "type": "Figure",
+  "number": "4.2.4",
+  "title": "",
+  "body": " Graphs of solutions to the logistic differential equation     "
+},
+{
+  "id": "subsec-diffeq-popn-density-dependent-13",
+  "level": "2",
+  "url": "diffeq-population-models.html#subsec-diffeq-popn-density-dependent-13",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "unstable equilibrium stable equilibrium "
+},
+{
+  "id": "subsec-diffeq-rescaling-2",
+  "level": "2",
+  "url": "diffeq-population-models.html#subsec-diffeq-rescaling-2",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "Dimensional analysis "
+},
+{
+  "id": "subsec-diffeq-rescaling-7",
+  "level": "2",
+  "url": "diffeq-population-models.html#subsec-diffeq-rescaling-7",
+  "type": "Listing",
+  "number": "4.2.5",
+  "title": "",
+  "body": "  library(dplyr) library(deSolve) library(ggplot2) library(ggquiver) # function for slope field slopeF <- function(t, p) { p*(1-p) } # Model parameters my_params <- c() # Grid for slope field grid_pts <- expand.grid(t = seq(0, 10, by = 0.5), p = seq(-0.2, 1.2, by = .05)) slope_data <- mutate(grid_pts, delta_t = 1, delta_p = slopeF(t, p) ) # function for `ode` rateF <- function(t, state, params) { with(as.list(c(state, params)), { p_rate <- p*(1-p) list(p_rate) }) } # Create several solutions times <- seq(0, 10, by = 0.1) soln1 <- ode(c(p=0), times, rateF, my_params) soln2 <- ode(c(p=0.05), times, rateF, my_params) soln3 <- ode(c(p=1), times, rateF, my_params) soln4 <- ode(c(p=1.4), times, rateF, my_params) # Create a graph soln_graph <- ggplot() + geom_quiver(data = slope_data, mapping = aes(x = t, y = p, u = delta_t, v = delta_p), color = \"blue\", vecsize = 3) + geom_line(data = soln1, mapping = aes(x = time, y = p), color = \"purple\", linewidth=1) + geom_line(data = soln2, mapping = aes(x = time, y = p), color = \"purple\", linewidth=1) + geom_line(data = soln3, mapping = aes(x = time, y = p), color = \"purple\", linewidth=1) + geom_line(data = soln4, mapping = aes(x = time, y = p), color = \"purple\", linewidth=1) + ylim(-0.20,1.20) show(soln_graph)   "
+},
+{
+  "id": "fig-diffeq-logistic-nondim-solution",
+  "level": "2",
+  "url": "diffeq-population-models.html#fig-diffeq-logistic-nondim-solution",
+  "type": "Figure",
+  "number": "4.2.6",
+  "title": "",
+  "body": " Graphs of solutions to the nondimensionalized logistic differential equation   slope field with several solution curves for the nondimensional logistic model   "
+},
+{
   "id": "differential-equation-analysis",
   "level": "1",
   "url": "differential-equation-analysis.html",
   "type": "Section",
-  "number": "4.2",
+  "number": "4.3",
   "title": "Analysis of Differential Equations",
   "body": " Analysis of Differential Equations   Differential equation models and sequence projection models have many similarities as well as differences. Just as we looked for equilibrium solutions for projection models in discrete time, we will look for equilibrium solutions for differential equation models in continuous time. Those equilibria can be stable or unstable. However, unlike sequence models, a differential equation model can not pass across an equilibrium solution. The graphical analysis of sequences using a cobweb diagram for discrete jumps is replaced for differential equations by the idea of a phase line.    Equilibria for Differential Equations  The concept of an equilibrium is that the state of the system is not changing. For variables, this means that the dynamic variables are constant functions with respect to time. Constant functions have a zero rate of change. We find equilibria solutions to a differential equation by solving the equation and look for solutions of the form for some constant . Other solutions that involve the variable are not equilibrium solution but instead describe other points where the instantaneous rate of change is zero but for which the function changes at other times.    Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives The solution is of the form is a constant and is therefore an equilibrium solution.      Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives either or , which give two equilibrium solutions and .    When we wanted to understand the stability of equilibria resulting from projection function models, we started by considering linear projection functions. For differential equations, we do similar analysis. We start with proportional rates of change models and then apply that to linear rates of change models.   Exponential Growth\/Decay Models   A differential equation of the form where is a constant, so that the rate of change of is proportional to the value of , has solutions that are exponential with rate . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as while as .  (exponential decay): as while as .     A differential equation of the form can be transformed into an exponential growth\/decay model by rewriting the model in terms of the equilibrium, found by . The equilibrium is so that the growth rate model can be rewritten as Because is a constant, . The rules of calculus allow us to define and find the differential equation Thus, is an exponential model and is shifted to be centered around the equilibrium.   Shifted Exponential Growth\/Decay Models   A differential equation of the form where and are constant has solutions that are exponential functions with rate shifted by the equilibrium . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as (unstable).  (exponential decay): as (stable).     Nonlinear growth rates that depend only on the dependent variable, , have equilibria at all of the values so that . Consider an equilibrium at . We can approximate the differential equation by the tangent line approximation at to determine stability of the equilibrium as long as . Then approximation suggests for values of sufficiently near . This is a linear rate function that leads to a shifted exponential model.   Local Stability of Equilibria   Suppose a differential equation of the form has an equilibrium at so that . Then if , the local stability of the equilibrium can be determined by the sign of .  (exponential growth): increases, at least initially.  (exponential decay): decreases.      The discrete logistic model in discrete time has a growth term defined by . This is saying that the total increment of change in the population over the course of the time increment is given by the formula . If we interpret that formula as a rate of change instead of the total increment of change, we arrive at the continuous-time logistic growth model where and are positive constants.  The equilibria for this model are found by solving to give and . The growth rate formula has a derivative . Computing the derivative at each equilibrium informs us of the stability of that solution.  so is an unstable equilibrium.  so is a stable equilibrium.  The following Sage script generates a typical slope field and several solutions coming from different initial values that illustrate the stability of these equilbria. Notice how solutions move away from the unstable equilibrium solution but towards the stable equilibrium solution.      Phase Lines  A differential equation with a rate that depends only on the dependent variable is called autonomous , such as . This is analogous to a sequence that can be defined recursively with a projection function. For a recursive sequence, we could study it geometrically using a cobweb diagram. When the projection function is above the line , the sequence increases; when the projection function is below the line, the sequence decreases.  For an autonomous differential equation, , we can use the graph of the rate function to understand the behavior of the solution function. When the rate function is positive (above the axis), the solution will be an increasing function. When the rate function is negative (below the axis), the solution will be a decreasing function. Equilibrium solutions correspond to values of where . We can summarize this behavior by drawing a number line with arrows pointing in the direction of increasing or decreasing between equilibrium values. Such a number line is called a phase line .   Consider the autonomous differential equation . We will generate a phase line summary of possible solution behaviors.  The graph of the rate function is a concave up parabola with roots at , shown below.       The roots of the rate function are the equilibrium solutions, and . Between the equilibria, the rate function is negative, so any solutions with initial values between the equilibria will be decreasing functions going away from the upper equilibrium and toward the lower equilibrium. If the initial value is above the equilibria, , then the solution will be an increasing function that grows without bound. If the initial value is below the equilibra, , then the solution will also be an increasing function but will grow at a slower rate as it approaches the lower equilibrium. The equilibria and the three intervals for initial values are summarized in the phase line below.       This phase line might be easier visualized in relation to the graph of different solutions if we drew it vertically on an axis so that arrows pointing to the right (increasing) represent solutions that rise (increasing) and arrows point to the left (decreasing) represent solutions that fall (decreasing). The equilibrium solutions correspond to solutions that remain constant. We see that is an unstable equilibrium while is a stable equilibrium.         "
 },
@@ -1958,7 +2057,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "differential-equation-analysis.html#diffeq-equilibria-3",
   "type": "Example",
-  "number": "4.2.1",
+  "number": "4.3.1",
   "title": "",
   "body": "  Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives The solution is of the form is a constant and is therefore an equilibrium solution.   "
 },
@@ -1967,7 +2066,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "differential-equation-analysis.html#diffeq-equilibria-4",
   "type": "Example",
-  "number": "4.2.2",
+  "number": "4.3.2",
   "title": "",
   "body": "  Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives either or , which give two equilibrium solutions and .   "
 },
@@ -1976,7 +2075,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "differential-equation-analysis.html#diffeq-exponential-models",
   "type": "Theorem",
-  "number": "4.2.3",
+  "number": "4.3.3",
   "title": "Exponential Growth\/Decay Models.",
   "body": " Exponential Growth\/Decay Models   A differential equation of the form where is a constant, so that the rate of change of is proportional to the value of , has solutions that are exponential with rate . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as while as .  (exponential decay): as while as .    "
 },
@@ -1985,7 +2084,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "differential-equation-analysis.html#diffeq-shifted-exponential-models",
   "type": "Theorem",
-  "number": "4.2.4",
+  "number": "4.3.4",
   "title": "Shifted Exponential Growth\/Decay Models.",
   "body": " Shifted Exponential Growth\/Decay Models   A differential equation of the form where and are constant has solutions that are exponential functions with rate shifted by the equilibrium . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as (unstable).  (exponential decay): as (stable).    "
 },
@@ -1994,7 +2093,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "differential-equation-analysis.html#diffeq-nonlinear-equilibria-stability",
   "type": "Theorem",
-  "number": "4.2.5",
+  "number": "4.3.5",
   "title": "Local Stability of Equilibria.",
   "body": " Local Stability of Equilibria   Suppose a differential equation of the form has an equilibrium at so that . Then if , the local stability of the equilibrium can be determined by the sign of .  (exponential growth): increases, at least initially.  (exponential decay): decreases.    "
 },
@@ -2003,7 +2102,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "differential-equation-analysis.html#diffeq-equilibria-11",
   "type": "Example",
-  "number": "4.2.6",
+  "number": "4.3.6",
   "title": "",
   "body": " The discrete logistic model in discrete time has a growth term defined by . This is saying that the total increment of change in the population over the course of the time increment is given by the formula . If we interpret that formula as a rate of change instead of the total increment of change, we arrive at the continuous-time logistic growth model where and are positive constants.  The equilibria for this model are found by solving to give and . The growth rate formula has a derivative . Computing the derivative at each equilibrium informs us of the stability of that solution.  so is an unstable equilibrium.  so is a stable equilibrium.  The following Sage script generates a typical slope field and several solutions coming from different initial values that illustrate the stability of these equilbria. Notice how solutions move away from the unstable equilibrium solution but towards the stable equilibrium solution.   "
 },
@@ -2030,7 +2129,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "differential-equation-analysis.html#diffeq-phase-line-4",
   "type": "Example",
-  "number": "4.2.7",
+  "number": "4.3.7",
   "title": "",
   "body": " Consider the autonomous differential equation . We will generate a phase line summary of possible solution behaviors.  The graph of the rate function is a concave up parabola with roots at , shown below.       The roots of the rate function are the equilibrium solutions, and . Between the equilibria, the rate function is negative, so any solutions with initial values between the equilibria will be decreasing functions going away from the upper equilibrium and toward the lower equilibrium. If the initial value is above the equilibria, , then the solution will be an increasing function that grows without bound. If the initial value is below the equilibra, , then the solution will also be an increasing function but will grow at a slower rate as it approaches the lower equilibrium. The equilibria and the three intervals for initial values are summarized in the phase line below.       This phase line might be easier visualized in relation to the graph of different solutions if we drew it vertically on an axis so that arrows pointing to the right (increasing) represent solutions that rise (increasing) and arrows point to the left (decreasing) represent solutions that fall (decreasing). The equilibrium solutions correspond to solutions that remain constant. We see that is an unstable equilibrium while is a stable equilibrium.       "
 },

@@ -260,10 +260,17 @@ eBookConfig.enable_chatcodes =  false;
 </ul>
 </li>
 <li class="toc-item toc-section">
-<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<div class="toc-title-box"><a href="diffeq-population-models.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Continuous Time Population Models</span></a></div>
 <ul class="structural toc-item-list">
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">4.2.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">4.2.2</span> <span class="title">Phase Lines</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-popn-density-dependent" class="internal"><span class="codenumber">4.2.1</span> <span class="title">Continuous Logistic Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-rescaling" class="internal"><span class="codenumber">4.2.2</span> <span class="title">Dimensional Analysis and Rescaling</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">4.3.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">4.3.2</span> <span class="title">Phase Lines</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -385,10 +392,10 @@ r = b - d = b - (d_0 + a P) = (b-d_0) - a P\text{.}
 </div>
 <div class="para">If we defined <span class="process-math">\(r_0 = b - d_0\)</span> as the per capita growth rate in the absence of individuals, then we see that <span class="process-math">\(r\)</span> is a decreasing linear function of <span class="process-math">\(P\text{,}\)</span>
 </div>
-<div class="displaymath process-math">
-\begin{equation*}
-r = r_0 - a P\text{.}
-\end{equation*}
+<div class="displaymath process-math" id="eq-per-capita-growth-discrete-logistic">
+\begin{equation}
+r = r_0 - a P\text{.}\tag{2.3.1}
+\end{equation}
 </div>
 <div class="para">Specifically for our simulation, our estimates for the parameters are <span class="process-math">\(b = 0.047877\)</span> and <span class="process-math">\(d = 0.032492 + 3.7966 \times 10^{-6} P\text{,}\)</span> so that <span class="process-math">\(r_0 = 0.015385\)</span> and <span class="process-math">\(a = 3.7966 \times 10^{-6}\text{.}\)</span>
 </div>
@@ -407,10 +414,10 @@ P_{n+1} = P_n + (r_0 - a P_n) P_n\text{.}
 \end{equation*}
 </div>
 <div class="para">Distributing out the <span class="process-math">\(P_n\)</span> on the right, we arrive at a model equation,</div>
-<div class="displaymath process-math">
-\begin{equation*}
-P_{n+1} = P_n + r_0 P_n - a P_n^2\text{,}
-\end{equation*}
+<div class="displaymath process-math" id="eq-discrete-logistic-model">
+\begin{equation}
+P_{n+1} = P_n + r_0 P_n - a P_n^2\text{,}\tag{2.3.2}
+\end{equation}
 </div>
 <div class="para">where <span class="process-math">\(r_0 \ge -1\)</span> and <span class="process-math">\(a &gt; 0\)</span> are the model parameters.</div>
 </div>
