@@ -70,5 +70,243 @@
             <men xml:id="eq-continuous-logistic-model">P' = r_0 P - a P^2</men>.
             This model is called the <term>continuous logistic model</term> for population growth, which is the differential equation analogue of <xref ref="eq-discrete-logistic-model"/>.
         </p>
+        <p>
+            When we worked with discrete models involving density dependence, we found equilibrium values by finding fixed points of the projection function.
+            The idea of an equilibrium is a state where the state does not change.
+            In the language of differential equations, an equilibrium is a constant state.
+            Because the derivative of a constant is 0, an equilibrium solution for a differential equation is a constant that is a solution to the differential equation.
+        </p>
+        <definition xml:id="def-diffeq-equilibrium">
+            <statement>
+                <p>
+                    Given a differential equation <m>Q' = f(t,Q)</m>, a constant <m>Q^*</m> is an <term>equilibrium solution</term> if <m>f(t, Q^*) = 0</m> for all values of <m>t</m>.
+                </p>
+            </statement>
+        </definition>
+        <p>
+            The rate function for the logistic differential equation does not involve <m>t</m>.
+            We say that the differential equation is <term>time-independent</term> or <term>autonomous</term>.
+            For an autonomous differential equation <m>Q' = f(Q)</m>, equilbrium solutions correspond to the roots of <m>f</m>, solving the equation <m>f(Q) = 0</m>.
+        </p>
+        <example>
+            <statement>
+                <p>
+                    We find the equilibrium solutions for the logistic differential equation by solving the equation
+                    <me>r_0 P - a P^2 = 0</me>
+                    for values of <m>P</m>.
+                    Because <m>P</m> is a common factor, we first factor that out to find
+                    <me>P(r_0 - aP) = 0</me>.
+                    One solution is <m>P=0</m>, corresponding to an extinct population.
+                    A second solution is found by solving <m>r_0 - aP = 0</m> to get <m>P = \frac{r_0}{a}</m>.
+                    This second root is the carrying capacity <m>K = \frac{r_0}{a}</m>.
+                </p>
+            </statement>
+        </example>
+        <p>
+            The logistic differential equation is often rewritten in terms of the values <m>r_0</m> and <m>K</m>.
+            The original formula for the per capita growth rate <m>r=r_0 - a P</m> represents a line in terms of the <m>y</m>-intercept and the slope.
+            The same line can be written as <m>r = r_0 (1 - \frac{P}{K}))</m>.
+            Based on this representation, the differential equation becomes
+            <me>P' = r_0 P (1 - \frac{P}{K})</me>.
+            This alternative representation makes it much easier to see the roots are <m>P=0</m> and <m>P=K</m>.
+        </p>
+        <p>
+            We will now explore the dynamics of our differential equation.
+            The listing below gives R code that generates a slope field and several solutions for model parameters <m>r_0 = 1.25</m> and <m>K=100</m>, including the equilibrium solutions <m>P=0</m> and <m>P=100</m>.
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[
+                library(dplyr)
+                library(deSolve)
+                library(ggplot2)
+                library(ggquiver)
+
+                # function for slope field
+                slopeF <- function(t, P, params) {
+                with(as.list(params), r0*P*(1-P/K))
+                }
+
+                # Model parameters
+                my_params <- list(r0 = 1.25, K = 100)
+
+                # Grid for slope field
+                grid_pts <- expand.grid(t = seq(0, 10, by = 0.25),
+                                        P = seq(-20, 120, by = 5))
+                slope_data <- mutate(grid_pts,
+                                    delta_t = 1,
+                                    delta_P = slopeF(t, P, my_params)
+                )
+
+                # function for `ode`
+                rateF <- function(t, state, params) {
+                with(as.list(c(state, params)), {
+                    P_rate <- r0*P*(1-P/K)
+                    list(P_rate)
+                })
+                }
+
+                # Create several solutions
+                times <- seq(0, 10, by = 0.25)
+                soln1 <- ode(c(P=0), times, rateF, my_params)
+                soln2 <- ode(c(P=5), times, rateF, my_params)
+                soln3 <- ode(c(P=100), times, rateF, my_params)
+                soln4 <- ode(c(P=140), times, rateF, my_params)
+
+                # Create a graph
+                soln_graph <- ggplot() +
+                geom_quiver(data = slope_data,
+                            mapping = aes(x = t, y = P,
+                                            u = delta_t, v = delta_P),
+                            color = "blue", vecsize = 15) +
+                geom_line(data = soln1,
+                            mapping = aes(x = time, y = P),
+                            color = "purple", linewidth=1) +
+                geom_line(data = soln2,
+                            mapping = aes(x = time, y = P),
+                            color = "purple", linewidth=1) +
+                geom_line(data = soln3,
+                            mapping = aes(x = time, y = P),
+                            color = "purple", linewidth=1) +
+                geom_line(data = soln4,
+                        mapping = aes(x = time, y = P),
+                        color = "purple", linewidth=1) +
+                ylim(-20,120)
+                show(soln_graph)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <figure xml:id="fig-diffeq-logistic-solution">
+            <caption>Graphs of solutions to the logistic differential equation</caption>
+            <image width="80%" source="images/diffeq-logistic-solutions.png">
+                <shortdescription></shortdescription>
+            </image>
+        </figure>
+        <p>
+            Because they are constant, the equilibrium solutions appear as horizontal lines.
+            When an initial condition starts between <m>P=0</m> and <m>P=K</m>, the solution moves away from <m>P=0</m> and toward <m>P=K</m>.
+            For an initial condition above <m>P=K</m>, the solution decreases toward <m>P=K</m>.
+            Although we didn't include a solution starting with <m>P \lt 0</m>, the slope field suggests solutions would decrease away from <m>P=0</m>.
+            That is, we have evidence that <m>P=0</m> is an <term>unstable equilibrium</term> while <m>P=K</m> is a <term>stable equilibrium</term>.
+        </p>
+    </subsection>
+    <subsection xml:id="subsec-diffeq-rescaling">
+        <title>Dimensional Analysis and Rescaling</title>
+        <p>
+            If you try different parameters for <m>r_0</m> and <m>K</m>, you will notice that the basic behavior of the logistic model always looks the same.
+            This is a consequence of the dimensional properties of the equation.
+            Recall that every measured quantity consists of a number and a unit.
+            Changing the choice of units for a quantity results in a different number to represent that same value.
+            <term>Dimensional analysis</term> refers to the analysis of the choice of units in order to simplify the equation.
+        </p>
+        <p>
+            The two variables for our problem are time <m>t</m> and population <m>P</m>.
+            This means that we can choose a unit time and a unit population.
+            The derivative <m>P'</m> will have units that match the population unit divided by the time unit.
+            The carrying capacity <m>K</m> also has the dimension of a population so that it can serve as a natural population unit.
+            We would like to find an appropriate time unit <m>T</m> in terms of our model parameters.
+        </p>
+        <p>
+            To analyze the dimensions of the equation, we will explicitly consider time <m>t</m> as a unit time <m>T</m> and the corresponding numerical value <m>\tau</m>,
+            <me>t = T \tau</me>.
+            Similarly, we will explicitly consider the population <m>P</m> as the unit population <m>K</m> and the corresponding numerical value <m>p</m>,
+            <me>P = K p</me>.
+            Furthermore, the derivative can be rewritten as
+            <me>P' = \frac{dP}{dt} = \frac{K}{T} \frac{dp}{d\tau}</me>.
+        </p>
+        <p>
+            When we substitute our dimensional replacements into the differential equation, we can find a dimensionless differential equation describing the numerical values <m>p</m> with respect to <m>\tau</m>.
+            <md>
+                <mrow>P' \amp = r_0 P (1-\frac{P}{K}) </mrow>
+                <mrow>\frac{K}{T} \frac{dp}{d\tau} = r_0 Kp (1-\frac{Kp}{K}) </mrow>
+                <mrow>\frac{1}{T} \frac{dp}{d\tau} = r_0 p (1-p) </mrow>
+                <mrow>\frac{dp}{d\tau} = r_0 T p (1-p) </mrow>
+            </md>
+            Because <m>p</m> and <m>\tau</m> are dimensionless, every term in the equation must be dimensionless.
+            This means that the product <m>r_0 T</m> is dimensionless, which can only occur if <m>r_0</m> has dimensions of inverse time.
+            If we <em>choose</em> <m>T = \frac{1}{r_0}</m>, then the dimensionless differential equation becomes
+            <me>\frac{dp}{d\tau} = p(1-p)</me>.
+        </p>
+        <p>
+            Our dimensional analysis used both parameters <m>r_0</m> and <m>K</m> in order to set our time and population units.
+            The resulting differential equation has no remaining parameters.
+            Analyzing the differential equation
+            <me>p' = p(1-p)</me>
+            captures all of the dynamics for our model, regardless of the choice of parameters that are used.
+            This provides formal justification for our earlier statement that <em>all</em> logistic differential equations behave the same way.
+            Different values of <m>r_0</m> and <m>K</m> do not change the shape of solution functions; they only change the scales for time and the population.
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[
+                library(dplyr)
+                library(deSolve)
+                library(ggplot2)
+                library(ggquiver)
+
+                # function for slope field
+                slopeF <- function(t, p) {
+                p*(1-p)
+                }
+
+                # Model parameters
+                my_params <- c()
+
+                # Grid for slope field
+                grid_pts <- expand.grid(t = seq(0, 10, by = 0.5),
+                                        p = seq(-0.2, 1.2, by = .05))
+                slope_data <- mutate(grid_pts,
+                                    delta_t = 1,
+                                    delta_p = slopeF(t, p)
+                )
+
+                # function for `ode`
+                rateF <- function(t, state, params) {
+                with(as.list(c(state, params)), {
+                    p_rate <- p*(1-p)
+                    list(p_rate)
+                })
+                }
+
+                # Create several solutions
+                times <- seq(0, 10, by = 0.1)
+                soln1 <- ode(c(p=0), times, rateF, my_params)
+                soln2 <- ode(c(p=0.05), times, rateF, my_params)
+                soln3 <- ode(c(p=1), times, rateF, my_params)
+                soln4 <- ode(c(p=1.4), times, rateF, my_params)
+
+                # Create a graph
+                soln_graph <- ggplot() +
+                geom_quiver(data = slope_data,
+                            mapping = aes(x = t, y = p,
+                                            u = delta_t, v = delta_p),
+                            color = "blue", vecsize = 3) +
+                geom_line(data = soln1,
+                            mapping = aes(x = time, y = p),
+                            color = "purple", linewidth=1) +
+                geom_line(data = soln2,
+                            mapping = aes(x = time, y = p),
+                            color = "purple", linewidth=1) +
+                geom_line(data = soln3,
+                            mapping = aes(x = time, y = p),
+                            color = "purple", linewidth=1) +
+                geom_line(data = soln4,
+                            mapping = aes(x = time, y = p),
+                            color = "purple", linewidth=1) +
+                ylim(-0.20,1.20)
+                show(soln_graph)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <figure xml:id="fig-diffeq-logistic-nondim-solution">
+            <caption>Graphs of solutions to the nondimensionalized logistic differential equation</caption>
+            <image width="80%" source="images/diffeq-logistic-nondim-solutions.png">
+                <shortdescription>slope field with several solution curves for the nondimensional logistic model</shortdescription>
+            </image>
+        </figure>
     </subsection>
 </section>
