@@ -267,10 +267,17 @@ eBookConfig.enable_chatcodes =  false;
 </ul>
 </li>
 <li class="toc-item toc-section">
-<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<div class="toc-title-box"><a href="sec-diffeq-equilibria.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Differential Equation Analysis of Equilibria</span></a></div>
 <ul class="structural toc-item-list">
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">4.3.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">4.3.2</span> <span class="title">Phase Lines</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-diffeq-equilibria.html#subsec-diffeq-phase-line" class="internal"><span class="codenumber">4.3.1</span> <span class="title">The Phase Line</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-diffeq-equilibria.html#subsec-equilibria-examples" class="internal"><span class="codenumber">4.3.2</span> <span class="title">Applications</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">4.4.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">4.4.2</span> <span class="title">Phase Lines</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -333,17 +340,23 @@ f'(x) = \frac{b(1-a)}{(bx+1)^2}
 </div>
 </div>
 <div class="para logical" id="subsec-structure-density-model-5">
-<div class="para">Using this mortality rate for larvae, and the uniform reproductive rate for adults, we obtain a modified density-dependent mosquito model. Because the larvae mortality rate always appeared as <span class="process-math">\(1-\mu_L\text{,}\)</span> we will rewrite this first,</div>
-<div class="displaymath process-math" id="subsec-structure-density-model-5-2">
+<div class="para">Using this mortality rate for larvae, and the uniform reproductive rate for adults, we obtain a modified density-dependent mosquito model. Because the larvae mortality rate in <a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3-7-1" class="xref" data-knowl="./knowl/xref/eqn-ELPA-larva-uniform-reproduction.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 3.3.2">(3.3.2)</a> and <a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3-7-1" class="xref" data-knowl="./knowl/xref/eqn-ELPA-pupa-uniform-reproduction.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 3.3.3">(3.3.3)</a> always appeared as <span class="process-math">\(1-\mu_L\text{,}\)</span> we will rewrite this first. We now know that <span class="process-math">\(\mu_L\)</span> is a function of <span class="process-math">\(L\)</span> with</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/eqn-ELPA-larva-uniform-reproduction.html ./knowl/xref/eqn-ELPA-pupa-uniform-reproduction.html ./knowl/xref/eqn-ELPA-larva-uniform-reproduction.html ./knowl/xref/eqn-ELPA-pupa-uniform-reproduction.html">
+\begin{equation*}
+\mu_L = \frac{bL+a}{bL+1}
+\end{equation*}
+</div>
+<div class="para">so that we can write</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/eqn-ELPA-larva-uniform-reproduction.html ./knowl/xref/eqn-ELPA-pupa-uniform-reproduction.html ./knowl/xref/eqn-ELPA-larva-uniform-reproduction.html ./knowl/xref/eqn-ELPA-pupa-uniform-reproduction.html" id="subsec-structure-density-model-5-7">
 \begin{align*}
-1-\mu_L \amp = 1 - \frac{bx+a}{bx+1} \\
-\amp = \frac{1-a}{bx+1}\\
-\amp = \frac{1-\mu_0}{\frac{k}{1-\mu_0} x+1}\\
-\amp = \frac{(1-\mu_0)^2}{kx + 1-\mu_0}
+1-\mu_L \amp = 1 - \frac{bL+a}{bL+1} \\
+\amp = \frac{1-a}{bL+1}\\
+\amp = \frac{1-\mu_0}{\frac{k}{1-\mu_0} L+1}\\
+\amp = \frac{(1-\mu_0)^2}{kL + 1-\mu_0}
 \end{align*}
 </div>
-<div class="para">Our model equations for the population stages then become</div>
-<div class="displaymath process-math" id="subsec-structure-density-model-5-3">
+<div class="para">Substituting this result into <a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3-7-1" class="xref" data-knowl="./knowl/xref/eqn-ELPA-larva-uniform-reproduction.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 3.3.2">(3.3.2)</a> and <a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3-7-1" class="xref" data-knowl="./knowl/xref/eqn-ELPA-pupa-uniform-reproduction.html" data-reveal-label="Reveal" data-close-label="Close" title="Equation 3.3.3">(3.3.3)</a>, our system of projection equations then become (using <span class="process-math">\(L_t\)</span> in place of <span class="process-math">\(L\)</span>)</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/xref/eqn-ELPA-larva-uniform-reproduction.html ./knowl/xref/eqn-ELPA-pupa-uniform-reproduction.html ./knowl/xref/eqn-ELPA-larva-uniform-reproduction.html ./knowl/xref/eqn-ELPA-pupa-uniform-reproduction.html" id="subsec-structure-density-model-5-12">
 \begin{align}
 E_{t+1} \amp = (1-\mu_{E})(1-p_{E}) E_{t} +  {\textstyle \frac{5 N_{egg}}{\tau_{A}}} A_{t}\tag{3.4.1}\\
 L_{t+1} \amp = (1-\mu_{E}) p_{E} E_{t} + \frac{(1-\mu_{0})^2(1-p_{L}) L_{t}}{k L_t + 1 - \mu_{0}}\tag{3.4.2}\\
@@ -396,14 +409,15 @@ for (t in 1:maxT) {
 }
 
 # Visualize dynamics --- expect exponential growth so use log-scale
+library(ggplot2)
 pop_growth &lt;- ggplot() +
     # Add data; use color to label the different stages
-    geom_point(mapping = aes(x = t_seq, y = E_seq, color = "S1")) +
-    geom_point(mapping = aes(x = t_seq, y = L_seq, color = "S2")) +
-    geom_point(mapping = aes(x = t_seq, y = P_seq, color = "S3")) +
-    geom_point(mapping = aes(x = t_seq, y = A_seq, color = "S4")) +
+    geom_point(mapping = aes(x = t_seq, y = E_seq, color = "1")) +
+    geom_point(mapping = aes(x = t_seq, y = L_seq, color = "2")) +
+    geom_point(mapping = aes(x = t_seq, y = P_seq, color = "3")) +
+    geom_point(mapping = aes(x = t_seq, y = A_seq, color = "4")) +
     # Add legend information
-    scale_color_discrete(breaks=c("S1", "S2", "S3", "S4"),
+    scale_color_discrete(breaks=c("1", "2", "3", "4"),
                         labels = c("eggs","larvae","pupae","adult (F)"),
                         name="stage") +
     # Add logarithimc scale

@@ -140,7 +140,7 @@ eBookConfig.enable_chatcodes =  false;
 <ol id="searchresults" class="searchresults"></ol>
 </div>
 </div>
-<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="intro-differential-equations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-continuous-dynamics.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="differential-equation-analysis.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="intro-differential-equations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-continuous-dynamics.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="sec-diffeq-equilibria.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
 </div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
 \newcommand{\gt}{&gt;}
@@ -255,10 +255,17 @@ eBookConfig.enable_chatcodes =  false;
 </ul>
 </li>
 <li class="toc-item toc-section">
-<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<div class="toc-title-box"><a href="sec-diffeq-equilibria.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Differential Equation Analysis of Equilibria</span></a></div>
 <ul class="structural toc-item-list">
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">4.3.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
-<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">4.3.2</span> <span class="title">Phase Lines</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-diffeq-equilibria.html#subsec-diffeq-phase-line" class="internal"><span class="codenumber">4.3.1</span> <span class="title">The Phase Line</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-diffeq-equilibria.html#subsec-equilibria-examples" class="internal"><span class="codenumber">4.3.2</span> <span class="title">Applications</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="differential-equation-analysis.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Analysis of Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-equilibria" class="internal"><span class="codenumber">4.4.1</span> <span class="title">Equilibria for Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="differential-equation-analysis.html#diffeq-phase-line" class="internal"><span class="codenumber">4.4.2</span> <span class="title">Phase Lines</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -468,9 +475,9 @@ P' = \frac{dP}{dt} = \frac{K}{T} \frac{dp}{d\tau}\text{.}
 <div class="displaymath process-math" id="subsec-diffeq-rescaling-5-3">
 \begin{align*}
 P' \amp = r_0 P (1-\frac{P}{K}) \\
-\frac{K}{T} \frac{dp}{d\tau} = r_0 Kp (1-\frac{Kp}{K}) \\
-\frac{1}{T} \frac{dp}{d\tau} = r_0 p (1-p) \\
-\frac{dp}{d\tau} = r_0 T p (1-p) 
+\frac{K}{T} \frac{dp}{d\tau} \amp = r_0 Kp (1-\frac{Kp}{K}) \\
+\frac{1}{T} \frac{dp}{d\tau} \amp = r_0 p (1-p) \\
+\frac{dp}{d\tau} \amp = r_0 T p (1-p) 
 \end{align*}
 </div>
 <div class="para">Because <span class="process-math">\(p\)</span> and <span class="process-math">\(\tau\)</span> are dimensionless, every term in the equation must be dimensionless. This means that the product <span class="process-math">\(r_0 T\)</span> is dimensionless, which can only occur if <span class="process-math">\(r_0\)</span> has dimensions of inverse time. If we <em class="emphasis">choose</em> <span class="process-math">\(T = \frac{1}{r_0}\text{,}\)</span> then the dimensionless differential equation becomes</div>
@@ -549,7 +556,7 @@ show(soln_graph)
 <figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.2.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-diffeq-logistic-nondim-solution"><div class="image-box" style="width: 80%; margin-left: 10%; margin-right: 10%;"><img src="external/images/diffeq-logistic-nondim-solutions.png" class="contained" alt="slope field with several solution curves for the nondimensional logistic model"></div>
 <figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.2.6<span class="period">.</span></span><span class="space"> </span>Graphs of solutions to the nondimensionalized logistic differential equation</figcaption></figure></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="intro-differential-equations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="differential-equation-analysis.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+<a class="previous-button button" href="intro-differential-equations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="sec-diffeq-equilibria.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
 </div>
 <div id="ptx-page-footer" class="ptx-page-footer">
