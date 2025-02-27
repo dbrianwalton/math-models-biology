@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="sec-diffeq-equilibria">
+    <title>Differential Equation Analysis of Equilibria</title>
+
+    <introduction>
+        <p>
+            The logistic differential equation model provided an example where the model had two equilibria, one of which was stable and the other was unstable.
+            When a differential equation is autonomous so that 
+            <me>x' = f(x)</me>,
+            then the equilibria correspond to the roots of <m>f(x)</m> solving <m>f(x)=0</m>.
+            In this section, we will focus on some core principles about analyzing a differential equation including the stability of equilibria.
+        </p>
+    </introduction>
+    
+    <subsection xml:id='subsec-diffeq-phase-line'>
+        <title>The Phase Line</title>
+
+        <p>
+            In a differential equation, the state variable is a function of time.
+            Suppose that <m>X</m> is our state variable in a differential equation <m>X' = f(t, X)</m>.
+            Finding a solution means that we are finding a <em>function</em> <m>X(t)</m> so that at each point <m>(t, X(t))</m> on the graph of the function has a slope <m>X'(t)</m> that is equal to the slope field formula <m>f(t, X(t))</m>.
+            The <em>graph</em> of the function lives in a 2-dimensional space of points <m>(t,X)</m>.
+        </p>
+        <p>
+            We want to think of <m>X(t)</m> as existing in a 1-dimensional space representing the state alone <m>(X)</m>, but where the state changes for different values of time <m>t</m>.
+            I like to think of <m>X</m> as if it is a point living on a line, which we call the <term>phase line</term>.
+            As time advances, that point moves around on the line.
+            The function <m>X(t)</m> represents how the point's location depends on time.
+        </p>
+        <p>
+            The figure below illustrates this idea with a video.
+            Time is represented on the horizontal axis.
+            The phase line is illustrated as a line overlapping the vertical axis for our state variable <m>X</m>.
+            In the video, as time advances, the point on the phase line moves to match the value of <m>X(t)</m> on the graph.
+        </p>
+        <figure xml:id="fig-movie-phase-line-point-moving">
+            <caption><m>X(t)</m> moves along the phase line as a function of time <m>t</m>.</caption>
+            <video width="75%" source="movies/phase-line-point-moving.mp4"/>
+        </figure>
+        <p>
+            Now, consider possible behaviors of solutions for a time autonomous differential equation, <m>X' = f(X)</m>.
+            Because the differential equation does not itself depend on time, the direction of motion only depends on the value of <m>X</m>.
+            From calculus, we know that when <m>X'(t) \gt 0</m>, the function <m>X(t)</m> is <term>increasing</term>, and when <m>X'(t) \lt 0</m>, the function <m>X(t)</m> is <term>decreasing</term>.
+            Consequently, if we look at a graph of the slope field function <m>f(X)</m> as a function in its own right, we can use the signs of <m>f(X)</m> to determine direction of motion on the phase line.
+        </p>
+        <theorem xml:id="thm-phase-line-directions">
+            <statement>
+                <p>
+                    Let <m>f(X)</m> be a slope field function that is independent of time and suppose that <m>f(X)</m> is <term>continuous</term>.
+                    <ul>
+                        <li><p>Points where <m>f(X) = 0</m> are equilibria. Solutions that start at this point stay there forever.</p></li>
+                        <li><p>If <m>X</m> starts at a point in an interval where <m>f(X) \gt 0</m>, then <m>X(t)</m> is increasing and moves in the positive direction within that interval.</p></li>
+                        <li><p>If <m>X</m> starts at a point in an interval where <m>f(X) \lt 0</m>, then <m>X(t)</m> is decreasing and moves in the negative direction within that interval.</p></li>
+                    </ul>
+                </p>
+            </statement>
+        </theorem>
+        <p>
+            As a consequence of the existence and uniqueness theorem, a solution can not move <em>through</em> an equilibrium (which is itself a solution).
+            Consequently, the roots in and intervals associated with <m>f(X)</m> completely characterize the directions of solutions.
+        </p>
+        <example>
+            <statement>
+                <p>
+                    The logistic differential equation <m>P' = r_0 P(1-\frac{P}{K})</m> has as its slope field function <m>f(P) = r_0 P(1-\frac{P}{K})</m>.
+                    This is a quadratic function that opens down and has roots at <m>P=0</m> and <m>P=K</m>.
+                </p>
+                <image width="60%" source="images/logistic-rate-function">
+                    <shortdescription>Graph of rate function for the logistic model</shortdescription>
+                </image>
+                <p>
+                    The phase line will have equilibrium points at <m>X=0</m> and at <m>X=K</m>.
+                    On the interval <m>(0,K)</m>, the rate function is positive so <m>X</m> will be increasing on that interval.
+                    On the interval <m>(K,\infty)</m>, the rate function is negative so <m>X</m> will be decreasing on that interval.
+                    Similarly, <m>X</m> is decreasing on <m>(-\infty,0)</m>.
+                </p>
+                <image width="60%" source="images/logistic-rate-phase-line">
+                    <shortdescription>Phase line diagram associated with the logistic model</shortdescription>
+                </image>
+            </statement>
+        </example>
+        <p>
+            We can use the phase line diagram to characterize the stability of an equilibrium.
+            If the phase line diagram shows solutions on both sides moving toward the equilibrium, then that equilibrium is stable.
+            If either side of the phase line has solutions that move away from the equilibrium, then the equilibrium is unstable.
+        </p>
+        <p>
+            The behavior of the phase line near the equilibrium can also be immediately determined by looking at the derivative of the rate function at the equilibrium.
+            Notice that the slope of the logistic rate function is positive at <m>P=0</m>.
+            This necessarily means that <m>f(P)</m> is negative on the left and <m>f(P)</m> is positive on the right.
+            In general, any equilibrium where <m>f'(X^*) \gt 0</m> will be <term>unstable</term>.
+            On the other hand, the equilibrium at <m>P=K</m> has a negative slope.
+            The values of <m>f(P)</m> near that point are positive on the left and negative on the right.
+            In general, any equilibrium where <m>f'(X^*) \lt 0</m> will be <term>stable</term>.
+        </p>
+        <theorem xml:id="thm-diffeq-stability-derivative-test">
+            <title>Derivative Test for Stability</title>
+            <statement>
+                <p>
+                    Suppose a differential equation <m>X' = f(X)</m> has an equilibrium at <m>X=X^*</m>, with <m>f(X^*) = 0</m> and suppose <m>f'(X^*)</m> exists.
+                    <ol>
+                        <li><p>If <m>f'(X^*) \gt 0</m>, then <m>X=X^*</m> is an unstable equilibrium.</p></li>
+                        <li><p>If <m>f'(X^*) \lt 0</m>, then <m>X=X^*</m> is a stable equilibrium.</p></li>
+                    </ol>
+                    For the case where <m>f'(X^*) = 0</m>, the test is inconclusive. (Check the phase line directly.)
+                </p>
+            </statement>
+        </theorem>
+    </subsection>
+    <subsection xml:id="subsec-equilibria-examples">
+        <title>Applications</title>
+        <p>
+            Applying the principles of interpreting the phase line for a differential equation is an example of <term>qualitative analysis</term>.
+            We have not solved the differential equation but we still understand the basic behavior that it will create.
+        </p>
+        <example>
+            <p>
+                The body metabolizes many drugs so that the drug is cleared from the bloodstream at a rate that is proportional to the drug concentration.
+                Suppose we are considering the blood concentration of a patient in a hospital that is being dosed using an IV.
+                This can be modeled as adding drug into the blood stream at a constant rate.
+                What would a differential equation predict about the patient's drug concentration?
+            </p>
+            <p>
+                We start by creating a differential equation.
+                The state variable is the amount of drug in the bloodstream, <m>D</m>.
+                The IV drip corresponds to a source of adding drug into the system.
+                This occurs at a constant rate, say at a rate <m>R_{IV}</m>.
+                The body metabolizes the drug, removing it from the blood stream, at a rate that is proportional to the amount of drug.
+                If we use a positive proportionality constant <m>k</m>, then the drug is being cleared at a rate <m>k D</m>.
+                The overall rate of change is the rate of drug being added minus the rate of drug being removed, leading to our differential equation
+                <me>D' = R_{IV} - k D</me>.
+            </p>
+            <p>
+                The rate function defining our slope field is linear in <m>D</m>,
+                <me>f(D) = R_{IV} - kD</me>,
+                where <m>R_{IV}</m> is the <m>y</m>-intercept and <m>-k</m> is the slope.
+                There is an equilibrium where <m>f(D) = 0</m>, which occurs at
+                <me>D^* = \frac{R_{IV}}{k}</me>.
+                We know that <m>f'(D^*) = -k</m>, which is negative, so <m>D = D^*</m> is a <term>stable</term> equilibrium.
+                If the patient starts with <m>D(0)=0</m>, the drug concentration will rise steadily and then converge <m>D \to D^*</m>.
+            </p>
+        </example>
+    </subsection>
+</section>
