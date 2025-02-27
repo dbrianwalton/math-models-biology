@@ -49,14 +49,19 @@
     </p>
     <p>
         Using this mortality rate for larvae, and the uniform reproductive rate for adults, we obtain a modified density-dependent mosquito model.
-        Because the larvae mortality rate always appeared as <m>1-\mu_L</m>, we will rewrite this first,
+        Because the larvae mortality rate in <xref ref="eqn-ELPA-larva-uniform-reproduction"/> and <xref ref="eqn-ELPA-pupa-uniform-reproduction"/> always appeared as <m>1-\mu_L</m>, we will rewrite this first.
+        We now know that <m>\mu_L</m> is a function of <m>L</m> with
+        <me>
+        \mu_L = \frac{bL+a}{bL+1}
+        </me>
+        so that we can write
         <md>
-            <mrow>1-\mu_L \amp = 1 - \frac{bx+a}{bx+1} </mrow>
-            <mrow>\amp = \frac{1-a}{bx+1}</mrow>
-            <mrow>\amp = \frac{1-\mu_0}{\frac{k}{1-\mu_0} x+1}</mrow>
-            <mrow>\amp = \frac{(1-\mu_0)^2}{kx + 1-\mu_0}</mrow>.
+            <mrow>1-\mu_L \amp = 1 - \frac{bL+a}{bL+1} </mrow>
+            <mrow>\amp = \frac{1-a}{bL+1}</mrow>
+            <mrow>\amp = \frac{1-\mu_0}{\frac{k}{1-\mu_0} L+1}</mrow>
+            <mrow>\amp = \frac{(1-\mu_0)^2}{kL + 1-\mu_0}</mrow>.
         </md>
-        Our model equations for the population stages then become
+        Substituting this result into <xref ref="eqn-ELPA-larva-uniform-reproduction"/> and <xref ref="eqn-ELPA-pupa-uniform-reproduction"/>, our system of projection equations then become (using <m>L_t</m> in place of <m>L</m>)
         <mdn>
             <mrow xml:id="eqn-ELPA-egg-density">
                 E_{t+1} \amp = (1-\mu_{E})(1-p_{E}) E_{t} +  {\textstyle \frac{5 N_{egg}}{\tau_{A}}} A_{t}
@@ -131,14 +136,15 @@
             }
 
             # Visualize dynamics --- expect exponential growth so use log-scale
+            library(ggplot2)
             pop_growth <- ggplot() +
                 # Add data; use color to label the different stages
-                geom_point(mapping = aes(x = t_seq, y = E_seq, color = "S1")) +
-                geom_point(mapping = aes(x = t_seq, y = L_seq, color = "S2")) +
-                geom_point(mapping = aes(x = t_seq, y = P_seq, color = "S3")) +
-                geom_point(mapping = aes(x = t_seq, y = A_seq, color = "S4")) +
+                geom_point(mapping = aes(x = t_seq, y = E_seq, color = "1")) +
+                geom_point(mapping = aes(x = t_seq, y = L_seq, color = "2")) +
+                geom_point(mapping = aes(x = t_seq, y = P_seq, color = "3")) +
+                geom_point(mapping = aes(x = t_seq, y = A_seq, color = "4")) +
                 # Add legend information
-                scale_color_discrete(breaks=c("S1", "S2", "S3", "S4"),
+                scale_color_discrete(breaks=c("1", "2", "3", "4"),
                                     labels = c("eggs","larvae","pupae","adult (F)"),
                                     name="stage") +
                 # Add logarithimc scale

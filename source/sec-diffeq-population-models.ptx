@@ -220,9 +220,9 @@
             When we substitute our dimensional replacements into the differential equation, we can find a dimensionless differential equation describing the numerical values <m>p</m> with respect to <m>\tau</m>.
             <md>
                 <mrow>P' \amp = r_0 P (1-\frac{P}{K}) </mrow>
-                <mrow>\frac{K}{T} \frac{dp}{d\tau} = r_0 Kp (1-\frac{Kp}{K}) </mrow>
-                <mrow>\frac{1}{T} \frac{dp}{d\tau} = r_0 p (1-p) </mrow>
-                <mrow>\frac{dp}{d\tau} = r_0 T p (1-p) </mrow>
+                <mrow>\frac{K}{T} \frac{dp}{d\tau} \amp = r_0 Kp (1-\frac{Kp}{K}) </mrow>
+                <mrow>\frac{1}{T} \frac{dp}{d\tau} \amp = r_0 p (1-p) </mrow>
+                <mrow>\frac{dp}{d\tau} \amp = r_0 T p (1-p) </mrow>
             </md>
             Because <m>p</m> and <m>\tau</m> are dimensionless, every term in the equation must be dimensionless.
             This means that the product <m>r_0 T</m> is dimensionless, which can only occur if <m>r_0</m> has dimensions of inverse time.

@@ -121,32 +121,295 @@
             Applying the principles of interpreting the phase line for a differential equation is an example of <term>qualitative analysis</term>.
             We have not solved the differential equation but we still understand the basic behavior that it will create.
         </p>
+        <p>
+            The body metabolizes many drugs so that the drug is cleared from the bloodstream at a rate that is proportional to the drug concentration.
+            Suppose we are considering the blood concentration of a patient in a hospital that is being dosed using an IV.
+            This can be modeled as adding drug into the blood stream at a constant rate.
+            What would a differential equation predict about the patient's drug concentration?
+        </p>
+        <p>
+            We start by creating a differential equation.
+            The state variable is the amount of drug in the bloodstream, <m>D</m>.
+            The IV drip corresponds to a source of adding drug into the system.
+            This occurs at a constant rate, say at a rate <m>R_{IV}</m>.
+            The body metabolizes the drug, removing it from the blood stream, at a rate that is proportional to the amount of drug.
+            If we use a positive proportionality constant <m>k</m>, then the drug is being cleared at a rate <m>k D</m>.
+            The overall rate of change is the rate of drug being added minus the rate of drug being removed, leading to our differential equation
+            <me>D' = R_{IV} - k D</me>.
+        </p>
+        <p>
+            The rate function defining our slope field is linear in <m>D</m>,
+            <me>f(D) = R_{IV} - kD</me>,
+            where <m>R_{IV}</m> is the <m>y</m>-intercept and <m>-k</m> is the slope.
+            There is an equilibrium where <m>f(D) = 0</m>, which occurs at
+            <me>D^* = \frac{R_{IV}}{k}</me>.
+            We know that <m>f'(D^*) = -k</m>, which is negative, so <m>D = D^*</m> is a <term>stable</term> equilibrium.
+            If the patient starts with <m>D(0)=0</m>, the drug concentration will rise steadily and then converge <m>D \to D^*</m>.
+        </p>
         <example>
             <p>
-                The body metabolizes many drugs so that the drug is cleared from the bloodstream at a rate that is proportional to the drug concentration.
-                Suppose we are considering the blood concentration of a patient in a hospital that is being dosed using an IV.
-                This can be modeled as adding drug into the blood stream at a constant rate.
-                What would a differential equation predict about the patient's drug concentration?
+                Vancomycin is an antibiotic that is commonly administered intravenously.
+                The typical recommended intravenous dosing is 500 mg per hour (for an hour).
+                The data sheet for the drug lists a half-life of approximately 5 hours.
+                If the dosing were to continue at this rate indefinitely, what would be the equilibrium?
+                How close do we get to equilibrium after the one hour of dosing?
             </p>
             <p>
-                We start by creating a differential equation.
-                The state variable is the amount of drug in the bloodstream, <m>D</m>.
-                The IV drip corresponds to a source of adding drug into the system.
-                This occurs at a constant rate, say at a rate <m>R_{IV}</m>.
-                The body metabolizes the drug, removing it from the blood stream, at a rate that is proportional to the amount of drug.
-                If we use a positive proportionality constant <m>k</m>, then the drug is being cleared at a rate <m>k D</m>.
-                The overall rate of change is the rate of drug being added minus the rate of drug being removed, leading to our differential equation
-                <me>D' = R_{IV} - k D</me>.
+                To apply this information to the model, we have the constant rate of dosage as <m>R_{IV} = 500</m> (mg/hr).
+                The half-life allows us to find the rate constant <m>k</m>.
+                In the absence of additional doses of drugs, our model for the drug in the blood is just <m>D' = -k D</m>, which has an exponential solution <m>D(t) = Ae^{-kt}</m>.
+                The half-life is the time it takes to go from <m>D(0) = A</m> to half that value <m>D(t_{1/2}) = \frac{1}{2}A</m>.
+                Using the model, we have <m>e^{-kt_{1/2}} = \frac{1}{2}</m>, which allows us to solve for 
+                <me>k = - \frac{\ln(1/2)}{t_{1/2}}</me>.
+                With <m>t_{1/2} = 5</m> (hr), this means <m>k = 0.13863</m>.
             </p>
             <p>
-                The rate function defining our slope field is linear in <m>D</m>,
-                <me>f(D) = R_{IV} - kD</me>,
-                where <m>R_{IV}</m> is the <m>y</m>-intercept and <m>-k</m> is the slope.
-                There is an equilibrium where <m>f(D) = 0</m>, which occurs at
-                <me>D^* = \frac{R_{IV}}{k}</me>.
-                We know that <m>f'(D^*) = -k</m>, which is negative, so <m>D = D^*</m> is a <term>stable</term> equilibrium.
-                If the patient starts with <m>D(0)=0</m>, the drug concentration will rise steadily and then converge <m>D \to D^*</m>.
+                We now have our differential equation,
+                <me>D' = 500 - 0.13863 D</me>
+                with an initial value <m>D(0) = 0</m> (no drug at the start of treatment).
+                The equilibrium can be found by solving 
+                <me>500-0.13863 D = 0</me> to obtain <m>D=3606.7</m> (mg).
+                At the end of only one hour, we have only administered 500 mg, but the body will have already metabolized some of that.
+                To find the amount in the body, we need to solve the differential equation with the given initial value.
+                In our graph, we will compare the amount in the bloodstream with the total amount administered to that point.
             </p>
+            <listing>
+                <program language="r">
+                    <code>
+                    <![CDATA[
+                    # Model parameters
+                    model_params <- c(R_IV = 500, k = -log(0.5)/5)
+
+                    # Define the rate function
+                    rateF <- function(t, state, params) {
+                        with(as.list(c(state, params)), {
+                            D_rate <- R_IV - k * D
+                            list(D_rate)
+                        })
+                    }
+
+                    # Solve the initial value problem
+                    library(deSolve)
+                    times <- seq(0, 1, by=0.05)
+                    init_state <- c(D = 0)
+                    soln <- ode(init_state, times, rateF, model_params)
+
+                    # Show a graph
+                    library(ggplot2)
+                    soln_graph <- ggplot(data = soln, mapping = aes(x = time, y = D)) +
+                        geom_abline(slope = 500, color="red", linetype = "dashed") +
+                        geom_line(color="blue", linewidth = 1) +
+                        labs(y = "Vancomycin in blood [mg]")
+                    show(soln_graph)
+
+                    # Display the final row of data
+                    N <- length(times)
+                    print(soln[N, ])
+                    ]]>
+                    </code>
+                </program>
+            </listing>
+            <figure xml:id="fig-diffeq-vancomycin-hour-graph">
+                <caption>Amount of vancomycin in bloodstream for an administration rate of 500 mg per hour over the course of one hour.</caption>
+                <image width="70%" source="images/diffeq-vancomycin-hour-graph.png">
+                    <shortdescription>graph of vancomycin in bloodstream over 1 hour</shortdescription>
+                </image>
+            </figure>
+            <p>
+                Examining the final value in the solution, we learn that after one hour, the amount of drug in the bloodstream is 466.89 mg, while 500 mg have been administered.
+                The body has already metabolized 33.11 mg during that time.
+                If we were to extend our simulation further in time, say a full day, we will see the blood level leveling out near the equilibrium value.
+                Even after that much time, the amount of the drug in the bloodstream is 3477 mg, nearly 130 mg away from the equilbrium.
+            </p>
+            <listing>
+                <program language="r">
+                    <code>
+                    <![CDATA[
+                    # Use the same as before but with more time.
+                    times <- seq(0, 24, by=0.25)
+                    init_state <- c(D = 0)
+                    soln <- ode(init_state, times, rateF, model_params)
+
+                    # Show a graph
+                    library(ggplot2)
+                    soln_graph <- ggplot(data = soln, mapping = aes(x = time, y = D)) +
+                        geom_line(color="blue", linewidth = 1) +
+                        labs(y = "Vancomycin in blood [mg]")
+                    show(soln_graph)
+
+                    # Display the final row of data
+                    N <- length(times)
+                    print(soln[N, ])
+                    ]]>
+                    </code>
+                </program>
+            </listing>
+            <figure xml:id="fig-diffeq-vancomycin-day-graph">
+                <caption>Amount of vancomycin in bloodstream for an administration rate of 500 mg per hour over the course of one full day.</caption>
+                <image width="70%" source="images/diffeq-vancomycin-day-graph.png">
+                    <shortdescription>graph of vancomycin in bloodstream over 24 hours</shortdescription>
+                </image>
+            </figure>
+        </example>
+        <p>
+            When we looked at density dependence for a single population, we developed the logistic model by considering the per capita growth rate as being a decreasing linear function.
+            The biological argument here was that for larger population densities, there is more competition or other negative impacts that result in either falling birth rates or rising death rates.
+            However, some species actually exhibit the per capita growth rates increase over a range of low population values before ultimately decreasing for very large population values.
+            This behavior is called the <term>Allee effect</term>, named after Warder Allee who studied increased survival for goldfish in the presence of higher densities of other goldfish.
+        </p>
+        <figure xml:id="fig-per-capita-growth-rate-Allee">
+            <caption>Per capita growth rate <m>r</m> as a function of the population size. Left: logistic growth uses a linear decreasing function. Right: Allee effect shows a switch between increasing and decreasing as a function.</caption>
+            <image width="80%" source="images/per-capita-growth-rate-Allee">
+                <shortdescription>side by side view of per capita growth for the logistic model with that for the Allee effect model</shortdescription>
+            </image>
+        </figure>
+        <p>
+            The simplest model for the per capita growth rate <m>r</m> that captures the behavior of the Allee effect would be a negative quadratic function.
+            The vertex of the quadratic should have a positive value, so there will be two roots where that quadratic function crosses the axis.
+            The larger of the two will play the role of the carrying capacity, so we will name it <m>K</m>.
+            The lower root will be <m>M</m>.
+            We can represent the quadratic in a factored form,
+            <me>r(P) = -a(P-M)(P-K)</me>
+            for some positive parameter <m>a</m>.
+            With only natural growth and losses, the resulting differential equation will become <m>P' = r \cdot P</m>, which will take the form
+            <me>P' = - a P(P-M)(P-K)</me>.
+        </p>
+        <p>
+            Our Allee effect model will mathematically have three equilibria<mdash/><m>P=0</m>, <m>P=M</m> and <m>P=K</m>.
+            The behavior will depend on whether we have <m>M \lt 0</m> or <m>0 \lt M</m>.
+            A negative cubic with three roots has a graph that has the basic form shown in <xref ref="fig-total-growth-rate-Allee"/>.
+        </p>
+        <figure xml:id="fig-total-growth-rate-Allee">
+            <caption>Typical graph of the total growth rate for cubic Allee effect model with three roots.</caption>
+            <image width="60%" source="images/total-growth-rate-Allee">
+                <shortdescription>graph of a negative cubic with three real roots</shortdescription>
+            </image>
+        </figure>
+        <p>
+            If <m>0 \lt M</m>, our model has two positive equilibria <m>P=K</m> and <m>P=M</m> in addition to the equilibrium <m>P=0</m> that corresponds to extinction.
+            The graph makes it clear in that in this case that at the leftmost equilibrium <m>P=0</m>, <m>f'(0) \lt 0</m>.
+            For initial values <m>0 \lt P \lt M</m>, the growth rate is negative and the population will decrease toward extinction.
+            If the initial value starts above <m>M</m>, the solution will move toward the carrying capacity <m>P=K</m>.
+            This case is called the <term>strong Allee effect</term>, in that there is a range of small positive population values for which <m>P</m> decreases (<m>P' \lt 0</m>).
+            The value <m>M</m> is a critical <term>threshold</term> that a population must stay above in order to grow and ultimately reach its capacity.
+            If the population falls below this Allee threshold, the population will be driven toward extinction.
+        </p>
+        <image width="60%" source="images/strong-Allee-rate-phase-line"/>
+        <p>
+            On the other hand, if <m>M \lt 0</m>, our model has only one positive equilibrium <m>P=K</m> to go with the extinction equilibrium <m>P=0</m>.
+            This time, starting with a small population still results in <m>P' \gt 0</m>, and the population will grow.
+            Every initial positive population will result in a solution that converges to the carrying capacity.
+            This case is called the <term>weak Allee effect</term>.
+        </p>
+        <image width="60%" source="images/weak-Allee-rate-phase-line"/>
+        <p>
+            I have not yet discovered definitive data that allows estimating actual Allee effect model parameters.
+            Research articles focus mainly on evidence of increased survival rates or reproductive success, but don't directly measure how that impacts overall population growth rates.
+            In the following example, we will show how dimensional analysis allows us to realize general possible behaviors without needing detailed rates.
+        </p>
+        <example>
+            <p>
+                The Allee effect model for population growth using a quadratic per capita growth rate results in the cubic rate function,
+                <me>P' = -aP(P-M)(P-K)</me>.
+                We will consider the strong Allee effect so that <m>M \gt 0</m>.
+                The carrying capacity <m>K</m> can provide a natural scale for the population, so that we write <m>P = K p</m>, where <m>p</m> is the dimensionless size of the population relative to <m>K</m>.
+                We also need a scale for time that is not yet clear, so we write <m>t = T \tau</m> where <m>T</m> will be our unit of time and <m>\tau</m> will be the dimensionless measure of time.
+            </p>
+            <p>
+                We next rewrite the differential equation in terms of <m>p</m> and <m>\tau</m>.
+                The rate of change <m>P'</m> will have units <m>\frac{K}{T}</m>, so that we can rewrite the original equation as
+                <me>\frac{K}{T} \frac{dp}{d \tau} = -a (Kp)(Kp-M)(Kp-K)</me>.
+                Factoring out <m>K</m> from the two terms <m>Kp-M</m> and <m>Kp-K</m>, and then multiplying both sides of the equation by <m>\frac{T}{K}</m>, we arrive at a nondimensionalized differential equation
+                <me>\frac{dp}{d \tau} = -a T K^2 \cdot p (p-\frac{M}{K})(p-1)</me>.
+                We still get to choose our value of <m>T</m>, and if we choose <m>T = \frac{1}{aK^2}</m>, the leading coefficient becomes 1.
+                The only remaining dependence on our original parameters is the ratio <m>m = \frac{M}{K}</m>, which measures the size of the Allee threshold in units of <m>K</m>.
+            </p>
+            <p>
+                With these choices, the Allee effect differential equation becomes
+                <me>\frac{dp}{d \tau} = -p (p-m)(p-1)</me>.
+                If we explore this differential equation with different values of <m>m</m>, we will understand all of the possible behaviors.
+                Different choices for <m>a</m>, <m>M</m>, and <m>K</m> will have solutions that correspond to rescaled solutions of the solutions that we find.
+            </p>
+            <p>
+                First, let us consider the Allee effect with <m>m=0.20</m>, putting the threshold at 20% of the carrying capacity.
+                The following script illustrates finding numerical solutions for different initial conditions and displaying them on top of a slope field.
+                Other choices of <m>m</m> or initial conditions can be achieved by modifying the appropriate lines in the script.
+            </p>
+            <listing>
+                <program language="r">
+                    <code>
+                    <![CDATA[
+                    # Model parameters
+                    model_params <- c(m = 0.2)
+
+                    # List of initial values (will be in a loop)
+                    initial_values = c(0, 0.15, 0.20, 0.25, 0.5, 1, 1.5)
+
+                    # Define the rate function
+                    slopefield_fcn <- function(p) {
+                        with(as.list(model_params), -p*(p-m)*(p-1))
+                    }
+
+                    # Create the slope field graph
+                    library(dplyr)
+                    library(ggplot2)
+                    library(ggquiver)
+                    grid_pts <- expand.grid(t = seq(0, 20, by=1), p = seq(-0.2, 1.25, by=0.05))
+
+                    # Calculate the slopes
+                    slope_field_data <- mutate(grid_pts,
+                        delta_t = 1,
+                        delta_p = slopefield_fcn(p)
+                    )
+                    slope_field_graph <- ggplot() +
+                        geom_quiver(data = slope_field_data,
+                                 mapping = aes(x = t, y = p,
+                                               u = delta_t, v = delta_p),
+                                 color = "blue", vecsize = 5)
+                    show(slope_field_graph)
+
+                    # Prepare to solve the differential equation
+                    library(deSolve)
+
+                    rateF <- function(t, state, params) {
+                        with(as.list(c(state, params)), {
+                            p_rate <- -p*(p-m)*(p-1)
+                            list(p_rate)
+                        })
+                    }
+
+                    # We are going to add multiple solutions in a loop.
+                    # Start with the slope field as the base layer
+                    soln_plot <- slope_field_graph +
+                        ylim(-0.2, 1.25) +
+                        labs(x = expression(tau))
+
+                    # Loop over initial values
+                    for (p0 in initial_values) {
+                        # Solve the initial value problem
+                        times <- seq(0, 20, by=0.25)
+                        init_state <- c(p = p0)
+                        soln <- ode(init_state, times, rateF, model_params)
+
+                        # Add the graphic layer for this solution
+                        soln_plot <- soln_plot +
+                            geom_line(data = soln,
+                                      mapping = aes(x = time, y = p),
+                                      color = "purple", linewidth = 1)
+                    }
+
+                    # Show the result
+                    show(soln_plot)
+                    ]]>
+                    </code>
+                </program>
+            </listing>
+            <figure xml:id="fig-strong-Allee-solution-curves">
+                <caption>Solutions for the Allee effect differential equation with the strong Allee effect, <m>m=0.2</m>.</caption>
+                <image width="80%" source="images/strong-Allee-solution-curves.png">
+                    <shortdescription>solution curves for the strong Allee effect</shortdescription>
+                </image>
+            </figure>
         </example>
     </subsection>
 </section>
