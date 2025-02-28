@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="seq-diffeq-interacting-populations">
+    <title>Differential Equations for Two Interacting Variables</title>
+
+    <introduction>
+        <p>
+            A single differential equation allows us to model a single state variable.
+            Just as we could create a system of projection equations when dealing with a population involving multiple state variables, we can similarly create systems of differential equations for multiple state variables.
+            In this section, we will focus on systems of differential equations involving two state variables.
+        </p>
+        <p>
+            Suppose that <m>X</m> and <m>Y</m> represent two state variables that interact, affecting each other's rate of change.
+            That is, the rate of change for <m>X</m> will be some function of both <m>X</m> and <m>Y</m> (and possibly time).
+            The same will be true for <m>Y</m> but with a different function.
+            That is, there are two functions <m>f_1(t, X, Y)</m> and <m>f_2(t, X,Y)</m> so that
+            <md>
+                <mrow> X' \amp = f_1(t, X, Y),</mrow>
+                <mrow> Y' \amp = f_2(t, X, Y).</mrow>
+            </md>
+            The system is <term>autonomous</term> or <term>time independent</term> if the rate functions do not depend on time, in which case we write
+            <md>
+                <mrow> X' \amp = f_1(X, Y),</mrow>
+                <mrow> Y' \amp = f_2(X, Y).</mrow>
+            </md>
+        </p>
+        <p>
+            In this section, we will discuss some strategies for understanding how to generalize the ideas of the phase line, slope fields, and equilibria autonomous systems of differential equations involving two state variables.
+            A phase line is used to understand solution behavior for a single variable.
+            A <term>phase plane</term> will be the generalization to explore the dynamics for two variables.
+            A slope field is a graphical representation showing the rate of change for a single variable with respect to time.
+            A <term>vector field</term> allows us to generalize this to visualize relative rates of change for two variables simultaneously.
+            Finally, equilibria will exist when both rate functions are equal to zero simultaneously.
+            We will look for these equilibria by describing where individual rate functions equal zero<mdash/>called nullclines<mdash/>and find their points of intersection.
+        </p>
+    </introduction>
+    
+    <subsection xml:id='subsec-diffeq-phase-plane-vector-fields'>
+        <title>The Phase Plan and Vector Fields</title>
+
+        <p>
+            When we find solutions to the system of differential equations,
+            our two state variables each will be functions of time.
+            Each of them will have their own graph involving points <m>(t, X(t))</m> or <m>(t,Y(t))</m>.
+            The idea of the phase plane is to consider the state variables as forming points in the plane, <m>(X,Y)</m>.
+            At each instant of time <m>t</m>, the value of <m>X(t)</m> will determine the <m>x</m>-coordinate of the point while the value <m>Y(t)</m> will determine the <m>y</m>-coordinate.
+            As time passes, the values of <m>X</m> and <m>Y</m> change, and the corresponding state as a point will move around in the phase plane.
+        </p>
+        <p>
+            Consider the functions <m>X(t) = \cos(t)</m> and <m>Y(t) = \sin(t)</m>.
+            We learned in trigonometry or calculus that the point <m>(\cos(t), \sin(t))</m> represents a point on the unit circle corresponding to a radian angle of <m>t</m>.
+            Consequently, the point <m>(X(t),Y(t))</m> can be visualized as moving around the unit circle in the phase plane.
+            The individual functions trace out the cosine or sine graphs in the <m>(t, X(t))</m> and <m>(t,Y(t))</m> graphs.
+            But in the phase plane, <m>(X(t), Y(t))</m> traces out the circle.
+        </p>
+        <figure>
+            <caption>Trace of <m>(\cos(t),\sin(t))</m> in phase plane</caption>
+            <interactive xml:id="circle-phase-plane" platform="jsxgraph" aspect="2:1" source="code/jsx/circle-phase-plane.js">
+                <sidebyside width="45%" margins="5%">
+                    <stack>
+                        <slate xml:id="jsx-circle-pp-graph_X" surface="jsxboard" aspect="2:1" />
+                        <slate xml:id="jsx-circle-pp-graph_Y" surface="jsxboard" aspect="2:1" />
+                    </stack>
+                    <slate xml:id="jsx-circle-phase-plane" surface="jsxboard" aspect="1:1" />
+                </sidebyside>
+                <instructions xml:id="circle-phase-plane-instructions">
+                <p>
+                    Use the time slider in the top left panel to vary the time to observe how the point in the phase plane moves.
+                </p>
+                </instructions>
+            </interactive>
+        </figure>
+    </subsection>
+</section>
