@@ -43,7 +43,7 @@
     </introduction>
     
     <subsection xml:id='subsec-diffeq-phase-plane-vector-fields'>
-        <title>The Phase Plan and Vector Fields</title>
+        <title>The Phase Plane and Vector Fields</title>
 
         <p>
             When we find solutions to the system of differential equations,
@@ -62,7 +62,7 @@
         </p>
         <figure>
             <caption>Trace of <m>(\cos(t),\sin(t))</m> in phase plane</caption>
-            <interactive xml:id="circle-phase-plane" platform="jsxgraph" aspect="2:1" source="code/jsx/circle-phase-plane.js">
+            <interactive xml:id="circle-phase-plane" platform="jsxgraph" aspect="2:1" source="code/jsx/jsx-circle-phase-plane.js">
                 <sidebyside width="45%" margins="5%">
                     <stack>
                         <slate xml:id="jsx-circle-pp-graph_X" surface="jsxboard" aspect="2:1" />
@@ -73,6 +73,70 @@
                 <instructions xml:id="circle-phase-plane-instructions">
                 <p>
                     Use the time slider in the top left panel to vary the time to observe how the point in the phase plane moves.
+                </p>
+                </instructions>
+            </interactive>
+        </figure>
+        <p>
+            Once we recognize that two functions of time can characterize a point in the phase plane that moves, we turn our attention to the derivatives of those functions.
+            Each function <m>X(t)</m> and <m>Y(t)</m> has a derivative <m>X'(t)</m> and <m>Y'(t)</m> which represent the slope of the individual graphs in the <m>(t,X)</m> and <m>(t,Y)</m> planes.
+            (Remember, these are not phase planes.)
+            We are going to draw a <term>vector</term> in the phase plane anchored at <m>(X(t), Y(t))</m> and ending at a point <m>(X(t) + \epsilon \cdot X'(t), Y(t) + \epsilon \cdot Y'(t))</m>, for some positive scaling value <m>\epsilon</m>.
+            That second point represents a point we would reach if we followed the tangent lines for <m>X(t)</m> and <m>Y(t)</m> for some amount of time <m>\epsilon</m>.
+            This resulting vector is called a <term>tangent vector</term>.
+            We say that <m>(X'(t), Y'(t))</m> is the <term>velocity vector</term>, corresponding to choosing <m>\epsilon = 1</m>, and it gives the direction and speed of the tangent vector.
+            These vectors will always be perfectly tangent to the curve the point follows in the phase space.
+        </p>
+        <figure>
+            <caption>Trace of <m>(\cos(t),\sin(t))</m> in phase plane showing the velocity vector.</caption>
+            <interactive xml:id="circle-phase-plane-tangent" platform="jsxgraph" aspect="2:1" source="code/jsx/jsx-circle-phase-plane-tangent.js">
+                <sidebyside width="45%" margins="5%">
+                    <stack>
+                        <slate xml:id="jsx-circle-ppt-graph_X" surface="jsxboard" aspect="2:1" />
+                        <slate xml:id="jsx-circle-ppt-graph_Y" surface="jsxboard" aspect="2:1" />
+                    </stack>
+                    <slate xml:id="jsx-circle-phase-plane-tangent" surface="jsxboard" aspect="1:1" />
+                </sidebyside>
+                <instructions xml:id="circle-phase-plane-tangent-instructions">
+                <p>
+                    Use the time slider in the top left panel to vary the time to observe how the tangent vector is related to the curve the point follows in phase space.
+                </p>
+                </instructions>
+            </interactive>
+        </figure>
+        <p>
+            Where a single autonomous differential equation <m>X' = f(X)</m> defines a slope field that depends only on <m>X</m> (and not <m>t</m>), an autonomous system of two differential equations
+            <md>
+                <mrow>X' \amp = f_1(X,Y), </mrow>
+                <mrow>Y' \amp = f_2(X,Y), </mrow>
+            </md>
+            defines a <term>vector field</term>.
+            At each point in the <m>(X,Y)</m> phase plane, the functions <m>(f_1,f_2)</m> define velocity vectors based on the location of that point.
+            We then would be looking a solution that consists of two functions <m>X(t)</m> and <m>Y(t)</m> such that the resulting flow of the point <m>(X(t),Y(t))</m> through the phase plane always has its velocity vector exactly match the vector field's velocity.
+        </p>
+        <p>
+            For practical visualization reasons, a vector field is typically rescaled so that the vectors don't overlap.
+            Longer vectors correspond to faster changes in the functions.
+            Shorter vectors correspond to slowly changing functions.
+        </p>
+        <p>
+            An initial condition represents a starting point in the phase plane at some specified time.
+            If we said <m>(X(t_0), Y(t_0)) = (a,b)</m>, then the point <m>(a,b)</m> is the initial point at the time <m>t = t_0</m>.
+            This would require that our solution functions <m>X(t)</m> and <m>Y(t)</m> have graphs that individually pass through <m>(t_0, a)</m> and <m>(t_0,b)</m>, respectively.
+        </p>
+        <figure>
+            <caption>The vector field <m>f_1(x,y) = -y</m> and <m>f_2(x,y)=x</m> has solutions that are rescaled and shifted sine/cosine pairs to pass through an initial point at <m>t=0</m>.</caption>
+            <interactive xml:id="circle-phase-plane-field" platform="jsxgraph" aspect="2:1" source="code/jsx/jsx-circle-phase-plane-field.js">
+                <sidebyside width="45%" margins="5%">
+                    <stack>
+                        <slate xml:id="jsx-circle-ppf-graph_X" surface="jsxboard" aspect="2:1" />
+                        <slate xml:id="jsx-circle-ppf-graph_Y" surface="jsxboard" aspect="2:1" />
+                    </stack>
+                    <slate xml:id="jsx-circle-phase-plane-field" surface="jsxboard" aspect="1:1" />
+                </sidebyside>
+                <instructions xml:id="circle-phase-plane-field-instructions">
+                <p>
+                    Drag the initial point in the phase plane to select different solutions. Drag the point <m>t</m> in the <m>X</m> graph plane to follow the individual solution and visualize the corresponding tangent vectors.
                 </p>
                 </instructions>
             </interactive>
