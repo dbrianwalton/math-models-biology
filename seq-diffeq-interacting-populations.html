@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US" dir="ltr">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Differential Equations for Two Interacting Variables</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Dynamic Models for Biology">
+<meta property="book:author" content="D. Brian Walton">
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script><script>
+var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "tags": "none",
+    "tagSide": "right",
+    "tagIndent": ".8em",
+    "packages": {
+      "[+]": [
+        "base",
+        "extpfeil",
+        "ams",
+        "amscd",
+        "color",
+        "newcommand",
+        "knowl"
+      ]
+    }
+  },
+  "options": {
+    "ignoreHtmlClass": "tex2jax_ignore|ignore-math",
+    "processHtmlClass": "process-math",
+    "renderActions": {
+      "findScript": [
+        10,
+        function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        },
+        ""
+      ]
+    }
+  },
+  "chtml": {
+    "scale": 0.98,
+    "mtextInheritFont": true
+  },
+  "loader": {
+    "load": [
+      "input/asciimath",
+      "[tex]/extpfeil",
+      "[tex]/amscd",
+      "[tex]/color",
+      "[tex]/newcommand",
+      "[pretext]/mathjaxknowl3.js"
+    ],
+    "paths": {
+      "pretext": "_static/pretext/js/lib"
+    }
+  },
+  "startup": {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  }
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<link href="_static/pretext/css/theme.css" rel="stylesheet" type="text/css">
+<link href="_static/pretext/css/ol-markers.css" rel="stylesheet" type="text/css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '7.5.10';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script src="_static/prefix-runtime.c2d04816128ebb44.bundle.js"></script><script src="_static/prefix-723.3e6434f80549315a.bundle.js"></script><script src="_static/prefix-runestone.f6bda0c0ccce4835.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-723.3bccd435914aa0ff.css">
+<link rel="stylesheet" type="text/css" href="_static/prefix-runestone.e0c6d4592e23c667.css">
+</head>
+<body id="dmb" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead" class="ptx-masthead"><div class="ptx-banner"><div class="title-container">
+<h1 class="heading"><a href="my-great-book.html"><span class="title">Dynamic Models for Biology</span></a></h1>
+<p class="byline">D. Brian Walton</p>
+</div></div></header><nav id="ptx-navbar" class="ptx-navbar navbar"><div class="ptx-navbar-contents">
+<button class="toc-toggle button" title="Contents"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d2;</span><span class="name">Contents</span></button><div class="searchbox">
+<div class="searchwidget"><button id="searchbutton" class="searchbutton button" type="button" title="Search book"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe8b6;</span><span class="name">Search Book</span></button></div>
+<div id="searchresultsplaceholder" class="searchresultsplaceholder" style="display: none">
+<div class="search-results-controls">
+<input aria-label="Search term" id="ptxsearch" class="ptxsearch" type="text" name="terms" placeholder="Search term"><button title="Close search" id="closesearchresults" class="closesearchresults"><span class="material-symbols-outlined">close</span></button>
+</div>
+<h2 class="search-results-heading">Search Results: </h2>
+<div id="searchempty" class="searchempty"><span>No results.</span></div>
+<ol id="searchresults" class="searchresults"></ol>
+</div>
+</div>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="sec-diffeq-equilibria.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-continuous-dynamics.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="interactions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+</div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar" class="ptx-sidebar"><nav id="ptx-toc" class="ptx-toc depth2 focused" data-preexpanded-levels="0" data-max-levels="2"><ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-frontmatter"><div class="toc-title-box"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="mathematical-modeling.html" class="internal"><span class="codenumber">1</span> <span class="title">Mathematical Modeling</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="scientific-method.html" class="internal"><span class="codenumber">1.1</span> <span class="title">The Scientific Method</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="role-of-models.html" class="internal"><span class="codenumber">1.2</span> <span class="title">The Role of Models</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="measurements.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Measurements</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-exercises"><div class="toc-title-box"><a href="measurements.html#exercises-measurements" class="internal"><span class="codenumber">1.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="system-state.html" class="internal"><span class="codenumber">1.4</span> <span class="title">The State of a System</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-mm-intro-ggplot.html" class="internal"><span class="codenumber">1.5</span> <span class="title">Introducing tidyverse and ggplot</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-mm-variable-relations.html" class="internal"><span class="codenumber">1.6</span> <span class="title">Relations between Variables</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="populations.html" class="internal"><span class="codenumber">2</span> <span class="title">Population Dynamics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-agent-based.html" class="internal"><span class="codenumber">2.1</span> <span class="title">An Agent Based Motivation for Dynamics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-based-3" class="internal"><span class="codenumber">2.1.1</span> <span class="title">NetLogo Overview</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-naive" class="internal"><span class="codenumber">2.1.2</span> <span class="title">Environmentally Naive Births and Deaths</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-density-dependent" class="internal"><span class="codenumber">2.1.3</span> <span class="title">Density-Dependent Births and Deaths</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-discrete.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Discrete Population Models</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-density-dependent.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Density Dependent Population Growth Models</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-projection.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Recursive Models Using Projection</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-functions" class="internal"><span class="codenumber">2.4.1</span> <span class="title">Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-fixed-points" class="internal"><span class="codenumber">2.4.2</span> <span class="title">Fixed Points and Equilibria</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="projection-analysis.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Analysis of Population Projections</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#linear-projection-analysis" class="internal"><span class="codenumber">2.5.1</span> <span class="title">Linear Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-4" class="internal"><span class="codenumber">2.5.2</span> <span class="title">Linearizing Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-5" class="internal"><span class="codenumber">2.5.3</span> <span class="title">Computer Assisted Analysis</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="projection-cobweb.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Graphical Analysis of Projection Functions</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-compare-replacement" class="internal"><span class="codenumber">2.6.1</span> <span class="title">Visualizing Potential for Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#cobweb-diagrams" class="internal"><span class="codenumber">2.6.2</span> <span class="title">Cobweb Diagrams</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-cobweb-5" class="internal"><span class="codenumber">2.6.3</span> <span class="title">Cobwebs and Stability</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-interventions.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Intervention and Bifurcations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-constant-harvesting" class="internal"><span class="codenumber">2.7.1</span> <span class="title">Constant Harvesting</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-interventions-4" class="internal"><span class="codenumber">2.7.2</span> <span class="title">Proportional Harvesting</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="ch-structured-populations.html" class="internal"><span class="codenumber">3</span> <span class="title">Structured Populations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-two-stage.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Two Stage Populations</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-matrix-models.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Matrix Models for Structured Populations</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Example: Mosquito Growth</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3" class="internal"><span class="codenumber">3.3.1</span> <span class="title">Model Equations and Parameters</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-4" class="internal"><span class="codenumber">3.3.2</span> <span class="title">Simulation, Asymptotic Growth, and Stable Distributions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-5" class="internal"><span class="codenumber">3.3.3</span> <span class="title">Exploring the Impact of Additional Mortality</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-structure-density-dependent.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Density Dependence in Structured Populations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-density-model" class="internal"><span class="codenumber">3.4.1</span> <span class="title">Model Development</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#sec-structure-density-dependent-4" class="internal"><span class="codenumber">3.4.2</span> <span class="title">Simulation</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-density-equilibria" class="internal"><span class="codenumber">3.4.3</span> <span class="title">Finding Fixed Points for Structured Populations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-partial-derivatives" class="internal"><span class="codenumber">3.4.4</span> <span class="title">Partial Derivatives</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-fixed-point-stability" class="internal"><span class="codenumber">3.4.5</span> <span class="title">Testing the Stability of a Fixed Point</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter contains-active">
+<div class="toc-title-box"><a href="ch-continuous-dynamics.html" class="internal"><span class="codenumber">4</span> <span class="title">Continuous Dynamics</span></a></div>
+<ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="intro-differential-equations.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Introduction to Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-rates-of-change" class="internal"><span class="codenumber">4.1.1</span> <span class="title">Rates of Change</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#differential-equations" class="internal"><span class="codenumber">4.1.2</span> <span class="title">Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-slope-fields" class="internal"><span class="codenumber">4.1.3</span> <span class="title">Slope Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-numerical-solutions" class="internal"><span class="codenumber">4.1.4</span> <span class="title">Numerical Solutions to Differential Equations</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="diffeq-population-models.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Continuous Time Population Models</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-popn-density-dependent" class="internal"><span class="codenumber">4.2.1</span> <span class="title">Continuous Logistic Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-rescaling" class="internal"><span class="codenumber">4.2.2</span> <span class="title">Dimensional Analysis and Rescaling</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-diffeq-equilibria.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Differential Equation Analysis of Equilibria</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-diffeq-equilibria.html#subsec-diffeq-phase-line" class="internal"><span class="codenumber">4.3.1</span> <span class="title">The Phase Line</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-diffeq-equilibria.html#subsec-equilibria-examples" class="internal"><span class="codenumber">4.3.2</span> <span class="title">Applications</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section contains-active">
+<div class="toc-title-box"><a href="seq-diffeq-interacting-populations.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Differential Equations for Two Interacting Variables</span></a></div>
+<ul class="structural toc-item-list active">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-interacting-populations.html#subsec-diffeq-phase-plane-vector-fields" class="internal"><span class="codenumber">4.4.1</span> <span class="title">The Phase Plane and Vector Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-interacting-populations.html#subsec-diffeq-systems-differential-equations" class="internal"><span class="codenumber">4.4.2</span> <span class="title">Systems of Differential Equations</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="interactions.html" class="internal"><span class="codenumber">5</span> <span class="title">Modeling Interactions</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="system-examples.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Examples of Interacting Systems</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-3" class="internal"><span class="codenumber">5.1.1</span> <span class="title">Epidemic Models</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-4" class="internal"><span class="codenumber">5.1.2</span> <span class="title">Interacting Populations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-5" class="internal"><span class="codenumber">5.1.3</span> <span class="title">Age or Stage-Based Models</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="interaction-rate-models.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Modeling Interaction Rates</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-3" class="internal"><span class="codenumber">5.2.1</span> <span class="title">Linear Rates and Linear Combinations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-4" class="internal"><span class="codenumber">5.2.2</span> <span class="title">Logistic Growth with Functional Dependence</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-5" class="internal"><span class="codenumber">5.2.3</span> <span class="title">Law of Mass Action for Interactions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-6" class="internal"><span class="codenumber">5.2.4</span> <span class="title">Saturating Functional Response</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-7" class="internal"><span class="codenumber">5.2.5</span> <span class="title">Switching Functional Response</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="system-phase-space.html" class="internal"><span class="codenumber">5.3</span> <span class="title">Dynamical Systems and Phase Space</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#vector-fields" class="internal"><span class="codenumber">5.3.1</span> <span class="title">Vector Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#system-phase-space-4" class="internal"><span class="codenumber">5.3.2</span> <span class="title">Nullclines and Equilibria</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-backmatter"><div class="toc-title-box"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="seq-diffeq-interacting-populations"><h2 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">4.4</span><span class="space"> </span><span class="title">Differential Equations for Two Interacting Variables</span>
+</h2>
+<section class="introduction" id="seq-diffeq-interacting-populations-2"><div class="para" id="seq-diffeq-interacting-populations-2-1">A single differential equation allows us to model a single state variable. Just as we could create a system of projection equations when dealing with a population involving multiple state variables, we can similarly create systems of differential equations for multiple state variables. In this section, we will focus on systems of differential equations involving two state variables.</div>
+<div class="para logical" id="seq-diffeq-interacting-populations-2-2">
+<div class="para">Suppose that <span class="process-math">\(X\)</span> and <span class="process-math">\(Y\)</span> represent two state variables that interact, affecting each other’s rate of change. That is, the rate of change for <span class="process-math">\(X\)</span> will be some function of both <span class="process-math">\(X\)</span> and <span class="process-math">\(Y\)</span> (and possibly time). The same will be true for <span class="process-math">\(Y\)</span> but with a different function. That is, there are two functions <span class="process-math">\(f_1(t, X, Y)\)</span> and <span class="process-math">\(f_2(t, X,Y)\)</span> so that</div>
+<div class="displaymath process-math" id="seq-diffeq-interacting-populations-2-2-9">
+\begin{align*}
+X' \amp = f_1(t, X, Y),\\
+Y' \amp = f_2(t, X, Y).
+\end{align*}
+</div>
+<div class="para">The system is <dfn class="terminology">autonomous</dfn> or <dfn class="terminology">time independent</dfn> if the rate functions do not depend on time, in which case we write</div>
+<div class="displaymath process-math" id="seq-diffeq-interacting-populations-2-2-12">
+\begin{align*}
+X' \amp = f_1(X, Y),\\
+Y' \amp = f_2(X, Y).
+\end{align*}
+</div>
+</div>
+<div class="para" id="seq-diffeq-interacting-populations-2-3">In this section, we will discuss some strategies for understanding how to generalize the ideas of the phase line, slope fields, and equilibria autonomous systems of differential equations involving two state variables. A phase line is used to understand solution behavior for a single variable. A <dfn class="terminology">phase plane</dfn> will be the generalization to explore the dynamics for two variables. A slope field is a graphical representation showing the rate of change for a single variable with respect to time. A <dfn class="terminology">vector field</dfn> allows us to generalize this to visualize relative rates of change for two variables simultaneously. Finally, equilibria will exist when both rate functions are equal to zero simultaneously. We will look for these equilibria by describing where individual rate functions equal zero—called nullclines—and find their points of intersection.</div></section><section class="subsection" id="subsec-diffeq-phase-plane-vector-fields"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.4.1</span><span class="space"> </span><span class="title">The Phase Plane and Vector Fields</span>
+</h3>
+<div class="para" id="subsec-diffeq-phase-plane-vector-fields-2">When we find solutions to the system of differential equations, our two state variables each will be functions of time. Each of them will have their own graph involving points <span class="process-math">\((t, X(t))\)</span> or <span class="process-math">\((t,Y(t))\text{.}\)</span> The idea of the phase plane is to consider the state variables as forming points in the plane, <span class="process-math">\((X,Y)\text{.}\)</span> At each instant of time <span class="process-math">\(t\text{,}\)</span> the value of <span class="process-math">\(X(t)\)</span> will determine the <span class="process-math">\(x\)</span>-coordinate of the point while the value <span class="process-math">\(Y(t)\)</span> will determine the <span class="process-math">\(y\)</span>-coordinate. As time passes, the values of <span class="process-math">\(X\)</span> and <span class="process-math">\(Y\)</span> change, and the corresponding state as a point will move around in the phase plane.</div>
+<div class="para" id="subsec-diffeq-phase-plane-vector-fields-3">Consider the functions <span class="process-math">\(X(t) = \cos(t)\)</span> and <span class="process-math">\(Y(t) = \sin(t)\text{.}\)</span> We learned in trigonometry or calculus that the point <span class="process-math">\((\cos(t), \sin(t))\)</span> represents a point on the unit circle corresponding to a radian angle of <span class="process-math">\(t\text{.}\)</span> Consequently, the point <span class="process-math">\((X(t),Y(t))\)</span> can be visualized as moving around the unit circle in the phase plane. The individual functions trace out the cosine or sine graphs in the <span class="process-math">\((t, X(t))\)</span> and <span class="process-math">\((t,Y(t))\)</span> graphs. But in the phase plane, <span class="process-math">\((X(t), Y(t))\)</span> traces out the circle.</div>
+<figure class="figure figure-like" id="subsec-diffeq-phase-plane-vector-fields-4"><iframe id="circle-phase-plane" width="600" height="300" src="circle-phase-plane-if.html"></iframe><div class="instructions"><details id="circle-phase-plane-instructions" class="solution-like born-hidden-knowl"><summary class="knowl__link"><h4 class="heading"><span class="type">Instructions<span class="period">.</span></span></h4></summary><div class="solution-like knowl__content"><div class="para" id="circle-phase-plane-instructions-1">Use the time slider in the top left panel to vary the time to observe how the point in the phase plane moves.</div></div></details></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.4.1<span class="period">.</span></span><span class="space"> </span>Trace of <span class="process-math">\((\cos(t),\sin(t))\)</span> in phase plane</figcaption></figure><div class="para" id="subsec-diffeq-phase-plane-vector-fields-5">Once we recognize that two functions of time can characterize a point in the phase plane that moves, we turn our attention to the derivatives of those functions. Each function <span class="process-math">\(X(t)\)</span> and <span class="process-math">\(Y(t)\)</span> has a derivative <span class="process-math">\(X'(t)\)</span> and <span class="process-math">\(Y'(t)\)</span> which represent the slope of the individual graphs in the <span class="process-math">\((t,X)\)</span> and <span class="process-math">\((t,Y)\)</span> planes. (Remember, these are not phase planes.) We are going to draw a <dfn class="terminology">vector</dfn> in the phase plane anchored at <span class="process-math">\((X(t), Y(t))\)</span> and ending at a point <span class="process-math">\((X(t) + \epsilon \cdot X'(t), Y(t) + \epsilon \cdot Y'(t))\text{,}\)</span> for some positive scaling value <span class="process-math">\(\epsilon\text{.}\)</span> That second point represents a point we would reach if we followed the tangent lines for <span class="process-math">\(X(t)\)</span> and <span class="process-math">\(Y(t)\)</span> for some amount of time <span class="process-math">\(\epsilon\text{.}\)</span> This resulting vector is called a <dfn class="terminology">tangent vector</dfn>. We say that <span class="process-math">\((X'(t), Y'(t))\)</span> is the <dfn class="terminology">velocity vector</dfn>, corresponding to choosing <span class="process-math">\(\epsilon = 1\text{,}\)</span> and it gives the direction and speed of the tangent vector. These vectors will always be perfectly tangent to the curve the point follows in the phase space.</div>
+<figure class="figure figure-like" id="subsec-diffeq-phase-plane-vector-fields-6"><iframe id="circle-phase-plane-tangent" width="600" height="300" src="circle-phase-plane-tangent-if.html"></iframe><div class="instructions"><details id="circle-phase-plane-tangent-instructions" class="solution-like born-hidden-knowl"><summary class="knowl__link"><h4 class="heading"><span class="type">Instructions<span class="period">.</span></span></h4></summary><div class="solution-like knowl__content"><div class="para" id="circle-phase-plane-tangent-instructions-1">Use the time slider in the top left panel to vary the time to observe how the tangent vector is related to the curve the point follows in phase space.</div></div></details></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.4.2<span class="period">.</span></span><span class="space"> </span>Trace of <span class="process-math">\((\cos(t),\sin(t))\)</span> in phase plane showing the velocity vector.</figcaption></figure><div class="para logical" id="subsec-diffeq-phase-plane-vector-fields-7">
+<div class="para">Where a single autonomous differential equation <span class="process-math">\(X' = f(X)\)</span> defines a slope field that depends only on <span class="process-math">\(X\)</span> (and not <span class="process-math">\(t\)</span>), an autonomous system of two differential equations</div>
+<div class="displaymath process-math" id="subsec-diffeq-phase-plane-vector-fields-7-4">
+\begin{align*}
+X' \amp = f_1(X,Y), \\
+Y' \amp = f_2(X,Y), 
+\end{align*}
+</div>
+<div class="para">defines a <dfn class="terminology">vector field</dfn>. At each point in the <span class="process-math">\((X,Y)\)</span> phase plane, the functions <span class="process-math">\((f_1,f_2)\)</span> define velocity vectors based on the location of that point. We then would be looking a solution that consists of two functions <span class="process-math">\(X(t)\)</span> and <span class="process-math">\(Y(t)\)</span> such that the resulting flow of the point <span class="process-math">\((X(t),Y(t))\)</span> through the phase plane always has its velocity vector exactly match the vector field’s velocity.</div>
+</div>
+<div class="para" id="subsec-diffeq-phase-plane-vector-fields-8">For practical visualization reasons, a vector field is typically rescaled so that the vectors don’t overlap. Longer vectors correspond to faster changes in the functions. Shorter vectors correspond to slowly changing functions.</div>
+<div class="para" id="subsec-diffeq-phase-plane-vector-fields-9">An initial condition represents a starting point in the phase plane at some specified time. If we said <span class="process-math">\((X(t_0), Y(t_0)) = (a,b)\text{,}\)</span> then the point <span class="process-math">\((a,b)\)</span> is the initial point at the time <span class="process-math">\(t = t_0\text{.}\)</span> This would require that our solution functions <span class="process-math">\(X(t)\)</span> and <span class="process-math">\(Y(t)\)</span> have graphs that individually pass through <span class="process-math">\((t_0, a)\)</span> and <span class="process-math">\((t_0,b)\text{,}\)</span> respectively.</div>
+<figure class="figure figure-like" id="subsec-diffeq-phase-plane-vector-fields-10"><iframe id="circle-phase-plane-field" width="600" height="300" src="circle-phase-plane-field-if.html"></iframe><div class="instructions"><details id="circle-phase-plane-field-instructions" class="solution-like born-hidden-knowl"><summary class="knowl__link"><h4 class="heading"><span class="type">Instructions<span class="period">.</span></span></h4></summary><div class="solution-like knowl__content"><div class="para" id="circle-phase-plane-field-instructions-1">Drag the initial point in the phase plane to select different solutions. Drag the point <span class="process-math">\(t\)</span> in the <span class="process-math">\(X\)</span> graph plane to follow the individual solution and visualize the corresponding tangent vectors.</div></div></details></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.4.3<span class="period">.</span></span><span class="space"> </span>The vector field <span class="process-math">\(f_1(x,y) = -y\)</span> and <span class="process-math">\(f_2(x,y)=x\)</span> has solutions that are rescaled and shifted sine/cosine pairs to pass through an initial point at <span class="process-math">\(t=0\text{.}\)</span></figcaption></figure></section><section class="subsection" id="subsec-diffeq-systems-differential-equations"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.4.2</span><span class="space"> </span><span class="title">Systems of Differential Equations</span>
+</h3>
+<div class="para logical" id="subsec-diffeq-systems-differential-equations-2">
+<div class="para">We now return to the idea of an autonomous (time-independent) system of differential equations,</div>
+<div class="displaymath process-math" id="subsec-diffeq-systems-differential-equations-2-1">
+\begin{align*}
+X' \amp = f_1(X, Y),\\
+Y' \amp = f_2(X, Y).
+\end{align*}
+</div>
+<div class="para">The pair of functions <span class="process-math">\(f_1\)</span> and <span class="process-math">\(f_2\)</span> define a vector field. At each point in the phase plane <span class="process-math">\((X,Y)\text{,}\)</span> the first function <span class="process-math">\(f_1\)</span> gives the rate of change in the direction of the first variable and <span class="process-math">\(f_2\)</span> gives the rate of change in the direction of the second. Just as we could draw a slope field for a single differential equation in the <span class="process-math">\((t,X)\)</span> plane, a vector field allows us to visualize the flow of the differential equation in the <span class="process-math">\((X,Y)\)</span> phase plane. Time does not directly appear in the vector field, but the lengths of the vectors are proportional to the speed of change, so shorter vectors correspond to regions of slower change.</div>
+</div>
+<div class="para" id="subsec-diffeq-systems-differential-equations-3">To illustrate the idea of a system of differential equations, we will consider a model of two populations, a producer and a consumer. As a specific example, consider algae as a producer and zooplankton as a consumer. The algae generates biomass through photosynthesis. The zooplankton consume the algae in order to produce its biomass.</div>
+<div class="para" id="subsec-diffeq-systems-differential-equations-4">In the absence of any zooplankton, the algae would behave like a simple population that grows subject to the natural constraints of the environment. When zooplankton are introduced, we would expect that this introduces a new loss term for the algae similar to our approach for harvesting a population, except that the total rate of harvesting is going to be proportional to the population of the zooplankton. The proportionality term represents the rate of algae consumption per individual zooplankton (or per unit measure of zooplankton population) and this will be some function of the algae density.</div>
+<div class="para" id="subsec-diffeq-systems-differential-equations-5">The zooplankton, on the other hand, require the presence of algae to survive. The intrinsic per capita growth rate for zooplankton without algae is therefore necessarily a negative value, corresponding to a population in decline. This per capita growth rate will be a function of the algae population density that is increasing such that increased algae density corresponds to a higher per capita growth rate. It will typically have the same functional form as the proportionality coefficient for harvesting, since the improved growth of zooplankton is typically directly related to the ability of zooplankton to consume algae.</div>
+<div class="para logical" id="subsec-diffeq-systems-differential-equations-6">
+<div class="para">To describe our model, we first introduce our state variables. Let <span class="process-math">\(A\)</span> represent the algae population density and let <span class="process-math">\(Z\)</span> represent the zooplankton population density. We model the algae population with logistic growth coupled with a zooplankton consumption term proportional to the product <span class="process-math">\(A \cdot Z\text{,}\)</span> such that the consumption of an individual zooplankton is itself proportional to the density of algae around it. We model the zooplankton population with a per capita growth rate that is negative for <span class="process-math">\(A=0\)</span> but which increases proportionally with <span class="process-math">\(A\text{.}\)</span> The system of differential equations is given by</div>
+<div class="displaymath process-math" id="subsec-diffeq-systems-differential-equations-6-6">
+\begin{align*}
+A' \amp = r_A A \cdot \left(1 - \frac{A}{K}\right) - b A Z,\\
+Z' \amp = (-r_Z + c A) \cdot Z.
+\end{align*}
+</div>
+</div>
+<div class="para" id="subsec-diffeq-systems-differential-equations-7">The model has five different model parameters. It can be overwhelming to try to explore the possible outcomes with so many parameters. As we have seen in the past, some of the parameters can be used to set natural units of scale for the different variables. We have two state variables plus time, giving three possible units of scale. We might be able to rewrite our model equations using appropriate units to go from five parameters to only two in a nondimensionalized version.</div>
+<div class="para logical" id="subsec-diffeq-systems-differential-equations-8">
+<div class="para">To create our nondimensionalized equations, we think of each state variable (<span class="process-math">\(A\)</span> and <span class="process-math">\(Z\)</span>) as a unit of scale (<span class="process-math">\(\hat{A}\)</span> and <span class="process-math">\(\hat{Z}\)</span>) times a dimensionless numerical variable (<span class="process-math">\(a\)</span> and <span class="process-math">\(z\)</span>), giving us <span class="process-math">\(A = hat{A} \cdot a\)</span> and <span class="process-math">\(Z = \hat{Z} \cdot z\text{.}\)</span> Similarly, we have our time variable <span class="process-math">\(t\)</span> measured in terms of a time scale <span class="process-math">\(T\)</span> and a dimensionless variable <span class="process-math">\(\tau\text{.}\)</span> The derivatives <span class="process-math">\(A'\)</span> and <span class="process-math">\(Z'\)</span> will be rewritten as dimensionless derivatives <span class="process-math">\(\dot{a} = \frac{da}{d\tau}\)</span> and <span class="process-math">\(\dot{z} = \frac{dz}{d\tau}\)</span> with units of measure <span class="process-math">\(\frac{\hat{A}}{T}\)</span> and <span class="process-math">\(\frac{\hat{Z}}{T}\text{,}\)</span> respectively. In terms of these units, our differential equations become</div>
+<div class="displaymath process-math" id="subsec-diffeq-systems-differential-equations-8-18">
+\begin{align*}
+\frac{\hat{A}}{T} \dot{a} \amp = r_A \hat{A} a \cdot \left(1 - \frac{\hat{A} a}{K}\right) - b \hat{A} \hat{Z} a z,\\
+\frac{\hat{Z}}{T} \dot{z} \amp = (-r_Z + c \hat{A} a) \cdot \hat{Z} z.
+\end{align*}
+</div>
+<div class="para">Rewriting these equations so that only <span class="process-math">\(\dot{a}\)</span> and <span class="process-math">\(\dot{z}\)</span> are on the left sides of the equations, we get</div>
+<div class="displaymath process-math" id="subsec-diffeq-systems-differential-equations-8-21">
+\begin{align*}
+\dot{a} \amp = r_A T a \cdot \left(1 - \frac{\hat{A} a}{K}\right) - b T \hat{Z} a z,\\
+\dot{z} \amp = (-r_Z T + c T \hat{A} a) \cdot z.
+\end{align*}
+</div>
+</div>
+<div class="para" id="subsec-diffeq-systems-differential-equations-9">At this point, the strategy is to make choices for our scales so that terms involving parameters simplify to simple numerical values. For example, we see that <span class="process-math">\(T\)</span> appears in the product <span class="process-math">\(r_A T a\text{,}\)</span> so if we <em class="emphasis">choose</em> <span class="process-math">\(T = \frac{1}{r_A}\text{,}\)</span> the term will be rewritten as just <span class="process-math">\(a\text{.}\)</span> Similarly, the scale <span class="process-math">\(\hat{A}\)</span> appears in the fraction <span class="process-math">\(\frac{\hat{A} a}{K}\text{,}\)</span> so the choice <span class="process-math">\(\hat{A} = K\)</span> will result in the term also being rewritten as just <span class="process-math">\(a\text{.}\)</span> The scale <span class="process-math">\(\hat{Z}\)</span> only appears in the term <span class="process-math">\(b T \hat{Z} a z\text{.}\)</span> We already have <span class="process-math">\(T = \frac{1}{r_A}\text{,}\)</span> so choosing <span class="process-math">\(\hat{Z} = \frac{1}{bT} = \frac{r_A}{b}\)</span> results in that term becoming just <span class="process-math">\(az\text{.}\)</span>
+</div>
+<div class="para logical" id="subsec-diffeq-systems-differential-equations-10">
+<div class="para">The nondimensionalized system of differential equations with this choice of scales is therefore written,</div>
+<div class="displaymath process-math" id="subsec-diffeq-systems-differential-equations-10-1">
+\begin{align*}
+\dot{a} \amp = a \cdot \left(1 - a\right) - a z,\\
+\dot{z} \amp = (- \frac{r_Z}{r_A} + \frac{c K}{r_A} a) \cdot z.
+\end{align*}
+</div>
+<div class="para">This new system depends only on two parameters, <span class="process-math">\(\alpha = \frac{r_Z}{r_A}\)</span> and <span class="process-math">\(\beta = \frac{cK}{r_A}\text{.}\)</span> By exploring different choices for those parameters, we can understand the different possible outcomes predicted by the original model.</div>
+</div>
+<div class="para" id="subsec-diffeq-systems-differential-equations-11">We will let a computer help us visualize the dynamics by plotting a vector field along with solution curves, called <dfn class="terminology">trajectories</dfn>, in the phase plane. To find the vector field, our use of <code class="code-inline tex2jax_ignore">geom_quiver</code> will be modified in that the displacement for our arrows will depend on both rates of change. In the <code class="code-inline tex2jax_ignore">mapping = aes()</code> call, we will need <code class="code-inline tex2jax_ignore">u</code> assigned to the values of the <span class="process-math">\(a\)</span> rate of change and <code class="code-inline tex2jax_ignore">v</code> assigned to the values of the <span class="process-math">\(z\)</span> rate of change. To find our solution curves, we will again use the <code class="code-inline tex2jax_ignore">ode</code> function from the <code class="code-inline tex2jax_ignore">deSolve</code> library. The primary difference is that we now have two state variables, so the <code class="code-inline tex2jax_ignore">init_state</code> argument will need to provide initial values for each of the variables <span class="process-math">\(a\)</span> and <span class="process-math">\(z\text{.}\)</span> Our rate function will also be required to return a list of two different rates.</div>
+<div class="para" id="subsec-diffeq-systems-differential-equations-12">One of the major challenges with visualizing vector fields is that the length of the vectors can be exceptionally small for many of the arrows on the grid. This makes it difficult to see what is happening.</div>
+<figure class="listing figure-like" id="subsec-diffeq-systems-differential-equations-13"><div class="code-box"><pre class="program"><code class="language-r"># Load the libraries
+library(ggplot2)
+library(ggquiver)
+library(deSolve)
+library(dplyr)
+
+# Define our model parameters
+my_params &lt;- c(alpha = 0.2, beta = 0.1)
+
+# Create a phase plane grid of points for vector field
+grid_pts &lt;- expand.grid(a = seq(0, 1,length=31), 
+                        z = seq(0, 1, length=31))
+
+# Define the simple rate calculations for vector field
+f1 &lt;- function(a, z, params) {
+    with(as.list(params), a*(1-a)-a*z)
+}
+f2 &lt;- function(a, z, params) {
+    with(as.list(params), (-alpha+beta*a)*z)
+}
+
+vec_field_data &lt;- grid_pts |&gt;
+    mutate(aRate = f1(a,z, my_params), 
+           zRate = f2(a,z, my_params))
+vec_field_graph &lt;- ggplot() +
+    geom_quiver(data = vec_field_data,
+                mapping = aes(x = a, y = z,
+                              u = aRate,
+                              v = zRate)
+                )
+show(vec_field_graph)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.4.4<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-producer-consumer-original-vector-field"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/producer-consumer-original-vector-field.png" class="contained" alt="unscaled vector field for producer-consumer system shows too many short vectors"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.4.5<span class="period">.</span></span><span class="space"> </span>Vector field for the producer-consumer model with <span class="process-math">\(\alpha=0.2\)</span> and <span class="process-math">\(\beta=0.1\)</span> shows many vectors with extremely short lengths.</figcaption></figure><div class="para" id="subsec-diffeq-systems-differential-equations-15">We can improve our visualization by rescaling all of the rates by the length of the vectors to provide directions of the same length, and then using color to distinguish the actual speed of change. Because the speed varies on the grid over several orders of magnitude, we <em class="emphasis">visualize</em> the speed using the logarithm of the speed.</div>
+<figure class="listing figure-like" id="subsec-diffeq-systems-differential-equations-16"><div class="code-box"><pre class="program"><code class="language-r"># Load the libraries
+library(ggplot2)
+library(ggquiver)
+library(deSolve)
+library(dplyr)
+
+# Define our model parameters
+my_params &lt;- c(alpha = 0.2, beta = 0.1)
+
+# Create a phase plane grid of points for vector field
+grid_pts &lt;- expand.grid(a = seq(0, 1.2,length=31), 
+                        z = seq(0, 1.2, length=31))
+
+# Define the simple rate calculations for vector field
+f1 &lt;- function(a, z, params) {
+    with(as.list(params), a*(1-a)-a*z)
+}
+f2 &lt;- function(a, z, params) {
+    with(as.list(params), (-alpha+beta*a)*z)
+}
+
+vec_field_data &lt;- grid_pts |&gt;
+    mutate(aRate = f1(a,z, my_params), 
+           zRate = f2(a,z, my_params)) |&gt;
+    mutate(speed = sqrt(aRate^2 + zRate^2)) |&gt;
+    mutate(aDir = aRate / speed,
+           zDir = zRate / speed)
+
+vec_field_graph &lt;- ggplot() +
+    geom_quiver(data = vec_field_data,
+                mapping = aes(x = a, y = z,
+                              u = aDir,
+                              v = zDir,
+                              color = log(speed))
+                ) +
+    scale_color_continuous(type = "viridis")
+show(vec_field_graph)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.4.6<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-producer-consumer-colored-vector-field-01"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/producer-consumer-colored-vector-field-01.png" class="contained" alt="rescaled vector field for producer-consumer system using color to show speed"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.4.7<span class="period">.</span></span><span class="space"> </span>Rescaled vector field for the producer-consumer model with color scheme to show speed, <span class="process-math">\(\alpha=0.2\)</span> and <span class="process-math">\(\beta=0.1\text{.}\)</span></figcaption></figure><div class="para" id="subsec-diffeq-systems-differential-equations-18">We can now add trajectories to our phase plane. Based on the vector field, we might choose some relevant initial conditions. For this first setting, we might be interested in what happens if we start with a lot of both organisms, which in the nondimensionalized values might be <span class="process-math">\((a,z) = (1,1)\text{.}\)</span> It might also be interesting to visualize what happens if we start on the left side of the plane, say at <span class="process-math">\((a,z) = (0.1, 0.75)\text{.}\)</span> Continuing from the previous listing, we add some additional code.</div>
+<div class="para" id="subsec-diffeq-systems-differential-equations-19">We also want to visualize the solutions as functions of time. Each set of initial conditions results in a different pair of functions, so we generate graphs of solutions within our loop.</div>
+<figure class="listing figure-like" id="subsec-diffeq-systems-differential-equations-20"><div class="code-box"><pre class="program"><code class="language-r"># Having already defined parameters and the vector field
+
+# Define the rate function for ode
+# Use the previously defined functions
+rateFcn &lt;- function(t, state, params) {
+    with(as.list(state), {
+        a_rate &lt;- f1(a,z,params)
+        z_rate &lt;- f2(a,z,params)
+        list(c(a_rate, z_rate))
+    })
+}
+
+times &lt;- seq(0, 20, by=0.1)
+init_vals &lt;- list(a0 = c(1, 0.1), z0 = c(1, 0.75))
+
+# Start with the vector field
+trajectory_graph &lt;- vec_field_graph
+
+# Loop through the different initial states to create graph
+num_conditions &lt;- length(init_vals $ a0)
+for (i in 1:num_conditions) {
+    # Find the diff eqn solutions
+    soln &lt;- ode(c(a = init_vals $ a0[i],
+                  z = init_vals $ z0[i]),
+                times,
+                rateFcn,
+                my_params)
+    # Add trajectories to the graph
+    trajectory_graph &lt;- trajectory_graph +
+        geom_path(data = soln,
+                  mapping = aes(x = a, y = z),
+                  color = "black",
+                  linewidth = 1)
+    # Solution graph
+    solution_graph &lt;- ggplot(data = soln) +
+        geom_line(mapping = aes(x=time, y=a, color="a")) +
+        geom_line(mapping = aes(x=time, y=z, color="z")) +
+        labs(x = "time", y = "population density") +
+        scale_color_discrete(breaks = c("a", "z"),
+                             name = "")
+    show(solution_graph)
+}
+
+# Show the results
+show(trajectory_graph)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.4.8<span class="period">.</span></span><span class="space"> </span></figcaption></figure><figure class="figure figure-like" id="fig-producer-consumer-pp-trajectories-01"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/producer-consumer-pp-trajectories-01.png" class="contained" alt="trajectories included with the vector field for producer-consumer system"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.4.9<span class="period">.</span></span><span class="space"> </span>Trajectories added to the producer-consumer system vector field, <span class="process-math">\(\alpha=0.2\)</span> and <span class="process-math">\(\beta=0.1\text{.}\)</span></figcaption></figure><figure class="figure figure-like" id="fig-producer-consumer-solutions-01"><div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;">
+<div class="sbspanel top" style="width:50%;"><img src="external/images/producer-consumer-solutions-01-1.png" class="contained"></div>
+<div class="sbspanel top" style="width:50%;"><img src="external/images/producer-consumer-solutions-01-2.png" class="contained"></div>
+</div></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.4.10<span class="period">.</span></span><span class="space"> </span>Trajectories added to the producer-consumer system vector field, <span class="process-math">\(\alpha=0.2\)</span> and <span class="process-math">\(\beta=0.1\text{.}\)</span></figcaption></figure><div class="para" id="subsec-diffeq-systems-differential-equations-23">For both of our initial conditions for this first choice of model parameters, we see that <span class="process-math">\(a\)</span> appears to be heading toward a non-zero equilibrium while <span class="process-math">\(z\)</span> appears to be heading toward zero.</div>
+<div class="para" id="subsec-diffeq-systems-differential-equations-24">Repeating the previous calculations with an adjustment in parameter values to use <code class="code-inline tex2jax_ignore">my_params &lt;- c(alpha = 0.2, beta = 0.3)</code>, but otherwise not changing the scripts, we obtain a new vector field with trajectories. This time, both of our initial conditions are showing both <span class="process-math">\(a\)</span> and <span class="process-math">\(z\)</span> converging to nonzero equilibrium values. For the parameter value <span class="process-math">\(\alpha = 0.2\text{,}\)</span> there must be some threshold for <span class="process-math">\(\beta\)</span> such that for larger values of <span class="process-math">\(\beta\text{,}\)</span> both zooplankton and algae are able to survive, but below that threshold, the zooplankton die off and the algae goes to its own nonzero equilibrium. We will explore this more methodically in a later section.</div>
+<figure class="figure figure-like" id="fig-producer-consumer-pp-trajectories-02"><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="external/images/producer-consumer-pp-trajectories-02.png" class="contained" alt="trajectories included with the vector field for producer-consumer system"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.4.11<span class="period">.</span></span><span class="space"> </span>Trajectories added to the producer-consumer system vector field, <span class="process-math">\(\alpha=0.2\)</span> and <span class="process-math">\(\beta=0.1\text{.}\)</span></figcaption></figure><figure class="figure figure-like" id="fig-producer-consumer-solutions-02"><div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;">
+<div class="sbspanel top" style="width:50%;"><img src="external/images/producer-consumer-solutions-02-1.png" class="contained"></div>
+<div class="sbspanel top" style="width:50%;"><img src="external/images/producer-consumer-solutions-02-2.png" class="contained"></div>
+</div></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.4.12<span class="period">.</span></span><span class="space"> </span>Trajectories added to the producer-consumer system vector field, <span class="process-math">\(\alpha=0.2\)</span> and <span class="process-math">\(\beta=0.1\text{.}\)</span></figcaption></figure></section></section></div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="sec-diffeq-equilibria.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="interactions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+</div></main>
+</div>
+<div id="ptx-page-footer" class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="338 3000 8772 6866" role="img"><title>PreTeXt logo</title><g style="stroke-width:.025in; stroke:currentColor; fill:none"><polyline points="472,3590 472,9732 " style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" src="https://runestone.academy/runestone/static/images/RAIcon_cropped.png" alt="Runstone Academy logo"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" src="https://www.mathjax.org/badge/badge-square-2.png" alt="MathJax logo"></a>
+</div>
+</body>
+</html>

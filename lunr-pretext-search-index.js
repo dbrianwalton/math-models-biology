@@ -2197,94 +2197,166 @@ var ptx_lunr_docs = [
   "body": " The Allee effect model for population growth using a quadratic per capita growth rate results in the cubic rate function, . We will consider the strong Allee effect so that . The carrying capacity can provide a natural scale for the population, so that we write , where is the dimensionless size of the population relative to . We also need a scale for time that is not yet clear, so we write where will be our unit of time and will be the dimensionless measure of time.  We next rewrite the differential equation in terms of and . The rate of change will have units , so that we can rewrite the original equation as . Factoring out from the two terms and , and then multiplying both sides of the equation by , we arrive at a nondimensionalized differential equation . We still get to choose our value of , and if we choose , the leading coefficient becomes 1. The only remaining dependence on our original parameters is the ratio , which measures the size of the Allee threshold in units of .  With these choices, the Allee effect differential equation becomes . If we explore this differential equation with different values of , we will understand all of the possible behaviors. Different choices for , , and will have solutions that correspond to rescaled solutions of the solutions that we find.  First, let us consider the Allee effect with , putting the threshold at 20% of the carrying capacity. The following script illustrates finding numerical solutions for different initial conditions and displaying them on top of a slope field. Other choices of or initial conditions can be achieved by modifying the appropriate lines in the script.    # Model parameters model_params <- c(m = 0.2) # List of initial values (will be in a loop) initial_values = c(0, 0.15, 0.20, 0.25, 0.5, 1, 1.5) # Define the rate function slopefield_fcn <- function(p) { with(as.list(model_params), -p*(p-m)*(p-1)) } # Create the slope field graph library(dplyr) library(ggplot2) library(ggquiver) grid_pts <- expand.grid(t = seq(0, 20, by=1), p = seq(-0.2, 1.25, by=0.05)) # Calculate the slopes slope_field_data <- mutate(grid_pts, delta_t = 1, delta_p = slopefield_fcn(p) ) slope_field_graph <- ggplot() + geom_quiver(data = slope_field_data, mapping = aes(x = t, y = p, u = delta_t, v = delta_p), color = \"blue\", vecsize = 5) show(slope_field_graph) # Prepare to solve the differential equation library(deSolve) rateF <- function(t, state, params) { with(as.list(c(state, params)), { p_rate <- -p*(p-m)*(p-1) list(p_rate) }) } # We are going to add multiple solutions in a loop. # Start with the slope field as the base layer soln_plot <- slope_field_graph + ylim(-0.2, 1.25) + labs(x = expression(tau)) # Loop over initial values for (p0 in initial_values) { # Solve the initial value problem times <- seq(0, 20, by=0.25) init_state <- c(p = p0) soln <- ode(init_state, times, rateF, model_params) # Add the graphic layer for this solution soln_plot <- soln_plot + geom_line(data = soln, mapping = aes(x = time, y = p), color = \"purple\", linewidth = 1) } # Show the result show(soln_plot)     Solutions for the Allee effect differential equation with the strong Allee effect, .   solution curves for the strong Allee effect    "
 },
 {
-  "id": "differential-equation-analysis",
+  "id": "seq-diffeq-interacting-populations",
   "level": "1",
-  "url": "differential-equation-analysis.html",
+  "url": "seq-diffeq-interacting-populations.html",
   "type": "Section",
   "number": "4.4",
-  "title": "Analysis of Differential Equations",
-  "body": " Analysis of Differential Equations   Differential equation models and sequence projection models have many similarities as well as differences. Just as we looked for equilibrium solutions for projection models in discrete time, we will look for equilibrium solutions for differential equation models in continuous time. Those equilibria can be stable or unstable. However, unlike sequence models, a differential equation model can not pass across an equilibrium solution. The graphical analysis of sequences using a cobweb diagram for discrete jumps is replaced for differential equations by the idea of a phase line.    Equilibria for Differential Equations  The concept of an equilibrium is that the state of the system is not changing. For variables, this means that the dynamic variables are constant functions with respect to time. Constant functions have a zero rate of change. We find equilibria solutions to a differential equation by solving the equation and look for solutions of the form for some constant . Other solutions that involve the variable are not equilibrium solution but instead describe other points where the instantaneous rate of change is zero but for which the function changes at other times.    Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives The solution is of the form is a constant and is therefore an equilibrium solution.      Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives either or , which give two equilibrium solutions and .    When we wanted to understand the stability of equilibria resulting from projection function models, we started by considering linear projection functions. For differential equations, we do similar analysis. We start with proportional rates of change models and then apply that to linear rates of change models.   Exponential Growth\/Decay Models   A differential equation of the form where is a constant, so that the rate of change of is proportional to the value of , has solutions that are exponential with rate . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as while as .  (exponential decay): as while as .     A differential equation of the form can be transformed into an exponential growth\/decay model by rewriting the model in terms of the equilibrium, found by . The equilibrium is so that the growth rate model can be rewritten as Because is a constant, . The rules of calculus allow us to define and find the differential equation Thus, is an exponential model and is shifted to be centered around the equilibrium.   Shifted Exponential Growth\/Decay Models   A differential equation of the form where and are constant has solutions that are exponential functions with rate shifted by the equilibrium . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as (unstable).  (exponential decay): as (stable).     Nonlinear growth rates that depend only on the dependent variable, , have equilibria at all of the values so that . Consider an equilibrium at . We can approximate the differential equation by the tangent line approximation at to determine stability of the equilibrium as long as . Then approximation suggests for values of sufficiently near . This is a linear rate function that leads to a shifted exponential model.   Local Stability of Equilibria   Suppose a differential equation of the form has an equilibrium at so that . Then if , the local stability of the equilibrium can be determined by the sign of .  (exponential growth): increases, at least initially.  (exponential decay): decreases.      The discrete logistic model in discrete time has a growth term defined by . This is saying that the total increment of change in the population over the course of the time increment is given by the formula . If we interpret that formula as a rate of change instead of the total increment of change, we arrive at the continuous-time logistic growth model where and are positive constants.  The equilibria for this model are found by solving to give and . The growth rate formula has a derivative . Computing the derivative at each equilibrium informs us of the stability of that solution.  so is an unstable equilibrium.  so is a stable equilibrium.  The following Sage script generates a typical slope field and several solutions coming from different initial values that illustrate the stability of these equilbria. Notice how solutions move away from the unstable equilibrium solution but towards the stable equilibrium solution.      Phase Lines  A differential equation with a rate that depends only on the dependent variable is called autonomous , such as . This is analogous to a sequence that can be defined recursively with a projection function. For a recursive sequence, we could study it geometrically using a cobweb diagram. When the projection function is above the line , the sequence increases; when the projection function is below the line, the sequence decreases.  For an autonomous differential equation, , we can use the graph of the rate function to understand the behavior of the solution function. When the rate function is positive (above the axis), the solution will be an increasing function. When the rate function is negative (below the axis), the solution will be a decreasing function. Equilibrium solutions correspond to values of where . We can summarize this behavior by drawing a number line with arrows pointing in the direction of increasing or decreasing between equilibrium values. Such a number line is called a phase line .   Consider the autonomous differential equation . We will generate a phase line summary of possible solution behaviors.  The graph of the rate function is a concave up parabola with roots at , shown below.       The roots of the rate function are the equilibrium solutions, and . Between the equilibria, the rate function is negative, so any solutions with initial values between the equilibria will be decreasing functions going away from the upper equilibrium and toward the lower equilibrium. If the initial value is above the equilibria, , then the solution will be an increasing function that grows without bound. If the initial value is below the equilibra, , then the solution will also be an increasing function but will grow at a slower rate as it approaches the lower equilibrium. The equilibria and the three intervals for initial values are summarized in the phase line below.       This phase line might be easier visualized in relation to the graph of different solutions if we drew it vertically on an axis so that arrows pointing to the right (increasing) represent solutions that rise (increasing) and arrows point to the left (decreasing) represent solutions that fall (decreasing). The equilibrium solutions correspond to solutions that remain constant. We see that is an unstable equilibrium while is a stable equilibrium.         "
+  "title": "Differential Equations for Two Interacting Variables",
+  "body": " Differential Equations for Two Interacting Variables   A single differential equation allows us to model a single state variable. Just as we could create a system of projection equations when dealing with a population involving multiple state variables, we can similarly create systems of differential equations for multiple state variables. In this section, we will focus on systems of differential equations involving two state variables.  Suppose that and represent two state variables that interact, affecting each other's rate of change. That is, the rate of change for will be some function of both and (and possibly time). The same will be true for but with a different function. That is, there are two functions and so that The system is autonomous or time independent if the rate functions do not depend on time, in which case we write   In this section, we will discuss some strategies for understanding how to generalize the ideas of the phase line, slope fields, and equilibria autonomous systems of differential equations involving two state variables. A phase line is used to understand solution behavior for a single variable. A phase plane will be the generalization to explore the dynamics for two variables. A slope field is a graphical representation showing the rate of change for a single variable with respect to time. A vector field allows us to generalize this to visualize relative rates of change for two variables simultaneously. Finally, equilibria will exist when both rate functions are equal to zero simultaneously. We will look for these equilibria by describing where individual rate functions equal zero called nullclines and find their points of intersection.    The Phase Plane and Vector Fields  When we find solutions to the system of differential equations, our two state variables each will be functions of time. Each of them will have their own graph involving points or . The idea of the phase plane is to consider the state variables as forming points in the plane, . At each instant of time , the value of will determine the -coordinate of the point while the value will determine the -coordinate. As time passes, the values of and change, and the corresponding state as a point will move around in the phase plane.  Consider the functions and . We learned in trigonometry or calculus that the point represents a point on the unit circle corresponding to a radian angle of . Consequently, the point can be visualized as moving around the unit circle in the phase plane. The individual functions trace out the cosine or sine graphs in the and graphs. But in the phase plane, traces out the circle.   Trace of in phase plane    Once we recognize that two functions of time can characterize a point in the phase plane that moves, we turn our attention to the derivatives of those functions. Each function and has a derivative and which represent the slope of the individual graphs in the and planes. (Remember, these are not phase planes.) We are going to draw a vector in the phase plane anchored at and ending at a point , for some positive scaling value . That second point represents a point we would reach if we followed the tangent lines for and for some amount of time . This resulting vector is called a tangent vector . We say that is the velocity vector , corresponding to choosing , and it gives the direction and speed of the tangent vector. These vectors will always be perfectly tangent to the curve the point follows in the phase space.   Trace of in phase plane showing the velocity vector.    Where a single autonomous differential equation defines a slope field that depends only on (and not ), an autonomous system of two differential equations defines a vector field . At each point in the phase plane, the functions define velocity vectors based on the location of that point. We then would be looking a solution that consists of two functions and such that the resulting flow of the point through the phase plane always has its velocity vector exactly match the vector field's velocity.  For practical visualization reasons, a vector field is typically rescaled so that the vectors don't overlap. Longer vectors correspond to faster changes in the functions. Shorter vectors correspond to slowly changing functions.  An initial condition represents a starting point in the phase plane at some specified time. If we said , then the point is the initial point at the time . This would require that our solution functions and have graphs that individually pass through and , respectively.   The vector field and has solutions that are rescaled and shifted sine\/cosine pairs to pass through an initial point at .      Systems of Differential Equations  We now return to the idea of an autonomous (time-independent) system of differential equations, The pair of functions and define a vector field. At each point in the phase plane , the first function gives the rate of change in the direction of the first variable and gives the rate of change in the direction of the second. Just as we could draw a slope field for a single differential equation in the plane, a vector field allows us to visualize the flow of the differential equation in the phase plane. Time does not directly appear in the vector field, but the lengths of the vectors are proportional to the speed of change, so shorter vectors correspond to regions of slower change.  To illustrate the idea of a system of differential equations, we will consider a model of two populations, a producer and a consumer. As a specific example, consider algae as a producer and zooplankton as a consumer. The algae generates biomass through photosynthesis. The zooplankton consume the algae in order to produce its biomass.  In the absence of any zooplankton, the algae would behave like a simple population that grows subject to the natural constraints of the environment. When zooplankton are introduced, we would expect that this introduces a new loss term for the algae similar to our approach for harvesting a population, except that the total rate of harvesting is going to be proportional to the population of the zooplankton. The proportionality term represents the rate of algae consumption per individual zooplankton (or per unit measure of zooplankton population) and this will be some function of the algae density.  The zooplankton, on the other hand, require the presence of algae to survive. The intrinsic per capita growth rate for zooplankton without algae is therefore necessarily a negative value, corresponding to a population in decline. This per capita growth rate will be a function of the algae population density that is increasing such that increased algae density corresponds to a higher per capita growth rate. It will typically have the same functional form as the proportionality coefficient for harvesting, since the improved growth of zooplankton is typically directly related to the ability of zooplankton to consume algae.  To describe our model, we first introduce our state variables. Let represent the algae population density and let represent the zooplankton population density. We model the algae population with logistic growth coupled with a zooplankton consumption term proportional to the product , such that the consumption of an individual zooplankton is itself proportional to the density of algae around it. We model the zooplankton population with a per capita growth rate that is negative for but which increases proportionally with . The system of differential equations is given by   The model has five different model parameters. It can be overwhelming to try to explore the possible outcomes with so many parameters. As we have seen in the past, some of the parameters can be used to set natural units of scale for the different variables. We have two state variables plus time, giving three possible units of scale. We might be able to rewrite our model equations using appropriate units to go from five parameters to only two in a nondimensionalized version.  To create our nondimensionalized equations, we think of each state variable ( and ) as a unit of scale ( and ) times a dimensionless numerical variable ( and ), giving us and . Similarly, we have our time variable measured in terms of a time scale and a dimensionless variable . The derivatives and will be rewritten as dimensionless derivatives and with units of measure and , respectively. In terms of these units, our differential equations become Rewriting these equations so that only and are on the left sides of the equations, we get   At this point, the strategy is to make choices for our scales so that terms involving parameters simplify to simple numerical values. For example, we see that appears in the product , so if we choose  , the term will be rewritten as just . Similarly, the scale appears in the fraction , so the choice will result in the term also being rewritten as just . The scale only appears in the term . We already have , so choosing results in that term becoming just .  The nondimensionalized system of differential equations with this choice of scales is therefore written, This new system depends only on two parameters, and . By exploring different choices for those parameters, we can understand the different possible outcomes predicted by the original model.  We will let a computer help us visualize the dynamics by plotting a vector field along with solution curves, called trajectories , in the phase plane. To find the vector field, our use of geom_quiver will be modified in that the displacement for our arrows will depend on both rates of change. In the mapping = aes() call, we will need u assigned to the values of the rate of change and v assigned to the values of the rate of change. To find our solution curves, we will again use the ode function from the deSolve library. The primary difference is that we now have two state variables, so the init_state argument will need to provide initial values for each of the variables and . Our rate function will also be required to return a list of two different rates.  One of the major challenges with visualizing vector fields is that the length of the vectors can be exceptionally small for many of the arrows on the grid. This makes it difficult to see what is happening.    # Load the libraries library(ggplot2) library(ggquiver) library(deSolve) library(dplyr) # Define our model parameters my_params <- c(alpha = 0.2, beta = 0.1) # Create a phase plane grid of points for vector field grid_pts <- expand.grid(a = seq(0, 1,length=31), z = seq(0, 1, length=31)) # Define the simple rate calculations for vector field f1 <- function(a, z, params) { with(as.list(params), a*(1-a)-a*z) } f2 <- function(a, z, params) { with(as.list(params), (-alpha+beta*a)*z) } vec_field_data <- grid_pts |> mutate(aRate = f1(a,z, my_params), zRate = f2(a,z, my_params)) vec_field_graph <- ggplot() + geom_quiver(data = vec_field_data, mapping = aes(x = a, y = z, u = aRate, v = zRate) ) show(vec_field_graph)     Vector field for the producer-consumer model with and shows many vectors with extremely short lengths.   unscaled vector field for producer-consumer system shows too many short vectors    We can improve our visualization by rescaling all of the rates by the length of the vectors to provide directions of the same length, and then using color to distinguish the actual speed of change. Because the speed varies on the grid over several orders of magnitude, we visualize the speed using the logarithm of the speed.    # Load the libraries library(ggplot2) library(ggquiver) library(deSolve) library(dplyr) # Define our model parameters my_params <- c(alpha = 0.2, beta = 0.1) # Create a phase plane grid of points for vector field grid_pts <- expand.grid(a = seq(0, 1.2,length=31), z = seq(0, 1.2, length=31)) # Define the simple rate calculations for vector field f1 <- function(a, z, params) { with(as.list(params), a*(1-a)-a*z) } f2 <- function(a, z, params) { with(as.list(params), (-alpha+beta*a)*z) } vec_field_data <- grid_pts |> mutate(aRate = f1(a,z, my_params), zRate = f2(a,z, my_params)) |> mutate(speed = sqrt(aRate^2 + zRate^2)) |> mutate(aDir = aRate \/ speed, zDir = zRate \/ speed) vec_field_graph <- ggplot() + geom_quiver(data = vec_field_data, mapping = aes(x = a, y = z, u = aDir, v = zDir, color = log(speed)) ) + scale_color_continuous(type = \"viridis\") show(vec_field_graph)     Rescaled vector field for the producer-consumer model with color scheme to show speed, and .   rescaled vector field for producer-consumer system using color to show speed    We can now add trajectories to our phase plane. Based on the vector field, we might choose some relevant initial conditions. For this first setting, we might be interested in what happens if we start with a lot of both organisms, which in the nondimensionalized values might be . It might also be interesting to visualize what happens if we start on the left side of the plane, say at . Continuing from the previous listing, we add some additional code.  We also want to visualize the solutions as functions of time. Each set of initial conditions results in a different pair of functions, so we generate graphs of solutions within our loop.    # Having already defined parameters and the vector field # Define the rate function for ode # Use the previously defined functions rateFcn <- function(t, state, params) { with(as.list(state), { a_rate <- f1(a,z,params) z_rate <- f2(a,z,params) list(c(a_rate, z_rate)) }) } times <- seq(0, 20, by=0.1) init_vals <- list(a0 = c(1, 0.1), z0 = c(1, 0.75)) # Start with the vector field trajectory_graph <- vec_field_graph # Loop through the different initial states to create graph num_conditions <- length(init_vals $ a0) for (i in 1:num_conditions) { # Find the diff eqn solutions soln <- ode(c(a = init_vals $ a0[i], z = init_vals $ z0[i]), times, rateFcn, my_params) # Add trajectories to the graph trajectory_graph <- trajectory_graph + geom_path(data = soln, mapping = aes(x = a, y = z), color = \"black\", linewidth = 1) # Solution graph solution_graph <- ggplot(data = soln) + geom_line(mapping = aes(x=time, y=a, color=\"a\")) + geom_line(mapping = aes(x=time, y=z, color=\"z\")) + labs(x = \"time\", y = \"population density\") + scale_color_discrete(breaks = c(\"a\", \"z\"), name = \"\") show(solution_graph) } # Show the results show(trajectory_graph)     Trajectories added to the producer-consumer system vector field, and .   trajectories included with the vector field for producer-consumer system     Trajectories added to the producer-consumer system vector field, and .       For both of our initial conditions for this first choice of model parameters, we see that appears to be heading toward a non-zero equilibrium while appears to be heading toward zero.  Repeating the previous calculations with an adjustment in parameter values to use my_params <- c(alpha = 0.2, beta = 0.3) , but otherwise not changing the scripts, we obtain a new vector field with trajectories. This time, both of our initial conditions are showing both and converging to nonzero equilibrium values. For the parameter value , there must be some threshold for such that for larger values of , both zooplankton and algae are able to survive, but below that threshold, the zooplankton die off and the algae goes to its own nonzero equilibrium. We will explore this more methodically in a later section.   Trajectories added to the producer-consumer system vector field, and .   trajectories included with the vector field for producer-consumer system     Trajectories added to the producer-consumer system vector field, and .        "
 },
 {
-  "id": "diffeq-equilibria-3",
+  "id": "seq-diffeq-interacting-populations-2-2",
   "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-equilibria-3",
-  "type": "Example",
+  "url": "seq-diffeq-interacting-populations.html#seq-diffeq-interacting-populations-2-2",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "autonomous time independent "
+},
+{
+  "id": "seq-diffeq-interacting-populations-2-3",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#seq-diffeq-interacting-populations-2-3",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "phase plane vector field "
+},
+{
+  "id": "subsec-diffeq-phase-plane-vector-fields-4",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#subsec-diffeq-phase-plane-vector-fields-4",
+  "type": "Figure",
   "number": "4.4.1",
   "title": "",
-  "body": "  Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives The solution is of the form is a constant and is therefore an equilibrium solution.   "
+  "body": " Trace of in phase plane   "
 },
 {
-  "id": "diffeq-equilibria-4",
+  "id": "subsec-diffeq-phase-plane-vector-fields-5",
   "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-equilibria-4",
-  "type": "Example",
+  "url": "seq-diffeq-interacting-populations.html#subsec-diffeq-phase-plane-vector-fields-5",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "vector tangent vector velocity vector "
+},
+{
+  "id": "subsec-diffeq-phase-plane-vector-fields-6",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#subsec-diffeq-phase-plane-vector-fields-6",
+  "type": "Figure",
   "number": "4.4.2",
   "title": "",
-  "body": "  Find the equilibrium solution(s) for the differential equation    The rate function involves only the dependent variable . Solving the equilibrium equation gives either or , which give two equilibrium solutions and .   "
+  "body": " Trace of in phase plane showing the velocity vector.   "
 },
 {
-  "id": "diffeq-exponential-models",
+  "id": "subsec-diffeq-phase-plane-vector-fields-7",
   "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-exponential-models",
-  "type": "Theorem",
+  "url": "seq-diffeq-interacting-populations.html#subsec-diffeq-phase-plane-vector-fields-7",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "vector field "
+},
+{
+  "id": "subsec-diffeq-phase-plane-vector-fields-10",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#subsec-diffeq-phase-plane-vector-fields-10",
+  "type": "Figure",
   "number": "4.4.3",
-  "title": "Exponential Growth\/Decay Models.",
-  "body": " Exponential Growth\/Decay Models   A differential equation of the form where is a constant, so that the rate of change of is proportional to the value of , has solutions that are exponential with rate . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as while as .  (exponential decay): as while as .    "
+  "title": "",
+  "body": " The vector field and has solutions that are rescaled and shifted sine\/cosine pairs to pass through an initial point at .   "
 },
 {
-  "id": "diffeq-shifted-exponential-models",
+  "id": "subsec-diffeq-systems-differential-equations-11",
   "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-shifted-exponential-models",
-  "type": "Theorem",
+  "url": "seq-diffeq-interacting-populations.html#subsec-diffeq-systems-differential-equations-11",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "trajectories "
+},
+{
+  "id": "subsec-diffeq-systems-differential-equations-13",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#subsec-diffeq-systems-differential-equations-13",
+  "type": "Listing",
   "number": "4.4.4",
-  "title": "Shifted Exponential Growth\/Decay Models.",
-  "body": " Shifted Exponential Growth\/Decay Models   A differential equation of the form where and are constant has solutions that are exponential functions with rate shifted by the equilibrium . That is, for an initial condition , the unique solution will be The growth behavior depends on the sign of :  (exponential growth): as (unstable).  (exponential decay): as (stable).    "
+  "title": "",
+  "body": "  # Load the libraries library(ggplot2) library(ggquiver) library(deSolve) library(dplyr) # Define our model parameters my_params <- c(alpha = 0.2, beta = 0.1) # Create a phase plane grid of points for vector field grid_pts <- expand.grid(a = seq(0, 1,length=31), z = seq(0, 1, length=31)) # Define the simple rate calculations for vector field f1 <- function(a, z, params) { with(as.list(params), a*(1-a)-a*z) } f2 <- function(a, z, params) { with(as.list(params), (-alpha+beta*a)*z) } vec_field_data <- grid_pts |> mutate(aRate = f1(a,z, my_params), zRate = f2(a,z, my_params)) vec_field_graph <- ggplot() + geom_quiver(data = vec_field_data, mapping = aes(x = a, y = z, u = aRate, v = zRate) ) show(vec_field_graph)   "
 },
 {
-  "id": "diffeq-nonlinear-equilibria-stability",
+  "id": "fig-producer-consumer-original-vector-field",
   "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-nonlinear-equilibria-stability",
-  "type": "Theorem",
+  "url": "seq-diffeq-interacting-populations.html#fig-producer-consumer-original-vector-field",
+  "type": "Figure",
   "number": "4.4.5",
-  "title": "Local Stability of Equilibria.",
-  "body": " Local Stability of Equilibria   Suppose a differential equation of the form has an equilibrium at so that . Then if , the local stability of the equilibrium can be determined by the sign of .  (exponential growth): increases, at least initially.  (exponential decay): decreases.    "
+  "title": "",
+  "body": " Vector field for the producer-consumer model with and shows many vectors with extremely short lengths.   unscaled vector field for producer-consumer system shows too many short vectors   "
 },
 {
-  "id": "diffeq-equilibria-11",
+  "id": "subsec-diffeq-systems-differential-equations-16",
   "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-equilibria-11",
-  "type": "Example",
+  "url": "seq-diffeq-interacting-populations.html#subsec-diffeq-systems-differential-equations-16",
+  "type": "Listing",
   "number": "4.4.6",
   "title": "",
-  "body": " The discrete logistic model in discrete time has a growth term defined by . This is saying that the total increment of change in the population over the course of the time increment is given by the formula . If we interpret that formula as a rate of change instead of the total increment of change, we arrive at the continuous-time logistic growth model where and are positive constants.  The equilibria for this model are found by solving to give and . The growth rate formula has a derivative . Computing the derivative at each equilibrium informs us of the stability of that solution.  so is an unstable equilibrium.  so is a stable equilibrium.  The following Sage script generates a typical slope field and several solutions coming from different initial values that illustrate the stability of these equilbria. Notice how solutions move away from the unstable equilibrium solution but towards the stable equilibrium solution.   "
+  "body": "  # Load the libraries library(ggplot2) library(ggquiver) library(deSolve) library(dplyr) # Define our model parameters my_params <- c(alpha = 0.2, beta = 0.1) # Create a phase plane grid of points for vector field grid_pts <- expand.grid(a = seq(0, 1.2,length=31), z = seq(0, 1.2, length=31)) # Define the simple rate calculations for vector field f1 <- function(a, z, params) { with(as.list(params), a*(1-a)-a*z) } f2 <- function(a, z, params) { with(as.list(params), (-alpha+beta*a)*z) } vec_field_data <- grid_pts |> mutate(aRate = f1(a,z, my_params), zRate = f2(a,z, my_params)) |> mutate(speed = sqrt(aRate^2 + zRate^2)) |> mutate(aDir = aRate \/ speed, zDir = zRate \/ speed) vec_field_graph <- ggplot() + geom_quiver(data = vec_field_data, mapping = aes(x = a, y = z, u = aDir, v = zDir, color = log(speed)) ) + scale_color_continuous(type = \"viridis\") show(vec_field_graph)   "
 },
 {
-  "id": "diffeq-phase-line-2",
+  "id": "fig-producer-consumer-colored-vector-field-01",
   "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-phase-line-2",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "autonomous "
-},
-{
-  "id": "diffeq-phase-line-3",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-phase-line-3",
-  "type": "Paragraph (with a defined term)",
-  "number": "",
-  "title": "",
-  "body": "phase line "
-},
-{
-  "id": "diffeq-phase-line-4",
-  "level": "2",
-  "url": "differential-equation-analysis.html#diffeq-phase-line-4",
-  "type": "Example",
+  "url": "seq-diffeq-interacting-populations.html#fig-producer-consumer-colored-vector-field-01",
+  "type": "Figure",
   "number": "4.4.7",
   "title": "",
-  "body": " Consider the autonomous differential equation . We will generate a phase line summary of possible solution behaviors.  The graph of the rate function is a concave up parabola with roots at , shown below.       The roots of the rate function are the equilibrium solutions, and . Between the equilibria, the rate function is negative, so any solutions with initial values between the equilibria will be decreasing functions going away from the upper equilibrium and toward the lower equilibrium. If the initial value is above the equilibria, , then the solution will be an increasing function that grows without bound. If the initial value is below the equilibra, , then the solution will also be an increasing function but will grow at a slower rate as it approaches the lower equilibrium. The equilibria and the three intervals for initial values are summarized in the phase line below.       This phase line might be easier visualized in relation to the graph of different solutions if we drew it vertically on an axis so that arrows pointing to the right (increasing) represent solutions that rise (increasing) and arrows point to the left (decreasing) represent solutions that fall (decreasing). The equilibrium solutions correspond to solutions that remain constant. We see that is an unstable equilibrium while is a stable equilibrium.       "
+  "body": " Rescaled vector field for the producer-consumer model with color scheme to show speed, and .   rescaled vector field for producer-consumer system using color to show speed   "
+},
+{
+  "id": "subsec-diffeq-systems-differential-equations-20",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#subsec-diffeq-systems-differential-equations-20",
+  "type": "Listing",
+  "number": "4.4.8",
+  "title": "",
+  "body": "  # Having already defined parameters and the vector field # Define the rate function for ode # Use the previously defined functions rateFcn <- function(t, state, params) { with(as.list(state), { a_rate <- f1(a,z,params) z_rate <- f2(a,z,params) list(c(a_rate, z_rate)) }) } times <- seq(0, 20, by=0.1) init_vals <- list(a0 = c(1, 0.1), z0 = c(1, 0.75)) # Start with the vector field trajectory_graph <- vec_field_graph # Loop through the different initial states to create graph num_conditions <- length(init_vals $ a0) for (i in 1:num_conditions) { # Find the diff eqn solutions soln <- ode(c(a = init_vals $ a0[i], z = init_vals $ z0[i]), times, rateFcn, my_params) # Add trajectories to the graph trajectory_graph <- trajectory_graph + geom_path(data = soln, mapping = aes(x = a, y = z), color = \"black\", linewidth = 1) # Solution graph solution_graph <- ggplot(data = soln) + geom_line(mapping = aes(x=time, y=a, color=\"a\")) + geom_line(mapping = aes(x=time, y=z, color=\"z\")) + labs(x = \"time\", y = \"population density\") + scale_color_discrete(breaks = c(\"a\", \"z\"), name = \"\") show(solution_graph) } # Show the results show(trajectory_graph)   "
+},
+{
+  "id": "fig-producer-consumer-pp-trajectories-01",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#fig-producer-consumer-pp-trajectories-01",
+  "type": "Figure",
+  "number": "4.4.9",
+  "title": "",
+  "body": " Trajectories added to the producer-consumer system vector field, and .   trajectories included with the vector field for producer-consumer system   "
+},
+{
+  "id": "fig-producer-consumer-solutions-01",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#fig-producer-consumer-solutions-01",
+  "type": "Figure",
+  "number": "4.4.10",
+  "title": "",
+  "body": " Trajectories added to the producer-consumer system vector field, and .      "
+},
+{
+  "id": "fig-producer-consumer-pp-trajectories-02",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#fig-producer-consumer-pp-trajectories-02",
+  "type": "Figure",
+  "number": "4.4.11",
+  "title": "",
+  "body": " Trajectories added to the producer-consumer system vector field, and .   trajectories included with the vector field for producer-consumer system   "
+},
+{
+  "id": "fig-producer-consumer-solutions-02",
+  "level": "2",
+  "url": "seq-diffeq-interacting-populations.html#fig-producer-consumer-solutions-02",
+  "type": "Figure",
+  "number": "4.4.12",
+  "title": "",
+  "body": " Trajectories added to the producer-consumer system vector field, and .      "
 },
 {
   "id": "system-examples",
