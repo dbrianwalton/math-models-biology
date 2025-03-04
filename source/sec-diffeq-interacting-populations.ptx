@@ -142,4 +142,293 @@
             </interactive>
         </figure>
     </subsection>
+    <subsection xml:id="subsec-diffeq-systems-differential-equations">
+        <title>Systems of Differential Equations</title>
+        
+        <p>
+            We now return to the idea of an autonomous (time-independent) system of differential equations,
+            <md>
+                <mrow>X' \amp = f_1(X, Y),</mrow>
+                <mrow>Y' \amp = f_2(X, Y).</mrow>
+            </md>
+            The pair of functions <m>f_1</m> and <m>f_2</m> define a vector field.
+            At each point in the phase plane <m>(X,Y)</m>, the first function <m>f_1</m> gives the rate of change in the direction of the first variable and <m>f_2</m> gives the rate of change in the direction of the second.
+            Just as we could draw a slope field for a single differential equation in the <m>(t,X)</m> plane, a vector field allows us to visualize the flow of the differential equation in the <m>(X,Y)</m> phase plane.
+            Time does not directly appear in the vector field, but the lengths of the vectors are proportional to the speed of change, so shorter vectors correspond to regions of slower change.
+        </p>
+        <p>
+            To illustrate the idea of a system of differential equations, we will consider a model of two populations, a producer and a consumer.
+            As a specific example, consider algae as a producer and zooplankton as a consumer.
+            The algae generates biomass through photosynthesis.
+            The zooplankton consume the algae in order to produce its biomass.
+        </p>
+        <p>
+            In the absence of any zooplankton, the algae would behave like a simple population that grows subject to the natural constraints of the environment.
+            When zooplankton are introduced, we would expect that this introduces a new loss term for the algae similar to our approach for harvesting a population, except that the total rate of harvesting is going to be proportional to the population of the zooplankton.
+            The proportionality term represents the rate of algae consumption per individual zooplankton (or per unit measure of zooplankton population) and this will be some function of the algae density.
+        </p>
+        <p>
+            The zooplankton, on the other hand, require the presence of algae to survive.
+            The intrinsic per capita growth rate for zooplankton without algae is therefore necessarily a negative value, corresponding to a population in decline.
+            This per capita growth rate will be a function of the algae population density that is increasing such that increased algae density corresponds to a higher per capita growth rate.
+            It will typically have the same functional form as the proportionality coefficient for harvesting, since the improved growth of zooplankton is typically directly related to the ability of zooplankton to consume algae.
+        </p>
+        <p>
+            To describe our model, we first introduce our state variables.
+            Let <m>A</m> represent the algae population density and let <m>Z</m> represent the zooplankton population density.
+            We model the algae population with logistic growth coupled with a zooplankton consumption term proportional to the product <m>A \cdot Z</m>, such that the consumption of an individual zooplankton is itself proportional to the density of algae around it.
+            We model the zooplankton population with a per capita growth rate that is negative for <m>A=0</m> but which increases proportionally with <m>A</m>.
+            The system of differential equations is given by
+            <md>
+                <mrow>A' \amp = r_A A \cdot \left(1 - \frac{A}{K}\right) - b A Z,</mrow>
+                <mrow>Z' \amp = (-r_Z + c A) \cdot Z.</mrow>
+            </md>
+        </p>
+        <p>
+            The model has five different model parameters.
+            It can be overwhelming to try to explore the possible outcomes with so many parameters.
+            As we have seen in the past, some of the parameters can be used to set natural units of scale for the different variables.
+            We have two state variables plus time, giving three possible units of scale.
+            We might be able to rewrite our model equations using appropriate units to go from five parameters to only two in a nondimensionalized version.
+        </p>
+        <p>
+            To create our nondimensionalized equations, we think of each state variable (<m>A</m> and <m>Z</m>) as a unit of scale (<m>\hat{A}</m> and <m>\hat{Z}</m>) times a dimensionless numerical variable (<m>a</m> and <m>z</m>), giving us <m>A = hat{A} \cdot a</m> and <m>Z = \hat{Z} \cdot z</m>.
+            Similarly, we have our time variable <m>t</m> measured in terms of a time scale <m>T</m> and a dimensionless variable <m>\tau</m>.
+            The derivatives <m>A'</m> and <m>Z'</m> will be rewritten as dimensionless derivatives <m>\dot{a} = \frac{da}{d\tau}</m> and <m>\dot{z} = \frac{dz}{d\tau}</m> with units of measure <m>\frac{\hat{A}}{T}</m> and <m>\frac{\hat{Z}}{T}</m>, respectively.
+            In terms of these units, our differential equations become
+            <md>
+                <mrow>\frac{\hat{A}}{T} \dot{a} \amp = r_A \hat{A} a \cdot \left(1 - \frac{\hat{A} a}{K}\right) - b \hat{A} \hat{Z} a z,</mrow>
+                <mrow>\frac{\hat{Z}}{T} \dot{z} \amp = (-r_Z + c \hat{A} a) \cdot \hat{Z} z.</mrow>
+            </md>
+            Rewriting these equations so that only <m>\dot{a}</m> and <m>\dot{z}</m> are on the left sides of the equations, we get
+            <md>
+                <mrow>\dot{a} \amp = r_A T a \cdot \left(1 - \frac{\hat{A} a}{K}\right) - b T \hat{Z} a z,</mrow>
+                <mrow>\dot{z} \amp = (-r_Z T + c T \hat{A} a) \cdot z.</mrow>
+            </md>
+        </p>
+        <p>
+            At this point, the strategy is to make choices for our scales so that terms involving parameters simplify to simple numerical values.
+            For example, we see that <m>T</m> appears in the product <m>r_A T a</m>, so if we <em>choose</em> <m>T = \frac{1}{r_A}</m>, the term will be rewritten as just <m>a</m>.
+            Similarly, the scale <m>\hat{A}</m> appears in the fraction <m>\frac{\hat{A} a}{K}</m>, so the choice <m>\hat{A} = K</m> will result in the term also being rewritten as just <m>a</m>.
+            The scale <m>\hat{Z}</m> only appears in the term <m>b T \hat{Z} a z</m>.
+            We already have <m>T = \frac{1}{r_A}</m>, so choosing <m>\hat{Z} = \frac{1}{bT} = \frac{r_A}{b}</m> results in that term becoming just <m>az</m>.
+        </p>
+        <p>
+            The nondimensionalized system of differential equations with this choice of scales is therefore written,
+            <md>
+                <mrow>\dot{a} \amp = a \cdot \left(1 - a\right) - a z,</mrow>
+                <mrow>\dot{z} \amp = (- \frac{r_Z}{r_A} + \frac{c K}{r_A} a) \cdot z.</mrow>
+            </md>
+            This new system depends only on two parameters, <m>\alpha = \frac{r_Z}{r_A}</m> and <m>\beta = \frac{cK}{r_A}</m>.
+            By exploring different choices for those parameters, we can understand the different possible outcomes predicted by the original model.
+        </p>
+        <p>
+            We will let a computer help us visualize the dynamics by plotting a vector field along with solution curves, called <term>trajectories</term>, in the phase plane.
+            To find the vector field, our use of <c>geom_quiver</c> will be modified in that the displacement for our arrows will depend on both rates of change.
+            In the <c>mapping = aes()</c> call, we will need <c>u</c> assigned to the values of the <m>a</m> rate of change and <c>v</c> assigned to the values of the <m>z</m> rate of change.
+            To find our solution curves, we will again use the <c>ode</c> function from the <c>deSolve</c> library.
+            The primary difference is that we now have two state variables, so the <c>init_state</c> argument will need to provide initial values for each of the variables <m>a</m> and <m>z</m>.
+            Our rate function will also be required to return a list of two different rates.
+        </p>
+        <p>
+            One of the major challenges with visualizing vector fields is that the length of the vectors can be exceptionally small for many of the arrows on the grid.
+            This makes it difficult to see what is happening.
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[# Load the libraries
+                library(ggplot2)
+                library(ggquiver)
+                library(deSolve)
+                library(dplyr)
+
+                # Define our model parameters
+                my_params <- c(alpha = 0.2, beta = 0.1)
+
+                # Create a phase plane grid of points for vector field
+                grid_pts <- expand.grid(a = seq(0, 1,length=31), 
+                                        z = seq(0, 1, length=31))
+
+                # Define the simple rate calculations for vector field
+                f1 <- function(a, z, params) {
+                    with(as.list(params), a*(1-a)-a*z)
+                }
+                f2 <- function(a, z, params) {
+                    with(as.list(params), (-alpha+beta*a)*z)
+                }
+
+                vec_field_data <- grid_pts |>
+                    mutate(aRate = f1(a,z, my_params), 
+                           zRate = f2(a,z, my_params))
+                vec_field_graph <- ggplot() +
+                    geom_quiver(data = vec_field_data,
+                                mapping = aes(x = a, y = z,
+                                              u = aRate,
+                                              v = zRate)
+                                )
+                show(vec_field_graph)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <figure xml:id="fig-producer-consumer-original-vector-field">
+            <caption>Vector field for the producer-consumer model with <m>\alpha=0.2</m> and <m>\beta=0.1</m> shows many vectors with extremely short lengths.</caption>
+            <image source="images/producer-consumer-original-vector-field.png">
+                <shortdescription>unscaled vector field for producer-consumer system shows too many short vectors</shortdescription>
+            </image>
+        </figure>
+        <p>
+            We can improve our visualization by rescaling all of the rates by the length of the vectors to provide directions of the same length, and then using color to distinguish the actual speed of change.
+            Because the speed varies on the grid over several orders of magnitude, we <em>visualize</em> the speed using the logarithm of the speed.
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[# Load the libraries
+                library(ggplot2)
+                library(ggquiver)
+                library(deSolve)
+                library(dplyr)
+
+                # Define our model parameters
+                my_params <- c(alpha = 0.2, beta = 0.1)
+
+                # Create a phase plane grid of points for vector field
+                grid_pts <- expand.grid(a = seq(0, 1.2,length=31), 
+                                        z = seq(0, 1.2, length=31))
+
+                # Define the simple rate calculations for vector field
+                f1 <- function(a, z, params) {
+                    with(as.list(params), a*(1-a)-a*z)
+                }
+                f2 <- function(a, z, params) {
+                    with(as.list(params), (-alpha+beta*a)*z)
+                }
+
+                vec_field_data <- grid_pts |>
+                    mutate(aRate = f1(a,z, my_params), 
+                           zRate = f2(a,z, my_params)) |>
+                    mutate(speed = sqrt(aRate^2 + zRate^2)) |>
+                    mutate(aDir = aRate / speed,
+                           zDir = zRate / speed)
+
+                vec_field_graph <- ggplot() +
+                    geom_quiver(data = vec_field_data,
+                                mapping = aes(x = a, y = z,
+                                              u = aDir,
+                                              v = zDir,
+                                              color = log(speed))
+                                ) +
+                    scale_color_continuous(type = "viridis")
+                show(vec_field_graph)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <figure xml:id="fig-producer-consumer-colored-vector-field-01">
+            <caption>Rescaled vector field for the producer-consumer model with color scheme to show speed, <m>\alpha=0.2</m> and <m>\beta=0.1</m>.</caption>
+            <image source="images/producer-consumer-colored-vector-field-01.png">
+                <shortdescription>rescaled vector field for producer-consumer system using color to show speed</shortdescription>
+            </image>
+        </figure>
+        <p>
+            We can now add trajectories to our phase plane.
+            Based on the vector field, we might choose some relevant initial conditions.
+            For this first setting, we might be interested in what happens if we start with a lot of both organisms, which in the nondimensionalized values might be <m>(a,z) = (1,1)</m>.
+            It might also be interesting to visualize what happens if we start on the left side of the plane, say at <m>(a,z) = (0.1, 0.75)</m>.
+            Continuing from the previous listing, we add some additional code.
+        </p>
+        <p>
+            We also want to visualize the solutions as functions of time.
+            Each set of initial conditions results in a different pair of functions, so we generate graphs of solutions within our loop.
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[# Having already defined parameters and the vector field
+
+                # Define the rate function for ode
+                # Use the previously defined functions
+                rateFcn <- function(t, state, params) {
+                    with(as.list(state), {
+                        a_rate <- f1(a,z,params)
+                        z_rate <- f2(a,z,params)
+                        list(c(a_rate, z_rate))
+                    })
+                }
+
+                times <- seq(0, 20, by=0.1)
+                init_vals <- list(a0 = c(1, 0.1), z0 = c(1, 0.75))
+
+                # Start with the vector field
+                trajectory_graph <- vec_field_graph
+
+                # Loop through the different initial states to create graph
+                num_conditions <- length(init_vals $ a0)
+                for (i in 1:num_conditions) {
+                    # Find the diff eqn solutions
+                    soln <- ode(c(a = init_vals $ a0[i],
+                                  z = init_vals $ z0[i]),
+                                times,
+                                rateFcn,
+                                my_params)
+                    # Add trajectories to the graph
+                    trajectory_graph <- trajectory_graph +
+                        geom_path(data = soln,
+                                  mapping = aes(x = a, y = z),
+                                  color = "black",
+                                  linewidth = 1)
+                    # Solution graph
+                    solution_graph <- ggplot(data = soln) +
+                        geom_line(mapping = aes(x=time, y=a, color="a")) +
+                        geom_line(mapping = aes(x=time, y=z, color="z")) +
+                        labs(x = "time", y = "population density") +
+                        scale_color_discrete(breaks = c("a", "z"),
+                                             name = "")
+                    show(solution_graph)
+                }
+
+                # Show the results
+                show(trajectory_graph)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <figure xml:id="fig-producer-consumer-pp-trajectories-01">
+            <caption>Trajectories added to the producer-consumer system vector field, <m>\alpha=0.2</m> and <m>\beta=0.1</m>.</caption>
+            <image source="images/producer-consumer-pp-trajectories-01.png">
+                <shortdescription>trajectories included with the vector field for producer-consumer system</shortdescription>
+            </image>
+        </figure>
+        <figure xml:id="fig-producer-consumer-solutions-01">
+            <caption>Trajectories added to the producer-consumer system vector field, <m>\alpha=0.2</m> and <m>\beta=0.1</m>.</caption>
+            <sidebyside>
+            <image source="images/producer-consumer-solutions-01-1.png" />
+            <image source="images/producer-consumer-solutions-01-2.png" />
+            </sidebyside>
+        </figure>
+        <p>
+            For both of our initial conditions for this first choice of model parameters, we see that <m>a</m> appears to be heading toward a non-zero equilibrium while <m>z</m> appears to be heading toward zero.
+        </p>
+        <p>
+            Repeating the previous calculations with an adjustment in parameter values to use <c>my_params &lt;- c(alpha = 0.2, beta = 0.3)</c>, but otherwise not changing the scripts, we obtain a new vector field with trajectories.
+            This time, both of our initial conditions are showing both <m>a</m> and <m>z</m> converging to nonzero equilibrium values.
+            For the parameter value <m>\alpha = 0.2</m>, there must be some threshold for <m>\beta</m> such that for larger values of <m>\beta</m>, both zooplankton and algae are able to survive, but below that threshold, the zooplankton die off and the algae goes to its own nonzero equilibrium.
+            We will explore this more methodically in a later section.
+        </p>
+        <figure xml:id="fig-producer-consumer-pp-trajectories-02">
+            <caption>Trajectories added to the producer-consumer system vector field, <m>\alpha=0.2</m> and <m>\beta=0.1</m>.</caption>
+            <image source="images/producer-consumer-pp-trajectories-02.png">
+                <shortdescription>trajectories included with the vector field for producer-consumer system</shortdescription>
+            </image>
+        </figure>
+        <figure xml:id="fig-producer-consumer-solutions-02">
+            <caption>Trajectories added to the producer-consumer system vector field, <m>\alpha=0.2</m> and <m>\beta=0.1</m>.</caption>
+            <sidebyside>
+            <image source="images/producer-consumer-solutions-02-1.png" />
+            <image source="images/producer-consumer-solutions-02-2.png" />
+            </sidebyside>
+        </figure>
+    </subsection>
 </section>
