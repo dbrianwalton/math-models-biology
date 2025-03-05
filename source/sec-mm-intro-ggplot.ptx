@@ -122,7 +122,7 @@
                mapping = aes(x = Year, y = Population)
             ) +
             geom_point(color = "blue") +
-            ylim(0, 4e8)
+            coord_cartesian(ylim = c(0, 4e8))
         </program>
     </listing>
     <image width="75%" source="images/US-popn-population-v-time-second.png"/>
@@ -140,7 +140,7 @@
                mapping = aes(x = Year, y = Population)
             ) +
             geom_point(color = "blue") +
-            ylim(0, 3.5e8)
+            coord_cartesian(ylim = c(0, 3.5e8))
         </program>
     </listing>
     <image width="75%" source="images/US-popn-population-v-time-third.png"/>
@@ -157,7 +157,7 @@
             geom_point(color = "blue") +
             geom_point(aes(y = "Births"), color = "red") +
             geom_point(aes(y = "Deaths"), color = "green") +
-            ylim(0, 3.5e8)
+            coord_cartesian(ylim = c(0, 3.5e8))
         </program>
     </listing>
     <image width="75%" source="images/US-popn-population-v-time-four.png"/>

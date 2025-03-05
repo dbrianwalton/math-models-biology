@@ -211,7 +211,7 @@
         base_plot <- ggplot() +
             geom_line(mapping = aes(x = xvals, y = yvals), color="blue", linewidth=1) +
             geom_abline(intercept = 0, slope = 1) +
-            xlim(x_min, x_max) + ylim(x_min, x_max) +
+            coord_cartesian(xlim = c(x_min, x_max), ylim = c(x_min, x_max)) +
             labs(x = "x[n]", y = "x[n+1]")
 
         # Generate the sequence used for the cobweb

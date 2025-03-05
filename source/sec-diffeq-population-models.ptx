@@ -156,23 +156,23 @@
 
                 # Create a graph
                 soln_graph <- ggplot() +
-                geom_quiver(data = slope_data,
-                            mapping = aes(x = t, y = P,
-                                            u = delta_t, v = delta_P),
-                            color = "blue", vecsize = 15) +
-                geom_line(data = soln1,
+                    geom_quiver(data = slope_data,
+                                mapping = aes(x = t, y = P,
+                                                u = delta_t, v = delta_P),
+                                color = "blue", vecsize = 15) +
+                    geom_line(data = soln1,
+                                mapping = aes(x = time, y = P),
+                                color = "purple", linewidth=1) +
+                    geom_line(data = soln2,
+                                mapping = aes(x = time, y = P),
+                                color = "purple", linewidth=1) +
+                    geom_line(data = soln3,
+                                mapping = aes(x = time, y = P),
+                                color = "purple", linewidth=1) +
+                    geom_line(data = soln4,
                             mapping = aes(x = time, y = P),
                             color = "purple", linewidth=1) +
-                geom_line(data = soln2,
-                            mapping = aes(x = time, y = P),
-                            color = "purple", linewidth=1) +
-                geom_line(data = soln3,
-                            mapping = aes(x = time, y = P),
-                            color = "purple", linewidth=1) +
-                geom_line(data = soln4,
-                        mapping = aes(x = time, y = P),
-                        color = "purple", linewidth=1) +
-                ylim(-20,120)
+                    coord_cartesian(ylim = c(-20,120))
                 show(soln_graph)
                 ]]>
                 </code>
@@ -280,23 +280,23 @@
 
                 # Create a graph
                 soln_graph <- ggplot() +
-                geom_quiver(data = slope_data,
-                            mapping = aes(x = t, y = p,
-                                            u = delta_t, v = delta_p),
-                            color = "blue", vecsize = 3) +
-                geom_line(data = soln1,
-                            mapping = aes(x = time, y = p),
-                            color = "purple", linewidth=1) +
-                geom_line(data = soln2,
-                            mapping = aes(x = time, y = p),
-                            color = "purple", linewidth=1) +
-                geom_line(data = soln3,
-                            mapping = aes(x = time, y = p),
-                            color = "purple", linewidth=1) +
-                geom_line(data = soln4,
-                            mapping = aes(x = time, y = p),
-                            color = "purple", linewidth=1) +
-                ylim(-0.20,1.20)
+                    geom_quiver(data = slope_data,
+                                mapping = aes(x = t, y = p,
+                                                u = delta_t, v = delta_p),
+                                color = "blue", vecsize = 3) +
+                    geom_line(data = soln1,
+                                mapping = aes(x = time, y = p),
+                                color = "purple", linewidth=1) +
+                    geom_line(data = soln2,
+                                mapping = aes(x = time, y = p),
+                                color = "purple", linewidth=1) +
+                    geom_line(data = soln3,
+                                mapping = aes(x = time, y = p),
+                                color = "purple", linewidth=1) +
+                    geom_line(data = soln4,
+                                mapping = aes(x = time, y = p),
+                                color = "purple", linewidth=1) +
+                    coord_cartesian(ylim = c(-0.20,1.20))
                 show(soln_graph)
                 ]]>
                 </code>

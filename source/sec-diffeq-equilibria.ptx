@@ -381,7 +381,7 @@
                     # We are going to add multiple solutions in a loop.
                     # Start with the slope field as the base layer
                     soln_plot <- slope_field_graph +
-                        ylim(-0.2, 1.25) +
+                        coord_cartesian(ylim=c(-0.2, 1.25)) +
                         labs(x = expression(tau))
 
                     # Loop over initial values

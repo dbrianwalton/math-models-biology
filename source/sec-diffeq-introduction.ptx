@@ -282,7 +282,7 @@
                     geom_function(fun = function(t) { 0.01*exp(3*t) }, linewidth=1) +
                     geom_function(fun = function(t) { -0.04*exp(3*t) }, linewidth=1) +
                     geom_function(fun = function(t) { -1*exp(3*t) }, linewidth=1) +
-                    ylim(-4, 4)  # Required to keep the same viewing window
+                    coord_cartesian(ylim=c(-4, 4))  # Required to keep the same viewing window
                 show(soln_curves)
                 ]]>
                 </code>
