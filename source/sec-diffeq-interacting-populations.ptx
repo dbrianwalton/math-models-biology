@@ -418,17 +418,32 @@
             We will explore this more methodically in a later section.
         </p>
         <figure xml:id="fig-producer-consumer-pp-trajectories-02">
-            <caption>Trajectories added to the producer-consumer system vector field, <m>\alpha=0.2</m> and <m>\beta=0.1</m>.</caption>
+            <caption>Trajectories added to the producer-consumer system vector field, <m>\alpha=0.2</m> and <m>\beta=0.3</m>.</caption>
             <image source="images/producer-consumer-pp-trajectories-02.png">
                 <shortdescription>trajectories included with the vector field for producer-consumer system</shortdescription>
             </image>
         </figure>
         <figure xml:id="fig-producer-consumer-solutions-02">
-            <caption>Trajectories added to the producer-consumer system vector field, <m>\alpha=0.2</m> and <m>\beta=0.1</m>.</caption>
+            <caption>Trajectories added to the producer-consumer system vector field, <m>\alpha=0.2</m> and <m>\beta=0.3</m>.</caption>
             <sidebyside>
             <image source="images/producer-consumer-solutions-02-1.png" />
             <image source="images/producer-consumer-solutions-02-2.png" />
             </sidebyside>
+        </figure>
+        <figure>
+            <caption>Interactive dynamics of the producer-consumer model</caption>
+            <interactive xml:id="producer-consumer-dynamics" platform="jsxgraph" aspect="16:9" source="code/jsx/jsx-producer-consumer-dynamics.js">
+                <slate xml:id="jsx-pc-controls" surface="jsxboard" aspect="16:1" />
+                <sidebyside width="50%">
+                    <slate xml:id="jsx-pc-pplane" surface="jsxboard" aspect="1:1" />
+                    <slate xml:id="jsx-pc-solutions" surface="jsxboard" aspect="1:1" />
+                </sidebyside>
+                <instructions xml:id="producer-consumer-instructions">
+                <p>
+                    Use the sliders to change model parameters, and change the initial point.
+                </p>
+                </instructions>
+            </interactive>
         </figure>
     </subsection>
 </section>
