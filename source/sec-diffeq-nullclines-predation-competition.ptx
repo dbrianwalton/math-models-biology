@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="seq-diffeq-nullclines-predation-competition">
+    <title>Phase Plane Analysis with Nullclines, Competition and Predator-Prey Models</title>
+
+    <introduction>
+        <p>
+            For a single autonomous differential equation <m>X' = f(X)</m>, solving the equation <m>f(X) = 0</m> allowed us to identify the equilibrium solutions.
+            When we have an autonomous system of two differential equation,
+            <md>
+                <mrow>X' \amp = f_1(X,Y),</mrow>
+                <mrow>Y' \amp = f_2(X,Y),</mrow>
+            </md>
+            solving a <em>single</em> equation like <m>f_1(X,Y) = 0</m> or <m>f_2(X,Y) = 0</m> is not quite finding an equilibrium.
+            An equilibrium would require that <em>both</em> equations are satisfied for the same point.
+            So what do we get when we think of an individual equation at a time?
+        </p>
+        <p>
+            In the <m>(x,y)</m> phase plane, an equation of the form <m>f(x,y) = 0</m> generally describes a <em>curve</em> in the plane.
+            In calculus, you would have learned about something called an <em>implicit function</em>.
+            In a general sense, for each value of <m>x</m>, there can be zero, one, or more values of <m>y</m> that make the equation true.
+            Near most such points, the solutions will follow some curve and the slope of that curve is calculated using the calculus strategy of <em>implicit differentiation</em>.
+        </p>
+        <p>
+            While we don't need to focus heavily on the slope of the curve, we are interested in the idea that the equation <em>describes</em> a curve in the plane.
+            Because the equation <m>f_1(X,Y)=0</m> represents points where <m>X</m> would have zero rate of change, the curve is called the <m>X</m>-<term>nullcline</term>.
+            The curve satisfied by <m>f_2(X,Y)=0</m> is called the <m>Y</m>-nullcline.
+            Any equilibrium solutions will correspond to the <em>intersections</em> of these two nullclines.
+        </p>
+        <p>
+            In this section, we will discuss how finding or describing the nullclines can simplify the visualization of the phase plane.
+            We can use intersection points to find equilibria.
+            Instead of finding a full vector field, we can identify direction at a single point in each region formed by the nullclines to see general directions of motion.
+            Sometimes, if it is clear that either all directions point toward the equilibrium or at least one direction points away, this is enough to determine the stability of equilibrium values.
+        </p>
+        <p>
+            As our primary examples to motivate the analysis, we will discuss competition between two species. We will also return to the idea of predation and consider predator-prey models.
+        </p>
+    </introduction>
+
+    <subsection xml:id="subsec-diffeq-competition-models">
+        <title>Competition Models</title>
+        <p>
+            The Rusty crayfish is an invasive aquatic crustacean in Virginia.
+            (See <url href="https://dwr.virginia.gov/wildlife/invasive-species/rusty-crayfish/"/>.)
+            Native in Ohio, Kentucky, Tennessee, and Indiana, this crayfish was first reported in Virginia in 2011.
+            The species competes for resources with native crayfish but consume resources at a much higher rate.
+            Thus, the Rusty crayfish risks displacing native species but also has the potential to disrupt the aquatic environment of other native species who share the water.
+        </p>
+        <p>
+            Invasive species are often studied in the context of <term>competition models</term>.
+            We want to consider two species that are found in the same environment and compete for similar resources,
+            such as populations of native crayfish and Rusty crayfish.
+            If there were only one species present, we could model that species with a logistic differential equation.
+            What does the presence of a competitor do to the model?
+        </p>
+        <p>
+            If we imagined that a carrying capacity represents the available number of <em>slots</em> available for a species in the environment based on resource availability, then the presence of a competitor who uses some of those resources is effectively eliminating some of the available slots.
+            From the perspective of per capita growth rates, we can imagine that the presence of a competitor has a negative effect on the species per capita rate.
+        </p>
+        <p>
+            Let <m>N</m> represent the population size of native crayfish and let <m>R</m> represent the population size of Rusty crayfish.
+            Each population would have its own intrinsic per capita growth rates and carrying capacities for the given environment, say <m>r_0</m> and <m>K</m> for the native population, and <m>q_0</m> and <m>M</m> for the invasive population.
+            The presence of competitors <em>occupy</em> some of the resources of the other species, so we can model our two populations using modified logistic growth models,
+            <md>
+                <mrow>N' \amp = r_0 N(1 - \frac{N + \alpha R}{K}), </mrow>
+                <mrow>R' \amp = q_0 N(1 - \frac{R + \beta N}{M}). </mrow>
+            </md>
+            The parameter <m>\alpha</m> represents the (fractional) number of native crayfish that would have the same impact on growth rates of native crayfish as <em>each</em> Rusty crayfish has.
+            Similarly, the parameter <m>\beta</m> represents the (fractional) number of Rusty crayfish that would have an equivalent impact on Rusty crawfish growth rates compared to the presence of <em>each</em> native crayfish.
+        </p>
+    </subsection>
+    
+    <subsection xml:id='subsec-diffeq-nullcline-analysis'>
+        <title>Nullclines in the Phase Plane</title>
+
+        <p>
+            A nullcline is a curve defining a collection of points in the phase plane at which <em>one</em> of the state variables has an instantaneous rate of change equal to zero.
+            We need to emphasize the idea of instantaneous because other variables are likely changing so that the solutions immediately move off of the nullcline.
+        </p>
+        <p>
+            For our competition model, the <m>N</m>-nullcline (where <m>N</m> has a zero rate of change) is characterized by points <m>(N,R)</m> at which
+            <me> r_0 N(1 - \frac{N+\alpha R}{K}) = 0.</me>
+            Similarly, the <m>R</m>-nullcline is characterized by points <m>(N,R)</m> at which 
+            <me> q_0 R(1 - \frac{R+\beta N}{M}) = 0.</me>
+            Because each equation is already written in a factored form, each nullcline consists of two distinct curves.
+            The <m>N</m>-nullcline consists of the line for which <m>N=0</m> as well as a second line for which <m>N+\alpha R = K</m>.
+            The <m>R</m>-nullcline consists of the lines for which <m>R=0</m> or <m>R+\beta N = M</m>.
+        </p>
+        <p>
+            Just as we drew arrows on a phase line to see the direction of motion for a single state variable, we can use nullclines to decompose the phase plane into different regions where each state variable is increasing or decreasing.
+            In the <m>(N,R)</m> phase plane, the <m>N</m>-nullcline includes a vertical line <m>N=0</m> and another line <m>N + \alpha R = K</m> that has an <m>N</m>-intercept (<m>R=0</m>) at <m>N=K</m> and an <m>R</m> intercept at <m>R = \frac{1}{\alpha}K</m>.
+            We check the <em>sign</em> of the rate formula <m>r_0 N (1 - \frac{N+\alpha N}{K})</m> to determine if <m>N</m> is increasing or decreasing.
+            When <m>N \gt 0</m> is <em>larger</em> than the second line, we have <m>N</m> <em>decreasing</em>.
+            When <m>N \gt 0</m> is <em>smaller</em> than the second line, we have <m>N</m> <em>increasing</em>.
+            Having <m>N \lt 0</m> is not biological for populations, but mathematically, we would have a reversal of signs because of the factor <m>r_0 N</m> being negative.
+        </p>
+        <p>
+            We have a similar evaluation for the variable <m>R</m>.
+            The <m>R</m> nullcline has a horizontal line <m>R=0</m> as well as a line with slope <m>\beta</m>.
+            That second line has an <m>N</m>-intercept at <m>N=\frac{1}{\beta}M</m> and a <m>R</m>-intercept at <m>R=M</m>.
+            Regions of where <m>R</m> is increasing or decreasing is analogous to that of <m>N</m>.
+        </p>
+        <p>
+            Both nullclines are visualized in <xref ref="fig-competition-nullclines-directions"/> along with directions of motion for <m>N</m> and <m>R</m>.
+            The behaviors are shown in separate graphs because we still need to consider the relative position of the nullclines to each other.
+        </p>
+        <figure xml:id="fig-competition-nullclines-directions">
+            <caption><m>N</m> (left) and <m>R</m> (right) nullclines as well as regions of the phase plane marked by whether the state variable is increasing or decreasing.</caption>
+            <sidebyside>
+                <image source="images/competition-N-null-directions">
+                    <shortdescription>N-nullcline and regions where N is increasing or decreasing</shortdescription>
+                </image>
+                <image source="images/competition-R-null-directions">
+                    <shortdescription>R-nullcline and regions where R is increasing or decreasing</shortdescription>
+                </image>
+            </sidebyside>
+        </figure>
+    </subsection>
+</section>
