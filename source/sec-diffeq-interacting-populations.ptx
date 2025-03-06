@@ -8,13 +8,13 @@
 <!-- See the file COPYING for copying conditions. -->
    
 <section xml:id="seq-diffeq-interacting-populations">
-    <title>Differential Equations for Two Interacting Variables</title>
+    <title>Interacting Variables and Producer-Consumer Interactions</title>
 
     <introduction>
         <p>
             A single differential equation allows us to model a single state variable.
             Just as we could create a system of projection equations when dealing with a population involving multiple state variables, we can similarly create systems of differential equations for multiple state variables.
-            In this section, we will focus on systems of differential equations involving two state variables.
+            In this section, we will focus on systems of differential equations involving two state variables, with a motivating example being the interactions between a producer species and consumer species.
         </p>
         <p>
             Suppose that <m>X</m> and <m>Y</m> represent two state variables that interact, affecting each other's rate of change.
@@ -30,6 +30,7 @@
                 <mrow> X' \amp = f_1(X, Y),</mrow>
                 <mrow> Y' \amp = f_2(X, Y).</mrow>
             </md>
+            For example, we will consider a producer species that uses photosynthesis to grow and produce its energy and biomass along with a consumer species that consumes individuals from the consumer species for its energy source. The rates of change of these two species will depend on the prevalence of the other species.
         </p>
         <p>
             In this section, we will discuss some strategies for understanding how to generalize the ideas of the phase line, slope fields, and equilibria autonomous systems of differential equations involving two state variables.
@@ -430,6 +431,9 @@
             <image source="images/producer-consumer-solutions-02-2.png" />
             </sidebyside>
         </figure>
+        <p>
+            An interactive figure is provided below where you can explore the dynamics by adjusting the two free parameters as well as the initial condition.
+        </p>
         <figure>
             <caption>Interactive dynamics of the producer-consumer model</caption>
             <interactive xml:id="producer-consumer-dynamics" platform="jsxgraph" aspect="16:9" source="code/jsx/jsx-producer-consumer-dynamics.js">
