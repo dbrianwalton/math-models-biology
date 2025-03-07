@@ -278,14 +278,14 @@
          id="tspan18"
          sodipodi:role="line">R</tspan></text>
     <path
-       style="opacity:0.518518;fill:#ff6600;stroke:#c2640d;stroke-width:1.8985;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.587719"
+       style="opacity:0.518518;fill:#ff6600;stroke:#ff8000;stroke-width:1.8985;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.69999999"
        d="M 130.4396,183.62087 H 22.225003"
        id="path847" />
     <path
        sodipodi:nodetypes="cc"
        id="path849"
        d="M 10.847915,115.8875 133.87916,211.0052"
-       style="opacity:0.518518;fill:#ff6600;stroke:#ff6600;stroke-width:1.76389;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.6" />
+       style="opacity:0.518518;fill:#ff6600;stroke:#ff8000;stroke-width:1.76389;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.69999999" />
     <path
        sodipodi:nodetypes="cc"
        id="path851"
@@ -323,9 +323,9 @@
        cy="183.48854"
        cx="98.292694"
        id="path2381"
-       style="opacity:1;fill:#ff6600;stroke:#070710;stroke-width:0.705556;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="opacity:1;fill:#ff8000;stroke:#070710;stroke-width:0.705556;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1" />
     <circle
-       style="opacity:1;fill:#ff6600;stroke:#070710;stroke-width:0.705556;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#ff8000;stroke:#070710;stroke-width:0.705556;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
        id="circle2383"
        cx="40.216663"
        cy="138.70781"

@@ -79,7 +79,7 @@
     </subsection>
     
     <subsection xml:id='subsec-diffeq-nullcline-analysis'>
-        <title>Nullclines in the Phase Plane</title>
+        <title>Nullcline Analysis</title>
 
         <p>
             A nullcline is a curve defining a collection of points in the phase plane at which <em>one</em> of the state variables has an instantaneous rate of change equal to zero.
@@ -123,5 +123,119 @@
                 </image>
             </sidebyside>
         </figure>
+        <p>
+            In order to analyze the dynamics, we consider the ordering of the <m>N</m>- and <m>R</m>-intercepts.
+            For <m>N</m>-intercepts, we either have <m>K \lt \frac{1}{\beta} M</m> or <m>\frac{1}{\beta} M \lt K</m>.
+            (There is also an exceptional case where they are equal, but the analysis for this would distract from our basic understanding.)
+            Similarly, the <m>R</m>-intercepts have two possible orderings.
+            Considering all of the combinations, there are four basic orderings possible, shown in <xref ref="fig-competition-all-nullcline-orderings"/>.
+        </p>
+        <figure xml:id="fig-competition-all-nullcline-orderings">
+            <caption>All possible orderings of the intercepts and resulting relative positions for the <m>N</m>- and <m>R</m>-nullclines for the competition model.</caption>
+            <sidebyside>
+                <image source="images/competition-pp-N-null-over-R">
+                    <shortdescription>N-nullcline intercepts are both above the R-nullcline intercepts</shortdescription>
+                </image>
+                <image source="images/competition-pp-NR-equil-outside">
+                    <shortdescription>nullclines cross with equilibria intercepts above the non-equilibria intercepts</shortdescription>
+                </image>
+            </sidebyside>
+            <sidebyside>
+                <image source="images/competition-pp-NR-equil-inside">
+                    <shortdescription>nullclines cross with non-equilibria intercepts above the equilibria intercepts</shortdescription>
+                </image>
+                <image source="images/competition-pp-R-null-over-N">
+                    <shortdescription>R-nullcline intercepts are both above the N-nullcline intercepts</shortdescription>
+                </image>
+            </sidebyside>
+        </figure>
+        <p>
+            In each region of <xref ref="fig-competition-all-nullcline-orderings"/>, we have included a single pair of direction arrows showing whether <m>N</m> and <m>R</m> are increasing or decreasing, with a composite direction formed by the addition of those vectors.
+            Notice how the <m>N</m>-direction reverses when we cross the <m>N</m>-nullcline.
+            This is analogous to ordinary functions changing sign when the variable passes through a root.
+            (Caution: A function can in general have a root without changing sign, like a parabola touching the axis at a single point; the same could happen with nullclines.)
+        </p>
+        <p>
+            Points where the <m>N</m>-nullcline intersects the <m>R</m>-nullcline are equilibrium points.
+            There are three equilibria that appear in every situation.
+            The equilibrium <m>(N,R) = (0,0)</m> corresponds to mutual extinction, where neither population is present.
+            The equilibrium <m>(N,R) = (K,0)</m> corresponds to the situation where the native crayfish are at their carrying capacity and there are no Rusty crayfish present.
+            Conversely, the equilibrium <m>(N,R) = (0,M)</m> corresponds to the situation where the Rusty crayfish are at their carrying capacity having completely wiped out the native population.
+            There are two cases where the nullclines intersect in the region with <m>N \gt 0</m> and <m>R \gt 0</m>.
+            It is possible to solve for the exact location of that point, but we will just call it <m>(N,R) = (N^*, R^*)</m>.
+        </p>
+        <p>
+            The directions of the vectors help us to recognize which equilibria are stable and which are stable.
+            If the direction arrows point toward an equilibrium in every region that surrounds the equilibrium, it must be stable.
+            If there is at least one region for which it is clear that direction arrows point away from the equilibrium, it must be unstable.
+            There can also be a case (not illustrated in this example) where it looks like direction arrows look like they would go around an equilibrium.
+            In that case, we would require another analysis method (involving eigenvalues) to determine stability.
+        </p>
+        <p>
+            In all cases, the equilibrium <m>(N,R)=(0,0)</m> is <em>unstable</em>.
+            For points near the equilibrium but with <m>N \gt 0</m> and <m>R \gt 0</m>, we see that both <m>N</m> and <m>R</m> will increase, forcing solutions to move away from the equilibrium.
+            Biologically, this means that an environment with no crayfish of either species for which we introduce new crayfish, those crayfish populations will (at least initially) grow.
+        </p>
+        <p>
+            Next, let us consider the equilibrium <m>(N,R) = (K,0)</m>.
+            In <xref ref="fig-competition-all-nullcline-orderings"/>, the top two cases and bottom two cases show different behaviors, based on the ordering of the <m>N</m>-intercepts.
+            In the top cases, where <m>N=K</m> (the equilibrium) is greater than <m>N=\frac{1}{\beta} M</m> (the <m>N</m>-intercept of the <m>R</m>-nullcline), the regions around the equilibrium have all direction arrows pointing toward the equilibrium.
+            Consequently, in these cases the equilibrium <m>(K,0)</m> would be <em>stable</em>.
+        </p>
+        <p>
+            Biologically, the equilibrium <m>(K,0)</m> represents the pre-invasion state of the ecosystem.
+            The native population has reached its own carrying capacity and is at equilibrium.
+            Stability means that when the new species is introduced with a few individuals, corresponding to moving to a point in the phase plane just above the equilibrium, the population will be driven back toward just one population.
+            The invading species would disappear and the invasion attempt would be unsuccessful.
+        </p>
+        <p>
+            In the other two cases, where <m>N=K</m> is less than <m>N=\frac{1}{\beta}M</m>, the regions around the equilibrium show the <m>N</m> directions point toward the equilibrium but the <m>R</m> directions point away from the equilibrium.
+            In these cases, the equilibrium <m>(K,0)</m> is <em>unstable</em>.
+            Biologically, this would mean that when a few Rusty crayfish enter a native population of crayfish at equilibrium, the Rusty crayfish population is able to grow, moving the system away from equilbrium.
+            This would be a successful invasion.
+        </p>
+        <p>
+            The equilibrium <m>(N,R) = (0,M)</m> will be essentially analogous to the previous discussion, except with the roles of <m>N</m> and <m>R</m> reversed.
+            Biologically, this refers to an ecosystem that only contains the Rusty crayfish.
+            In the context of the invasion, since we had to start with just the native population, this would conceptually be an equilibrium corresponding to a complete takeover by the invader.
+            Being a stable equilibrium would mean that reintroducing a few native crayfish without eliminating the Rusty crayfish would have no impact.
+        </p>
+        <p>
+            There is a fourth equilibrium in the positive quadrant <m>(N,R) = (N^*,R^*)</m> in two of the four cases shown in <xref ref="fig-competition-all-nullcline-orderings"/>.
+            Notice that this extra equilibrium has stability that is opposite that of <m>(K,0)</m> and <m>(0,M)</m>.
+            In the top-right case where <m>K \gt \frac{1}{\beta}M</m> and <m>M \gt \frac{1}{\alpha}K</m>, both of the single population equilibria are stable, but the interior equilibrium <m>(N^*,R^*)</m> is unstable because solutions in the narrow wedges have directions moving away from the equilibrium.
+            This case corresponds to a scenario in which a single population is resistant to invasion by the other, regardless of which population happened to have initially colonized the area.
+        </p>
+        <p>
+            In the bottom-left case, the two single population equilibria are both unstable, but the interior equilibrium is stable.
+            This corresponds to a scenario where both types of crayfish are susceptbile to an invasion, but the invasion results in a stable equilibrium where both species coexist.
+            This would typically only happen for two species that have weak competition, where the presence of one slows the other, but there are enough resources needs that do not overlap that both species can be self-sustaining in the presence of the other.
+        </p>
+    </subsection>
+    <subsection xml:id="subsec-diffeq-predator-prey">
+        <title>The Predator-Prey Model</title>
+        <p>
+            We previously considered a producer-consumer model between two species.
+            We will revisit a simplified version of that model called the <term>Lotka-Volterra Predator Prey model</term>.
+            We think of the producer species as any prey species, and the consumer species is the predator species.
+            For example, we might consider a prey species as being field mice and the predator species as being owls.
+        </p>
+        <p>
+            The model will be simplified in that the prey species does not have logistic growth but is modeled with a constant per capita growth rate.
+            If we let <m>M</m> represent the mouse population size and <m>O</m> represent the owl population size, then the Lotka-Volterra model would be written as the system of differential equations
+            <md>
+                <mrow> M' \amp r_M M - b M O, </mrow>
+                <mrow> O' \amp -r_O O + c M O. </mrow>
+            </md>
+        </p>
+        <p>
+            Factoring the equations will make the nullclines more apparent, so we rewrite our model as
+            <md>
+                <mrow> M' \amp M(r_M  - b O), </mrow>
+                <mrow> O' \amp  O(-r_O + c M). </mrow>
+            </md>
+            The <m>M</m> nullcline in the <m>(M,O)</m> phase plane will be found from <m>M=0</m> or <m>1 - \frac{b}{r_M}O = 0</m>, corresponding to the <em>vertical</em> line <m>M=0</m> and the <em>horizontal</em> line <m>O = \frac{r_M}{b}</m>.
+            Similarly, the <m>O</m> nullcline will consist of the  <em>horizontal</em> line <m>O=0</m> and the <em>vertical</em> line <m>M = \frac{r_O}{c}</m>.
+        </p>
     </subsection>
 </section>
