@@ -224,15 +224,15 @@
             The model will be simplified in that the prey species does not have logistic growth but is modeled with a constant per capita growth rate.
             If we let <m>M</m> represent the mouse population size and <m>O</m> represent the owl population size, then the Lotka-Volterra model would be written as the system of differential equations
             <md>
-                <mrow> M' \amp r_M M - b M O, </mrow>
-                <mrow> O' \amp -r_O O + c M O. </mrow>
+                <mrow> M' \amp = r_M M - b M O, </mrow>
+                <mrow> O' \amp = -r_O O + c M O. </mrow>
             </md>
         </p>
         <p>
             Factoring the equations will make the nullclines more apparent, so we rewrite our model as
             <md>
-                <mrow> M' \amp M(r_M  - b O), </mrow>
-                <mrow> O' \amp  O(-r_O + c M). </mrow>
+                <mrow> M' \amp = M(r_M  - b O), </mrow>
+                <mrow> O' \amp = O(-r_O + c M). </mrow>
             </md>
             The <m>M</m> nullcline in the <m>(M,O)</m> phase plane will be found from <m>M=0</m> or <m>1 - \frac{b}{r_M}O = 0</m>, corresponding to the <em>vertical</em> line <m>M=0</m> and the <em>horizontal</em> line <m>O = \frac{r_M}{b}</m>.
             Similarly, the <m>O</m> nullcline will consist of the  <em>horizontal</em> line <m>O=0</m> and the <em>vertical</em> line <m>M = \frac{r_O}{c}</m>.
