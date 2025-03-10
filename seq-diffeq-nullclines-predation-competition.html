@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US" dir="ltr">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Phase Plane Analysis with Nullclines, Competition and Predator-Prey Models</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Dynamic Models for Biology">
+<meta property="book:author" content="D. Brian Walton">
+<script src="https://sagecell.sagemath.org/static/embedded_sagecell.js"></script><script>
+var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  "tex": {
+    "inlineMath": [
+      [
+        "\\(",
+        "\\)"
+      ]
+    ],
+    "tags": "none",
+    "tagSide": "right",
+    "tagIndent": ".8em",
+    "packages": {
+      "[+]": [
+        "base",
+        "extpfeil",
+        "ams",
+        "amscd",
+        "color",
+        "newcommand",
+        "knowl"
+      ]
+    }
+  },
+  "options": {
+    "ignoreHtmlClass": "tex2jax_ignore|ignore-math",
+    "processHtmlClass": "process-math",
+    "renderActions": {
+      "findScript": [
+        10,
+        function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        },
+        ""
+      ]
+    }
+  },
+  "chtml": {
+    "scale": 0.98,
+    "mtextInheritFont": true
+  },
+  "loader": {
+    "load": [
+      "input/asciimath",
+      "[tex]/extpfeil",
+      "[tex]/amscd",
+      "[tex]/color",
+      "[tex]/newcommand",
+      "[pretext]/mathjaxknowl3.js"
+    ],
+    "paths": {
+      "pretext": "_static/pretext/js/lib"
+    }
+  },
+  "startup": {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  }
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-core.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha512-dubtf8xMHSQlExGRQ5R7toxHLgSDZ0K7AunqPWHXmJQ8XyVIG19S1T95gBxlAeGOK02P4Da2RTnQz0Za0H0ebQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/line-highlight/prism-line-highlight.min.js" integrity="sha512-93uCmm0q+qO5Lb1huDqr7tywS8A2TFA+1/WHvyiWaK6/pvsFl6USnILagntBx8JnVbQH5s3n0vQZY6xNthNfKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script src="lunr-pretext-search-index.js" async=""></script><script src="_static/pretext/js/pretext_search.js"></script><script src="_static/pretext/js/lib/jquery.min.js"></script><script src="_static/pretext/js/lib/jquery.sticky.js"></script><script src="_static/pretext/js/lib/jquery.espy.min.js"></script><script src="_static/pretext/js/pretext.js"></script><script src="_static/pretext/js/pretext_add_on.js?x=1"></script><script src="_static/pretext/js/user_preferences.js"></script><script src="_static/pretext/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<link href="_static/pretext/css/theme.css" rel="stylesheet" type="text/css">
+<link href="_static/pretext/css/ol-markers.css" rel="stylesheet" type="text/css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '7.5.10';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script src="_static/prefix-runtime.c2d04816128ebb44.bundle.js"></script><script src="_static/prefix-723.3e6434f80549315a.bundle.js"></script><script src="_static/prefix-runestone.f6bda0c0ccce4835.bundle.js"></script><link rel="stylesheet" type="text/css" href="_static/prefix-723.3bccd435914aa0ff.css">
+<link rel="stylesheet" type="text/css" href="_static/prefix-runestone.e0c6d4592e23c667.css">
+</head>
+<body id="dmb" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead" class="ptx-masthead"><div class="ptx-banner"><div class="title-container">
+<h1 class="heading"><a href="my-great-book.html"><span class="title">Dynamic Models for Biology</span></a></h1>
+<p class="byline">D. Brian Walton</p>
+</div></div></header><nav id="ptx-navbar" class="ptx-navbar navbar"><div class="ptx-navbar-contents">
+<button class="toc-toggle button" title="Contents"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5d2;</span><span class="name">Contents</span></button><div class="searchbox">
+<div class="searchwidget"><button id="searchbutton" class="searchbutton button" type="button" title="Search book"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe8b6;</span><span class="name">Search Book</span></button></div>
+<div id="searchresultsplaceholder" class="searchresultsplaceholder" style="display: none">
+<div class="search-results-controls">
+<input aria-label="Search term" id="ptxsearch" class="ptxsearch" type="text" name="terms" placeholder="Search term"><button title="Close search" id="closesearchresults" class="closesearchresults"><span class="material-symbols-outlined">close</span></button>
+</div>
+<h2 class="search-results-heading">Search Results: </h2>
+<div id="searchempty" class="searchempty"><span>No results.</span></div>
+<ol id="searchresults" class="searchresults"></ol>
+</div>
+</div>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="seq-diffeq-interacting-populations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-continuous-dynamics.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="interactions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+</div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar" class="ptx-sidebar"><nav id="ptx-toc" class="ptx-toc depth2 focused" data-preexpanded-levels="0" data-max-levels="2"><ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-frontmatter"><div class="toc-title-box"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div></li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="mathematical-modeling.html" class="internal"><span class="codenumber">1</span> <span class="title">Mathematical Modeling</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="scientific-method.html" class="internal"><span class="codenumber">1.1</span> <span class="title">The Scientific Method</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="role-of-models.html" class="internal"><span class="codenumber">1.2</span> <span class="title">The Role of Models</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="measurements.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Measurements</span></a></div>
+<ul class="structural toc-item-list"><li class="toc-item toc-exercises"><div class="toc-title-box"><a href="measurements.html#exercises-measurements" class="internal"><span class="codenumber">1.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="system-state.html" class="internal"><span class="codenumber">1.4</span> <span class="title">The State of a System</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-mm-intro-ggplot.html" class="internal"><span class="codenumber">1.5</span> <span class="title">Introducing tidyverse and ggplot</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-mm-variable-relations.html" class="internal"><span class="codenumber">1.6</span> <span class="title">Relations between Variables</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="populations.html" class="internal"><span class="codenumber">2</span> <span class="title">Population Dynamics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-agent-based.html" class="internal"><span class="codenumber">2.1</span> <span class="title">An Agent Based Motivation for Dynamics</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-based-3" class="internal"><span class="codenumber">2.1.1</span> <span class="title">NetLogo Overview</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-naive" class="internal"><span class="codenumber">2.1.2</span> <span class="title">Environmentally Naive Births and Deaths</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-agent-based.html#population-agent-density-dependent" class="internal"><span class="codenumber">2.1.3</span> <span class="title">Density-Dependent Births and Deaths</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-discrete.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Discrete Population Models</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-population-density-dependent.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Density Dependent Population Growth Models</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-projection.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Recursive Models Using Projection</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-functions" class="internal"><span class="codenumber">2.4.1</span> <span class="title">Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-projection.html#projection-fixed-points" class="internal"><span class="codenumber">2.4.2</span> <span class="title">Fixed Points and Equilibria</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="projection-analysis.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Analysis of Population Projections</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#linear-projection-analysis" class="internal"><span class="codenumber">2.5.1</span> <span class="title">Linear Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-4" class="internal"><span class="codenumber">2.5.2</span> <span class="title">Linearizing Projection Functions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-analysis.html#projection-analysis-5" class="internal"><span class="codenumber">2.5.3</span> <span class="title">Computer Assisted Analysis</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="projection-cobweb.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Graphical Analysis of Projection Functions</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-compare-replacement" class="internal"><span class="codenumber">2.6.1</span> <span class="title">Visualizing Potential for Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#cobweb-diagrams" class="internal"><span class="codenumber">2.6.2</span> <span class="title">Cobweb Diagrams</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="projection-cobweb.html#projection-cobweb-5" class="internal"><span class="codenumber">2.6.3</span> <span class="title">Cobwebs and Stability</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="population-interventions.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Intervention and Bifurcations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-constant-harvesting" class="internal"><span class="codenumber">2.7.1</span> <span class="title">Constant Harvesting</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="population-interventions.html#population-interventions-4" class="internal"><span class="codenumber">2.7.2</span> <span class="title">Proportional Harvesting</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="ch-structured-populations.html" class="internal"><span class="codenumber">3</span> <span class="title">Structured Populations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-two-stage.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Two Stage Populations</span></a></div></li>
+<li class="toc-item toc-section"><div class="toc-title-box"><a href="sec-structure-matrix-models.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Matrix Models for Structured Populations</span></a></div></li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Example: Mosquito Growth</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-3" class="internal"><span class="codenumber">3.3.1</span> <span class="title">Model Equations and Parameters</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-4" class="internal"><span class="codenumber">3.3.2</span> <span class="title">Simulation, Asymptotic Growth, and Stable Distributions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-example-mosquitoes.html#sec-structure-example-mosquitoes-5" class="internal"><span class="codenumber">3.3.3</span> <span class="title">Exploring the Impact of Additional Mortality</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-structure-density-dependent.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Density Dependence in Structured Populations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-density-model" class="internal"><span class="codenumber">3.4.1</span> <span class="title">Model Development</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#sec-structure-density-dependent-4" class="internal"><span class="codenumber">3.4.2</span> <span class="title">Simulation</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-density-equilibria" class="internal"><span class="codenumber">3.4.3</span> <span class="title">Finding Fixed Points for Structured Populations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-partial-derivatives" class="internal"><span class="codenumber">3.4.4</span> <span class="title">Partial Derivatives</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-structure-density-dependent.html#subsec-structure-fixed-point-stability" class="internal"><span class="codenumber">3.4.5</span> <span class="title">Testing the Stability of a Fixed Point</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter contains-active">
+<div class="toc-title-box"><a href="ch-continuous-dynamics.html" class="internal"><span class="codenumber">4</span> <span class="title">Continuous Dynamics</span></a></div>
+<ul class="structural toc-item-list contains-active">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="intro-differential-equations.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Introduction to Differential Equations</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-rates-of-change" class="internal"><span class="codenumber">4.1.1</span> <span class="title">Rates of Change</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#differential-equations" class="internal"><span class="codenumber">4.1.2</span> <span class="title">Differential Equations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-slope-fields" class="internal"><span class="codenumber">4.1.3</span> <span class="title">Slope Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="intro-differential-equations.html#subsec-diffeq-numerical-solutions" class="internal"><span class="codenumber">4.1.4</span> <span class="title">Numerical Solutions to Differential Equations</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="diffeq-population-models.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Continuous Time Population Models</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-popn-density-dependent" class="internal"><span class="codenumber">4.2.1</span> <span class="title">Continuous Logistic Growth</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="diffeq-population-models.html#subsec-diffeq-rescaling" class="internal"><span class="codenumber">4.2.2</span> <span class="title">Dimensional Analysis and Rescaling</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="sec-diffeq-equilibria.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Analysis of Equilibria, Drug Dosing, and the Allee effect</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-diffeq-equilibria.html#subsec-diffeq-phase-line" class="internal"><span class="codenumber">4.3.1</span> <span class="title">The Phase Line</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="sec-diffeq-equilibria.html#subsec-equilibria-examples" class="internal"><span class="codenumber">4.3.2</span> <span class="title">Applications</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="seq-diffeq-interacting-populations.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Interacting Variables and Producer-Consumer Interactions</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-interacting-populations.html#subsec-diffeq-phase-plane-vector-fields" class="internal"><span class="codenumber">4.4.1</span> <span class="title">The Phase Plane and Vector Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-interacting-populations.html#subsec-diffeq-systems-differential-equations" class="internal"><span class="codenumber">4.4.2</span> <span class="title">Systems of Differential Equations</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section contains-active">
+<div class="toc-title-box"><a href="seq-diffeq-nullclines-predation-competition.html" class="internal"><span class="codenumber">4.5</span> <span class="title">Phase Plane Analysis with Nullclines, Competition and Predator-Prey Models</span></a></div>
+<ul class="structural toc-item-list active">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-nullclines-predation-competition.html#subsec-diffeq-competition-models" class="internal"><span class="codenumber">4.5.1</span> <span class="title">Competition Models</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-nullclines-predation-competition.html#subsec-diffeq-nullcline-analysis" class="internal"><span class="codenumber">4.5.2</span> <span class="title">Nullcline Analysis</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-nullclines-predation-competition.html#subsec-diffeq-predator-prey" class="internal"><span class="codenumber">4.5.3</span> <span class="title">The Predator-Prey Model</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-chapter">
+<div class="toc-title-box"><a href="interactions.html" class="internal"><span class="codenumber">5</span> <span class="title">Modeling Interactions</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="system-examples.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Examples of Interacting Systems</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-3" class="internal"><span class="codenumber">5.1.1</span> <span class="title">Epidemic Models</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-4" class="internal"><span class="codenumber">5.1.2</span> <span class="title">Interacting Populations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-examples.html#system-examples-5" class="internal"><span class="codenumber">5.1.3</span> <span class="title">Age or Stage-Based Models</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="interaction-rate-models.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Modeling Interaction Rates</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-3" class="internal"><span class="codenumber">5.2.1</span> <span class="title">Linear Rates and Linear Combinations</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-4" class="internal"><span class="codenumber">5.2.2</span> <span class="title">Logistic Growth with Functional Dependence</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-5" class="internal"><span class="codenumber">5.2.3</span> <span class="title">Law of Mass Action for Interactions</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-6" class="internal"><span class="codenumber">5.2.4</span> <span class="title">Saturating Functional Response</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="interaction-rate-models.html#interaction-rate-models-7" class="internal"><span class="codenumber">5.2.5</span> <span class="title">Switching Functional Response</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="system-phase-space.html" class="internal"><span class="codenumber">5.3</span> <span class="title">Dynamical Systems and Phase Space</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#vector-fields" class="internal"><span class="codenumber">5.3.1</span> <span class="title">Vector Fields</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="system-phase-space.html#system-phase-space-4" class="internal"><span class="codenumber">5.3.2</span> <span class="title">Nullclines and Equilibria</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-item toc-backmatter"><div class="toc-title-box"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div></li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="seq-diffeq-nullclines-predation-competition"><h2 class="heading hide-type">
+<span class="type">Section</span><span class="space"> </span><span class="codenumber">4.5</span><span class="space"> </span><span class="title">Phase Plane Analysis with Nullclines, Competition and Predator-Prey Models</span>
+</h2>
+<section class="introduction" id="seq-diffeq-nullclines-predation-competition-2"><div class="para logical" id="seq-diffeq-nullclines-predation-competition-2-1">
+<div class="para">For a single autonomous differential equation <span class="process-math">\(X' = f(X)\text{,}\)</span> solving the equation <span class="process-math">\(f(X) = 0\)</span> allowed us to identify the equilibrium solutions. When we have an autonomous system of two differential equation,</div>
+<div class="displaymath process-math" id="seq-diffeq-nullclines-predation-competition-2-1-3">
+\begin{align*}
+X' \amp = f_1(X,Y),\\
+Y' \amp = f_2(X,Y),
+\end{align*}
+</div>
+<div class="para">solving a <em class="emphasis">single</em> equation like <span class="process-math">\(f_1(X,Y) = 0\)</span> or <span class="process-math">\(f_2(X,Y) = 0\)</span> is not quite finding an equilibrium. An equilibrium would require that <em class="emphasis">both</em> equations are satisfied for the same point. So what do we get when we think of an individual equation at a time?</div>
+</div>
+<div class="para" id="seq-diffeq-nullclines-predation-competition-2-2">In the <span class="process-math">\((x,y)\)</span> phase plane, an equation of the form <span class="process-math">\(f(x,y) = 0\)</span> generally describes a <em class="emphasis">curve</em> in the plane. In calculus, you would have learned about something called an <em class="emphasis">implicit function</em>. In a general sense, for each value of <span class="process-math">\(x\text{,}\)</span> there can be zero, one, or more values of <span class="process-math">\(y\)</span> that make the equation true. Near most such points, the solutions will follow some curve and the slope of that curve is calculated using the calculus strategy of <em class="emphasis">implicit differentiation</em>.</div>
+<div class="para" id="seq-diffeq-nullclines-predation-competition-2-3">While we don’t need to focus heavily on the slope of the curve, we are interested in the idea that the equation <em class="emphasis">describes</em> a curve in the plane. Because the equation <span class="process-math">\(f_1(X,Y)=0\)</span> represents points where <span class="process-math">\(X\)</span> would have zero rate of change, the curve is called the <span class="process-math">\(X\)</span>-<dfn class="terminology">nullcline</dfn>. The curve satisfied by <span class="process-math">\(f_2(X,Y)=0\)</span> is called the <span class="process-math">\(Y\)</span>-nullcline. Any equilibrium solutions will correspond to the <em class="emphasis">intersections</em> of these two nullclines.</div>
+<div class="para" id="seq-diffeq-nullclines-predation-competition-2-4">In this section, we will discuss how finding or describing the nullclines can simplify the visualization of the phase plane. We can use intersection points to find equilibria. Instead of finding a full vector field, we can identify direction at a single point in each region formed by the nullclines to see general directions of motion. Sometimes, if it is clear that either all directions point toward the equilibrium or at least one direction points away, this is enough to determine the stability of equilibrium values.</div>
+<div class="para" id="seq-diffeq-nullclines-predation-competition-2-5">As our primary examples to motivate the analysis, we will discuss competition between two species. We will also return to the idea of predation and consider predator-prey models.</div></section><section class="subsection" id="subsec-diffeq-competition-models"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.5.1</span><span class="space"> </span><span class="title">Competition Models</span>
+</h3>
+<div class="para" id="subsec-diffeq-competition-models-2">The Rusty crayfish is an invasive aquatic crustacean in Virginia. (See <a class="external" href="https://dwr.virginia.gov/wildlife/invasive-species/rusty-crayfish/" target="_blank"><code class="code-inline tex2jax_ignore">https://dwr.virginia.gov/wildlife/invasive-species/rusty-crayfish/</code></a>.) Native in Ohio, Kentucky, Tennessee, and Indiana, this crayfish was first reported in Virginia in 2011. The species competes for resources with native crayfish but consume resources at a much higher rate. Thus, the Rusty crayfish risks displacing native species but also has the potential to disrupt the aquatic environment of other native species who share the water.</div>
+<div class="para" id="subsec-diffeq-competition-models-3">Invasive species are often studied in the context of <dfn class="terminology">competition models</dfn>. We want to consider two species that are found in the same environment and compete for similar resources, such as populations of native crayfish and Rusty crayfish. If there were only one species present, we could model that species with a logistic differential equation. What does the presence of a competitor do to the model?</div>
+<div class="para" id="subsec-diffeq-competition-models-4">If we imagined that a carrying capacity represents the available number of <em class="emphasis">slots</em> available for a species in the environment based on resource availability, then the presence of a competitor who uses some of those resources is effectively eliminating some of the available slots. From the perspective of per capita growth rates, we can imagine that the presence of a competitor has a negative effect on the species per capita rate.</div>
+<div class="para logical" id="subsec-diffeq-competition-models-5">
+<div class="para">Let <span class="process-math">\(N\)</span> represent the population size of native crayfish and let <span class="process-math">\(R\)</span> represent the population size of Rusty crayfish. Each population would have its own intrinsic per capita growth rates and carrying capacities for the given environment, say <span class="process-math">\(r_0\)</span> and <span class="process-math">\(K\)</span> for the native population, and <span class="process-math">\(q_0\)</span> and <span class="process-math">\(M\)</span> for the invasive population. The presence of competitors <em class="emphasis">occupy</em> some of the resources of the other species, so we can model our two populations using modified logistic growth models,</div>
+<div class="displaymath process-math" id="subsec-diffeq-competition-models-5-8">
+\begin{align*}
+N' \amp = r_0 N(1 - \frac{N + \alpha R}{K}), \\
+R' \amp = q_0 N(1 - \frac{R + \beta N}{M}). 
+\end{align*}
+</div>
+<div class="para">The parameter <span class="process-math">\(\alpha\)</span> represents the (fractional) number of native crayfish that would have the same impact on growth rates of native crayfish as <em class="emphasis">each</em> Rusty crayfish has. Similarly, the parameter <span class="process-math">\(\beta\)</span> represents the (fractional) number of Rusty crayfish that would have an equivalent impact on Rusty crawfish growth rates compared to the presence of <em class="emphasis">each</em> native crayfish.</div>
+</div></section><section class="subsection" id="subsec-diffeq-nullcline-analysis"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.5.2</span><span class="space"> </span><span class="title">Nullcline Analysis</span>
+</h3>
+<div class="para" id="subsec-diffeq-nullcline-analysis-2">A nullcline is a curve defining a collection of points in the phase plane at which <em class="emphasis">one</em> of the state variables has an instantaneous rate of change equal to zero. We need to emphasize the idea of instantaneous because other variables are likely changing so that the solutions immediately move off of the nullcline.</div>
+<div class="para logical" id="subsec-diffeq-nullcline-analysis-3">
+<div class="para">For our competition model, the <span class="process-math">\(N\)</span>-nullcline (where <span class="process-math">\(N\)</span> has a zero rate of change) is characterized by points <span class="process-math">\((N,R)\)</span> at which</div>
+<div class="displaymath process-math">
+\begin{equation*}
+r_0 N(1 - \frac{N+\alpha R}{K}) = 0.
+\end{equation*}
+</div>
+<div class="para">Similarly, the <span class="process-math">\(R\)</span>-nullcline is characterized by points <span class="process-math">\((N,R)\)</span> at which</div>
+<div class="displaymath process-math">
+\begin{equation*}
+q_0 R(1 - \frac{R+\beta N}{M}) = 0.
+\end{equation*}
+</div>
+<div class="para">Because each equation is already written in a factored form, each nullcline consists of two distinct curves. The <span class="process-math">\(N\)</span>-nullcline consists of the line for which <span class="process-math">\(N=0\)</span> as well as a second line for which <span class="process-math">\(N+\alpha R = K\text{.}\)</span> The <span class="process-math">\(R\)</span>-nullcline consists of the lines for which <span class="process-math">\(R=0\)</span> or <span class="process-math">\(R+\beta N = M\text{.}\)</span>
+</div>
+</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-4">Just as we drew arrows on a phase line to see the direction of motion for a single state variable, we can use nullclines to decompose the phase plane into different regions where each state variable is increasing or decreasing. In the <span class="process-math">\((N,R)\)</span> phase plane, the <span class="process-math">\(N\)</span>-nullcline includes a vertical line <span class="process-math">\(N=0\)</span> and another line <span class="process-math">\(N + \alpha R = K\)</span> that has an <span class="process-math">\(N\)</span>-intercept (<span class="process-math">\(R=0\)</span>) at <span class="process-math">\(N=K\)</span> and an <span class="process-math">\(R\)</span> intercept at <span class="process-math">\(R = \frac{1}{\alpha}K\text{.}\)</span> We check the <em class="emphasis">sign</em> of the rate formula <span class="process-math">\(r_0 N (1 - \frac{N+\alpha N}{K})\)</span> to determine if <span class="process-math">\(N\)</span> is increasing or decreasing. When <span class="process-math">\(N \gt 0\)</span> is <em class="emphasis">larger</em> than the second line, we have <span class="process-math">\(N\)</span> <em class="emphasis">decreasing</em>. When <span class="process-math">\(N \gt 0\)</span> is <em class="emphasis">smaller</em> than the second line, we have <span class="process-math">\(N\)</span> <em class="emphasis">increasing</em>. Having <span class="process-math">\(N \lt 0\)</span> is not biological for populations, but mathematically, we would have a reversal of signs because of the factor <span class="process-math">\(r_0 N\)</span> being negative.</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-5">We have a similar evaluation for the variable <span class="process-math">\(R\text{.}\)</span> The <span class="process-math">\(R\)</span> nullcline has a horizontal line <span class="process-math">\(R=0\)</span> as well as a line with slope <span class="process-math">\(\beta\text{.}\)</span> That second line has an <span class="process-math">\(N\)</span>-intercept at <span class="process-math">\(N=\frac{1}{\beta}M\)</span> and a <span class="process-math">\(R\)</span>-intercept at <span class="process-math">\(R=M\text{.}\)</span> Regions of where <span class="process-math">\(R\)</span> is increasing or decreasing is analogous to that of <span class="process-math">\(N\text{.}\)</span>
+</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-6">Both nullclines are visualized in <a href="seq-diffeq-nullclines-predation-competition.html#fig-competition-nullclines-directions" class="xref" data-knowl="./knowl/xref/fig-competition-nullclines-directions.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 4.5.1">Figure 4.5.1</a> along with directions of motion for <span class="process-math">\(N\)</span> and <span class="process-math">\(R\text{.}\)</span> The behaviors are shown in separate graphs because we still need to consider the relative position of the nullclines to each other.</div>
+<figure class="figure figure-like" id="fig-competition-nullclines-directions"><div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;">
+<div class="sbspanel top" style="width:50%;"><img src="external/images/competition-N-null-directions.svg" role="img" class="contained" alt="N-nullcline and regions where N is increasing or decreasing"></div>
+<div class="sbspanel top" style="width:50%;"><img src="external/images/competition-R-null-directions.svg" role="img" class="contained" alt="R-nullcline and regions where R is increasing or decreasing"></div>
+</div></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.5.1<span class="period">.</span></span><span class="space"> </span><span class="process-math">\(N\)</span> (left) and <span class="process-math">\(R\)</span> (right) nullclines as well as regions of the phase plane marked by whether the state variable is increasing or decreasing.</figcaption></figure><div class="para" id="subsec-diffeq-nullcline-analysis-8">In order to analyze the dynamics, we consider the ordering of the <span class="process-math">\(N\)</span>- and <span class="process-math">\(R\)</span>-intercepts. For <span class="process-math">\(N\)</span>-intercepts, we either have <span class="process-math">\(K \lt \frac{1}{\beta} M\)</span> or <span class="process-math">\(\frac{1}{\beta} M \lt K\text{.}\)</span> (There is also an exceptional case where they are equal, but the analysis for this would distract from our basic understanding.) Similarly, the <span class="process-math">\(R\)</span>-intercepts have two possible orderings. Considering all of the combinations, there are four basic orderings possible, shown in <a href="seq-diffeq-nullclines-predation-competition.html#fig-competition-all-nullcline-orderings" class="xref" data-knowl="./knowl/xref/fig-competition-all-nullcline-orderings.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 4.5.2">Figure 4.5.2</a>.</div>
+<figure class="figure figure-like" id="fig-competition-all-nullcline-orderings"><div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;">
+<div class="sbspanel top" style="width:50%;"><img src="external/images/competition-pp-N-null-over-R.svg" role="img" class="contained" alt="N-nullcline intercepts are both above the R-nullcline intercepts"></div>
+<div class="sbspanel top" style="width:50%;"><img src="external/images/competition-pp-NR-equil-outside.svg" role="img" class="contained" alt="nullclines cross with equilibria intercepts above the non-equilibria intercepts"></div>
+</div></div>
+<div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;">
+<div class="sbspanel top" style="width:50%;"><img src="external/images/competition-pp-NR-equil-inside.svg" role="img" class="contained" alt="nullclines cross with non-equilibria intercepts above the equilibria intercepts"></div>
+<div class="sbspanel top" style="width:50%;"><img src="external/images/competition-pp-R-null-over-N.svg" role="img" class="contained" alt="R-nullcline intercepts are both above the N-nullcline intercepts"></div>
+</div></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.5.2<span class="period">.</span></span><span class="space"> </span>All possible orderings of the intercepts and resulting relative positions for the <span class="process-math">\(N\)</span>- and <span class="process-math">\(R\)</span>-nullclines for the competition model.</figcaption></figure><div class="para" id="subsec-diffeq-nullcline-analysis-10">In each region of <a href="seq-diffeq-nullclines-predation-competition.html#fig-competition-all-nullcline-orderings" class="xref" data-knowl="./knowl/xref/fig-competition-all-nullcline-orderings.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 4.5.2">Figure 4.5.2</a>, we have included a single pair of direction arrows showing whether <span class="process-math">\(N\)</span> and <span class="process-math">\(R\)</span> are increasing or decreasing, with a composite direction formed by the addition of those vectors. Notice how the <span class="process-math">\(N\)</span>-direction reverses when we cross the <span class="process-math">\(N\)</span>-nullcline. This is analogous to ordinary functions changing sign when the variable passes through a root. (Caution: A function can in general have a root without changing sign, like a parabola touching the axis at a single point; the same could happen with nullclines.)</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-11">Points where the <span class="process-math">\(N\)</span>-nullcline intersects the <span class="process-math">\(R\)</span>-nullcline are equilibrium points. There are three equilibria that appear in every situation. The equilibrium <span class="process-math">\((N,R) = (0,0)\)</span> corresponds to mutual extinction, where neither population is present. The equilibrium <span class="process-math">\((N,R) = (K,0)\)</span> corresponds to the situation where the native crayfish are at their carrying capacity and there are no Rusty crayfish present. Conversely, the equilibrium <span class="process-math">\((N,R) = (0,M)\)</span> corresponds to the situation where the Rusty crayfish are at their carrying capacity having completely wiped out the native population. There are two cases where the nullclines intersect in the region with <span class="process-math">\(N \gt 0\)</span> and <span class="process-math">\(R \gt 0\text{.}\)</span> It is possible to solve for the exact location of that point, but we will just call it <span class="process-math">\((N,R) = (N^*, R^*)\text{.}\)</span>
+</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-12">The directions of the vectors help us to recognize which equilibria are stable and which are stable. If the direction arrows point toward an equilibrium in every region that surrounds the equilibrium, it must be stable. If there is at least one region for which it is clear that direction arrows point away from the equilibrium, it must be unstable. There can also be a case (not illustrated in this example) where it looks like direction arrows look like they would go around an equilibrium. In that case, we would require another analysis method (involving eigenvalues) to determine stability.</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-13">In all cases, the equilibrium <span class="process-math">\((N,R)=(0,0)\)</span> is <em class="emphasis">unstable</em>. For points near the equilibrium but with <span class="process-math">\(N \gt 0\)</span> and <span class="process-math">\(R \gt 0\text{,}\)</span> we see that both <span class="process-math">\(N\)</span> and <span class="process-math">\(R\)</span> will increase, forcing solutions to move away from the equilibrium. Biologically, this means that an environment with no crayfish of either species for which we introduce new crayfish, those crayfish populations will (at least initially) grow.</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-14">Next, let us consider the equilibrium <span class="process-math">\((N,R) = (K,0)\text{.}\)</span> In <a href="seq-diffeq-nullclines-predation-competition.html#fig-competition-all-nullcline-orderings" class="xref" data-knowl="./knowl/xref/fig-competition-all-nullcline-orderings.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 4.5.2">Figure 4.5.2</a>, the top two cases and bottom two cases show different behaviors, based on the ordering of the <span class="process-math">\(N\)</span>-intercepts. In the top cases, where <span class="process-math">\(N=K\)</span> (the equilibrium) is greater than <span class="process-math">\(N=\frac{1}{\beta} M\)</span> (the <span class="process-math">\(N\)</span>-intercept of the <span class="process-math">\(R\)</span>-nullcline), the regions around the equilibrium have all direction arrows pointing toward the equilibrium. Consequently, in these cases the equilibrium <span class="process-math">\((K,0)\)</span> would be <em class="emphasis">stable</em>.</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-15">Biologically, the equilibrium <span class="process-math">\((K,0)\)</span> represents the pre-invasion state of the ecosystem. The native population has reached its own carrying capacity and is at equilibrium. Stability means that when the new species is introduced with a few individuals, corresponding to moving to a point in the phase plane just above the equilibrium, the population will be driven back toward just one population. The invading species would disappear and the invasion attempt would be unsuccessful.</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-16">In the other two cases, where <span class="process-math">\(N=K\)</span> is less than <span class="process-math">\(N=\frac{1}{\beta}M\text{,}\)</span> the regions around the equilibrium show the <span class="process-math">\(N\)</span> directions point toward the equilibrium but the <span class="process-math">\(R\)</span> directions point away from the equilibrium. In these cases, the equilibrium <span class="process-math">\((K,0)\)</span> is <em class="emphasis">unstable</em>. Biologically, this would mean that when a few Rusty crayfish enter a native population of crayfish at equilibrium, the Rusty crayfish population is able to grow, moving the system away from equilbrium. This would be a successful invasion.</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-17">The equilibrium <span class="process-math">\((N,R) = (0,M)\)</span> will be essentially analogous to the previous discussion, except with the roles of <span class="process-math">\(N\)</span> and <span class="process-math">\(R\)</span> reversed. Biologically, this refers to an ecosystem that only contains the Rusty crayfish. In the context of the invasion, since we had to start with just the native population, this would conceptually be an equilibrium corresponding to a complete takeover by the invader. Being a stable equilibrium would mean that reintroducing a few native crayfish without eliminating the Rusty crayfish would have no impact.</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-18">There is a fourth equilibrium in the positive quadrant <span class="process-math">\((N,R) = (N^*,R^*)\)</span> in two of the four cases shown in <a href="seq-diffeq-nullclines-predation-competition.html#fig-competition-all-nullcline-orderings" class="xref" data-knowl="./knowl/xref/fig-competition-all-nullcline-orderings.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 4.5.2">Figure 4.5.2</a>. Notice that this extra equilibrium has stability that is opposite that of <span class="process-math">\((K,0)\)</span> and <span class="process-math">\((0,M)\text{.}\)</span> In the top-right case where <span class="process-math">\(K \gt \frac{1}{\beta}M\)</span> and <span class="process-math">\(M \gt \frac{1}{\alpha}K\text{,}\)</span> both of the single population equilibria are stable, but the interior equilibrium <span class="process-math">\((N^*,R^*)\)</span> is unstable because solutions in the narrow wedges have directions moving away from the equilibrium. This case corresponds to a scenario in which a single population is resistant to invasion by the other, regardless of which population happened to have initially colonized the area.</div>
+<div class="para" id="subsec-diffeq-nullcline-analysis-19">In the bottom-left case, the two single population equilibria are both unstable, but the interior equilibrium is stable. This corresponds to a scenario where both types of crayfish are susceptbile to an invasion, but the invasion results in a stable equilibrium where both species coexist. This would typically only happen for two species that have weak competition, where the presence of one slows the other, but there are enough resources needs that do not overlap that both species can be self-sustaining in the presence of the other.</div></section><section class="subsection" id="subsec-diffeq-predator-prey"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.5.3</span><span class="space"> </span><span class="title">The Predator-Prey Model</span>
+</h3>
+<div class="para" id="subsec-diffeq-predator-prey-2">We previously considered a producer-consumer model between two species. We will revisit a simplified version of that model called the <dfn class="terminology">Lotka-Volterra Predator Prey model</dfn>. We think of the producer species as any prey species, and the consumer species is the predator species. For example, we might consider a prey species as being field mice and the predator species as being owls.</div>
+<div class="para logical" id="subsec-diffeq-predator-prey-3">
+<div class="para">The model will be simplified in that the prey species does not have logistic growth but is modeled with a constant per capita growth rate. If we let <span class="process-math">\(M\)</span> represent the mouse population size and <span class="process-math">\(O\)</span> represent the owl population size, then the Lotka-Volterra model would be written as the system of differential equations</div>
+<div class="displaymath process-math" id="subsec-diffeq-predator-prey-3-3">
+\begin{align*}
+M' \amp r_M M - b M O, \\
+O' \amp -r_O O + c M O. 
+\end{align*}
+</div>
+</div>
+<div class="para logical" id="subsec-diffeq-predator-prey-4">
+<div class="para">Factoring the equations will make the nullclines more apparent, so we rewrite our model as</div>
+<div class="displaymath process-math" id="subsec-diffeq-predator-prey-4-1">
+\begin{align*}
+M' \amp M(r_M  - b O), \\
+O' \amp  O(-r_O + c M). 
+\end{align*}
+</div>
+<div class="para">The <span class="process-math">\(M\)</span> nullcline in the <span class="process-math">\((M,O)\)</span> phase plane will be found from <span class="process-math">\(M=0\)</span> or <span class="process-math">\(1 - \frac{b}{r_M}O = 0\text{,}\)</span> corresponding to the <em class="emphasis">vertical</em> line <span class="process-math">\(M=0\)</span> and the <em class="emphasis">horizontal</em> line <span class="process-math">\(O = \frac{r_M}{b}\text{.}\)</span> Similarly, the <span class="process-math">\(O\)</span> nullcline will consist of the  <em class="emphasis">horizontal</em> line <span class="process-math">\(O=0\)</span> and the <em class="emphasis">vertical</em> line <span class="process-math">\(M = \frac{r_O}{c}\text{.}\)</span>
+</div>
+</div>
+<div class="para" id="subsec-diffeq-predator-prey-5">Directions for the rates of change in the positive quadrant can be characterized by looking at the sign of the rate formulas on either side of the nullclines.</div>
+<div class="para" id="subsec-diffeq-predator-prey-6">For the mice <span class="process-math">\(M \gt 0\text{,}\)</span> if <span class="process-math">\(O \gt \frac{r_{M}}{b}\)</span> (many owls), the rate of change in the mouse population will be negative. Owls are eating mice faster than they are able to reproduce because there are so many owls. However, when <span class="process-math">\(O \lt \frac{r_{M}}{b}\text{,}\)</span> the rate of reproduction now exceeds predation by owls and the mouse population is able to grow.</div>
+<div class="para" id="subsec-diffeq-predator-prey-7">Similarly, for the owls, if <span class="process-math">\(M \gt \frac{r_{O}}{c}\)</span> (many mice), the rate of change for the owl population will be positive. There is plenty of food for the owls and the owl population will be increasing. On the other hand, if <span class="process-math">\(M \lt \frac{r_{O}}{c}\)</span> (few mice), the rate of change for the owl population will be negative and the owl population will decrease.</div>
+<div class="para" id="subsec-diffeq-predator-prey-8">The phase plane with nullclines and directions of motion are illustrated in <a href="seq-diffeq-nullclines-predation-competition.html#fig-predator-prey-pp-nullclines" class="xref" data-knowl="./knowl/xref/fig-predator-prey-pp-nullclines.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 4.5.3">Figure 4.5.3</a>. Notice that there are exactly two equilibria, where <span class="process-math">\((M,O)=(0,0)\)</span> represents mutual extinction and <span class="process-math">\((M,O) = (\frac{r_O}{c}, \frac{r_M}{b})\)</span> represents both species coexisting.</div>
+<figure class="figure figure-like" id="fig-predator-prey-pp-nullclines"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="external/images/predator-prey-pp-nullclines.svg" role="img" class="contained" alt="N-nullcline intercepts are both above the R-nullcline intercepts"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.5.3<span class="period">.</span></span><span class="space"> </span>Nullclines in the <span class="process-math">\((M,O)\)</span> phase space for the owl-mice predator-prey model.</figcaption></figure><div class="para" id="subsec-diffeq-predator-prey-10">The vector field directions this time are only partly helpful in understanding stability. The equilibrium for extinction is clearly unstable based on directions of the vector field, since a small introduction of mice into the environment will result in mice growing exponentially. However, the vector field does not show clearly what happens for the coexisting equilibrium—the vector field seems to rotate around the equilibrium point, rather than flow in or out of it. We need deeper analysis than just the picture to determine what happens here.</div></section></section></div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="seq-diffeq-interacting-populations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="interactions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+</div></main>
+</div>
+<div id="ptx-page-footer" class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org" title="PreTeXt"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="338 3000 8772 6866" role="img"><title>PreTeXt logo</title><g style="stroke-width:.025in; stroke:currentColor; fill:none"><polyline points="472,3590 472,9732 " style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259"></path><path style="stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0   472  9732"></path><path style="stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,3496  A 4241 4241  0  0  1  4724  3590"></path><path style="stroke-width:126;stroke-linecap:round;" d="M 850,9259  A 4507 4507  0  0  1  4724  9448"></path><polyline points="5385,4299 4062,8125" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8598,3496 8598,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="850,3496 850,9259" style="stroke-width:126; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="4960,9685 4488,9685" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="3070,4582 1889,6141 3070,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="6418,4582 7600,6141 6418,7700" style="stroke-width:300; stroke-linejoin:miter; stroke-linecap:round;"></polyline><polyline points="8976,3590 8976,9732" style="stroke-width:174; stroke-linejoin:miter; stroke-linecap:round;"></polyline><path style="stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732"></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy" title="Runestone Academy"><img class="logo" src="https://runestone.academy/runestone/static/images/RAIcon_cropped.png" alt="Runstone Academy logo"></a><a class="mathjax-link" href="https://www.mathjax.org" title="MathJax"><img class="logo" src="https://www.mathjax.org/badge/badge-square-2.png" alt="MathJax logo"></a>
+</div>
+</body>
+</html>
