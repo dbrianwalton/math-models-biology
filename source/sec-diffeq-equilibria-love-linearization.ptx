@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="seq-diffeq-equilibria-love-linearization">
+    <title>Equilibrium Analysis, Models of Love, and Linearization</title>
+
+    <introduction>
+        <p>
+            Equilibrium solutions are one of the most important concepts in understanding dynamical systems.
+            We already know that we find equilibrium solutions by looking for the intersection of the nullclines.
+            In the previous section, we saw that sometimes we can determine the stability of an equilibrium by looking at the direction of the vector field in all of the regions surrounding an equilibrium.
+            Unfortunately, this is sometimes inconclusive.
+            Even worse, it might be hard to visualize especially if there are more than two state variables.
+        </p>
+        <p>
+            We need a more definitive way to determine whether an equilibrium solution is stable or unstable.
+            For our projection models involving sequences, we learned about the possibility of using the eigenvalues of the derivative matrix of the projection functions.
+            We will be able to do the same thing for systems of differential equations.
+            This time, however, we are looking at whether the eigenvalues of the matrix have positive or negative real part.
+        </p>
+    </introduction>
+
+    <subsection xml:id="subsec-diffeq-equil-romeo-juliet">
+        <title>Linear Differential Equations and Romeo and Juliet</title>
+        <p>
+            Suppose we have <m>n</m> different state variables, <m>X_1,\ldots,X_n</m> and a system of <m>n</m> differential equations for those variables,
+            <md>
+                <mrow>X_1' \amp = f_1(X_1, X_2, \ldots, X_n) </mrow>
+                <mrow>X_2' \amp = f_2(X_1, X_2, \ldots, X_n) </mrow>
+                <mrow> \amp \vdots </mrow>
+                <mrow>X_n' \amp = f_n(X_1, X_2, \ldots, X_n). </mrow>
+            </md>
+            We say that the system is a <term>linear system of differential equations</term> if the <m>n</m> rate functions are all just linear combinations of the state variables
+            <md>
+                <mrow>X_1' \amp = c_{11} X_1 + c_{12} X_2 + \cdots + c_{1n} X_n </mrow>
+                <mrow>X_2' \amp = c_{21} X_1 + c_{22} X_2 + \cdots + c_{2n} X_n </mrow>
+                <mrow> \amp \vdots </mrow>
+                <mrow>X_n' \amp = c_{n1} X_1 + c_{n2} X_2 + \cdots + c_{nn} X_n. </mrow>
+            </md>
+            The coefficients define a square matrix with <m>n</m> rows (for each equation) and <m>n</m> columns (for the state variables),
+            <md>
+                A = \begin{bmatrix}
+                    c_{11} \amp c_{12} \amp \cdots \amp c_{1n} \\
+                    c_{21} \amp c_{22} \amp \cdots \amp c_{2n} \\
+                    \vdots \amp \vdots \amp \ddots \amp \vdots \\
+                    c_{n1} \amp c_{n2} \amp \cdots \amp c_{nn}
+                \end{bmatrix}
+            </md>
+            This system is often summarized as a vector differential equation
+            <md>\vec{X}' = A \cdot \vec{X}</md>
+            where <m>X = (X_1, X_2, \ldots, X_n)</m> is the state vector containing all of state variables in order.
+        </p>
+        <p>
+            As our motivating example, we will consider a simple model for love developed by mathematician Steven Strogatz as a way to illustrate linear differential equations, which he called the <q>Romeo-Juliet</q> model of love.
+            Let <m>R</m> quantify Romeo's ardor toward Juliet, so that <m>R \gt 0</m> corresponds to Romeo feeling in love with Juliet and <m>R \lt 0</m> corresponds to Romeo feeling out of love with Juliet.
+            We let <m>J</m> quantify Juliet's ardor toward Romeo in a similar way.
+        </p>
+        <p>
+            In his play <q>Romeo and Juliet</q>, Shakespeare gives a dialogue between Romeo and his friend Benvolio:
+            <dl>
+                <li>
+                    <title>Benvolio</title>
+                    <p>What sadness lengthens Romeo's hours?</p>
+                </li>
+                <li>
+                    <title>Romeo</title>
+                    <p>Not having that, which, having, makes them short.</p>
+                </li>
+                <li>
+                    <title>Benvolio</title>
+                    <p>In love?</p>
+                </li>
+                <li>
+                    <title>Romeo</title>
+                    <p>Out.</p>
+                </li>
+                <li>
+                    <title>Benvolio</title>
+                    <p>Of love?</p>
+                </li>
+                <li>
+                    <title>Romeo</title>
+                    <p>Out of her favour, where I am in love.</p>
+                </li>
+            </dl>
+            In a very simplified interpretation of the relationship, Romeo initially has positive feelings of love toward Juliet but because he perceives that he is out of her favor, he is sad.
+            From a modeling point of view, we will say that seeing Juliet's feelings be negative causes Romeo's feelings of love <em>decrease</em>.
+        </p>
+        <p>
+            Juliet, on the other hand, expresses coyness at Romeo in a different scene:
+            <dl>
+                <li>
+                    <title>Juliet</title>
+                    <p>
+                        <line>If thou dost love, pronounce it faithfully:</line>
+                        <line>Or if thou think'st I am too quickly won,</line>
+                        <line>I'll frown and be perverse an say thee nay,</line>
+                        <line>So thou wilt woo; but else, not for the world.</line>
+                    </p>
+                </li>
+            </dl>
+            Again, we will take a simplified interpretation and say that Juliet's actual feelings move in the opposite direction of Romeo current feelings.
+            If Romeo loves Juliet, Juliet's feelings for Romeo will decrease.
+            If Romeo dislikes Juliet, Juliet tries to win him back by having her feelings increase.
+        </p>
+        <p>
+            The simplest model capturing these simplified (and nontextual) dynamics would be given by a system of differential equations
+            <md>
+                <mrow>R' \amp = a J, </mrow>
+                <mrow>J' \amp = - b R.</mrow>
+            </md>
+            This says that Romeo's feelings <em>move</em> in the direction of Juliets feelings by having a rate of change that is <em>proportional</em> to Juliet's current level of love.
+            Meanwhile, Juliet's feelings have a rate of change that is proportional to the <em>opposite</em> of Romeo's current level of love.
+        </p>
+        <p>
+            The phase plane will be the <m>(R,J)</m> plane.
+            The <m>R</m> nullcline is the line <m>J=0</m> (horizontal axis).
+            If <m>J \gt 0</m>, <m>R</m> is moving to the right; if <m>J \lt 0</m>, <m>R</m> is moving to the left.
+            The <m>J</m> nullcine is the line <m>R=0</m> (vertical axis).
+            If <m>R \gt 0</m>, <m>J</m> is moving down; if <m>R \lt 0</m>, <m>J</m> is moving up.
+            There is only one equilibrium at <m>(R,J)=(0,0)</m>, a state of mutual apathy.
+        </p>
+        <figure xml:id="fig-romeo-juliet-responsive-fickle-nullclines">
+            <caption>Phase plane for the Romeo-Juliet model showing nullclines, equilibrium, and directions of motion.</caption>
+            <image width="60%" source="images/romeo-juliet-responsive-fickle-nullclines">
+                <shortdescription>phase plane with nullclines and directions of motion for Romeo and Juliet model</shortdescription>
+            </image>
+        </figure>
+        <p>
+            The preliminary phase plane analysis based on the nullclines suggest that the dynamics will have the state spiraling around the equilibrium.
+            We can verify this numerically by calculating a solution and looking at the plot.
+            Of course, we need to select parameter values, so we will choose <m>a = 0.8</m> and <m>b = 0.2</m>.
+            There is no fixed sense of scale for this problem, so we will start with an initial value <m>R(0) = 1</m> and <m>J(0) = 0</m>, so that Romeo likes Juliet but Juliet starts out being indifferent.
+        </p>
+        <p>
+            The following listing will create a graph showing the phase plane with nullclines and the trajectory for this initial value problem as well as a graph showing the solutions as functions of time.
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[
+                # Rate formulas
+                f1 <- function(R, J, params) {
+                    with(as.list(params), a*J)
+                }
+                f2 <- function(R, J, params) {
+                    with(as.list(params), -b*R)
+                }
+
+                # Model parameters
+                my_p <- c(a = 0.8, b = 0.2)
+
+                # Rate function for ode solver
+                rateFcn <- function(t, state, params) {
+                    with(as.list(state),
+                    {
+                        dRdt <- f1(R, J, params)
+                        dJdt <- f2(R, J, params)
+                        list( c(dRdt, dJdt) )
+                    })
+                }
+
+                # Find the numerical solution
+                library(deSolve)
+                R0 <- 1
+                J0 <- 0
+                times <- seq(0, 30, by=0.1)
+                soln <- ode( c(R=R0, J=J0), times, rateFcn, my_p ) |>
+                    as.data.frame()
+
+                # Create vector field data
+                library(dplyr)
+                vf_data <- expand.grid(R = seq(-1.5, 1.5, length = 21),
+                                       J = seq(-1.5, 1.5, length = 21)) |>
+                    mutate( dRdt = f1(R, J, my_p),
+                            dJdt = f2(R, J, my_p)) |>
+                    mutate( speed = sqrt(dRdt^2 + dJdt^2) ) |>
+                    mutate( Rdir = dRdt/speed,
+                            Jdir = dJdt/speed)
+
+                # Create the plot, we know nullclines exactly
+                library(ggplot2)
+                library(ggquiver)
+                pp_graph <- ggplot() +
+                    geom_quiver(data = vf_data,
+                        mapping = aes(x = R, y = J,
+                                      u = Rdir, v = Jdir),
+                        color = "black", vecsize = 0.5) + 
+                    geom_hline(yintercept = 0, color = "cyan") +
+                    geom_vline(xintercept = 0, color = "salmon") +
+                    geom_path(data = soln,
+                              mapping = aes(x = R, y = J),
+                              linewidth = 2) +
+                    labs(x = "R", y = "J") + 
+                    scale_color_discrete(breaks=c("R","J"),
+                                         labels = c("R'=0", "J'=0"),
+                                         name = "nullcline")
+                show(pp_graph)
+
+                soln_graph <- ggplot(data = soln) +
+                    geom_line(mapping = aes(x = time, y = R, color="R"),
+                                linewidth = 2) + 
+                    geom_line(mapping = aes(x = time, y = J, color="J"),
+                                linewidth = 2) +
+                    scale_color_discrete(breaks = c("R","J"), name = "")
+                show(soln_graph)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <figure xml:id="fig-romeo-juliet-responsive-fickle-graphs">
+            <caption>Phase plane showing nullclines and the trajectory of the solution as well as the solution <m>R(t)</m> and <m>J(t)</m> as functions of time.</caption>
+            <sidebyside>
+                <image source="images/romeo-juliet-responsive-fickle-phaseplane-trajectory.png">
+                    <shortdescription>phase plane showing nullclines and trajectory of a solution</shortdescription>
+                </image>
+                <image source="images/romeo-juliet-responsive-fickle-phaseplane-solutions.png">
+                    <shortdescription>phase plane showing nullclines and trajectory of a solution</shortdescription>
+                </image>
+            </sidebyside>
+        </figure>
+    </subsection>
+</section>

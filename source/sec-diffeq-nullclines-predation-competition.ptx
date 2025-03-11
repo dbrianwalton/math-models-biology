@@ -267,4 +267,135 @@
             We need deeper analysis than just the picture to determine what happens here.
         </p>
     </subsection>
+    <subsection xml:id="subsec-diffeq-nullclines-code">
+        <title>Generating Nullcline Curves in R</title>
+        <p>
+            The discussion earlier was algebra-centered.
+            Using nullclines is often a qualitative method that we use in a preliminary setting and may not be included in our final analysis.
+            Sometimes, we our nullclines can be easily visualized in terms of graphs that we know, such as the lines that appeared in our earlier examples.
+            At other times, we might not see how to express the nullclines in a way that makes it easy for us to graph.
+        </p>
+        <p>
+            One option would be to use a graphing tool like <url href="https://desmos.com/calculator">desmos.com</url> where you can type an equation, although you need to use <m>x</m> and <m>y</m> as your state variables.
+            An advantage here is that if you use parameter names, you get automatic sliders to adjust any of those parameters and can explore the effect of changing them.
+            Other tools might also be able to do this, often using a command to create <term>implicit plots</term>.
+        </p>
+        <p>
+            This section introduces some ideas for how we can visualize the results in R using contour plots.
+            We might want to do this so that everything is integrated together into a single document.
+            It would also allow us to overlay solution trajectories on a graph that shows the nullclines if desired.
+        </p>
+        <p>
+            When we calculate a vector field at a grid of points, we gain some a lot of information.
+            Nullclines are significant because they show where one of the directions rate functions goes to zero.
+            Usually, the vector field changes direction for a state variable when we cross that state's nullcline.
+            This would be a change of sign in the data calculated for our vector field.
+        </p>
+        <p>
+            A <term>contour graph</term> takes a grid of two variables and a function or data that is evaluated at each point in the grid and shows curves where the value of the function or data changes between various levels.
+            To find a nullcline, we want to find a curve where the data crosses the value of zero, thereby separating the data into two regions for positive and negative.
+        </p>
+        <p>
+            If we know how to create a vector field for a differential equation, we can use the same setup to estimate the nullclines.
+            However, we often want a more closely-spaced grid of points for a nullcline in order to make the estimate smooth, so we probably don't want to use the exact same grid data.
+        </p>
+        <example>
+            <statement>
+                <p>
+                    For our first example, let us generate an estimate of the nullclines for the competition model.
+                    We will use state variables <m>X</m> and <m>Y</m> for the system of differential equations with
+                    <md>
+                        <mrow>X' \amp = r_1 X(1-X-\alpha Y)</mrow>
+                        <mrow>Y' \amp = r_2 Y(1-Y-\beta X)</mrow>
+                    </md>
+                    so that our carrying capacities are <m>K=1</m> and <m>M=1</m>, respectively.
+                    We will choose <m>\alpha = 0.75</m> and <m>\beta = 1.1</m>, and <m>r_1 = 0.2</m> and <m>r_2 = 0.3</m>.
+                </p>
+                <listing xml:id="listing-competition-model-R-nullclines">
+                    <program language="r">
+                        <code>
+                        <![CDATA[ 
+                        # Define our parameters
+                        my_p <- c(r1 = 0.2, r2 = 0.3, alpha = 0.75, beta = 1.1)
+
+                        # Define our rate functions
+                        f1 <- function(X, Y, params) {
+                            with(as.list(params),
+                                r1 * X * (1 - X - alpha * Y)
+                            )
+                        }
+                        f2 <- function(X, Y, params) {
+                            with(as.list(params),
+                                r2 * Y * (1 - Y - beta * X)
+                            )
+                        }
+
+                        # Make a vector field grid (relatively wide spacing)
+                        library(dplyr)  # To get mutate (add extra columns)
+                        vf_grid <- expand.grid(X = seq(-0.5, 1.5, by = 0.2),
+                                               Y = seq(-0.5, 1.5, by = 0.2)) |>
+                            mutate(dXdt = f1(X, Y, my_p),
+                                   dYdt = f2(X, Y, my_p)) |>
+                            # rescale by speed
+                            mutate(speed = sqrt(dXdt^2 + dYdt^2)) |>
+                            mutate(Xdir = dXdt / speed,
+                                   Ydir = dYdt / speed)
+                        
+                        # Make a contour grid (relatively close spacing)
+                        contour_grid <- expand.grid(X = seq(-0.5, 1.5, by = 0.02),
+                                               Y = seq(-0.5, 1.5, by = 0.02)) |>
+                            mutate(dXdt = f1(X, Y, my_p),
+                                   dYdt = f2(X, Y, my_p))
+                        
+                        # Make a graph showing the vector field and nullclines
+                        library(ggplot2)
+                        library(ggquiver)
+                        nullcline_graph <- ggplot() +
+                            # Vector field
+                            geom_quiver(data = vf_grid,
+                                        mapping = aes(x = X, y = Y,
+                                                      u = Xdir, v = Ydir),
+                                        vecsize = 0.25) +
+                            # X nullcline
+                            geom_contour(data = contour_grid,
+                                         mapping = aes(x = X, y = Y, 
+                                                       z = dXdt, color = "X"),
+                                         breaks = c(0), linetype = "dashed") + 
+                            # Y nullcline
+                            geom_contour(data = contour_grid,
+                                         mapping = aes(x = X, y = Y, 
+                                                       z = dYdt, color = "Y"),
+                                         breaks = c(0), linetype = "dashed") +
+                            # Legend update
+                            scale_color_discrete(breaks = c("X","Y"), name = "nullcline")
+                        show(nullcline_graph)
+                        ]]>
+                        </code>
+                    </program>
+                </listing>
+                <figure xml:id="fig-competition-model-R-nullclines">
+                    <caption>Nullclines and vector field associated with the competition model given in the <xref ref="listing-competition-model-R-nullclines"/></caption>
+                    <image width="60%" source="images/competition-model-R-nullclines.png">
+                        <shortdescription>generated graph showing nullclines and vector field described in listing</shortdescription>
+                    </image>
+                </figure>
+            </statement>
+        </example>
+        <p>
+            A disadvantage of using contours from data as opposed to an algebraic approach is that we have to choose specific model parameters.
+            An algebraic approach can allow us to recognize how the nullclines will change as we adjust various parameters.
+        </p>
+        <p>
+            A second issue is that we only get an approximation, and sometimes the result is not quite accurate.
+            For example, the nullcline that was created for the competition model in the example above used <c>by = 0.02</c> for the grid used by the <c>contour</c> command.
+            If we changed that to <c>by = 0.06</c>, we would see a result where there appears to be a gap in the nullclines.
+            What is happening is that at the point where the nullcline intersects itself, unless we happen to include that point in the grid, the algorithm doesn't know the point exists and allows two regions on opposite sides of the point to merge to a single region.
+        </p>
+        <figure xml:id="fig-competition-model-R-nullclines-poor">
+            <caption>Recreated <xref ref="fig-competition-model-R-nullclines-poor"/> with <c>by=0.06</c>, which results in a gap in the nullclines</caption>
+            <image width="60%" source="images/competition-model-R-nullclines-poor.png">
+                <shortdescription>remade graph showing nullclines and vector field described in listing with different step size</shortdescription>
+            </image>
+        </figure>
+    </subsection>
 </section>

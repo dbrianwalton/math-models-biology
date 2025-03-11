@@ -45,4 +45,5 @@
   <xi:include href="./sec-diffeq-equilibria.ptx" />
   <xi:include href="./sec-diffeq-interacting-populations.ptx" />
   <xi:include href="./sec-diffeq-nullclines-predation-competition.ptx" />
+  <xi:include href="./sec-diffeq-equilibria-love-linearization.ptx" />
 </chapter>
