@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body class="ignore-math">
+<figure class="listing figure-like"><div class="code-box"><pre class="program"><code class="language-r"># Define our parameters
+my_p &lt;- c(r1 = 0.2, r2 = 0.3, alpha = 0.75, beta = 1.1)
+
+# Define our rate functions
+f1 &lt;- function(X, Y, params) {
+    with(as.list(params),
+        r1 * X * (1 - X - alpha * Y)
+    )
+}
+f2 &lt;- function(X, Y, params) {
+    with(as.list(params),
+        r2 * Y * (1 - Y - beta * X)
+    )
+}
+
+# Make a vector field grid (relatively wide spacing)
+library(dplyr)  # To get mutate (add extra columns)
+vf_grid &lt;- expand.grid(X = seq(-0.5, 1.5, by = 0.2),
+                       Y = seq(-0.5, 1.5, by = 0.2)) |&gt;
+    mutate(dXdt = f1(X, Y, my_p),
+           dYdt = f2(X, Y, my_p)) |&gt;
+    # rescale by speed
+    mutate(speed = sqrt(dXdt^2 + dYdt^2)) |&gt;
+    mutate(Xdir = dXdt / speed,
+           Ydir = dYdt / speed)
+
+# Make a contour grid (relatively close spacing)
+contour_grid &lt;- expand.grid(X = seq(-0.5, 1.5, by = 0.02),
+                       Y = seq(-0.5, 1.5, by = 0.02)) |&gt;
+    mutate(dXdt = f1(X, Y, my_p),
+           dYdt = f2(X, Y, my_p))
+
+# Make a graph showing the vector field and nullclines
+library(ggplot2)
+library(ggquiver)
+nullcline_graph &lt;- ggplot() +
+    # Vector field
+    geom_quiver(data = vf_grid,
+                mapping = aes(x = X, y = Y,
+                              u = Xdir, v = Ydir),
+                vecsize = 0.25) +
+    # X nullcline
+    geom_contour(data = contour_grid,
+                 mapping = aes(x = X, y = Y, 
+                               z = dXdt, color = "X"),
+                 breaks = c(0), linetype = "dashed") + 
+    # Y nullcline
+    geom_contour(data = contour_grid,
+                 mapping = aes(x = X, y = Y, 
+                               z = dYdt, color = "Y"),
+                 breaks = c(0), linetype = "dashed") +
+    # Legend update
+    scale_color_discrete(breaks = c("X","Y"), name = "nullcline")
+show(nullcline_graph)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.5.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure><span class="incontext"><a class="internal" href="seq-diffeq-nullclines-predation-competition.html#listing-competition-model-R-nullclines">in-context</a></span>
+</body>
+</html>

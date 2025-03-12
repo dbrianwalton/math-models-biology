@@ -140,7 +140,7 @@ eBookConfig.enable_chatcodes =  false;
 <ol id="searchresults" class="searchresults"></ol>
 </div>
 </div>
-<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="seq-diffeq-interacting-populations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-continuous-dynamics.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="interactions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
+<span class="nav-other-controls"><button id="light-dark-button" class="light-dark-button button" title="Dark Mode"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe51c;</span><span class="name">Dark Mode</span></button></span><span class="treebuttons"><a class="previous-button button" href="seq-diffeq-interacting-populations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="up-button button" href="ch-continuous-dynamics.html" title="Up"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Up</span></a><a class="next-button button" href="seq-diffeq-equilibria-love-linearization.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a></span>
 </div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\newcommand{\N}{\mathbb N} \newcommand{\Z}{\mathbb Z} \newcommand{\Q}{\mathbb Q} \newcommand{\R}{\mathbb R}
 \newcommand{\lt}{&lt;}
 \newcommand{\gt}{&gt;}
@@ -274,6 +274,15 @@ eBookConfig.enable_chatcodes =  false;
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-nullclines-predation-competition.html#subsec-diffeq-competition-models" class="internal"><span class="codenumber">4.5.1</span> <span class="title">Competition Models</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-nullclines-predation-competition.html#subsec-diffeq-nullcline-analysis" class="internal"><span class="codenumber">4.5.2</span> <span class="title">Nullcline Analysis</span></a></div></li>
 <li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-nullclines-predation-competition.html#subsec-diffeq-predator-prey" class="internal"><span class="codenumber">4.5.3</span> <span class="title">The Predator-Prey Model</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-nullclines-predation-competition.html#subsec-diffeq-nullclines-code" class="internal"><span class="codenumber">4.5.4</span> <span class="title">Generating Nullcline Curves in R</span></a></div></li>
+</ul>
+</li>
+<li class="toc-item toc-section">
+<div class="toc-title-box"><a href="seq-diffeq-equilibria-love-linearization.html" class="internal"><span class="codenumber">4.6</span> <span class="title">Equilibrium Analysis, Models of Love, and Linearization</span></a></div>
+<ul class="structural toc-item-list">
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-equilibria-love-linearization.html#subsec-diffeq-equil-romeo-juliet" class="internal"><span class="codenumber">4.6.1</span> <span class="title">Linear Differential Equations and Romeo and Juliet</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-equilibria-love-linearization.html#subsec-diffeq-eigenvalues-as-rates" class="internal"><span class="codenumber">4.6.2</span> <span class="title">Linear Systems of Differential Equations and Eigenvalues</span></a></div></li>
+<li class="toc-item toc-subsection"><div class="toc-title-box"><a href="seq-diffeq-equilibria-love-linearization.html#subsec-diffeq-linearization" class="internal"><span class="codenumber">4.6.3</span> <span class="title">Linearization Around Equilibria</span></a></div></li>
 </ul>
 </li>
 </ul>
@@ -417,9 +426,90 @@ O' \amp = O(-r_O + c M).
 <div class="para" id="subsec-diffeq-predator-prey-7">Similarly, for the owls, if <span class="process-math">\(M \gt \frac{r_{O}}{c}\)</span> (many mice), the rate of change for the owl population will be positive. There is plenty of food for the owls and the owl population will be increasing. On the other hand, if <span class="process-math">\(M \lt \frac{r_{O}}{c}\)</span> (few mice), the rate of change for the owl population will be negative and the owl population will decrease.</div>
 <div class="para" id="subsec-diffeq-predator-prey-8">The phase plane with nullclines and directions of motion are illustrated in <a href="seq-diffeq-nullclines-predation-competition.html#fig-predator-prey-pp-nullclines" class="xref" data-knowl="./knowl/xref/fig-predator-prey-pp-nullclines.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 4.5.3">Figure 4.5.3</a>. Notice that there are exactly two equilibria, where <span class="process-math">\((M,O)=(0,0)\)</span> represents mutual extinction and <span class="process-math">\((M,O) = (\frac{r_O}{c}, \frac{r_M}{b})\)</span> represents both species coexisting.</div>
 <figure class="figure figure-like" id="fig-predator-prey-pp-nullclines"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="external/images/predator-prey-pp-nullclines.svg" role="img" class="contained" alt="N-nullcline intercepts are both above the R-nullcline intercepts"></div>
-<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.5.3<span class="period">.</span></span><span class="space"> </span>Nullclines in the <span class="process-math">\((M,O)\)</span> phase space for the owl-mice predator-prey model.</figcaption></figure><div class="para" id="subsec-diffeq-predator-prey-10">The vector field directions this time are only partly helpful in understanding stability. The equilibrium for extinction is clearly unstable based on directions of the vector field, since a small introduction of mice into the environment will result in mice growing exponentially. However, the vector field does not show clearly what happens for the coexisting equilibrium—the vector field seems to rotate around the equilibrium point, rather than flow in or out of it. We need deeper analysis than just the picture to determine what happens here.</div></section></section></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.5.3<span class="period">.</span></span><span class="space"> </span>Nullclines in the <span class="process-math">\((M,O)\)</span> phase space for the owl-mice predator-prey model.</figcaption></figure><div class="para" id="subsec-diffeq-predator-prey-10">The vector field directions this time are only partly helpful in understanding stability. The equilibrium for extinction is clearly unstable based on directions of the vector field, since a small introduction of mice into the environment will result in mice growing exponentially. However, the vector field does not show clearly what happens for the coexisting equilibrium—the vector field seems to rotate around the equilibrium point, rather than flow in or out of it. We need deeper analysis than just the picture to determine what happens here.</div></section><section class="subsection" id="subsec-diffeq-nullclines-code"><h3 class="heading hide-type">
+<span class="type">Subsection</span><span class="space"> </span><span class="codenumber">4.5.4</span><span class="space"> </span><span class="title">Generating Nullcline Curves in R</span>
+</h3>
+<div class="para" id="subsec-diffeq-nullclines-code-2">The discussion earlier was algebra-centered. Using nullclines is often a qualitative method that we use in a preliminary setting and may not be included in our final analysis. Sometimes, we our nullclines can be easily visualized in terms of graphs that we know, such as the lines that appeared in our earlier examples. At other times, we might not see how to express the nullclines in a way that makes it easy for us to graph.</div>
+<div class="para" id="subsec-diffeq-nullclines-code-3">One option would be to use a graphing tool like <a class="external" href="https://desmos.com/calculator" target="_blank">desmos.com</a><details class="ptx-footnote" aria-live="polite" id="subsec-diffeq-nullclines-code-3-2"><summary class="ptx-footnote__number" title="Footnote 4.5.1"><sup> 1 </sup></summary><div class="ptx-footnote__contents" id="subsec-diffeq-nullclines-code-3-2"><code class="code-inline tex2jax_ignore">desmos.com/calculator</code></div></details> where you can type an equation, although you need to use <span class="process-math">\(x\)</span> and <span class="process-math">\(y\)</span> as your state variables. An advantage here is that if you use parameter names, you get automatic sliders to adjust any of those parameters and can explore the effect of changing them. Other tools might also be able to do this, often using a command to create <dfn class="terminology">implicit plots</dfn>.</div>
+<div class="para" id="subsec-diffeq-nullclines-code-4">This section introduces some ideas for how we can visualize the results in R using contour plots. We might want to do this so that everything is integrated together into a single document. It would also allow us to overlay solution trajectories on a graph that shows the nullclines if desired.</div>
+<div class="para" id="subsec-diffeq-nullclines-code-5">When we calculate a vector field at a grid of points, we gain some a lot of information. Nullclines are significant because they show where one of the directions rate functions goes to zero. Usually, the vector field changes direction for a state variable when we cross that state’s nullcline. This would be a change of sign in the data calculated for our vector field.</div>
+<div class="para" id="subsec-diffeq-nullclines-code-6">A <dfn class="terminology">contour graph</dfn> takes a grid of two variables and a function or data that is evaluated at each point in the grid and shows curves where the value of the function or data changes between various levels. To find a nullcline, we want to find a curve where the data crosses the value of zero, thereby separating the data into two regions for positive and negative.</div>
+<div class="para" id="subsec-diffeq-nullclines-code-7">If we know how to create a vector field for a differential equation, we can use the same setup to estimate the nullclines. However, we often want a more closely-spaced grid of points for a nullcline in order to make the estimate smooth, so we probably don’t want to use the exact same grid data.</div>
+<article class="example example-like" id="subsec-diffeq-nullclines-code-8"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">4.5.4</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="subsec-diffeq-nullclines-code-8-1-1">
+<div class="para">For our first example, let us generate an estimate of the nullclines for the competition model. We will use state variables <span class="process-math">\(X\)</span> and <span class="process-math">\(Y\)</span> for the system of differential equations with</div>
+<div class="displaymath process-math" id="subsec-diffeq-nullclines-code-8-1-1-3">
+\begin{align*}
+X' \amp = r_1 X(1-X-\alpha Y)\\
+Y' \amp = r_2 Y(1-Y-\beta X)
+\end{align*}
+</div>
+<div class="para">so that our carrying capacities are <span class="process-math">\(K=1\)</span> and <span class="process-math">\(M=1\text{,}\)</span> respectively. We will choose <span class="process-math">\(\alpha = 0.75\)</span> and <span class="process-math">\(\beta = 1.1\text{,}\)</span> and <span class="process-math">\(r_1 = 0.2\)</span> and <span class="process-math">\(r_2 = 0.3\text{.}\)</span>
+</div>
+</div> <figure class="listing figure-like" id="listing-competition-model-R-nullclines"><div class="code-box"><pre class="program"><code class="language-r"># Define our parameters
+my_p &lt;- c(r1 = 0.2, r2 = 0.3, alpha = 0.75, beta = 1.1)
+
+# Define our rate functions
+f1 &lt;- function(X, Y, params) {
+    with(as.list(params),
+        r1 * X * (1 - X - alpha * Y)
+    )
+}
+f2 &lt;- function(X, Y, params) {
+    with(as.list(params),
+        r2 * Y * (1 - Y - beta * X)
+    )
+}
+
+# Make a vector field grid (relatively wide spacing)
+library(dplyr)  # To get mutate (add extra columns)
+vf_grid &lt;- expand.grid(X = seq(-0.5, 1.5, by = 0.2),
+                       Y = seq(-0.5, 1.5, by = 0.2)) |&gt;
+    mutate(dXdt = f1(X, Y, my_p),
+           dYdt = f2(X, Y, my_p)) |&gt;
+    # rescale by speed
+    mutate(speed = sqrt(dXdt^2 + dYdt^2)) |&gt;
+    mutate(Xdir = dXdt / speed,
+           Ydir = dYdt / speed)
+
+# Make a contour grid (relatively close spacing)
+contour_grid &lt;- expand.grid(X = seq(-0.5, 1.5, by = 0.02),
+                       Y = seq(-0.5, 1.5, by = 0.02)) |&gt;
+    mutate(dXdt = f1(X, Y, my_p),
+           dYdt = f2(X, Y, my_p))
+
+# Make a graph showing the vector field and nullclines
+library(ggplot2)
+library(ggquiver)
+nullcline_graph &lt;- ggplot() +
+    # Vector field
+    geom_quiver(data = vf_grid,
+                mapping = aes(x = X, y = Y,
+                              u = Xdir, v = Ydir),
+                vecsize = 0.25) +
+    # X nullcline
+    geom_contour(data = contour_grid,
+                 mapping = aes(x = X, y = Y, 
+                               z = dXdt, color = "X"),
+                 breaks = c(0), linetype = "dashed") + 
+    # Y nullcline
+    geom_contour(data = contour_grid,
+                 mapping = aes(x = X, y = Y, 
+                               z = dYdt, color = "Y"),
+                 breaks = c(0), linetype = "dashed") +
+    # Legend update
+    scale_color_discrete(breaks = c("X","Y"), name = "nullcline")
+show(nullcline_graph)
+</code></pre></div>
+<figcaption><span class="type">Listing</span><span class="space"> </span><span class="codenumber">4.5.5<span class="period">.</span></span><span class="space"> </span></figcaption></figure> <figure class="figure figure-like" id="fig-competition-model-R-nullclines"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="external/images/competition-model-R-nullclines.png" class="contained" alt="generated graph showing nullclines and vector field described in listing"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.5.6<span class="period">.</span></span><span class="space"> </span>Nullclines and vector field associated with the competition model given in the <a href="seq-diffeq-nullclines-predation-competition.html#listing-competition-model-R-nullclines" class="xref" data-knowl="./knowl/xref/listing-competition-model-R-nullclines.html" data-reveal-label="Reveal" data-close-label="Close" title="Listing 4.5.5">Listing 4.5.5</a></figcaption></figure></article><div class="para" id="subsec-diffeq-nullclines-code-9">A disadvantage of using contours from data as opposed to an algebraic approach is that we have to choose specific model parameters. An algebraic approach can allow us to recognize how the nullclines will change as we adjust various parameters.</div>
+<div class="para" id="subsec-diffeq-nullclines-code-10">A second issue is that we only get an approximation, and sometimes the result is not quite accurate. For example, the nullcline that was created for the competition model in the example above used <code class="code-inline tex2jax_ignore">by = 0.02</code> for the grid used by the <code class="code-inline tex2jax_ignore">contour</code> command. If we changed that to <code class="code-inline tex2jax_ignore">by = 0.06</code>, we would see a result where there appears to be a gap in the nullclines. What is happening is that at the point where the nullcline intersects itself, unless we happen to include that point in the grid, the algorithm doesn’t know the point exists and allows two regions on opposite sides of the point to merge to a single region.</div>
+<figure class="figure figure-like" id="fig-competition-model-R-nullclines-poor"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="external/images/competition-model-R-nullclines-poor.png" class="contained" alt="remade graph showing nullclines and vector field described in listing with different step size"></div>
+<figcaption><span class="type">Figure</span><span class="space"> </span><span class="codenumber">4.5.7<span class="period">.</span></span><span class="space"> </span>Recreated <a href="seq-diffeq-nullclines-predation-competition.html#fig-competition-model-R-nullclines-poor" class="xref" data-knowl="./knowl/xref/fig-competition-model-R-nullclines-poor.html" data-reveal-label="Reveal" data-close-label="Close" title="Figure 4.5.7">Figure 4.5.7</a> with <code class="code-inline tex2jax_ignore">by=0.06</code>, which results in a gap in the nullclines</figcaption></figure></section></section></div>
 <div class="ptx-content-footer">
-<a class="previous-button button" href="seq-diffeq-interacting-populations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="interactions.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
+<a class="previous-button button" href="seq-diffeq-interacting-populations.html" title="Previous"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cb;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5ce;</span><span class="name">Top</span></a><a class="next-button button" href="seq-diffeq-equilibria-love-linearization.html" title="Next"><span class="name">Next</span><span class="icon material-symbols-outlined" aria-hidden="true">&#xe5cc;</span></a>
 </div></main>
 </div>
 <div id="ptx-page-footer" class="ptx-page-footer">
