@@ -225,5 +225,308 @@
                 </image>
             </sidebyside>
         </figure>
+        <p>
+            If you think those graphs look like sine and cosine curves, you are correct.
+            <m>R(t)</m> is exactly <me>R(t) = \cos(\omega t)</me> for some angular frequency <m>\omega</m>.
+            The love of Romeo and Juliet, if not interrupted, would be a never-ending cycle of ups and downs.
+            But what is the angular frequency?
+        </p>
+        <p>
+            If we calculate <m>R'(t)</m> we get <me>R' = -\omega \sin(\omega t)</me>, which by our differential equation is supposed to equal <m>R' = a J</m>.
+            Although we don't know <m>\omega</m> quite yet, this allows us to solve for <me>J(t) = -\frac{\omega}{a} \sin(\omega t)</me>.
+        </p>
+        <p>
+            Another derivative gives us <me>J'(t) = -\frac{\omega^2}{a} \cos(\omega t)</me>, which is also supposed to equal <m>J' = -b R</m>.
+            Since we know <m>-b R = - b \cos(\omega t)</m>, we must have
+            <m>\frac{\omega^2}{a} = b</m> or
+            <me>\omega = \sqrt{a b}</me>.
+            Since our demo had <m>a = 0.8</m> and <m>b = 0.2</m>, we get <m>\omega = \sqrt{(0.8)(0.2)} = 0.4</m>.
+        </p>
+        <p>
+            Now I want to make a connection to matrices and eigenvalues.
+            Our system of differential equations
+            <md>
+                <mrow>R' \amp = a J, </mrow>
+                <mrow>J' \amp = - b R.</mrow>
+            </md>
+            is a <term>linear system</term> because the rate formulas are linear combinations of the state variables <m>R</m> and <m>J</m>.
+            The matrix associated with this system contains the coefficients of the variables,
+            <me>
+            A = \begin{bmatrix} 0 \amp a \\ -b \amp 0 \end{bmatrix}
+            =  \begin{bmatrix} 0 \amp 0.8 \\ -0.2 \amp 0 \end{bmatrix}
+            </me>.
+            What are the eigenvalues of this matrix?
+        </p>
+        <listing>
+            <program language="r">
+                <code>
+                <![CDATA[ 
+                A <- matrix( c(0, -0.2, 0.8, 0), nrow=2, ncol=2, byrow=FALSE)
+                eig_sys <- eigen(A)
+                print(eig_sys$values)
+                ]]>
+                </code>
+            </program>
+        </listing>
+        <console>
+            <output>
+            <![CDATA[ 
+            > print(eig_sys$values)
+            [1] 0+0.4i 0-0.4i
+            ]]>
+            </output>
+        </console>
+        <sage language="r">
+            <input>
+                A &lt;- matrix( c(0, -0.2, 0.8, 0), nrow=2, ncol=2, byrow=FALSE)
+                eig_sys &lt;- eigen(A)
+                print(eig_sys$values)
+            </input>
+        </sage>
+        <p>
+            The eigenvalues are complex numbers, <m>\lambda_1 = 0 + 0.4i</m> and <m>\lambda_2 = 0 - 0.4i</m>.
+            The imaginary coefficient, the number multiplying <m>i</m>, is exactly the same as our angular frequency.
+        </p>
+    </subsection>
+    <subsection xml:id="subsec-diffeq-eigenvalues-as-rates">
+        <title>Linear Systems of Differential Equations and Eigenvalues</title>
+        <p>
+            The observation that the eigenvalues of the matrix were related to the solutions of the system of differential equations is not an accident.
+            It is not our goal to learn the theory, but I will summarize the major results.
+        </p>
+        <theorem xml:id="thm-diffeq-linear-eigen-systems">
+            <statement>
+                <p>
+                    Suppose a linear system of <m>n</m> differential equations for <m>n</m> state variables is written in matrix form <m>\vec{X}' = A \cdot \vec{X}</m> with a square <m>n \times n</m> matrix <m>A</m>.
+                    With some rare exceptions, the matrix <m>A</m> will have <m>n</m> eigenvalues <m>\lambda_1, \lambda_2, \ldots, \lambda_n</m> and <m>n</m> corresponding eigenvectors <m>\vec v_1, \vec v_2, \ldots, \vec v_n</m>.
+                </p>
+                <p>
+                    Each eigenvalue<ndash/>eigenvector pair <m>(\lambda_k, \vec v_k)</m> provides one component of a solution.
+                    <ul>
+                        <li>
+                            <p>
+                                If <m>\lambda_k</m> is a real number, then there is a solution <m>e^{\lambda_k t} \vec v_k</m> corresponding to either exponential growth or decay in the direction of <m>\vec v_k</m>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                If <m>\lambda_k</m> is a pure imaginary number, <m>\lambda_k = \omega i</m>, then its corresponding eigenvector will have a nonzero real and imaginary vector components and there will be <em>two</em> component solutions of the form <m>\cos(\omega t) \vec{u}</m> and <m>\sin(\omega t) \vec{v}</m> where <m>\vec u,\vec v</m> are in the plane of the real and imaginary components of the eigenvector.
+                            </p>
+                            <p>
+                                The conjugate value <m>-\omega i</m> will also be an eigenvalue and its corresponding eigenvectors will similarly be conjugates.
+                                The conjugate does not introduce any new solutions.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                If <m>\lambda_k</m> is a complex number with real and imaginary parts, <m>\lambda_k = \alpha + \omega i</m>, then its corresponding eigenvector will also have a nonzero real and imaginary vector components.
+                                There will be <em>two</em> component solutions of the form <m>e^{\alpha t} \cos(\omega t) \vec{u}</m> and <m>e^{\alpha t} \sin(\omega t) \vec{v}</m> where <m>\vec u,\vec v</m> are in the plane of the real and imaginary components of the eigenvector.
+                            </p>
+                        </li>
+                    </ul>
+                </p>
+                <p>
+                    Growth or decay ultimately comes down to the real part of the eigenvalues.
+                    For each eigenvalue with a <em>positive</em> real part, there is a eigenvector-based direction for which solutions see exponential growth.
+                    For each eigenvalue with a <em>negative</em> real part, there is a eigenvector-based direction for which solutions see exponential decay.
+                    Eigenvalues that are complex conjugate pairs together correspond to two directions in which there is oscillation,
+                    and whether the oscillation grows or decays is based on the real part of the eigenvalue.
+                </p>
+            </statement>
+        </theorem>
+        <p>
+            The take-home message for this theorem is that when we have our matrix for the linear system of differential equations, we look at all of the eigenvalues and keep track of whether the real part is positive or negative.
+            This will give us an understanding of whether solutions are growing or decaying.
+            The imaginary parts will give us an understanding of whether there are any oscillations.
+        </p>
+        <example>
+            <statement>
+                <p>
+                    A variant of the Romeo and Juliet model is to consider the possibility that both Romeo and Juliet respond positively to the others' current emotions.
+                    That is, if Romeo loves Juliet, Juliets feelings toward Romeo increase, regardless of their current value.
+                    If Romeo dislikes Juliet, then her feelings will decrease.
+                    The mutually responsive model of love is given by
+                    <md>
+                        <mrow>R' \amp = a J,</mrow>
+                        <mrow>J' \amp = b R.</mrow>
+                    </md>
+                </p>
+                <p>
+                    The matrix associated with this system is
+                    <me>A = \begin{bmatrix} 0 \amp a \\ b \amp 0 \end{bmatrix}</me>.
+                    Using particular values <m>a = 0.8</m> and <m>b = 0.2</m>, we find two real eigenvalues <m>\lambda_1 = 0.4</m> and <m>\lambda_2 = -0.4</m>.
+                    R reports the first eigenvector as <m>\vec v_1 = \langle 0.8944, 0.4472 \rangle</m>, which will be the direction of the exponential growth component <m>e^{0.4 t}</m>.
+                    The second eigenvector <m>\vec v_2 = \langle -0.8944, 0.4472 \rangle</m> gives the direction of the exponential decay component <m>e^{-0.4 t}</m>.
+                </p>
+                <p>
+                    The equilibrium of no passion in this case is <term>unstable</term> because solutions have components that move away from the equilibrium with exponential growth.
+                </p>
+            </statement>
+        </example>
+    </subsection>
+    <subsection xml:id="subsec-diffeq-linearization">
+        <title>Linearization Around Equilibria</title>
+        <p>
+            We are now ready to give the result for local stability analysis of equilibria in systems of differential equations.
+            Suppose we have a system of differential equations<mdash/>linear or nonlinear<mdash/>
+            <md>
+                <mrow>X_1' \amp = f_1(X_1, X_2, \ldots, X_n) </mrow>
+                <mrow>X_2' \amp = f_2(X_1, X_2, \ldots, X_n) </mrow>
+                <mrow> \amp \vdots </mrow>
+                <mrow>X_n' \amp = f_n(X_1, X_2, \ldots, X_n). </mrow>
+            </md>
+            And suppose we have found an equilibrium solution <m>\vec X^* = (x_1^*, x_2^*, \ldots, x_n^*)</m> at which <em>all</em> of the rate functions equal zero.
+            Then <em>near</em> the equilibrium, the displacement of our solution from the equilibrium will approximately follow the <term>linearized</term> system of differential equations formed by the partial derivatives.
+        </p>
+        <p>
+            Let <m>Df</m> be the matrix of partial derivatives,
+            <me>
+                Df = \begin{bmatrix}
+                \frac{\partial f_1}{\partial x_1} \amp \frac{\partial f_1}{\partial x_2} \amp \cdots \frac{\partial f_1}{\partial x_n} \\
+                \frac{\partial f_2}{\partial x_1} \amp \frac{\partial f_2}{\partial x_2} \amp \cdots \frac{\partial f_2}{\partial x_n} \\
+                \vdots \amp \vdots \amp \ddots \amp \vdots \\
+                \frac{\partial f_n}{\partial x_1} \amp \frac{\partial f_n}{\partial x_2} \amp \cdots \frac{\partial f_n}{\partial x_n} \\
+                \end{bmatrix}
+            </me>
+            and we evaluate the matrix at the equilibrium to get a specific matrix <m>Df(\vec X^*)</m>.
+            Compute the eigenvalues of this matrix.
+            <ul>
+                <li><p>
+                        If <em>all</em> of the eigenvalues have negative real parts, then the equilibrium is locally stable.
+                </p></li>
+                <li><p>
+                        If <em>one or more</em> of the eigenvalues have positive real parts, then the equilibrium is locally unstable.
+                </p></li>
+                <li><p>
+                        If <em>one or more</em> of the eigenvalues has a real part that is 0 and none have positive real part, then this test is inconclusive.
+                </p></li>
+            </ul>
+        </p>
+        <p>
+            The following Sage script can be modified to define the state variables and rate functions for your model and it will attempt to find algebraic solutions for equilibria.
+            For each equilibrium solution it finds, it will report back the eigenvalues so that you can interpret the results.
+            This is essentially the same analysis as what we did earlier for projection functions.
+        </p>
+        <p>
+            The provided example is for the nondimensionalized producer<ndash/>consumer model,
+            <md>
+                <mrow>\dot{a} \amp = a \cdot \left(1 - a\right) - a z,</mrow>
+                <mrow>\dot{z} \amp = (- \alpha + \beta a) \cdot z,</mrow>
+            </md>
+            which has two free parameters <m>\alpha</m> and <m>\beta</m>.
+            The code initial analyzes the system for <m>\alpha = 0.2</m> and <m>\beta = 0.1</m>.
+        </p>
+        <sage>
+            <input>
+            # Declare state variables
+            var("a,z")
+
+            # Parameters as values
+            alpha = 0.2
+            beta = 0.1
+
+            # Define our two functions
+            f1(a,z) = a * (1 - a) - a * z
+            f2(a,z) = (- alpha + beta * a) * z
+
+            # Create an association between variables and projections
+            state_vars = [a, z]
+            rate_functions = [f1(a,z), f2(a,z)]
+
+            # ==== Edit ABOVE this line =====
+            # Caution: lengths must be the same or an error
+            assert len(state_vars) == len(rate_functions)
+
+            # Create a matrix using partial derivatives
+            # This uses a Python trick called "list comprehension"
+            Df = matrix([ # create a list of rows based on projections
+                [ # create a list of factored derivatives
+                    curF.derivative(curX).factor()
+                        for curX in state_vars
+                ] for curF in rate_functions
+            ])
+            show("General Jacobian")
+            show(Df)
+
+            # Find the equilibrium solutions
+            N = len(state_vars)
+            
+            # Again use list comprehension so this works for other models
+            equil_list = solve([ rate_functions[i] == 0 for i in range(N)],
+                        state_vars)
+
+            # Show the equilibrium solutions and also the Jacobian evaluated there.
+            for equil in equil_list:
+                show("-")
+                show("Equilibrium solution")
+                for my_var in state_vars:
+                    show(my_var == N(my_var.subs(equil).factor().simplify()))
+
+                show("Jacobian")
+                myJ = Df.subs(equil)
+                show(myJ)
+                
+                show("Eigenvalues")
+                myJM = Matrix(RDF, myJ)
+                myEigSpace = myJM.right_eigenvectors()
+                show([myEig[0] for myEig in myEigSpace])
+            </input>
+        </sage>
+        <p>
+            The matrix of partial derivatives in terms of the parameters and state variables will be
+            <me>
+            Df = \begin{bmatrix}
+            1 - 2a - z \amp -a \\
+            \beta z \amp -\alpha + \beta a
+            \end{bmatrix}
+            </me>.
+        </p>
+        <p>
+            Using the parameters <m>\alpha = 0.2</m> and <m>\beta = 0.1</m>, we find the following results:
+            <ol>
+                <li>
+                    <p>Equilibrium: <m>(a,z) = (0,0)</m></p>
+                    <p>Eigenvalues: <m>\lambda_1 = 1</m>, <m>\lambda_2 = -0.2</m></p>
+                    <p>Both eigenvalues are real, and one of them is positive. So this equilibrium is <term>unstable</term></p>
+                </li>
+                <li>
+                    <p>Equilibrium: <m>(a,z) = (1,0)</m></p>
+                    <p>Eigenvalues: <m>\lambda_1 = -1</m>, <m>\lambda_2 = -0.1</m></p>
+                    <p>Both eigenvalues are real and negative.
+                    So this equilibrium is <term>stable</term></p>
+                </li>
+                <li>
+                    <p>Equilibrium: <m>(a,z) = (2,-1)</m></p>
+                    <p>Eigenvalues: <m>\lambda_1 = -2.095</m>, <m>\lambda_2 = 0.095</m></p>
+                    <p>Both eigenvalues are real, and one of them is positive.
+                    So this equilibrium (which is not biologically meaningful since one population is negative) is <term>unstable</term></p>
+                </li>
+            </ol>
+            With these parameter values, the system is only at a stable equilibrium when the algae is at its natural carrying capacity and there are no zooplankton.
+        </p>
+        <p>
+            Changing the parameters to <m>\alpha = 0.2</m> and <m>\beta = 0.3</m>, we repeat the analysis:
+            <ol>
+                <li>
+                    <p>Equilibrium: <m>(a,z) = (0,0)</m></p>
+                    <p>Eigenvalues: <m>\lambda_1 = 1</m>, <m>\lambda_2 = -0.2</m></p>
+                    <p>Both eigenvalues are real, and one of them is positive. So this equilibrium is <term>unstable</term></p>
+                </li>
+                <li>
+                    <p>Equilibrium: <m>(a,z) = (1,0)</m></p>
+                    <p>Eigenvalues: <m>\lambda_1 = -1</m>, <m>\lambda_2 = 0.1</m></p>
+                    <p>Both eigenvalues are real, but one is still positive.
+                    This equilibrium is also <term>unstable</term></p>
+                </li>
+                <li>
+                    <p>Equilibrium: <m>(a,z) = (\frac{2}{3}, \frac{1}{3})</m></p>
+                    <p>Eigenvalues: <m>\lambda_1 = -0.5442</m>, <m>\lambda_2 = -0.1225</m></p>
+                    <p>Both eigenvalues are real and negative.
+                    This equilibrium is <term>stable</term></p>
+                </li>
+            </ol>
+            With these new parameter values, the system is stable when there are both algae and zooplankton present at equilibrium.
+            If the population started with only algae at equilibrium <m>(1,0)</m>, then introducing just a few zooplankton will result in the zooplankton growing to reach a positive equilibrium value.
+        </p>
     </subsection>
 </section>
