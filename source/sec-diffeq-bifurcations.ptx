@@ -117,5 +117,200 @@
             The stability of <m>(F,S)=(0,0)</m> changes stability at <m>\lambda = r_F</m>.
             We say there is a <term>bifurcation</term> at <m>\lambda = r_F</m>.
         </p>
+        <p>
+            We can see this bifurcation in the interactive <xref ref="fig-predator-prey-bifurcation-dynamics"/>.
+            The parameters correspond to a nondimensionalized version of the model so that the equilibrium with no fishing intensity is at <m>(F,S)=(1,1)</m>.
+            Nullclines are also shown in the phase plane.
+            Notice that the bifurcation occurs when the <m>F</m> nullcline crosses <m>S=0</m>.
+        </p>
+        <figure xml:id="fig-predator-prey-bifurcation-dynamics">
+            <caption>Interactive dynamics of the predator-prey model with bifurcation</caption>
+            <interactive xml:id="predator-prey-bifurcation-dynamics" platform="jsxgraph" aspect="16:9" source="code/jsx/jsx-predator-prey-bifurcation.js">
+                <slate xml:id="jsx-bif-pp-controls" surface="jsxboard" aspect="16:1" />
+                <sidebyside width="50%">
+                    <slate xml:id="jsx-bif-pp-pplane" surface="jsxboard" aspect="1:1" />
+                    <slate xml:id="jsx-bif-pp-solutions" surface="jsxboard" aspect="1:1" />
+                </sidebyside>
+                <instructions xml:id="predator-prey-bifurcation-instructions">
+                <p>
+                    Use the sliders to change fishing intensity relative to natural growth or decay, and change the initial point.
+                </p>
+                </instructions>
+            </interactive>
+        </figure>
+    </subsection>
+    <subsection xml:id="subsec-diffeq-bifurc-2x2-analysis">
+        <title>Analysis for Two-Dimensional Systems</title>
+        <p>
+            Mathematical analysis of stability is based on eigenvalues of the linearized system using the Jacobian matrix.
+            We have been restricted to analysis after we assign specific numerical values to the parameters.
+            Analysis using the parameters as symbols requires a more detailed understanding of linear algebra, specifically how to compute eigenvalues algebraically.
+        </p>
+        <p>
+            In linear algebra, we learn that eigenvalues are the roots of a polynomial equation where the degree of the polynomial matches the dimension of the matrix.
+            For two-dimensional systems, those which only have two state variables, the analysis reduces to solving a quadratic equation.
+            Because this is accessible to us, we will introduce this approach.
+        </p>
+        <p>
+            Roots of a polynomial directly correspond to factors of the polynomial.
+            For a quadratic, there will be two roots.
+            As we typicaly represent eigenvalues with the Greek letter <m>\lambda</m>, our two eigenvalues will be stated as <m>\lambda = \lambda_1</m> and <m>\lambda = \lambda_2</m>.
+            The quadratic equation that we solve would therefore need to be, in factored form, equivalent to
+            <me>(\lambda - \lambda_1)(\lambda - \lambda_2) = 0</me>.
+            Expanding this formula out using distribution, the equation will be equivalent to
+            <me>\lambda^2 - (\lambda_1 + \lambda 2) \lambda + \lambda_1 \lambda_2 = 0</me>.
+        </p>
+        <p>
+            We now use two more facts from linear algebra, again stated without justification here.
+            For any matrix, the sum of diagonal entries, which is called the <term>trace</term> of the matrix, is always equal to the <em>sum</em> of the eigenvalues.
+            For the two-dimensional matrix <m>A</m>, the trace is calculated by
+            <me>\tr(A) = \lambda_1 + \lambda_2 = a + d.</me>
+            In addition, the <term>determinant</term> of a square matrix is always equal to the <em>product</em> of the eigenvalues.
+            For the matrix <m>A</m> above, the determinant is calculated by
+            <me>\det(A) = \lambda_1 \lambda 2 = ad - bc.</me>
+        </p>
+        <p>
+            Consequently, given <em>any</em> two-dimensional square matrix <m>A</m>, if we calculate the trace <m>p = \tr(A)</m> and the determinant <m>q = \det(A)</m>, then we will find the eigenvalues by solving the quadratic equation
+            <me>\lambda^2 - p \lambda + q = 0</me>.
+            We can always do this using the quadratic formula to obtain
+            <me>\lambda = \frac{p \pm \sqrt{p^2 - 4q}}{2}</me>.
+            We can now make some quick conclusions about the eigenvalues.
+        </p>
+        <theorem xml:id="thm-2x2-matrix-eigenvalues">
+            <statement>
+                <p>
+                    Given a <m>2 \times 2</m> matrix <m>A</m> with <m>\tr(A) = p</m> and <m>\det(A) = q</m>, we have the following:
+                    <ul>
+                        <li><p>
+                            If <m>q = \det(A) \lt 0</m> (negative determinant), then there are two real eigenvalues, one of which is positive and one of which is negative.
+                        </p></li>
+                        <li><p>
+                            If <m>q = \det(A) = 0</m> (zero determinant), then the eigenvalues are <m>\lambda = p</m> and <m>\lambda=0</m>.
+                        </p></li>
+                        <li><p>
+                            If <m>q = \det(A) \gt 0</m> (positive determinant), then the <em>real-part</em> of both eigenvalues will have the same sign as the trace <m>\tr(A)</m>.
+                            Furthermore, there are three possibilities
+                            <ul>
+                                <li><p>
+                                    If <m>p^2 \gt 4q</m>, then both eigenvalues are real-valued.
+                                </p></li>
+                                <li><p>
+                                    If <m>p^2 = 4q</m>, then the eigenvalues have the same real value (double root).
+                                </p></li>
+                                <li><p>
+                                    If <m>p^2 \lt 4q</m>, then the eigenvalues are complex conjugates.
+                                </p></li>
+                            </ul>
+                        </p></li>
+                    </ul>
+                </p>
+            </statement>
+        </theorem>
+        <p>
+            The inequalities in <xref ref="thm-2x2-matrix-eigenvalues"/> can be used with a symbolic Jacobian matrix for a two-dimensional system to explore bifurcations.
+        </p>
+        <p>
+            Consider the nondimensionalized producer-consumer model where we introduce harvesting of the producer,
+            <md>
+                <mrow>\dot{a} \amp = a(1-a-z) - \mu a </mrow>
+                <mrow>\dot{z} \amp = (-\rho + \beta a) \cdot z. </mrow>
+            </md>
+            There are three possible equilibria solutions:
+            <ol>
+                <li><p> <m>(a,z) = (0,0)</m>, </p></li>
+                <li><p> <m>(a,z) = (1-\mu,0)</m>, </p></li>
+                <li><p> <m>(a,z) = (\frac{\rho}{\beta}, 1-\mu-\frac{\rho}{\beta})</m>. </p></li>
+            </ol>
+            The Jacobian matrix made from partial derivatives based on the ordering <m>(a,z)</m> is given by
+            <me>
+                Df = \begin{bmatrix}
+                1 - \mu - 2a - z \amp -a \\
+                \beta z \amp -\rho + \beta a
+                \end{bmatrix}.
+            </me>
+        </p>
+        <p>
+            Let us first consider the stability of mutual extinction at <m>(a,z) = (0,0)</m>.
+            The Jacobian matrix evaluated at this equilibrium point is 
+            <me>
+                Df = \begin{bmatrix}
+                1 - \mu \amp 0 \\
+                0 \amp -\rho 
+                \end{bmatrix}.
+            </me>
+            The <em>trace</em> of the matrix is given by <m>\tr(Df) = 1 - \mu - \rho</m> and the <em>determinant</em> is given by <m>\det(Df) = (1-\mu) \cdot -\rho = \rho(\mu - 1)</m>.
+            We know <m>\rho \gt 0</m> is positive.
+            If <m>\mu \lt 1</m>, then we have <m>\det(Df) \lt 0</m>.
+            By <xref ref="thm-2x2-matrix-eigenvalues"/>, this means there will be one positive eigenvalue and one negative eigenvalue.
+            The positive eigenvalues implies that the equilibrium <m>(a,z) = (0,0)</m> is <em>unstable</em>.
+        </p>
+        <p>
+            If we increase <m>\mu \gt 1</m>, then we now have a positive determinant as well as a negative trace, <m>\tr(Df) = 1-\mu-\rho \lt 0</m>.
+            By <xref ref="thm-2x2-matrix-eigenvalues"/>, this means the real part of both eigenvalues must be negative which, in turn, implies that the equilibrium <m>(a,z) = (0,0)</m> becomes <em>stable</em>.
+            That is, too much harvesting of the producer will cause extinction of both producer and consumre to be stable.
+            The bifurcation makes sense.
+        </p>
+        <p>
+            Let us next consider the stability of the equilibrium at <m>(a,z) = (1-\mu, 0)</m>, where only the producer is present.
+            The Jacobian matrix evaluated at this second equilibrium point is 
+            <me>
+                Df = \begin{bmatrix}
+                -1 + \mu \amp -1 + \mu \\
+                0 \amp -\rho  + \beta (1-\mu)
+                \end{bmatrix}.
+            </me>
+            The trace of the Jacobian is <m>\tr(Df) = (-1+\mu) + (-\rho+\beta(1-\mu))</m> and the determinant is <m>\det(Df) = (-1+\mu) \cdot (-\rho+\beta(1-\mu))</m>.
+            Notice how the trace and determinant are <em>already</em> written as the sum and product of values as written, so those terms must be the eigenvalues,
+            <md>
+                <mrow>\lambda_1 \amp = -1 + \mu </mrow>
+                <mrow>\lambda_2 \amp = -\rho + \beta(1-\mu) </mrow>
+            </md>
+        </p>
+        <p>
+            Knowing the eigenvalues, we can think now about stability.
+            We first look at the case with no harvesting.
+        </p>
+        <p>
+            When there is no harvesting, <m>\mu = 0</m>, we have <m>\lambda_1 = -1</m>, which is negative, and <m>\lambda_2 = -\rho + \beta</m>, which could be positive or negative, depending on the relation between <m>\rho</m> and <m>\beta</m>.
+            If <m>\rho \gt \beta</m> then <m>\lambda_2</m> will be negative and the equilibrium will be <em>stable</em>.
+            This physically is because we are saying that the consumers are dying at a faster rate than they can grow in the presence of the producers at their carrying capacity.
+            So only producers are capable of surviving.
+            On the other hand, if <m>\rho \lt \beta</m>, the consumers in the presence of at-capacity producers are able to grow faster than they die corresponding to a <em>positive</em> eigenvalue, making the equilibrium <em>unstable</em>.
+        </p>
+        <p>
+            What happens as we increase the harvesting rate <m>\mu</m>?
+            As long as <m>\mu \lt 1</m>, the producers are able to reproduce faster than harvesting is able to remove them, resulting in the first eigenvalue being a negative value <m>\lambda_1 = -1 + \mu</m>.
+            This corresponds to the tendency of producers to be driven towards their carrying capacity which was shifted due to harvesting.
+            For the second eigenavalue, if we originally had <m>\rho \gt \beta</m>, then with <m>\mu \gt 0</m> we have <m>\lambda_2 = -\rho + \beta(1-\mu)</m> will also necessarily be negative, and the equilibrium is stable.
+        </p>
+        <p>
+            On the other hand, if we originally had <m>\rho \lt \beta</m> so that the equilibrium was unstable for <m>\mu=0</m>, then there will be a bifurcation at <m>\mu = 1 - \frac{\rho}{\beta}</m>.
+            for <m>0 \le \mu \lt 1 - \frac{\rho}{\beta}</m>, we will have <m>\lambda_2 \gt 0</m> and an unstable equilibrium.
+            For <m>\mu \gt 1 - \frac{\rho}{\beta}</m>, we have <m>\lambda_2 \lt 0</m>.
+            In this range, both eigenvalues are negative and the equilibrium is <em>stable</em>.
+            The level of harvesting of the producers pushes levels of the producer population below what the consumers require to survive.
+        </p>
+        <p>
+            However, if we cause <m>\mu \gt 1</m>, two things happen.
+            First, the location of the equilibrium <m>(a, z) = (1-\mu,0)</m> has a negative value for <m>a</m>, which is unbiological.
+            Furthermore, the corresponding eigenvalue <m>\lambda_1 = -1+ \mu</m> is now positive, causing that mathematical equilibrium to be unstable.
+         </p>
+         <p>
+            Finally, notice that the third equilibrium corresponding to both algae and zooplankton coexisting occurs with <m>z = 1 - \mu - \frac{\rho}{\beta}</m>.
+            If <m>\mu \gt 1 - \frac{\rho}{\beta}</m>, which was required for the algae-only equilibrium to be stable, the coexisting equilibrium has a nonbiological value <m>z \lt 0</m>.
+            But when <m>\mu \lt 1 - \frac{\rho}{\beta}</m>, the coexisting equilibrium is biological and the algae-only equilibrium is unstable.
+            But is the coexisting equilibrium stable?
+         </p>
+         <p>
+            At the coexisting equilibrium at <m>(a,z) = (\frac{\rho}{\beta}, 1-\mu-\frac{\rho}{\beta})</m>, assuming <m>\rho \lt \beta</m>,
+            the Jacobian matrix is
+            <me>
+                Df = \begin{bmatrix}
+                -\frac{\rho}{\beta} \amp -\frac{\rho}{\beta} \\
+                \beta \cdot (1 - \mu - \frac{\rho}{beta}) \amp 0
+                \end{bmatrix}.
+            </me>
+            We find <m>\tr(Df) = - \frac{\rho}{\beta}</m> and <m>\det(Df) = \rho \cdot (1 - \mu - \frac{\rho}{\beta})</m>.
+         </p>
     </subsection>
 </section>
