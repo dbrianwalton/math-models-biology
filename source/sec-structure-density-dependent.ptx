@@ -242,7 +242,8 @@
             show(L == N(L.subs(fp)))
             show(P == N(P.subs(fp)))
             show(A == N(A.subs(fp)))
-            show("-")   # To break up results
+            print("-")   # To break up results
+            sys.stdout.flush()
         ]]>
         </input>
     </sage>
@@ -495,28 +496,32 @@
                             for curX in state_vars
                     ] for curF in projections
                 ])
-                show("General Jacobian")
+                print("General Jacobian")
+                sys.stdout.flush()
                 show(Df)
 
                 # Find the fixed points
-                N = len(state_vars)
+                Nv = len(state_vars)
                 
                 # Again use list comprehension so this works for other models
-                fp_list = solve([ state_vars[i] == projections[i] for i in range(N)],
+                fp_list = solve([ state_vars[i] == projections[i] for i in range(Nv)],
                           state_vars)
 
                 # Show the fixed point solutions and also the Jacobian evaluated there.
                 for fp in fp_list:
-                    show("-")
-                    show("Fixed point solution")
+                    print("-")
+                    print("Fixed point solution")
+                    sys.stdout.flush()
                     for my_var in state_vars:
-                        show(my_var == my_var.subs(fp).factor().simplify())
+                        show(my_var == N(my_var.subs(fp).factor().simplify()))
 
-                    show("Jacobian")
+                    print("Jacobian")
+                    sys.stdout.flush()
                     myJ = Df.subs(fp)
                     show(myJ)
                     
-                    show("Eigenvalues")
+                    print("Eigenvalues")
+                    sys.stdout.flush()
                     myJM = Matrix(RDF, myJ)
                     myEigSpace = myJM.right_eigenvectors()
                     show([myEig[0] for myEig in myEigSpace])

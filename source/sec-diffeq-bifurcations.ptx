@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file is part of the book                -->
+<!--                                              -->
+<!--      Mathematical Models in Biology         -->
+<!--                                              -->
+<!-- Copyright (C) 2017  D. Brian Walton          -->
+<!-- See the file COPYING for copying conditions. -->
+   
+<section xml:id="seq-diffeq-bifurcations">
+    <title>Bifurcations and the Impacts of Intervention</title>
+
+    <introduction>
+        <p>
+            One important reason for using mathematical models is to be able to predict the consequences of proposed interventions.
+            We have already developed the ideas of creating differential equation models for individual populations as well as multiple interacting systems.
+            Given those models, we know how to find equilibrium solutions and to determine whether those equilibria are stable or unstable.
+            Interventions will obviously result in changes to future values and dynamics for the state variables.
+            They also might fundamentally change the structure of the system, introducing or removing equilibrium solutions or changing the stability of those equilibria.
+            These structural changes to the behavior are called <term>bifurcations</term>.
+        </p>
+        <p>
+            In this section, we will learn about strategies for exploring possible bifurcations.
+            For two-dimensional systems with only two state variables, we will find there are some algebraic approaches for this exploration involving the quadratic formula.
+            For more complicated systems or where the algebra becomes too complex, we will be able to explore possible bifurcations numerically.
+        </p>
+    </introduction>
+
+    <subsection xml:id="subsec-diffeq-bifurc-producer-consumer">
+        <title>Predation and Harvesting</title>
+        <p>
+            The original mathematical model for a predator-prey interaction introduced in <xref ref="subsec-diffeq-predator-prey"/> was developed by Vito Volterra, an Italian mathematician.
+            Volterra had been approached by Umberto D'Ancona, his future son-in-law, to help understand some surprising data regarding fishing yields in the Mediterranean when comparing the years during World War 1 with the years when the war was not occurring.
+            During the war, there was less fishing but records showed a higher percentage of the catch were sharks and rays.
+            D'Ancona wanted to understand why this would happen.
+        </p>
+        <p>
+            We can consider the predator-prey model as a natural system of the interactions between food fish and predator fish<mdash/>the sharks and rays.
+            Let <m>F</m> be the size of the fish population and let <m>S</m> be the size of the shark and ray population.
+            Fishing with nets introduces an additional rate of loss since all kinds of fish are caught.
+            We can see this explicitly by introducing harvesting rates for both populations that are proportional to the population sizes.
+            The populations will then be modeled by the system of differential equations
+            <md>
+                <mrow>F' \amp = r_F F - b F S - \lambda F, </mrow>
+                <mrow>S' \amp = -r_S S + c F S - \mu S. </mrow>
+            </md>
+        </p>
+        <p>
+            The equilibrium values move if the parameters for the fishing rate parameters <m>\lambda</m> and <m>\mu</m> change.
+            The <m>F</m> nullcline has two parts, <m>F=0</m> and <m>r_F - bS - \lambda = 0</m> which gives <m>S = \frac{r_F - \lambda}{b}</m>.
+            Similarly, the <m>S</m> nullcline has two parts <m>S=0</m> and <m>-r_S + cF - \mu = 0</m>, which gives <m>F = \frac{r_S + \mu}{c}</m>.
+            The equilibrium at <m>(F,S) = (0,0)</m> does not depend on any parameters.
+            The other equilibrium at <m>(F,S) = (\frac{r_S + \mu}{c}, \frac{r_F - \lambda}{b})</m> does depend on the parameters.
+        </p>
+        <p>
+            Notice that if the amount of fishing increases, the fish population at equilibrium goes <em>up</em> and the predator population of sharks and rays goes <em>down</em>.
+            But during the war, fishing effort went down, resulting in a counterintuitive <em>reduction</em> in the food fish population and an <em>increase</em> in the predator population.
+        </p>
+        <p>
+            Perhaps even more surprisingly, suppose that we could be specific in how we fish and <em>only</em> catch food fish.
+            This would correspond to <m>\mu = 0</m>, with no harvesting of sharks and rays.
+            In this case, the equilibrium value for the food fish does not depend at all on the amount fishing taking place.
+            Instead, it is the predator population that sees the impact.
+        </p>
+        <p>
+            The discussion above focused on the <em>value</em> of the equilibrium solutions.
+            Changing the fishing harvesting coefficient resulted in a change of the <em>location</em> of the equilibrium.
+            This in itself is not a bifurcation, but will be related to that concept.
+            To see a bifurcation, we need to also look at stability.
+        </p>
+        <p>
+            Consider the equilibrium solution at <m>(F,S) = (0,0)</m>.
+            The Jacobian matrix made from the partial derivatives will help us determine the stability.
+            The rate function for <m>F</m> is given by
+            <me>
+                F' = f_1(F,S) = r_F F - b F S - \lambda F,
+            </me>
+            which has partial derivatives
+            <md>
+                <mrow>\partial_F f_1 \amp = r_f - bS - \lambda,</mrow>
+                <mrow> \partial_S f_1 \amp = - b F.</mrow>
+            </md>
+            The rate function for <m>S</m> is given by
+            <me>
+                S' = f_2(F,S) = -r_S S + c F S - \mu S,
+            </me>
+            which has partial derivatives
+            <md>
+                <mrow>\partial_F f_2 \amp = c S,</mrow>
+                <mrow> \partial_S f_2 \amp = -r_S + c F - \mu.</mrow>
+            </md>
+            When the Jacobian is evaluated at the equilibrium <m>(F,S) = (0,0)</m>,
+            we get the matrix
+            <me>
+                Df(0,0) = \begin{bmatrix}
+                r_F - \lambda \amp 0 \\ 0 \amp -r_S - \mu
+                \end{bmatrix}
+            </me>            
+        </p>
+        <p>
+            The Jacobian matrix gives the coefficients for the linear approximation that controls the distance between solutions and the equilibrium solutions, <m>\epsilon_F</m> and <m>\epsilon_S</m>,
+            <md>
+                <mrow> \epsilon_F' \amp = r_F \epsilon_F </mrow>
+                <mrow> \epsilon_S' \amp = -(r_S + \mu) \epsilon_S </mrow>
+            </md>
+            Because the values <m>r_F, r_S, \mu</m> are all constant, these are just the differential equations for exponential functions,
+            <md>
+                <mrow> \epsilon_F(t) \amp = \epsilon_{F,0} e^{(r_F-\lambda) t}, </mrow>
+                <mrow> \epsilon_S(t) \amp = \epsilon_{S,0} e^{ -(r_S + \mu)t}.</mrow>
+            </md>
+            The distance <m>\epsilon_S</m> between <m>S(t)</m> and the corresponding equilibrium value <m>S=0</m> follows exponential decay regardless of the parameter values.
+        </p>
+        <p>
+            On the other hand, the distance <m>\epsilon_F</m> between <m>F(t)</m> and its equilibrium value <m>F=0</m> can be either exponential growth or decay, depending on which parameter is larger.
+            When <m>\lambda \lt r_F</m>, the distance <m>\epsilon_F</m> <em>grows</em> exponentially and the equilibrium is <em>unstable</em>.
+            However, if <m>\lambda \gt r_F</m>, the distance will <em>decay</em> exponentially and now the equilibrium has both directions seeing decaying distances.
+            The stability of <m>(F,S)=(0,0)</m> changes stability at <m>\lambda = r_F</m>.
+            We say there is a <term>bifurcation</term> at <m>\lambda = r_F</m>.
+        </p>
+    </subsection>
+</section>

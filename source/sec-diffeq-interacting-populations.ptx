@@ -220,7 +220,11 @@
                 <mrow>\dot{a} \amp = a \cdot \left(1 - a\right) - a z,</mrow>
                 <mrow>\dot{z} \amp = (- \frac{r_Z}{r_A} + \frac{c K}{r_A} a) \cdot z.</mrow>
             </md>
-            This new system depends only on two parameters, <m>\alpha = \frac{r_Z}{r_A}</m> and <m>\beta = \frac{cK}{r_A}</m>.
+            This new system depends only on two parameters, <m>\rho = \frac{r_Z}{r_A}</m> and <m>\beta = \frac{cK}{r_A}</m>, so that we rewrite the model as
+            <md>
+                <mrow>\dot{a} \amp = a \cdot \left(1 - a\right) - a z,</mrow>
+                <mrow>\dot{z} \amp = (- \rho + \beta a) \cdot z.</mrow>
+            </md>
             By exploring different choices for those parameters, we can understand the different possible outcomes predicted by the original model.
         </p>
         <p>

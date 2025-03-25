@@ -411,10 +411,10 @@
             The provided example is for the nondimensionalized producer<ndash/>consumer model,
             <md>
                 <mrow>\dot{a} \amp = a \cdot \left(1 - a\right) - a z,</mrow>
-                <mrow>\dot{z} \amp = (- \alpha + \beta a) \cdot z,</mrow>
+                <mrow>\dot{z} \amp = (- \rho + \beta a) \cdot z,</mrow>
             </md>
-            which has two free parameters <m>\alpha</m> and <m>\beta</m>.
-            The code initial analyzes the system for <m>\alpha = 0.2</m> and <m>\beta = 0.1</m>.
+            which has two free parameters <m>\rho</m> and <m>\beta</m>.
+            The code initial analyzes the system for <m>\rho = 0.2</m> and <m>\beta = 0.1</m>.
         </p>
         <sage>
             <input>
@@ -422,12 +422,12 @@
             var("a,z")
 
             # Parameters as values
-            alpha = 0.2
+            rho = 0.2
             beta = 0.1
 
             # Define our two functions
             f1(a,z) = a * (1 - a) - a * z
-            f2(a,z) = (- alpha + beta * a) * z
+            f2(a,z) = (- rho + beta * a) * z
 
             # Create an association between variables and projections
             state_vars = [a, z]
@@ -445,28 +445,32 @@
                         for curX in state_vars
                 ] for curF in rate_functions
             ])
-            show("General Jacobian")
+            print("General Jacobian")
+            sys.stdout.flush()
             show(Df)
 
             # Find the equilibrium solutions
-            N = len(state_vars)
+            N_vars = len(state_vars)
             
             # Again use list comprehension so this works for other models
-            equil_list = solve([ rate_functions[i] == 0 for i in range(N)],
+            equil_list = solve([ rate_functions[i] == 0 for i in range(N_vars)],
                         state_vars)
 
             # Show the equilibrium solutions and also the Jacobian evaluated there.
             for equil in equil_list:
-                show("-")
-                show("Equilibrium solution")
+                print("-")
+                print("Equilibrium solution")
+                sys.stdout.flush()
                 for my_var in state_vars:
                     show(my_var == N(my_var.subs(equil).factor().simplify()))
 
-                show("Jacobian")
+                print("Jacobian")
+                sys.stdout.flush()
                 myJ = Df.subs(equil)
                 show(myJ)
                 
-                show("Eigenvalues")
+                print("Eigenvalues")
+                sys.stdout.flush()
                 myJM = Matrix(RDF, myJ)
                 myEigSpace = myJM.right_eigenvectors()
                 show([myEig[0] for myEig in myEigSpace])
@@ -477,12 +481,12 @@
             <me>
             Df = \begin{bmatrix}
             1 - 2a - z \amp -a \\
-            \beta z \amp -\alpha + \beta a
+            \beta z \amp -\rho + \beta a
             \end{bmatrix}
             </me>.
         </p>
         <p>
-            Using the parameters <m>\alpha = 0.2</m> and <m>\beta = 0.1</m>, we find the following results:
+            Using the parameters <m>\rho = 0.2</m> and <m>\beta = 0.1</m>, we find the following results:
             <ol>
                 <li>
                     <p>Equilibrium: <m>(a,z) = (0,0)</m></p>
@@ -505,7 +509,7 @@
             With these parameter values, the system is only at a stable equilibrium when the algae is at its natural carrying capacity and there are no zooplankton.
         </p>
         <p>
-            Changing the parameters to <m>\alpha = 0.2</m> and <m>\beta = 0.3</m>, we repeat the analysis:
+            Changing the parameters to <m>\rho = 0.2</m> and <m>\beta = 0.3</m>, we repeat the analysis:
             <ol>
                 <li>
                     <p>Equilibrium: <m>(a,z) = (0,0)</m></p>

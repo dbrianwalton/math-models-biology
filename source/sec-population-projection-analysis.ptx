@@ -319,6 +319,7 @@
             print("Fixed point", fp)
             slope = f_prime.subs(fp).simplify()
             print("Calculated slope", slope)
+            sys.stdout.flush()
         ]]>
         </input>
     </sage>
@@ -373,6 +374,7 @@
                     print("Fixed point", fp)
                     slope = f_prime.subs(fp).simplify()
                     print("Calculated slope", slope)
+                    sys.stdout.flush()
                 ]]>
                 </input>
             </sage>
